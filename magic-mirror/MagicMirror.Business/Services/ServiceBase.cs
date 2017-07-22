@@ -6,7 +6,7 @@ namespace MagicMirror.Business.Services
 {
     public abstract class ServiceBase
     {
-        private IMapper _mapper;
+        protected IMapper _mapper;
 
         public ServiceBase()
         {

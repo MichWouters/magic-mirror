@@ -19,8 +19,8 @@ namespace MagicMirror.Business.Configuration
                     .ForMember(dest => dest.DegreesKelvin, source => source.MapFrom(src => src.Main.Temp))
                 .ReverseMap();
 
-            CreateMap<TrafficEntity, TrafficModel>()
-                .ReverseMap();
+            //CreateMap<TrafficEntity, TrafficModel>()
+            //    .ReverseMap();
         }
     }
 }

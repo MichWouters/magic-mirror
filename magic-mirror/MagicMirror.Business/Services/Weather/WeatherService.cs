@@ -11,7 +11,6 @@ namespace MagicMirror.Business.Services.Weather
     public class WeatherService : ServiceBase, IService<WeatherModel>
     {
         private readonly IRepo<WeatherEntity> _repo;
-        private IMapper _mapper;
         private SearchCriteria _criteria;
 
         public WeatherService()
