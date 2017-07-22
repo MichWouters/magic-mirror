@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MagicMirror.Business.Models;
+using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public interface IService
+    public interface IService<T> where T : Model
     {
+        Task<T> GetModelAsync();
 
+        T MapEntityToModel();
+
+        T CalculateMappedValues();
     }
 }

@@ -10,4 +10,8 @@
     <ProjectReference Include="..\MagicMirror.Business.Models\MagicMirror.Business.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.1.1" />
+  </ItemGroup>
+
 </Project>
