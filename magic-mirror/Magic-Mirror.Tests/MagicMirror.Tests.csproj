@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Magic-Mirror.DataAccess.Entities\Magic-Mirror.DataAccess.Entities.csproj" />
-    <ProjectReference Include="..\Magic-Mirror.DataAccess\Magic-Mirror.DataAccess.csproj" />
+    <ProjectReference Include="..\Magic-Mirror.DataAccess.Entities\MagicMirror.DataAccess.Entities.csproj" />
+    <ProjectReference Include="..\Magic-Mirror.DataAccess\MagicMirror.DataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>

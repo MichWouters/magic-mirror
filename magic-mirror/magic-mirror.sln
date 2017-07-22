@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magic-Mirror.DataAccess", "Magic-Mirror.DataAccess\Magic-Mirror.DataAccess.csproj", "{61B61B9C-649D-4C21-8D9B-F60905372A2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicMirror.DataAccess", "Magic-Mirror.DataAccess\MagicMirror.DataAccess.csproj", "{61B61B9C-649D-4C21-8D9B-F60905372A2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magic-Mirror.DataAccess.Entities", "Magic-Mirror.DataAccess.Entities\Magic-Mirror.DataAccess.Entities.csproj", "{06257571-7A42-4A83-9230-B7A954F92439}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicMirror.DataAccess.Entities", "Magic-Mirror.DataAccess.Entities\MagicMirror.DataAccess.Entities.csproj", "{06257571-7A42-4A83-9230-B7A954F92439}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magic-Mirror.Tests", "Magic-Mirror.Tests\Magic-Mirror.Tests.csproj", "{E03B3A91-150D-4CD2-885D-0EEB0627D9ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicMirror.Tests", "Magic-Mirror.Tests\MagicMirror.Tests.csproj", "{E03B3A91-150D-4CD2-885D-0EEB0627D9ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
