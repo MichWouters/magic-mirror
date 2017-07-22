@@ -1,4 +1,5 @@
 ﻿using MagicMirror.Business.Models;
+using MagicMirror.DataAccess.Entities;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
@@ -7,8 +8,8 @@ namespace MagicMirror.Business.Services
     {
         Task<T> GetModelAsync();
 
-        T MapEntityToModel();
+        T MapEntityToModel(Entity entity);
 
-        T CalculateMappedValues();
+        T CalculateMappedValues(T model);
     }
 }
