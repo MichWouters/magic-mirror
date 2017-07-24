@@ -43,7 +43,6 @@ namespace MagicMirror.UnitTests.Weather
             Assert.Equal(entity.Name, model.Name);
             Assert.Equal(entity.Weather[0].Main, model.WeatherType);
             Assert.Equal(degreesCelsius, model.DegreesCelsius);
-
         }
 
         [Fact]
@@ -61,6 +60,10 @@ namespace MagicMirror.UnitTests.Weather
             Assert.NotEqual(0, model.DegreesKelvin);
             Assert.InRange(model.DegreesCelsius, -20, 50);
 
+
+            // Todo: Show difference in equality for reference types
+            // E.G: var ref1 = new obj, var ref2 = ref1 etc...
+            // new ref1 with same values as ref2 != equality!
             Assert.NotEqual("", model.Description);
             Assert.NotEqual("", model.Icon);
             Assert.NotEqual("", model.SunRise);
