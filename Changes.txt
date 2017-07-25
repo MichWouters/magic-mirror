@@ -1,0 +1,14 @@
+When creating a pull request, please specify the changes made to the project here.
+This way other developers can get an overview what changes occured since the tutorials were created.
+
+Please specify changes in the following format:
+Author - Date (dd MM yyyy)
+----------------------------------------------
+Feature - Feature location
+Description
+
+E.g:
+Michiel Wouters - 25th July 2017
+----------------------------------------------
+Added Automapper - MagicMirror.BusinessLayer
+A new automapper has been added to the project which allows for easy conversion between Entity and Model objects.
