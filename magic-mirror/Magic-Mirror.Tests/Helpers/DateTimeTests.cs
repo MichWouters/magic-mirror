@@ -37,7 +37,7 @@ namespace MagicMirror.Tests.Helpers
 
             // Act
             var sunrise = DateHelper.ConvertToUnixTimestamp(sunriseDate);
-            van sunset = DateHelper.ConvertToUnixTimestamp(sunsetDate);
+            var sunset = DateHelper.ConvertToUnixTimestamp(sunsetDate);
         }
     }
 }
