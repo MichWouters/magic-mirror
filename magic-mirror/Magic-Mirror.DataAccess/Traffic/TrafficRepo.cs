@@ -33,7 +33,6 @@ namespace MagicMirror.DataAccess.Traffic
             return response;
         }
 
-
         public async Task<TrafficEntity> GetEntityAsync()
         {
             string json = await GetJsonAsync();

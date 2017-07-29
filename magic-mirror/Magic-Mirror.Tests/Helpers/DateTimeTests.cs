@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MagicMirror.Business.Helpers;
+using System;
 using Xunit;
-using MagicMirror.Business.Helpers;
 
 namespace MagicMirror.Tests.Helpers
 {
@@ -25,13 +23,12 @@ namespace MagicMirror.Tests.Helpers
 
             Assert.Equal(expectedSunRise, sunriseDate);
             Assert.Equal(expectedSunset, sunsetDate);
-
         }
 
         [Fact]
         public void DateTime_To_Int_Correct()
         {
-            // Arrange 
+            // Arrange
             DateTime sunriseDate = new DateTime(2017, 7, 29, 4, 20, 43);
             DateTime sunsetDate = new DateTime(2017, 7, 29, 19, 52, 15);
 

@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using MagicMirror.Business.Models;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities;
+using System;
+using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {

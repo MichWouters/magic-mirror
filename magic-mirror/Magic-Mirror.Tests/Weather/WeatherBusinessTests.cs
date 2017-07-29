@@ -55,8 +55,6 @@ namespace MagicMirror.Tests.Weather
             // Assert
             Assert.NotNull(model);
             Assert.NotEqual(0, model.DegreesKelvin);
-            
-
 
             // Todo: Show difference in equality for reference types
             // E.G: var ref1 = new obj, var ref2 = ref1 etc...

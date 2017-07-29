@@ -35,9 +35,5 @@ namespace MagicMirror.UniversalApp.Dto
             get { return _trafficModel; }
             set { _trafficModel = value; }
         }
-
-
-
-
     }
 }

@@ -1,7 +1,7 @@
-﻿using System;
-using MagicMirror.Business.Models;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Dto;
+using System;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
@@ -43,7 +43,6 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private void RefreshTime()
         {
-
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.DataAccess;
+using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Weather;
 using System.Threading.Tasks;
-using MagicMirror.DataAccess.Entities;
 
 namespace MagicMirror.Business.Services
 {
