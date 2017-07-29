@@ -6,30 +6,6 @@ namespace MagicMirror.UniversalApp.Dto
 {
     public class MagicMirrorDto : INotifyPropertyChanged
     {
-        private string _time;
-
-        public string Time
-        {
-            get { return _time; }
-            set
-            {
-                _time = value;
-                OnPropertyChanged(nameof(Time));
-            }
-        }
-
-        private string _compliment;
-
-        public string Compliment
-        {
-            get { return _compliment; }
-            set
-            {
-                _compliment = value;
-                OnPropertyChanged(nameof(Compliment));
-            }
-        }
-
         private WeatherModel _weatherModel;
 
         public WeatherModel WeatherModel
@@ -55,12 +31,35 @@ namespace MagicMirror.UniversalApp.Dto
             }
         }
 
+        private string _time;
+
+        public string Time
+        {
+            get { return _time; }
+            set
+            {
+                _time = value;
+                OnPropertyChanged(nameof(Time));
+            }
+        }
+
+        private string _compliment;
+
+        public string Compliment
+        {
+            get { return _compliment; }
+            set
+            {
+                _compliment = value;
+                OnPropertyChanged(nameof(Compliment));
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 }

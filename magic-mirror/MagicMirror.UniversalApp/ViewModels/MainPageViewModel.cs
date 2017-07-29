@@ -2,6 +2,7 @@
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Dto;
 using System;
+using System.Threading.Tasks;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
@@ -23,20 +24,24 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private void Initialize()
         {
-            throw new NotImplementedException();
+            Dto.WeatherModel = RefreshWeather;
+            //Dto.TrafficModel = RefreshTraffic();
+            Dto.Time = RefreshTime();
         }
 
-        private WeatherModel RefreshWeather
+        public WeatherModel RefreshWeather
         {
             get
             {
-                throw new NotImplementedException();
+                WeatherModel result = Task.Run(() => _weatherService.GetModelAsync()).Result;
+                return result;
             }
         }
 
         private TrafficModel RefreshTraffic()
         {
-            throw new NotImplementedException();
+            TrafficModel result = Task.Run(() => _trafficService.GetModelAsync()).Result;
+            return result;
         }
 
         private string RefreshCompliment()
@@ -44,8 +49,9 @@ namespace MagicMirror.UniversalApp.ViewModels
             throw new NotImplementedException();
         }
 
-        private void RefreshTime()
+        private string RefreshTime()
         {
+            return DateTime.Now.ToString("HH:mm");
         }
     }
 }
