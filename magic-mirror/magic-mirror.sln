@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicMirror.DataAccess", "Magic-Mirror.DataAccess\MagicMirror.DataAccess.csproj", "{61B61B9C-649D-4C21-8D9B-F60905372A2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.DataAccess", "Magic-Mirror.DataAccess\MagicMirror.DataAccess.csproj", "{61B61B9C-649D-4C21-8D9B-F60905372A2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicMirror.DataAccess.Entities", "Magic-Mirror.DataAccess.Entities\MagicMirror.DataAccess.Entities.csproj", "{06257571-7A42-4A83-9230-B7A954F92439}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.DataAccess.Entities", "Magic-Mirror.DataAccess.Entities\MagicMirror.DataAccess.Entities.csproj", "{06257571-7A42-4A83-9230-B7A954F92439}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicMirror.Tests", "Magic-Mirror.Tests\MagicMirror.Tests.csproj", "{E03B3A91-150D-4CD2-885D-0EEB0627D9ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.Tests", "Magic-Mirror.Tests\MagicMirror.Tests.csproj", "{E03B3A91-150D-4CD2-885D-0EEB0627D9ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicMirror.Business", "MagicMirror.Business\MagicMirror.Business.csproj", "{9C98AD46-C186-4B98-ABA2-C8E8462C21A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicMirror.Business.Models", "MagicMirror.Business.Models\MagicMirror.Business.Models.csproj", "{6C1D40E7-E7DB-4C2A-ADC9-E6FDD4028C0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{E03B3A91-150D-4CD2-885D-0EEB0627D9ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E03B3A91-150D-4CD2-885D-0EEB0627D9ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E03B3A91-150D-4CD2-885D-0EEB0627D9ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C98AD46-C186-4B98-ABA2-C8E8462C21A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C98AD46-C186-4B98-ABA2-C8E8462C21A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C98AD46-C186-4B98-ABA2-C8E8462C21A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C98AD46-C186-4B98-ABA2-C8E8462C21A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C1D40E7-E7DB-4C2A-ADC9-E6FDD4028C0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C1D40E7-E7DB-4C2A-ADC9-E6FDD4028C0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C1D40E7-E7DB-4C2A-ADC9-E6FDD4028C0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C1D40E7-E7DB-4C2A-ADC9-E6FDD4028C0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
