@@ -2,12 +2,11 @@
 using MagicMirror.DataAccess.Traffic;
 using MagicMirror.Entities.Traffic;
 using System;
-using System.ComponentModel;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace MagicMirror.UnitTests.Traffic
+namespace MagicMirror.Tests.Traffic
 {
     public class TrafficDataTests
     {
@@ -26,7 +25,6 @@ namespace MagicMirror.UnitTests.Traffic
         }
 
         [Fact]
-        [DisplayName("Foo")]
         public async Task Can_Access_Api()
         {
             var result = await _repo.GetJsonResponseAsync();

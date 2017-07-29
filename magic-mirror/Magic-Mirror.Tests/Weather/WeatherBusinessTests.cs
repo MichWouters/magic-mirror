@@ -4,11 +4,10 @@ using MagicMirror.Business.Services.Weather;
 using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Weather;
-using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace MagicMirror.UnitTests.Weather
+namespace MagicMirror.Tests.Weather
 {
     public class WeatherBussinessTests
     {
