@@ -1,4 +1,5 @@
-﻿using MagicMirror.Business.Models;
+﻿using System;
+using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Dto;
 
@@ -16,6 +17,33 @@ namespace MagicMirror.UniversalApp.ViewModels
             dto = new MagicMirrorDto();
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
+
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            throw new NotImplementedException();
+        }
+
+        private WeatherModel RefreshWeather()
+        {
+            throw new NotImplementedException();
+        }
+
+        private TrafficModel RefreshTraffic()
+        {
+            throw new NotImplementedException();
+        }
+
+        private string RefreshCompliment()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void RefreshTime()
+        {
+
         }
     }
 }
