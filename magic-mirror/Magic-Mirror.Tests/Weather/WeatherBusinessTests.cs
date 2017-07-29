@@ -35,14 +35,13 @@ namespace MagicMirror.UnitTests.Weather
             // Act
             WeatherModel model = _service.MapEntityToModel(entity);
             model = _service.CalculateMappedValues(model);
-            int degreesCelsius = (int)Math.Round(entity.Main.Temp - 273.15);
 
             // Assert
             Assert.Equal(entity.Weather[0].Description, model.Description);
             Assert.Equal(entity.Weather[0].Icon, model.Icon);
             Assert.Equal(entity.Name, model.Name);
             Assert.Equal(entity.Weather[0].Main, model.WeatherType);
-            Assert.Equal(degreesCelsius, model.DegreesCelsius);
+            Assert.InRange(model.DegreesCelsius, -20, 50);
         }
 
         [Fact]
@@ -58,7 +57,7 @@ namespace MagicMirror.UnitTests.Weather
             // Assert
             Assert.NotNull(model);
             Assert.NotEqual(0, model.DegreesKelvin);
-            Assert.InRange(model.DegreesCelsius, -20, 50);
+            
 
 
             // Todo: Show difference in equality for reference types

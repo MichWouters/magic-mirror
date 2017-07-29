@@ -25,8 +25,8 @@ namespace MagicMirror.Business.Services.Weather
 
         public WeatherModel CalculateMappedValues(WeatherModel model)
         {
-            model.DegreesCelsius = Helpers.TemperatureHelper.ConvertToCelsiusRounded(model.DegreesKelvin);
-            model.DegreesFahrenheit = Helpers.TemperatureHelper.ConvertToFahrenheit(model.DegreesKelvin);
+            model.DegreesCelsius = Helpers.TemperatureHelper.KelvinToCelsius(model.DegreesKelvin);
+            model.DegreesFahrenheit = Helpers.TemperatureHelper.KelvinToFahrenheit(model.DegreesKelvin);
             return model;
         }
 
