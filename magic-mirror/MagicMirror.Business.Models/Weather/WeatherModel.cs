@@ -1,4 +1,4 @@
-﻿namespace MagicMirror.Business.Models.Weather
+﻿namespace MagicMirror.Business.Models
 {
     public class WeatherModel : Model
     {

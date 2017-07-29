@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MagicMirror.Business.Models.Traffic;
+using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities;
 
-namespace MagicMirror.Business.Services.Traffic
+namespace MagicMirror.Business.Services
 {
     public class TrafficService : ServiceBase, IService<TrafficModel>
     {

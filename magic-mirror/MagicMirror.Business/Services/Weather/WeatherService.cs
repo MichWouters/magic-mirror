@@ -1,12 +1,11 @@
-﻿using AutoMapper;
-using MagicMirror.Business.Models.Weather;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Weather;
 using System.Threading.Tasks;
 using MagicMirror.DataAccess.Entities;
 
-namespace MagicMirror.Business.Services.Weather
+namespace MagicMirror.Business.Services
 {
     public class WeatherService : ServiceBase, IService<WeatherModel>
     {
