@@ -10,11 +10,11 @@ namespace MagicMirror.UniversalApp.ViewModels
         private readonly IService<WeatherModel> _weatherService;
         private readonly IService<TrafficModel> _trafficService;
 
-        public MagicMirrorDto dto { get; set; }
+        public MagicMirrorDto Dto { get; set; }
 
         public MainPageViewModel()
         {
-            dto = new MagicMirrorDto();
+            Dto = new MagicMirrorDto();
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
 
@@ -26,9 +26,12 @@ namespace MagicMirror.UniversalApp.ViewModels
             throw new NotImplementedException();
         }
 
-        private WeatherModel RefreshWeather()
+        private WeatherModel RefreshWeather
         {
-            throw new NotImplementedException();
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         private TrafficModel RefreshTraffic()
