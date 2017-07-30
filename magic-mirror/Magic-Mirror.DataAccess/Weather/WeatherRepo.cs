@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System;
 using Newtonsoft.Json;
 
-namespace MagicMirror.DataAccess.Weather
+namespace MagicMirror.DataAccess
 {
     public class WeatherRepo : IRepo<WeatherEntity>
     {

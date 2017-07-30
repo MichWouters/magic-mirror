@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using MagicMirror.Business.Models.Weather;
+﻿using MagicMirror.Business.Models.Weather;
 using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities.Weather;
-using MagicMirror.DataAccess.Weather;
 using System.Threading.Tasks;
 using MagicMirror.DataAccess.Entities;
 
@@ -25,8 +23,8 @@ namespace MagicMirror.Business.Services.Weather
 
         public WeatherModel CalculateMappedValues(WeatherModel model)
         {
-            model.DegreesCelsius = Helpers.TemperatureHelper.KelvinToCelsius(model.DegreesKelvin);
-            model.DegreesFahrenheit = Helpers.TemperatureHelper.KelvinToFahrenheit(model.DegreesKelvin);
+            model.DegreesCelsius = Helpers.TemperatureHelper.KelvinToCelsius(model.DegreesKelvin, 1);
+            model.DegreesFahrenheit = Helpers.TemperatureHelper.KelvinToFahrenheit(model.DegreesKelvin, 0);
             return model;
         }
 
@@ -35,18 +33,18 @@ namespace MagicMirror.Business.Services.Weather
             // Get entity from Repository.
             WeatherEntity entity = await _repo.GetEntityAsync();
 
-            // Map entity to dto.
+            // Map entity to model.
             WeatherModel model = MapEntityToModel(entity);
 
             // Calculate non-mappable values
-            CalculateMappedValues(model);
+            model = CalculateMappedValues(model);
 
             return model;
         }
 
         public WeatherModel MapEntityToModel(Entity entity)
         {
-            var model = _mapper.Map<WeatherModel>(entity);
+            WeatherModel model = _mapper.Map<WeatherModel>(entity);
             return model;
         }
     }
