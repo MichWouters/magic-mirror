@@ -4,7 +4,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace MagicMirror.DataAccess.Traffic
+namespace MagicMirror.DataAccess
 {
     public class TrafficRepo : IRepo<TrafficEntity>
     {
