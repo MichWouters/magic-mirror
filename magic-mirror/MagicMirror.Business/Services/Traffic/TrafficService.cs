@@ -1,14 +1,15 @@
-﻿using MagicMirror.Business.Models.Traffic;
 using System;
 using MagicMirror.DataAccess.Entities;
 using System.Threading.Tasks;
 using MagicMirror.DataAccess;
 using MagicMirror.Entities.Traffic;
 
-namespace MagicMirror.Business.Services.Traffic
+namespace MagicMirror.Business.Services
 {
     public class TrafficService : ServiceBase, IService<TrafficModel>
     {
+        public Task<TrafficModel> GetModelAsync()
+        {
         private readonly IRepo<TrafficEntity> _repo;
         private readonly SearchCriteria _criteria;
 

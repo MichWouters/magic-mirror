@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MagicMirror.Business.Models.Traffic
+namespace MagicMirror.Business.Models
 {
     public class TrafficModel : Model
     {

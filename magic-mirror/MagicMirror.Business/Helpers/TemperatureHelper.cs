@@ -28,7 +28,6 @@ namespace MagicMirror.Business.Helpers
             return Math.Round(result, precision);
         }
 
-
         public static double FahrenheitToKelvin(double fahrenheit, int precision = 2)
         {
             double buffer = (double)(5m / 9m);

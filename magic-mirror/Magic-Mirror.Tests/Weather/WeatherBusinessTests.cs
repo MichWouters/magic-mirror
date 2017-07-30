@@ -1,12 +1,11 @@
-﻿using MagicMirror.Business.Models.Weather;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
-using MagicMirror.Business.Services.Weather;
 using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities.Weather;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace MagicMirror.UnitTests.Weather
+namespace MagicMirror.Tests.Weather
 {
     public class WeatherBussinessTests
     {
@@ -51,6 +50,9 @@ namespace MagicMirror.UnitTests.Weather
 
             // Assert
             Assert.NotEqual(0, model.DegreesKelvin);
+            // Todo: Show difference in equality for reference types
+            // E.G: var ref1 = new obj, var ref2 = ref1 etc...
+            // new ref1 with same values as ref2 != equality!
             Assert.NotEqual("", model.Description);
             Assert.NotEqual("", model.Icon);
             Assert.NotEqual("", model.Name);

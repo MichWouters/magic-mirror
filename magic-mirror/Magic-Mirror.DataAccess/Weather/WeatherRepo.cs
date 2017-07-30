@@ -1,8 +1,8 @@
 ﻿using MagicMirror.DataAccess.Entities.Weather;
+using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System;
-using Newtonsoft.Json;
 
 namespace MagicMirror.DataAccess
 {
@@ -19,7 +19,6 @@ namespace MagicMirror.DataAccess
         {
             get { return (_response.IsSuccessStatusCode) ? true : false; }
         }
-
 
         public WeatherRepo(SearchCriteria criteria)
         {

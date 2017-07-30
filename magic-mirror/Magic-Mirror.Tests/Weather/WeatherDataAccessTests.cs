@@ -5,7 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace MagicMirror.UnitTests.Weather
+namespace MagicMirror.Tests.Weather
 {
     public class WeatherDataAccessTests
     {

@@ -1,12 +1,11 @@
 ﻿using MagicMirror.DataAccess;
 using MagicMirror.Entities.Traffic;
 using System;
-using System.ComponentModel;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace MagicMirror.UnitTests.Traffic
+namespace MagicMirror.Tests.Traffic
 {
     public class TrafficDataTests
     {
