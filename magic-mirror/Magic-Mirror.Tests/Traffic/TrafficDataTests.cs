@@ -1,5 +1,4 @@
 ﻿using MagicMirror.DataAccess;
-using MagicMirror.DataAccess.Traffic;
 using MagicMirror.Entities.Traffic;
 using System;
 using System.ComponentModel;
@@ -26,7 +25,6 @@ namespace MagicMirror.UnitTests.Traffic
         }
 
         [Fact]
-        [DisplayName("Foo")]
         public async Task Can_Access_Api()
         {
             var result = await _repo.GetJsonResponseAsync();
@@ -48,7 +46,7 @@ namespace MagicMirror.UnitTests.Traffic
         }
 
         [Fact]
-        public async Task Json_Can_Convert_To_Entity()
+        public async Task Can_Convert_Json_To_Entity()
         {
             // Act
             TrafficEntity result = await _repo.GetEntityAsync();
@@ -58,6 +56,7 @@ namespace MagicMirror.UnitTests.Traffic
             Assert.NotEqual("NOT_FOUND", result.Status);
             Assert.NotEqual("ZERO_RESULTS", result.Status);
             Assert.Equal("OK", result.Status);
+            Assert.NotEqual(0, result.Routes.Count);
             Assert.NotNull(result.Routes[0].Legs[0].Duration);
             Assert.NotEqual(0, result.Routes[0].Legs[0].Duration.Value);
         }

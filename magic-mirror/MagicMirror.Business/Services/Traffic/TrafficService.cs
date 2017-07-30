@@ -1,12 +1,9 @@
 ﻿using MagicMirror.Business.Models.Traffic;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using MagicMirror.DataAccess.Entities;
 using System.Threading.Tasks;
 using MagicMirror.DataAccess;
 using MagicMirror.Entities.Traffic;
-using MagicMirror.DataAccess.Traffic;
 
 namespace MagicMirror.Business.Services.Traffic
 {
@@ -28,7 +25,37 @@ namespace MagicMirror.Business.Services.Traffic
 
         public TrafficModel CalculateMappedValues(TrafficModel model)
         {
-            throw new NotImplementedException();
+            model.Minutes = (model.Minutes / 60);
+            model.TrafficDensity = CalculateTrafficDensity(model.NumberOfIncidents);
+            model.HourOfArrival = DateTime.Now.AddMinutes(model.Minutes);
+
+            return model;
+        }
+
+        private TrafficDensity CalculateTrafficDensity(int numberOfIncidents)
+        {
+            if (numberOfIncidents < 0) throw new ArgumentException("Number of incidents cannot be a negative number");
+
+            TrafficDensity result = TrafficDensity.Few;
+
+            if (numberOfIncidents == 0)
+            {
+                result = TrafficDensity.Few;
+            }
+            else if (numberOfIncidents <= 1)
+            {
+                result = TrafficDensity.Light;
+            }
+            else if(numberOfIncidents <= 2)
+            {
+                result = TrafficDensity.Medium;
+            }
+            else
+            {
+                result = TrafficDensity.Heavy;
+            }
+
+            return result;
         }
 
         public async Task<TrafficModel> GetModelAsync()

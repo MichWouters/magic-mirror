@@ -1,7 +1,6 @@
 ﻿using MagicMirror.Business.Models.Weather;
 using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities.Weather;
-using MagicMirror.DataAccess.Weather;
 using System.Threading.Tasks;
 using MagicMirror.DataAccess.Entities;
 

@@ -6,7 +6,9 @@ namespace MagicMirror.Business.Models.Traffic
     {
         public string Distance { get; set; }
 
-        public string Minutes { get; set; }
+        public int Minutes { get; set; }
+
+        public string MinutesText { get; set; }
 
         public int NumberOfIncidents { get; set; }
 
