@@ -1,31 +1,26 @@
-﻿using MagicMirror.Business.Models;
+﻿using System;
+using MagicMirror.Business.Models;
 using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Entities.Weather;
 using System.Threading.Tasks;
+using MagicMirror.Business.Helpers;
+using MagicMirror.DataAccess.Repos;
 
 namespace MagicMirror.Business.Services
 {
     public class WeatherService : ServiceBase, IService<WeatherModel>
     {
         private readonly IRepo<WeatherEntity> _repo;
-        private SearchCriteria _criteria;
 
         public WeatherService()
         {
-            _criteria = new SearchCriteria
+            var criteria = new SearchCriteria
             {
                 City = "London"
             };
 
-            _repo = new WeatherRepo(_criteria);
-        }
-
-        public WeatherModel CalculateMappedValues(WeatherModel model)
-        {
-            model.DegreesCelsius = Helpers.TemperatureHelper.KelvinToCelsius(model.DegreesKelvin, 1);
-            model.DegreesFahrenheit = Helpers.TemperatureHelper.KelvinToFahrenheit(model.DegreesKelvin, 0);
-            return model;
+            _repo = new WeatherRepo(criteria);
         }
 
         public async Task<WeatherModel> GetModelAsync()
@@ -42,9 +37,22 @@ namespace MagicMirror.Business.Services
             return model;
         }
 
+        public WeatherModel CalculateMappedValues(WeatherModel model)
+        {
+            model.DegreesCelsius = TemperatureHelper.KelvinToCelsius(model.DegreesKelvin, 1);
+            model.DegreesFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.DegreesKelvin, 0);
+
+            DateTime sunrise = DateHelper.ConvertFromUnixTimestamp(model.SunRiseMilliseconds);
+            model.SunRise = sunrise.ToString("HH:mm");
+
+            DateTime sunset = DateHelper.ConvertFromUnixTimestamp(model.SunSetMilliSeconds);
+            model.SunSet = sunset.ToString("HH:mm");
+            return model;
+        }
+
         public WeatherModel MapEntityToModel(Entity entity)
         {
-            WeatherModel model = _mapper.Map<WeatherModel>(entity);
+            WeatherModel model = Mapper.Map<WeatherModel>(entity);
             return model;
         }
     }

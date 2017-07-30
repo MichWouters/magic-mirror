@@ -5,28 +5,10 @@
     /// </summary>
     public class SearchCriteria
     {
-        private string _city;
+        public string City { get; set; }
 
-        public string City
-        {
-            get { return _city; }
-            set { _city = value; }
-        }
+        public string Start { get; set; }
 
-        private string _start;
-
-        public string Start
-        {
-            get { return _start; }
-            set { _start = value; }
-        }
-
-        private string _destination;
-
-        public string Destination
-        {
-            get { return _destination; }
-            set { _destination = value; }
-        }
+        public string Destination { get; set; }
     }
 }

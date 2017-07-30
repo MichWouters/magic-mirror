@@ -7,7 +7,7 @@ namespace MagicMirror.Business.Helpers
         /// <summary>
         /// Calculates a DateTime object by adding a number of seconds since 1/1/1970
         /// </summary>
-        /// <param name="seconds">The amount of seconds passed since the first of January 1970</param>
+        /// <param name="timestamp">The amount of seconds passed since the first of January 1970</param>
         /// <returns>DateTime</returns>
         public static DateTime ConvertFromUnixTimestamp(int timestamp)
         {

@@ -3,19 +3,20 @@ using MagicMirror.DataAccess.Entities.Weather;
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using MagicMirror.DataAccess.Repos;
 using Xunit;
 
 namespace MagicMirror.Tests.Weather
 {
     public class WeatherDataAccessTests
     {
-        private IRepo<WeatherEntity> _repo;
-        private SearchCriteria criteria;
+        private readonly IRepo<WeatherEntity> _repo;
+        private readonly SearchCriteria _criteria;
 
         public WeatherDataAccessTests()
         {
-            criteria = new SearchCriteria { City = "London" };
-            _repo = new WeatherRepo(criteria);
+            _criteria = new SearchCriteria { City = "London" };
+            _repo = new WeatherRepo(_criteria);
         }
 
         [Fact]
@@ -38,7 +39,7 @@ namespace MagicMirror.Tests.Weather
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(result.Name.ToLower().Trim(), criteria.City.ToLower().Trim());
+            Assert.Equal(result.Name.ToLower().Trim(), _criteria.City.ToLower().Trim());
             Assert.IsType<WeatherEntity>(result);
         }
 

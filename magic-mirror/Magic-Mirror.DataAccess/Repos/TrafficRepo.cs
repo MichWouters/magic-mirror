@@ -1,18 +1,18 @@
-﻿using MagicMirror.Entities.Traffic;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using MagicMirror.Entities.Traffic;
+using Newtonsoft.Json;
 
-namespace MagicMirror.DataAccess
+namespace MagicMirror.DataAccess.Repos
 {
     public class TrafficRepo : IRepo<TrafficEntity>
     {
         private readonly string _apiId = DataAccessConfig.TrafficApiId;
         private readonly string _apiUrl = DataAccessConfig.TrafficApiUrl;
 
-        private string _url;
-        private SearchCriteria _criteria;
+        private readonly string _url;
+        private readonly SearchCriteria _criteria;
 
         public TrafficRepo(SearchCriteria criteria)
         {

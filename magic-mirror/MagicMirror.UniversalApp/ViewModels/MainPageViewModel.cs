@@ -2,6 +2,7 @@
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Dto;
 using System;
+using System.Threading.Tasks;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
@@ -10,11 +11,11 @@ namespace MagicMirror.UniversalApp.ViewModels
         private readonly IService<WeatherModel> _weatherService;
         private readonly IService<TrafficModel> _trafficService;
 
-        public MagicMirrorDto dto { get; set; }
+        public MagicMirrorDto MagicMirrorDto { get; set; }
 
         public MainPageViewModel()
         {
-            dto = new MagicMirrorDto();
+            MagicMirrorDto = new MagicMirrorDto();
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
 
@@ -23,26 +24,44 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private void Initialize()
         {
-            throw new NotImplementedException();
+            MagicMirrorDto.WeatherModel = Weather;
+            MagicMirrorDto.TrafficModel = Traffic;
+            MagicMirrorDto.Time = Time;
+            MagicMirrorDto.Compliment = Compliment;
         }
 
-        private WeatherModel RefreshWeather()
+        public WeatherModel Weather
         {
-            throw new NotImplementedException();
+            get
+            {
+                WeatherModel result = Task.Run(() => _weatherService.GetModelAsync()).Result;
+                return result;
+            }
         }
 
-        private TrafficModel RefreshTraffic()
+        public TrafficModel Traffic
         {
-            throw new NotImplementedException();
+            get
+            {
+                TrafficModel result = Task.Run(() => _trafficService.GetModelAsync()).Result;
+                return result;
+            }
         }
 
-        private string RefreshCompliment()
+        public string Compliment
         {
-            throw new NotImplementedException();
+            get
+            {
+                return "You look nice today";
+            }
         }
 
-        private void RefreshTime()
+        public string Time
         {
+            get
+            {
+                return DateTime.Now.ToString("HH:mm");
+            }
         }
     }
 }

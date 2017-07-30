@@ -1,19 +1,18 @@
-﻿using MagicMirror.DataAccess.Entities.Weather;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using MagicMirror.DataAccess.Entities.Weather;
+using Newtonsoft.Json;
 
-namespace MagicMirror.DataAccess
+namespace MagicMirror.DataAccess.Repos
 {
     public class WeatherRepo : IRepo<WeatherEntity>
     {
         private readonly string _apiUrl = DataAccessConfig.OpenWeatherApiUrl;
         private readonly string _apiId = DataAccessConfig.OpenWeatherApiId;
-        private string _url;
+        private readonly string _url;
 
         private HttpResponseMessage _response;
-        private SearchCriteria _criteria;
 
         public bool IsAbleToConnectToApi
         {
@@ -22,11 +21,10 @@ namespace MagicMirror.DataAccess
 
         public WeatherRepo(SearchCriteria criteria)
         {
-            if (criteria == null) throw new ArgumentNullException("No search criteria provided");
+            if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
             if (string.IsNullOrWhiteSpace(criteria.City)) throw new ArgumentException("A city has to be provided");
 
-            _criteria = criteria;
-            _url = string.Format("{0}/weather?q={1}&appid={2}", _apiUrl, _criteria.City, _apiId);
+            _url = string.Format("{0}/weather?q={1}&appid={2}", _apiUrl, criteria.City, _apiId);
         }
 
         public async Task<HttpResponseMessage> GetJsonResponseAsync()
@@ -46,10 +44,7 @@ namespace MagicMirror.DataAccess
                 string result = await _response.Content.ReadAsStringAsync();
                 return result;
             }
-            else
-            {
-                throw new HttpRequestException("A connection with the server could not be established");
-            }
+            throw new HttpRequestException("A connection with the server could not be established");
         }
 
         public async Task<WeatherEntity> GetEntityAsync()
@@ -64,11 +59,6 @@ namespace MagicMirror.DataAccess
             {
                 throw new ArgumentException("Cannot convert Json to objects");
             }
-        }
-
-        public static implicit operator Action(WeatherRepo v)
-        {
-            throw new NotImplementedException();
         }
     }
 }

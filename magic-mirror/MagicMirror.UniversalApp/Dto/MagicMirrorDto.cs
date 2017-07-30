@@ -1,15 +1,46 @@
 ﻿using MagicMirror.Business.Models;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace MagicMirror.UniversalApp.Dto
 {
-    public class MagicMirrorDto
+    public class MagicMirrorDto : INotifyPropertyChanged
     {
+        private WeatherModel _weatherModel;
+
+        public WeatherModel WeatherModel
+        {
+            get { return _weatherModel; }
+            set
+            {
+                _weatherModel = value;
+                OnPropertyChanged(nameof(WeatherModel));
+            }
+        }
+
+        private TrafficModel _trafficModel;
+
+
+        public TrafficModel TrafficModel
+        {
+            get { return _trafficModel; }
+            set
+            {
+                _trafficModel = value;
+                OnPropertyChanged(nameof(TrafficModel));
+            }
+        }
+
         private string _time;
 
         public string Time
         {
             get { return _time; }
-            set { _time = value; }
+            set
+            {
+                _time = value;
+                OnPropertyChanged(nameof(Time));
+            }
         }
 
         private string _compliment;
@@ -17,23 +48,18 @@ namespace MagicMirror.UniversalApp.Dto
         public string Compliment
         {
             get { return _compliment; }
-            set { _compliment = value; }
+            set
+            {
+                _compliment = value;
+                OnPropertyChanged(nameof(Compliment));
+            }
         }
 
-        private WeatherModel _weatherModel;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public WeatherModel WeatherModel
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            get { return _weatherModel; }
-            set { _weatherModel = value; }
-        }
-
-        private TrafficModel _trafficModel;
-
-        public TrafficModel TrafficModel
-        {
-            get { return _trafficModel; }
-            set { _trafficModel = value; }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

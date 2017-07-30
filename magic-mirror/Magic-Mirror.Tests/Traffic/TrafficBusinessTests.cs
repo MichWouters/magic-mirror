@@ -1,18 +1,17 @@
-﻿using MagicMirror.Business.Models.Traffic;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
-using MagicMirror.Business.Services.Traffic;
 using MagicMirror.DataAccess;
 using MagicMirror.Entities.Traffic;
-using System;
 using System.Threading.Tasks;
+using MagicMirror.DataAccess.Repos;
 using Xunit;
 
 namespace MagicMirror.Tests.Traffic
 {
     public class TrafficBusinessTests
     {
-        private IRepo<TrafficEntity> _repo;
-        private IService<TrafficModel> _service;
+        private readonly IRepo<TrafficEntity> _repo;
+        private readonly IService<TrafficModel> _service;
 
         public TrafficBusinessTests()
         {
