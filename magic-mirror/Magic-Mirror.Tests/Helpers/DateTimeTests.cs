@@ -35,6 +35,10 @@ namespace MagicMirror.Tests.Helpers
             // Act
             var sunrise = DateHelper.ConvertToUnixTimestamp(sunriseDate);
             var sunset = DateHelper.ConvertToUnixTimestamp(sunsetDate);
+
+            // Assert
+            Assert.Equal(1501294843, sunrise);
+            Assert.Equal(1501350735, sunset);
         }
     }
 }

@@ -24,12 +24,13 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private void Initialize()
         {
-            Dto.WeatherModel = RefreshWeather;
-            //Dto.TrafficModel = RefreshTraffic();
-            Dto.Time = RefreshTime();
+            Dto.WeatherModel = Weather;
+            Dto.TrafficModel = Traffic;
+            Dto.Time = Time;
+            Dto.Compliment = Compliment;
         }
 
-        public WeatherModel RefreshWeather
+        public WeatherModel Weather
         {
             get
             {
@@ -38,20 +39,29 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        private TrafficModel RefreshTraffic()
+        private TrafficModel Traffic
         {
-            TrafficModel result = Task.Run(() => _trafficService.GetModelAsync()).Result;
-            return result;
+            get
+            {
+                TrafficModel result = Task.Run(() => _trafficService.GetModelAsync()).Result;
+                return result;
+            }
         }
 
-        private string RefreshCompliment()
+        private string Compliment
         {
-            throw new NotImplementedException();
+            get
+            {
+                return "You look nice today";
+            }
         }
 
-        private string RefreshTime()
+        private string Time
         {
-            return DateTime.Now.ToString("HH:mm");
+            get
+            {
+                return DateTime.Now.ToString("HH:mm");
+            }
         }
     }
 }
