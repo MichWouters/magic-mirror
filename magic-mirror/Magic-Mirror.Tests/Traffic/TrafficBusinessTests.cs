@@ -1,9 +1,7 @@
-﻿using MagicMirror.Business.Models.Traffic;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
-using MagicMirror.Business.Services.Traffic;
 using MagicMirror.DataAccess;
 using MagicMirror.Entities.Traffic;
-using System;
 using System.Threading.Tasks;
 using Xunit;
 
