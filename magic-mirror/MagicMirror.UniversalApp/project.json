@@ -1,5 +1,6 @@
 ﻿{
   "dependencies": {
+    "AutoMapper": "6.1.1",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.3"
   },
   "frameworks": {

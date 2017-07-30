@@ -126,12 +126,14 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\Magic-Mirror.DataAccess.Entities\MagicMirror.DataAccess.Entities.csproj">
+      <Project>{06257571-7a42-4a83-9230-b7a954f92439}</Project>
+      <Name>MagicMirror.DataAccess.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magic-Mirror.DataAccess\MagicMirror.DataAccess.csproj">
+      <Project>{61b61b9c-649d-4c21-8d9b-f60905372a2d}</Project>
+      <Name>MagicMirror.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MagicMirror.Business.Models\MagicMirror.Business.Models.csproj">
       <Project>{6c1d40e7-e7db-4c2a-adc9-e6fdd4028c0b}</Project>
       <Name>MagicMirror.Business.Models</Name>
@@ -140,6 +142,13 @@
       <Project>{9c98ad46-c186-4b98-aba2-c8e8462c21a3}</Project>
       <Name>MagicMirror.Business</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Views\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

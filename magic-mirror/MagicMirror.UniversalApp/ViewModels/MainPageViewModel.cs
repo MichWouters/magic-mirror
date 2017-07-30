@@ -11,11 +11,11 @@ namespace MagicMirror.UniversalApp.ViewModels
         private readonly IService<WeatherModel> _weatherService;
         private readonly IService<TrafficModel> _trafficService;
 
-        public MagicMirrorDto Dto { get; set; }
+        public MagicMirrorDto MagicMirrorDto { get; set; }
 
         public MainPageViewModel()
         {
-            Dto = new MagicMirrorDto();
+            MagicMirrorDto = new MagicMirrorDto();
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
 
@@ -24,10 +24,10 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private void Initialize()
         {
-            Dto.WeatherModel = Weather;
-            Dto.TrafficModel = Traffic;
-            Dto.Time = Time;
-            Dto.Compliment = Compliment;
+            MagicMirrorDto.WeatherModel = Weather;
+            MagicMirrorDto.TrafficModel = Traffic;
+            MagicMirrorDto.Time = Time;
+            MagicMirrorDto.Compliment = Compliment;
         }
 
         public WeatherModel Weather
@@ -39,7 +39,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        private TrafficModel Traffic
+        public TrafficModel Traffic
         {
             get
             {
@@ -48,7 +48,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        private string Compliment
+        public string Compliment
         {
             get
             {
@@ -56,7 +56,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        private string Time
+        public string Time
         {
             get
             {
