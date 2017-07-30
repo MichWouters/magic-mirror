@@ -1,4 +1,5 @@
-﻿using MagicMirror.Business.Models;
+﻿using System;
+using MagicMirror.Business.Models;
 using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Entities.Weather;
@@ -40,8 +41,11 @@ namespace MagicMirror.Business.Services
             model.DegreesCelsius = TemperatureHelper.KelvinToCelsius(model.DegreesKelvin, 1);
             model.DegreesFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.DegreesKelvin, 0);
 
-            model.SunRise = DateHelper.ConvertFromUnixTimestamp(model.SunRiseMilliseconds);
-            model.SunSet = DateHelper.ConvertFromUnixTimestamp(model.SunSetMilliSeconds);
+            DateTime sunrise = DateHelper.ConvertFromUnixTimestamp(model.SunRiseMilliseconds);
+            model.SunRise = sunrise.ToString("HH:mm");
+
+            DateTime sunset = DateHelper.ConvertFromUnixTimestamp(model.SunSetMilliSeconds);
+            model.SunSet = sunset.ToString("HH:mm");
             return model;
         }
 
