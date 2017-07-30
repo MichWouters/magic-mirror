@@ -1,4 +1,6 @@
-﻿namespace MagicMirror.Business.Models
+﻿using System;
+
+namespace MagicMirror.Business.Models
 {
     public class WeatherModel : Model
     {
@@ -10,7 +12,10 @@
         public double DegreesFahrenheit { get; set; }
         public string WeatherType { get; set; }
 
-        public string SunRise { get; set; }
-        public string SunSet { get; set; }
+        public DateTime SunRise { get; set; }
+        public int SunRiseMilliseconds { get; set; }
+
+        public DateTime SunSet { get; set; }
+        public int SunSetMilliSeconds { get; set; }              
     }
 }

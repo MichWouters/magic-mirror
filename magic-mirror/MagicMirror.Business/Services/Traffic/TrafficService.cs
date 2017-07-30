@@ -10,17 +10,30 @@ namespace MagicMirror.Business.Services
     public class TrafficService : ServiceBase, IService<TrafficModel>
     {
         private readonly IRepo<TrafficEntity> _repo;
-        private readonly SearchCriteria _criteria;
 
         public TrafficService()
         {
-            _criteria = new SearchCriteria
+            var criteria = new SearchCriteria
             {
                 Start = "Heikant 51 3390 Houwaart",
                 Destination = "Generaal ArmstrongWeg 1 Antwerpen"
             };
 
-            _repo = new TrafficRepo(_criteria);
+            _repo = new TrafficRepo(criteria);
+        }
+
+        public async Task<TrafficModel> GetModelAsync()
+        {
+            // Get entity from repository
+            TrafficEntity entity = await _repo.GetEntityAsync();
+
+            // Map entity to model
+            TrafficModel model = MapEntityToModel(entity);
+
+            // Calculate non-mappable values
+            model = CalculateMappedValues(model);
+
+            return model;
         }
 
         public TrafficModel CalculateMappedValues(TrafficModel model)
@@ -36,7 +49,7 @@ namespace MagicMirror.Business.Services
         {
             if (numberOfIncidents < 0) throw new ArgumentException("Number of incidents cannot be a negative number");
 
-            TrafficDensity result = TrafficDensity.Few;
+            TrafficDensity result;
 
             if (numberOfIncidents == 0)
             {
@@ -58,23 +71,9 @@ namespace MagicMirror.Business.Services
             return result;
         }
 
-        public async Task<TrafficModel> GetModelAsync()
-        {
-            // Get entity from repository
-            TrafficEntity entity = await _repo.GetEntityAsync();
-
-            // Map entity to model
-            TrafficModel model = MapEntityToModel(entity);
-
-            // Calculate non-mappable values
-            model = CalculateMappedValues(model);
-
-            return model;
-        }
-
         public TrafficModel MapEntityToModel(Entity entity)
         {
-            TrafficModel model = _mapper.Map<TrafficModel>(entity);
+            TrafficModel model = Mapper.Map<TrafficModel>(entity);
             return model;
         }
     }

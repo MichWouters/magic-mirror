@@ -6,9 +6,9 @@ namespace MagicMirror.Business.Services
 {
     public abstract class ServiceBase
     {
-        protected IMapper _mapper;
+        protected IMapper Mapper;
 
-        public ServiceBase()
+        protected ServiceBase()
         {
             SetUpMapperConfiguration();
         }
@@ -22,7 +22,7 @@ namespace MagicMirror.Business.Services
             var baseMappings = new MapperConfigurationExpression();
             baseMappings.AddProfile<AutoMapperConfiguration>();
             var config = new MapperConfiguration(baseMappings);
-            _mapper = new Mapper(config);
+            Mapper = new Mapper(config);
         }
     }
 }

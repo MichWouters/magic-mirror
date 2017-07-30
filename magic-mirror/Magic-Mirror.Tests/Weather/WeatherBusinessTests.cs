@@ -9,8 +9,8 @@ namespace MagicMirror.Tests.Weather
 {
     public class WeatherBussinessTests
     {
-        private IRepo<WeatherEntity> _repo;
-        private IService<WeatherModel> _service;
+        private readonly IRepo<WeatherEntity> _repo;
+        private readonly IService<WeatherModel> _service;
 
         public WeatherBussinessTests()
         {
@@ -40,6 +40,7 @@ namespace MagicMirror.Tests.Weather
 
         }
 
+        [Fact]
         public async Task AutoMapped_Values_Correct()
         {
             // Arrange
@@ -50,27 +51,31 @@ namespace MagicMirror.Tests.Weather
 
             // Assert
             Assert.NotEqual(0, model.DegreesKelvin);
-            // Todo: Show difference in equality for reference types
-            // E.G: var ref1 = new obj, var ref2 = ref1 etc...
-            // new ref1 with same values as ref2 != equality!
             Assert.NotEqual("", model.Description);
             Assert.NotEqual("", model.Icon);
             Assert.NotEqual("", model.Name);
+            Assert.NotEqual(0, model.SunRiseMilliseconds);
+            Assert.NotEqual(0, model.SunSetMilliSeconds);
+            Assert.Equal(entity.Weather[0].Icon, model.Icon);
+            Assert.Equal(entity.Weather[0].Main, model.WeatherType);
         }
 
         [Fact]
-        public async Task Calculated_Fields_Correct()
+        public void Calculated_Fields_Correct()
         {
             // Arrange
-            WeatherEntity entity = await _repo.GetEntityAsync();
+            WeatherModel model = new WeatherModel
+            {
+                SunRiseMilliseconds = 0,
+                SunSetMilliSeconds = 0,
+                DegreesKelvin = 100,
+            };
 
             // Act
-            WeatherModel model = _service.MapEntityToModel(entity);
             model = _service.CalculateMappedValues(model);
 
             // Assert
-            Assert.Equal(entity.Weather[0].Icon, model.Icon);
-            Assert.Equal(entity.Weather[0].Main, model.WeatherType);
+            // Todo: Add additional checks
             Assert.InRange(model.DegreesCelsius, -20, 50);
             Assert.NotEqual(0, model.DegreesFahrenheit);
             Assert.NotEqual(0, model.DegreesKelvin);

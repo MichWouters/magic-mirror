@@ -11,8 +11,8 @@ namespace MagicMirror.DataAccess
         private readonly string _apiId = DataAccessConfig.TrafficApiId;
         private readonly string _apiUrl = DataAccessConfig.TrafficApiUrl;
 
-        private string _url;
-        private SearchCriteria _criteria;
+        private readonly string _url;
+        private readonly SearchCriteria _criteria;
 
         public TrafficRepo(SearchCriteria criteria)
         {

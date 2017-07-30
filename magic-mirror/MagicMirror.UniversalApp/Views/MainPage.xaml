@@ -8,11 +8,74 @@
     xmlns:vm="using:MagicMirror.UniversalApp.ViewModels"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <Style TargetType="RelativePanel">
+            <Setter Property="Padding" Value="10" />
+        </Style>
+
+        <Style x:Key="WeatherType" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FDF7C500" />
+            <Setter Property="FontStyle" Value="Italic" />
+        </Style>
+
+        <Style x:Key="Degrees" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="42" />
+        </Style>
+    </Page.Resources>
+
     <Page.DataContext>
         <vm:MainPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="Foo" Text="{Binding Compliment}" />
+        <!--  Top Left elements  -->
+        <TextBlock x:Name="LocationTextBlock" Text="{Binding MagicMirrorDto.WeatherModel.Name, FallbackValue='Montgomery'}" />
+
+        <Image
+            x:Name="WeatherImage"
+            Width="50"
+            Height="50"
+            RelativePanel.Below="LocationTextBlock"
+            Source="../Assets/Square150x150Logo.png" />
+
+        <TextBlock
+            x:Name="WeatherTextBox"
+            RelativePanel.Below="WeatherImage"
+            Style="{StaticResource WeatherType}"
+            Text="{Binding MagicMirrorDto.WeatherModel.WeatherType}" />
+
+        <!--  Main Temperature  -->
+        <TextBlock
+            x:Name="TemperatureTextBlock"
+            RelativePanel.Below="LocationTextBlock"
+            RelativePanel.RightOf="WeatherImage"
+            Style="{StaticResource Degrees}"
+            Text="{Binding MagicMirrorDto.WeatherModel.DegreesCelsius}" />
+
+        <Image
+            x:Name="SunriseImage"
+            Width="24"
+            Height="24"
+            RelativePanel.Below="WeatherTextBox"
+            Source="../Assets/Square44x44Logo.scale-200.png" />
+
+        <TextBlock
+            x:Name="SunriseTextBox"
+            RelativePanel.AlignVerticalCenterWith="SunriseImage"
+            RelativePanel.RightOf="SunriseImage"
+            Text="{Binding MagicMirrorDto.WeatherModel.SunRise, FallbackValue='6:35 am'}" />
+
+        <Image
+            x:Name="SunSetImage"
+            Width="24"
+            Height="24"
+            RelativePanel.Below="SunriseImage"
+            Source="../Assets/Square44x44Logo.scale-200.png" />
+
+        <TextBlock
+            x:Name="SunsetTextBox"
+            RelativePanel.AlignVerticalCenterWith="SunSetImage"
+            RelativePanel.RightOf="SunSetImage"
+            Text="{Binding MagicMirrorDto.WeatherModel.SunSet, FallbackValue='19:35 am'}" />
     </RelativePanel>
 </Page>

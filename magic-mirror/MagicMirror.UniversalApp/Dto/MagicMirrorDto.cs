@@ -6,15 +6,6 @@ namespace MagicMirror.UniversalApp.Dto
 {
     public class MagicMirrorDto : INotifyPropertyChanged
     {
-        private int _foo;
-
-        public int Foo
-        {
-            get { return _foo; }
-            set { _foo = value; }
-        }
-
-
         private WeatherModel _weatherModel;
 
         public WeatherModel WeatherModel

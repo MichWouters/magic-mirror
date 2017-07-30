@@ -9,18 +9,17 @@ namespace MagicMirror.Tests.Traffic
 {
     public class TrafficDataTests
     {
-        private IRepo<TrafficEntity> _repo;
-        private SearchCriteria _criteria;
+        private readonly IRepo<TrafficEntity> _repo;
 
         public TrafficDataTests()
         {
-            _criteria = new SearchCriteria
+            var criteria = new SearchCriteria
             {
                 Start = "Heikant 51 Houwaart Belgium",
                 Destination = "Earl Bakkenstraat 10, 6422 PJ Heerlen, Netherlands"
             };
 
-            _repo = new TrafficRepo(_criteria);
+            _repo = new TrafficRepo(criteria);
         }
 
         [Fact]
@@ -63,27 +62,27 @@ namespace MagicMirror.Tests.Traffic
         [Fact]
         public void Empty_Input_Throws_Exception()
         {
-            SearchCriteria criteria = null; ;
-            var exception = AssertEmptyInput(criteria, typeof(NullReferenceException));
+            AssertEmptyInput(null, typeof(NullReferenceException));
 
-            criteria = new SearchCriteria();
-            exception = AssertEmptyInput(criteria, typeof(ArgumentException));
+            var criteria = new SearchCriteria();
+            AssertEmptyInput(criteria, typeof(ArgumentException));
 
             criteria.Start = "";
             criteria.Destination = "London";
-            exception = AssertEmptyInput(criteria, typeof(ArgumentException));
+            AssertEmptyInput(criteria, typeof(ArgumentException));
 
             criteria.Start = "London";
             criteria.Destination = "";
-            exception = AssertEmptyInput(criteria, typeof(ArgumentException));
+            AssertEmptyInput(criteria, typeof(ArgumentException));
         }
 
-        private Exception AssertEmptyInput(SearchCriteria criteria, Type type)
+        private void AssertEmptyInput(SearchCriteria criteria, Type type)
         {
+            if (type == null) throw new ArgumentNullException(nameof(type));
+
             Exception exception = Record.Exception(() => new TrafficRepo(criteria));
             Assert.NotNull(exception);
             Assert.IsType(type, exception);
-            return exception;
         }
     }
 }
