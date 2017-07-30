@@ -1,10 +1,10 @@
-﻿using MagicMirror.DataAccess.Entities.Weather;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using MagicMirror.DataAccess.Entities.Weather;
+using Newtonsoft.Json;
 
-namespace MagicMirror.DataAccess
+namespace MagicMirror.DataAccess.Repos
 {
     public class WeatherRepo : IRepo<WeatherEntity>
     {

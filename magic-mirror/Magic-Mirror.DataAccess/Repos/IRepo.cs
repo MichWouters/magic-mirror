@@ -1,8 +1,8 @@
-﻿using MagicMirror.DataAccess.Entities;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
+using MagicMirror.DataAccess.Entities;
 
-namespace MagicMirror.DataAccess
+namespace MagicMirror.DataAccess.Repos
 {
     public interface IRepo<T> where T : Entity
     {

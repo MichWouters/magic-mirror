@@ -143,6 +143,5 @@
             RelativePanel.AlignRightWithPanel="True"
             RelativePanel.Below="DateTextBlock"
             Text="5:22 pm" />
-
     </RelativePanel>
 </Page>

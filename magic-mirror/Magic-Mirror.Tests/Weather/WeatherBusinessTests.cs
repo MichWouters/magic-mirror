@@ -3,6 +3,7 @@ using MagicMirror.Business.Services;
 using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities.Weather;
 using System.Threading.Tasks;
+using MagicMirror.DataAccess.Repos;
 using Xunit;
 
 namespace MagicMirror.Tests.Weather

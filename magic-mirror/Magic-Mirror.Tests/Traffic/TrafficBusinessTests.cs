@@ -3,6 +3,7 @@ using MagicMirror.Business.Services;
 using MagicMirror.DataAccess;
 using MagicMirror.Entities.Traffic;
 using System.Threading.Tasks;
+using MagicMirror.DataAccess.Repos;
 using Xunit;
 
 namespace MagicMirror.Tests.Traffic
