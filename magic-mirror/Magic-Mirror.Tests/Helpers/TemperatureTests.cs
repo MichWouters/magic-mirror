@@ -1,4 +1,4 @@
-﻿using MagicMirror.Business.Helpers;
+﻿using Acme.Generic;
 using Xunit;
 
 namespace MagicMirror.Tests.Helpers

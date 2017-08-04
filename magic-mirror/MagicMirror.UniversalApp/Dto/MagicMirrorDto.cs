@@ -55,6 +55,19 @@ namespace MagicMirror.UniversalApp.Dto
             }
         }
 
+        private string _date;
+
+        public string Date
+        {
+            get { return _date; }
+            set
+            {
+                _date = value;
+                OnPropertyChanged(nameof(Date));
+            }
+        }
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

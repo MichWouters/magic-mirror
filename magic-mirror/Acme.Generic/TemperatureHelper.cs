@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MagicMirror.Business.Helpers
+namespace Acme.Generic
 {
     public static class TemperatureHelper
     {

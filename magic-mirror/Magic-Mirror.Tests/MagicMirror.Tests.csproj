@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Acme.Generic\Acme.Generic.csproj" />
     <ProjectReference Include="..\Magic-Mirror.DataAccess.Entities\MagicMirror.DataAccess.Entities.csproj" />
     <ProjectReference Include="..\Magic-Mirror.DataAccess\MagicMirror.DataAccess.csproj" />
     <ProjectReference Include="..\MagicMirror.Business.Models\MagicMirror.Business.Models.csproj" />

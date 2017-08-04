@@ -4,7 +4,7 @@ using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Entities.Weather;
 using System.Threading.Tasks;
-using MagicMirror.Business.Helpers;
+using Acme.Generic;
 using MagicMirror.DataAccess.Repos;
 
 namespace MagicMirror.Business.Services
