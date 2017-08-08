@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MagicMirror.Business.Models\MagicMirror.Business.Models.csproj" />
+    <ProjectReference Include="..\MagicMirror.Business\MagicMirror.Business.csproj" />
+  </ItemGroup>
+
+</Project>

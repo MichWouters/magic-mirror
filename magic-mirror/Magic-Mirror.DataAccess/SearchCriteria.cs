@@ -5,10 +5,17 @@
     /// </summary>
     public class SearchCriteria
     {
+        public string UserName { get; set; }
         public string City { get; set; }
 
         public string Start { get; set; }
 
         public string Destination { get; set; }
+
+        public override string ToString()
+        {
+            return $"Name: {this.UserName}\n" +
+                   $"City: {this.City}";
+        }
     }
 }

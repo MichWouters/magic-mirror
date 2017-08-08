@@ -51,7 +51,7 @@ namespace MagicMirror.Tests.Weather
             WeatherModel model = _service.MapEntityToModel(entity);
 
             // Assert
-            Assert.NotEqual(0, model.DegreesKelvin);
+            Assert.NotEqual(0, model.TemperatureKelvin);
             Assert.NotEqual("", model.Description);
             Assert.NotEqual("", model.Icon);
             Assert.NotEqual("", model.Name);
@@ -69,7 +69,7 @@ namespace MagicMirror.Tests.Weather
             {
                 SunRiseMilliseconds = 0,
                 SunSetMilliSeconds = 0,
-                DegreesKelvin = 100,
+                TemperatureKelvin = 100,
             };
 
             // Act
@@ -77,9 +77,9 @@ namespace MagicMirror.Tests.Weather
 
             // Assert
             // Todo: Add additional checks
-            Assert.InRange(model.DegreesCelsius, -20, 50);
-            Assert.NotEqual(0, model.DegreesFahrenheit);
-            Assert.NotEqual(0, model.DegreesKelvin);
+            Assert.InRange(model.TemperatureCelsius, -20, 50);
+            Assert.NotEqual(0, model.TemperatureFahrenheit);
+            Assert.NotEqual(0, model.TemperatureKelvin);
         }
     }
 }

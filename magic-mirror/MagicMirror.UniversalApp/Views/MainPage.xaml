@@ -70,7 +70,7 @@
             RelativePanel.Below="LocationTextBlock"
             RelativePanel.RightOf="WeatherImage"
             Style="{StaticResource Degrees}"
-            Text="{Binding MagicMirrorDto.WeatherModel.DegreesCelsius}" />
+            Text="{Binding MagicMirrorDto.WeatherModel.TemperatureCelsius}" />
 
         <Image
             x:Name="SunriseImage"
