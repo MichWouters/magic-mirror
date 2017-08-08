@@ -143,5 +143,9 @@
             RelativePanel.AlignRightWithPanel="True"
             RelativePanel.Below="DateTextBlock"
             Text="5:22 pm" />
+        <Button
+            Click="Button_Click"
+            Content="Button"
+            RelativePanel.Below="SunSetImage" />
     </RelativePanel>
 </Page>

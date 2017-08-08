@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccessLayer", "DataAcce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicMirror.UniversalApp", "MagicMirror.UniversalApp\MagicMirror.UniversalApp.csproj", "{01DF9D76-1F83-481F-85D0-95D44ED12204}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.Generic", "Acme.Generic\Acme.Generic.csproj", "{230DEDBB-0D31-4DE4-A8AC-9F871F023A8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.Generic", "Acme.Generic\Acme.Generic.csproj", "{230DEDBB-0D31-4DE4-A8AC-9F871F023A8F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{C76044E1-B2F3-45E0-8A01-2EB81247E47F}"
 EndProject
@@ -118,6 +118,8 @@ Global
 		{6C1D40E7-E7DB-4C2A-ADC9-E6FDD4028C0B}.Release|x86.ActiveCfg = Release|Any CPU
 		{6C1D40E7-E7DB-4C2A-ADC9-E6FDD4028C0B}.Release|x86.Build.0 = Release|Any CPU
 		{01DF9D76-1F83-481F-85D0-95D44ED12204}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{01DF9D76-1F83-481F-85D0-95D44ED12204}.Debug|Any CPU.Build.0 = Debug|x86
+		{01DF9D76-1F83-481F-85D0-95D44ED12204}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{01DF9D76-1F83-481F-85D0-95D44ED12204}.Debug|ARM.ActiveCfg = Debug|ARM
 		{01DF9D76-1F83-481F-85D0-95D44ED12204}.Debug|ARM.Build.0 = Debug|ARM
 		{01DF9D76-1F83-481F-85D0-95D44ED12204}.Debug|ARM.Deploy.0 = Debug|ARM
