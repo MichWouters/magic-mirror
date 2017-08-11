@@ -20,7 +20,6 @@ namespace MagicMirror.UniversalApp.Dto
 
         private TrafficModel _trafficModel;
 
-
         public TrafficModel TrafficModel
         {
             get { return _trafficModel; }
@@ -66,7 +65,6 @@ namespace MagicMirror.UniversalApp.Dto
                 OnPropertyChanged(nameof(Date));
             }
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

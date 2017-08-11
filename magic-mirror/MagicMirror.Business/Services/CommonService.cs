@@ -1,5 +1,5 @@
-﻿using System;
-using MagicMirror.DataAccess.Compliments;
+﻿using MagicMirror.DataAccess.Compliments;
+using System;
 
 namespace MagicMirror.Business.Services
 {

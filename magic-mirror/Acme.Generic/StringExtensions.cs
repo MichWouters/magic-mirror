@@ -54,7 +54,6 @@ namespace Acme.Generic
                 sb.Append(" ");
             }
 
-
             for (var i = 1; i < words.Length; i++)
             {
                 string word = words[i];
