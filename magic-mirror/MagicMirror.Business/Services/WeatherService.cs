@@ -1,31 +1,26 @@
-﻿using System;
+﻿using Acme.Generic;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Entities.Weather;
-using System.Threading.Tasks;
-using Acme.Generic;
 using MagicMirror.DataAccess.Repos;
+using System;
+using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
     public class WeatherService : ServiceBase, IService<WeatherModel>
     {
-        private readonly IRepo<WeatherEntity> _repo;
+        private IRepo<WeatherEntity> _repo;
 
-        public WeatherService()
+        public async Task<WeatherModel> GetModelAsync(SearchCriteria criteria)
         {
-            var criteria = new SearchCriteria
-            {
-                City = "London"
-            };
+            // Defensive coding
+            if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
+            if (string.IsNullOrWhiteSpace(criteria.City)) throw new ArgumentException("A city has to be provided");
 
-            _repo = new WeatherRepo(criteria);
-        }
-
-        public async Task<WeatherModel> GetModelAsync()
-        {
             // Get entity from Repository.
+            _repo = new WeatherRepo(criteria);
             WeatherEntity entity = await _repo.GetEntityAsync();
 
             // Map entity to model.
@@ -39,7 +34,7 @@ namespace MagicMirror.Business.Services
 
         public WeatherModel CalculateMappedValues(WeatherModel model)
         {
-            model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, 1);
+            model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin);
             model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, 0);
 
             DateTime sunrise = DateHelper.ConvertFromUnixTimestamp(model.SunRiseMilliseconds);

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MagicMirror.Entities.Traffic;
+using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using MagicMirror.Entities.Traffic;
-using Newtonsoft.Json;
 
 namespace MagicMirror.DataAccess.Repos
 {
@@ -23,14 +23,6 @@ namespace MagicMirror.DataAccess.Repos
 
             _criteria = criteria;
             _url = $"{_apiUrl}?origin={_criteria.Start}&destination={_criteria.Destination}&key={_apiId}";
-        }
-
-        public async Task<HttpResponseMessage> GetJsonResponseAsync()
-        {
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(_url);
-
-            return response;
         }
 
         public async Task<TrafficEntity> GetEntityAsync()
@@ -56,9 +48,24 @@ namespace MagicMirror.DataAccess.Repos
             }
         }
 
-        public bool IsAbleToConnectToApi(HttpResponseMessage response)
+        public async Task<HttpResponseMessage> GetJsonResponseAsync()
         {
-            return (response.IsSuccessStatusCode) ? true : false;
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync(_url);
+
+                return response;
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidOperationException("An invalid url was provided", e);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MagicMirror.Business.Models
+﻿namespace MagicMirror.Business.Models
 {
     public class WeatherModel : Model
     {
@@ -15,6 +13,6 @@ namespace MagicMirror.Business.Models
         public string SunRise { get; set; }
         public int SunRiseMilliseconds { get; set; }
         public string SunSet { get; set; }
-        public int SunSetMilliSeconds { get; set; }              
+        public int SunSetMilliSeconds { get; set; }
     }
 }

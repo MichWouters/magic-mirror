@@ -1,31 +1,26 @@
-﻿using System;
-using MagicMirror.DataAccess.Entities;
-using System.Threading.Tasks;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.DataAccess;
-using MagicMirror.Entities.Traffic;
-using MagicMirror.Business.Models;
+using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Repos;
+using MagicMirror.Entities.Traffic;
+using System;
+using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
     public class TrafficService : ServiceBase, IService<TrafficModel>
     {
-        private readonly IRepo<TrafficEntity> _repo;
+        private IRepo<TrafficEntity> _repo;
 
-        public TrafficService()
+        public async Task<TrafficModel> GetModelAsync(SearchCriteria criteria)
         {
-            var criteria = new SearchCriteria
-            {
-                Start = "Heikant 51 3390 Houwaart",
-                Destination = "Generaal ArmstrongWeg 1 Antwerpen"
-            };
+            // Defensive coding
+            if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
+            if (string.IsNullOrWhiteSpace(criteria.Start)) throw new ArgumentException("A home address has to be provided");
+            if (string.IsNullOrWhiteSpace(criteria.Destination)) throw new ArgumentException("A destination address has to be provided");
 
-            _repo = new TrafficRepo(criteria);
-        }
-
-        public async Task<TrafficModel> GetModelAsync()
-        {
             // Get entity from repository
+            _repo = new TrafficRepo(criteria);
             TrafficEntity entity = await _repo.GetEntityAsync();
 
             // Map entity to model
@@ -54,25 +49,28 @@ namespace MagicMirror.Business.Services
 
             if (numberOfIncidents == 0)
             {
-                result = TrafficDensity.Few;
-            }
-            else if (numberOfIncidents <= 1)
-            {
-                result = TrafficDensity.Light;
-            }
-            else if(numberOfIncidents <= 2)
-            {
-                result = TrafficDensity.Medium;
+                result = TrafficDensity.Little;
             }
             else
             {
-                result = TrafficDensity.Heavy;
+                if (numberOfIncidents <= 1)
+                {
+                    result = TrafficDensity.Light;
+                }
+                else if (numberOfIncidents <= 2)
+                {
+                    result = TrafficDensity.Medium;
+                }
+                else
+                {
+                    result = TrafficDensity.Heavy;
+                }
             }
 
             return result;
         }
 
-        public TrafficModel MapEntityToModel(Entity entity)
+        private TrafficModel MapEntityToModel(Entity entity)
         {
             TrafficModel model = Mapper.Map<TrafficModel>(entity);
             return model;

@@ -5,7 +5,7 @@ namespace Acme.Generic
     public static class DateHelper
     {
         /// <summary>
-        /// Calculates a DateTime object by adding a number of seconds since 1/1/1970
+        /// Calculates a DateTime object by adding a number of seconds to 1/1/1970
         /// </summary>
         /// <param name="timestamp">The amount of seconds passed since the first of January 1970</param>
         /// <returns>DateTime</returns>

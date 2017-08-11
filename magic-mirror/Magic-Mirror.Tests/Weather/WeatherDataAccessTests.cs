@@ -1,9 +1,9 @@
 ﻿using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities.Weather;
+using MagicMirror.DataAccess.Repos;
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using MagicMirror.DataAccess.Repos;
 using Xunit;
 
 namespace MagicMirror.Tests.Weather
@@ -20,7 +20,7 @@ namespace MagicMirror.Tests.Weather
         }
 
         [Fact]
-        public async Task RetrieveJsonData()
+        public async Task Can_Retrieve_Json_Data()
         {
             // Act
             var result = await _repo.GetJsonAsync();
@@ -32,7 +32,7 @@ namespace MagicMirror.Tests.Weather
         }
 
         [Fact]
-        public async Task ConvertJsonToEntity()
+        public async Task Convert_Json_To_Entity_Success()
         {
             // Act
             var result = await _repo.GetEntityAsync();
@@ -44,7 +44,7 @@ namespace MagicMirror.Tests.Weather
         }
 
         [Fact]
-        public async Task CanConnectToApi()
+        public async Task Connect_To_Api_Success()
         {
             // Act
             var result = await _repo.GetJsonResponseAsync();
@@ -56,7 +56,7 @@ namespace MagicMirror.Tests.Weather
         }
 
         [Fact]
-        public void EmptyInputRaisesException()
+        public void Empty_Input_Raises_Exception()
         {
             // Arrange
             var exception = Record.Exception(() => new WeatherRepo(null));

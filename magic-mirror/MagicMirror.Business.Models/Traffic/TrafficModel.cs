@@ -19,6 +19,6 @@ namespace MagicMirror.Business.Models
 
     public enum TrafficDensity
     {
-        Few, Light, Medium, Heavy
+        Little, Light, Medium, Heavy
     }
 }
