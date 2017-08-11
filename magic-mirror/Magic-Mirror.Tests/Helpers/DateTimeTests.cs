@@ -1,5 +1,5 @@
-﻿using MagicMirror.Business.Helpers;
-using System;
+﻿using System;
+using Acme.Generic;
 using Xunit;
 
 namespace MagicMirror.Tests.Helpers

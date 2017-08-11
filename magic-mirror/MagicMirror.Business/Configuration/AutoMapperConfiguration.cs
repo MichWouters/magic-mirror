@@ -15,7 +15,7 @@ namespace MagicMirror.Business.Configuration
                     .ForMember(dest => dest.WeatherType, source => source.MapFrom(src => src.Weather[0].Main))
                     .ForMember(dest => dest.Icon, source => source.MapFrom(src => src.Weather[0].Icon))
                     .ForMember(dest => dest.Description, source => source.MapFrom(src => src.Weather[0].Description))
-                    .ForMember(dest => dest.DegreesKelvin, source => source.MapFrom(src => src.Main.Temp))
+                    .ForMember(dest => dest.TemperatureKelvin, source => source.MapFrom(src => src.Main.Temp))
                 .ReverseMap();
 
             CreateMap<TrafficEntity, TrafficModel>()

@@ -4,7 +4,7 @@ using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Entities.Weather;
 using System.Threading.Tasks;
-using MagicMirror.Business.Helpers;
+using Acme.Generic;
 using MagicMirror.DataAccess.Repos;
 
 namespace MagicMirror.Business.Services
@@ -39,8 +39,8 @@ namespace MagicMirror.Business.Services
 
         public WeatherModel CalculateMappedValues(WeatherModel model)
         {
-            model.DegreesCelsius = TemperatureHelper.KelvinToCelsius(model.DegreesKelvin, 1);
-            model.DegreesFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.DegreesKelvin, 0);
+            model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, 1);
+            model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, 0);
 
             DateTime sunrise = DateHelper.ConvertFromUnixTimestamp(model.SunRiseMilliseconds);
             model.SunRise = sunrise.ToString("HH:mm");
