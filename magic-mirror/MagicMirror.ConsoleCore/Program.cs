@@ -1,8 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using MagicMirror.Business.Models;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace MagicMirror.ConsoleCore
 {
@@ -10,10 +10,11 @@ namespace MagicMirror.ConsoleCore
     {
         private static IService<WeatherModel> _service;
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             SearchCriteria criteria = GatherUserInformation();
             Console.WriteLine("Crunching the numbers...");
+
             Task.Run(() => GenerateInformation(criteria));
             Console.ReadLine();
         }
@@ -30,7 +31,6 @@ namespace MagicMirror.ConsoleCore
             Console.WriteLine("Please enter your work address: ");
             string workAddress = Console.ReadLine();
 
-
             var criteria = new SearchCriteria
             {
                 UserName = user,
@@ -44,7 +44,7 @@ namespace MagicMirror.ConsoleCore
         private static async Task<WeatherModel> GenerateInformation(SearchCriteria criteria)
         {
             _service = new WeatherService();
-            WeatherModel result = await _service.GetModelAsync();
+            WeatherModel result = await _service.GetModelAsync(criteria);
 
             Console.WriteLine($"Welcome {criteria.UserName} The current top-side temperature is {result.TemperatureCelsius} degrees Celsius");
             return result;

@@ -2,7 +2,6 @@
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Dto;
 using System;
-using System.Threading.Tasks;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
@@ -30,38 +29,12 @@ namespace MagicMirror.UniversalApp.ViewModels
             MagicMirrorDto.Compliment = Compliment;
         }
 
-        public WeatherModel Weather
-        {
-            get
-            {
-                WeatherModel result = Task.Run(() => _weatherService.GetModelAsync()).Result;
-                return result;
-            }
-        }
+        public WeatherModel Weather => null;
 
-        public TrafficModel Traffic
-        {
-            get
-            {
-                TrafficModel result = Task.Run(() => _trafficService.GetModelAsync()).Result;
-                return result;
-            }
-        }
+        public TrafficModel Traffic => null;
 
-        public string Compliment
-        {
-            get
-            {
-                return "You look nice today";
-            }
-        }
+        public string Compliment => "You look nice today";
 
-        public string Time
-        {
-            get
-            {
-                return DateTime.Now.ToString("HH:mm");
-            }
-        }
+        public string Time => DateTime.Now.ToString("HH:mm");
     }
 }

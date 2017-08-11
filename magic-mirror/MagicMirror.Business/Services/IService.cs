@@ -1,5 +1,5 @@
 ﻿using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities;
+using MagicMirror.DataAccess;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
@@ -10,14 +10,7 @@ namespace MagicMirror.Business.Services
         /// Get the model without automapped and calculated fields.
         /// </summary>
         /// <returns></returns>
-        Task<T> GetModelAsync();
-
-        /// <summary>
-        /// Map an Entity object to a Model object
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        T MapEntityToModel(Entity entity);
+        Task<T> GetModelAsync(SearchCriteria criteria);
 
         /// <summary>
         /// Calculate the model's fields which cannot be resolved using Automapper.
@@ -25,7 +18,5 @@ namespace MagicMirror.Business.Services
         /// <param name="model"></param>
         /// <returns></returns>
         T CalculateMappedValues(T model);
-
-        
     }
 }

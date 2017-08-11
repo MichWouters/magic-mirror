@@ -1,9 +1,10 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.DataAccess;
-using MagicMirror.Entities.Traffic;
-using System.Threading.Tasks;
 using MagicMirror.DataAccess.Repos;
+using MagicMirror.Entities.Traffic;
+using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace MagicMirror.Tests.Traffic
@@ -12,30 +13,18 @@ namespace MagicMirror.Tests.Traffic
     {
         private readonly IRepo<TrafficEntity> _repo;
         private readonly IService<TrafficModel> _service;
+        private readonly SearchCriteria _criteria;
 
         public TrafficBusinessTests()
         {
-            SearchCriteria criteria = new SearchCriteria
+            _criteria = new SearchCriteria
             {
                 Start = "Heikant 51 339° Houwaart",
                 Destination = "Generaal Armstrongweg 1 Antwerpen"
             };
 
-            _repo = new TrafficRepo(criteria);
+            _repo = new TrafficRepo(_criteria);
             _service = new TrafficService();
-        }
-
-        [Fact]
-        public async Task Can_Map_Entity_To_Model()
-        {
-            // Arrange
-            TrafficEntity entity = await _repo.GetEntityAsync();
-
-            // Act
-            TrafficModel model = _service.MapEntityToModel(entity);
-
-            // Assert
-            Assert.NotNull(model);
         }
 
         [Fact]
@@ -45,7 +34,7 @@ namespace MagicMirror.Tests.Traffic
             TrafficEntity entity = await _repo.GetEntityAsync();
 
             // Act
-            TrafficModel model = _service.MapEntityToModel(entity);
+            TrafficModel model = await _service.GetModelAsync(_criteria);
 
             // Assert
             Assert.NotNull(model.Distance);
@@ -54,7 +43,7 @@ namespace MagicMirror.Tests.Traffic
 
             Assert.NotNull(model.Minutes);
             Assert.NotEqual(0, model.Minutes);
-            Assert.Equal(model.Minutes, entity.Routes[0].Legs[0].Duration.Value);
+            Assert.Equal(model.Minutes, entity.Routes[0].Legs[0].Duration.Value / 60);
 
             Assert.NotNull(model.MinutesText);
             Assert.NotEqual("", model.MinutesText);
@@ -64,7 +53,7 @@ namespace MagicMirror.Tests.Traffic
         [Fact]
         public void Calculated_Fields_Correct()
         {
-            // Arrange 
+            // Arrange
             TrafficModel model = new TrafficModel
             {
                 Minutes = 5400,
