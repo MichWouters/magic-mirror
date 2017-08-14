@@ -1,6 +1,5 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
-using MagicMirror.UniversalApp.Dto;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         public WeatherModel WeatherModel { get; set; }
         public TrafficModel TrafficModel { get; set; }
-
 
         public MainPageViewModel()
         {
@@ -48,7 +46,15 @@ namespace MagicMirror.UniversalApp.ViewModels
                 return result;
             }
         }
-        public TrafficModel Traffic => null;
+
+        public TrafficModel Traffic
+        {
+            get
+            {
+                TrafficModel result = Task.Run(() => _trafficService.GetModelAsync(_searchCriteria)).Result;
+                return result;
+            }
+        }
 
         private string compliment;
 
@@ -57,7 +63,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             get { return "You look awful today"; }
             set { compliment = value; }
         }
-
 
         public string Time
         {
@@ -68,6 +73,5 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
     }
 }
