@@ -16,13 +16,10 @@ namespace MagicMirror.Tests.Traffic
 
         public TrafficBusinessTests()
         {
-            _criteria = new SearchCriteria
-            {
-                Start = "Heikant 51 339° Houwaart",
-                Destination = "Generaal Armstrongweg 1 Antwerpen"
-            };
+            string start = "Heikant 51 3390 Houwaart";
+            string destination = "Generaal Armstrongweg 1 Antwerpen";
 
-            _repo = new TrafficRepo(_criteria);
+            _repo = new TrafficRepo(start, destination);
             _service = new TrafficService();
         }
 

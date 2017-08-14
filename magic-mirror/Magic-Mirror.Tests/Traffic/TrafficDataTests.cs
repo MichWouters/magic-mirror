@@ -1,5 +1,4 @@
-﻿using MagicMirror.DataAccess;
-using MagicMirror.DataAccess.Repos;
+﻿using MagicMirror.DataAccess.Repos;
 using MagicMirror.Entities.Traffic;
 using System;
 using System.Net;
@@ -14,13 +13,10 @@ namespace MagicMirror.Tests.Traffic
 
         public TrafficDataTests()
         {
-            var criteria = new SearchCriteria
-            {
-                Start = "Heikant 51 Houwaart Belgium",
-                Destination = "Earl Bakkenstraat 10, 6422 PJ Heerlen, Netherlands"
-            };
+            string start = "Heikant 51 Houwaart Belgium";
+            string destination = "Earl Bakkenstraat 10, 6422 PJ Heerlen, Netherlands";
 
-            _repo = new TrafficRepo(criteria);
+            _repo = new TrafficRepo(start, destination);
         }
 
         [Fact]
@@ -63,25 +59,22 @@ namespace MagicMirror.Tests.Traffic
         [Fact]
         public void Empty_Input_Throws_Exception()
         {
-            AssertEmptyInput(null, typeof(NullReferenceException));
+            AssertEmptyInput(null, null, typeof(NullReferenceException));
 
-            var criteria = new SearchCriteria();
-            AssertEmptyInput(criteria, typeof(ArgumentException));
+            string start = "";
+            string destination = "London";
+            AssertEmptyInput(start, destination, typeof(ArgumentNullException));
 
-            criteria.Start = "";
-            criteria.Destination = "London";
-            AssertEmptyInput(criteria, typeof(ArgumentException));
-
-            criteria.Start = "London";
-            criteria.Destination = "";
-            AssertEmptyInput(criteria, typeof(ArgumentException));
+            start = "London";
+            destination = "";
+            AssertEmptyInput(start, destination, typeof(ArgumentNullException));
         }
 
-        private void AssertEmptyInput(SearchCriteria criteria, Type type)
+        private void AssertEmptyInput(string start, string destination, Type type)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
 
-            Exception exception = Record.Exception(() => new TrafficRepo(criteria));
+            Exception exception = Record.Exception(() => new TrafficRepo(start, destination));
             Assert.NotNull(exception);
             Assert.IsType(type, exception);
         }

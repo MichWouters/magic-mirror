@@ -1,4 +1,4 @@
-﻿namespace MagicMirror.DataAccess
+﻿namespace MagicMirror.Business.Models
 {
     /// <summary>
     /// Generic helper class to pass search parameters from the business to the data-layer.
@@ -6,6 +6,7 @@
     public class SearchCriteria
     {
         public string UserName { get; set; }
+
         public string City { get; set; }
 
         public string Start { get; set; }

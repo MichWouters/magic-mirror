@@ -2,19 +2,25 @@
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Dto;
 using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
-    public class MainPageViewModel
+    public class MainPageViewModel : INotifyPropertyChanged
     {
         private readonly IService<WeatherModel> _weatherService;
         private readonly IService<TrafficModel> _trafficService;
+        private SearchCriteria _searchCriteria;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public MagicMirrorDto MagicMirrorDto { get; set; }
 
         public MainPageViewModel()
         {
-            MagicMirrorDto = new MagicMirrorDto();
+            _searchCriteria = new SearchCriteria();
+
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
 
@@ -29,11 +35,17 @@ namespace MagicMirror.UniversalApp.ViewModels
             MagicMirrorDto.Compliment = Compliment;
         }
 
-        public WeatherModel Weather => null;
-
+        public WeatherModel Weather
+        {
+            get
+            {
+                WeatherModel result = Task.Run(() => _weatherService.GetModelAsync(_searchCriteria)).Result;
+                return result;
+            }
+        }
         public TrafficModel Traffic => null;
 
-        public string Compliment => "You look nice today";
+        public string Compliment => "You look awful today";
 
         public string Time => DateTime.Now.ToString("HH:mm");
     }

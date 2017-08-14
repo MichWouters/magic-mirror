@@ -12,17 +12,13 @@ namespace MagicMirror.DataAccess.Repos
         private readonly string _apiUrl = DataAccessConfig.TrafficApiUrl;
 
         private readonly string _url;
-        private readonly SearchCriteria _criteria;
 
-        public TrafficRepo(SearchCriteria criteria)
+        public TrafficRepo(string start, string destination)
         {
-            if (criteria == null)
-                throw new NullReferenceException("Criteria cannot be empty");
-            if (string.IsNullOrWhiteSpace(criteria.Start) || string.IsNullOrWhiteSpace(criteria.Destination))
+            if (string.IsNullOrWhiteSpace(start) || string.IsNullOrWhiteSpace(destination))
                 throw new ArgumentNullException("Start and destination addresses need to be provided");
 
-            _criteria = criteria;
-            _url = $"{_apiUrl}?origin={_criteria.Start}&destination={_criteria.Destination}&key={_apiId}";
+            _url = $"{_apiUrl}?origin={start}&destination={destination}&key={_apiId}";
         }
 
         public async Task<TrafficEntity> GetEntityAsync()
