@@ -4,4 +4,8 @@
     <TargetFramework>netstandard1.4</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Acme.Generic\Acme.Generic.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -12,9 +12,6 @@ namespace MagicMirror.UniversalApp.ViewModels
         private readonly IService<TrafficModel> _trafficService;
         private SearchCriteria _searchCriteria;
 
-        public WeatherModel WeatherModel { get; set; }
-        public TrafficModel TrafficModel { get; set; }
-
         public MainPageViewModel()
         {
             _searchCriteria = new SearchCriteria
@@ -27,15 +24,6 @@ namespace MagicMirror.UniversalApp.ViewModels
 
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
-
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            this.WeatherModel = Weather;
-            this.TrafficModel = Traffic;
-            this.Compliment = Compliment;
         }
 
         public WeatherModel Weather
@@ -54,6 +42,11 @@ namespace MagicMirror.UniversalApp.ViewModels
                 TrafficModel result = Task.Run(() => _trafficService.GetModelAsync(_searchCriteria)).Result;
                 return result;
             }
+        }
+
+        public DateModel Date
+        {
+            get { return new DateModel(); }
         }
 
         private string compliment;

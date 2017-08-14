@@ -73,9 +73,9 @@ namespace Acme.Generic
         /// </summary>
         /// <param name="day"></param>
         /// <returns></returns>
-        public static string ToShortDayNotation(this string day)
+        public static string ToShortDayNotation(this DayOfWeek day)
         {
-            string shortDay = day.Substring(0, 3);
+            string shortDay = day.ToString().Substring(0, 3);
             return shortDay;
         }
     }
