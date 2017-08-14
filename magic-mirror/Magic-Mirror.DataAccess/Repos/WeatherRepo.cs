@@ -17,7 +17,7 @@ namespace MagicMirror.DataAccess.Repos
         public WeatherRepo(SearchCriteria criteria)
         {
             if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
-            if (string.IsNullOrWhiteSpace(criteria.City)) throw new ArgumentException("A city has to be provided");
+            if (string.IsNullOrWhiteSpace(criteria.City)) throw new ArgumentNullException("A home city has to be provided");
 
             _url = string.Format("{0}/weather?q={1}&appid={2}", _apiUrl, criteria.City, _apiId);
         }
