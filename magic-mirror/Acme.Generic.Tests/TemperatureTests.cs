@@ -1,7 +1,6 @@
-﻿using Acme.Generic;
-using Xunit;
+﻿using Xunit;
 
-namespace MagicMirror.Tests.Helpers
+namespace Acme.Generic.Tests
 {
     public class TemperatureTests
     {
