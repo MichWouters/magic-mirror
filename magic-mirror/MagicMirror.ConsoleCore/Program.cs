@@ -13,13 +13,24 @@ namespace MagicMirror.ConsoleCore
 
         public static void Main(string[] args)
         {
-            SearchCriteria criteria = GatherUserInformation();
-            Console.WriteLine("Crunching the numbers...");
-            Console.WriteLine();
+            try
+            {
+                SearchCriteria criteria = GatherUserInformation();
+                Console.WriteLine("Crunching the numbers...");
+                Console.WriteLine();
 
-            MagicMirrorDto dto = Task.Run(() => GenerateDto(criteria)).Result;
-            OutputData(dto);
-            Console.ReadLine();
+                MagicMirrorDto dto = Task.Run(() => GenerateDto(criteria)).Result;
+                OutputData(dto);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                Console.WriteLine("Press any key to exit.");
+                Console.ReadLine();
+            }
         }
 
         private static SearchCriteria GatherUserInformation()
@@ -50,29 +61,21 @@ namespace MagicMirror.ConsoleCore
 
         private static async Task<MagicMirrorDto> GenerateDto(SearchCriteria criteria)
         {
-            try
-            {
-                _weatherService = new WeatherService();
-                _trafficService = new TrafficService();
-                WeatherModel weatherModel = await _weatherService.GetModelAsync(criteria);
-                TrafficModel trafficModel = await _trafficService.GetModelAsync(criteria);
+            _weatherService = new WeatherService();
+            _trafficService = new TrafficService();
+            WeatherModel weatherModel = await _weatherService.GetModelAsync(criteria);
+            TrafficModel trafficModel = await _trafficService.GetModelAsync(criteria);
 
-                var dto = new MagicMirrorDto
-                {
-                    UserName = criteria.UserName,
-                    DegreesCelsius = weatherModel.TemperatureCelsius,
-                    TravelTime = trafficModel.MinutesText,
-                    TrafficDensity = trafficModel.TrafficDensity,
-                    WeatherType = weatherModel.WeatherType
-                };
-
-                return dto;
-            }
-            catch (Exception e)
+            var dto = new MagicMirrorDto
             {
-                Console.WriteLine(e);
-                throw;
-            }
+                UserName = criteria.UserName,
+                DegreesCelsius = weatherModel.TemperatureCelsius,
+                TravelTime = trafficModel.MinutesText,
+                TrafficDensity = trafficModel.TrafficDensity,
+                WeatherType = weatherModel.WeatherType
+            };
+
+            return dto;
         }
 
         private static void OutputData(MagicMirrorDto dto)
