@@ -32,39 +32,7 @@ namespace MagicMirror.UniversalApp.Dto
 
         private string _time;
 
-        public string Time
-        {
-            get { return _time; }
-            set
-            {
-                _time = value;
-                OnPropertyChanged(nameof(Time));
-            }
-        }
-
-        private string _compliment;
-
-        public string Compliment
-        {
-            get { return _compliment; }
-            set
-            {
-                _compliment = value;
-                OnPropertyChanged(nameof(Compliment));
-            }
-        }
-
-        private string _date;
-
-        public string Date
-        {
-            get { return _date; }
-            set
-            {
-                _date = value;
-                OnPropertyChanged(nameof(Date));
-            }
-        }
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
 

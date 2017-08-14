@@ -1,4 +1,5 @@
-﻿using MagicMirror.Entities.Traffic;
+﻿using MagicMirror.DataAccess.Configuration;
+using MagicMirror.Entities.Traffic;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;

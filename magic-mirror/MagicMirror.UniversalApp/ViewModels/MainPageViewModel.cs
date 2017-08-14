@@ -13,13 +13,19 @@ namespace MagicMirror.UniversalApp.ViewModels
         private readonly IService<TrafficModel> _trafficService;
         private SearchCriteria _searchCriteria;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public WeatherModel WeatherModel { get; set; }
+        public TrafficModel TrafficModel { get; set; }
 
-        public MagicMirrorDto MagicMirrorDto { get; set; }
 
         public MainPageViewModel()
         {
-            _searchCriteria = new SearchCriteria();
+            _searchCriteria = new SearchCriteria
+            {
+                City = "Houwaart",
+                Destination = "Generaal ArmstrongWeg 1, Antwerpen",
+                Start = "Heikant 51 Houwaart",
+                UserName = "Michiel"
+            };
 
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
@@ -29,10 +35,9 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private void Initialize()
         {
-            MagicMirrorDto.WeatherModel = Weather;
-            MagicMirrorDto.TrafficModel = Traffic;
-            MagicMirrorDto.Time = Time;
-            MagicMirrorDto.Compliment = Compliment;
+            this.WeatherModel = Weather;
+            this.TrafficModel = Traffic;
+            this.Compliment = Compliment;
         }
 
         public WeatherModel Weather
@@ -45,8 +50,24 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
         public TrafficModel Traffic => null;
 
-        public string Compliment => "You look awful today";
+        private string compliment;
 
-        public string Time => DateTime.Now.ToString("HH:mm");
+        public string Compliment
+        {
+            get { return "You look awful today"; }
+            set { compliment = value; }
+        }
+
+
+        public string Time
+        {
+            get
+            {
+                return DateTime.Now.ToString("HH:mm");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
     }
 }

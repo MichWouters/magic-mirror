@@ -1,4 +1,5 @@
-﻿using MagicMirror.DataAccess.Entities.Weather;
+﻿using MagicMirror.DataAccess.Configuration;
+using MagicMirror.DataAccess.Entities.Weather;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
