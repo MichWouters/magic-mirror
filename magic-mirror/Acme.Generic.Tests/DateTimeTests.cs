@@ -1,8 +1,7 @@
-﻿using Acme.Generic;
-using System;
+﻿using System;
 using Xunit;
 
-namespace MagicMirror.Tests.Helpers
+namespace Acme.Generic.Tests
 {
     public class DateTimeTests
     {

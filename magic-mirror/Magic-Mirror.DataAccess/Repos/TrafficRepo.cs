@@ -19,7 +19,7 @@ namespace MagicMirror.DataAccess.Repos
             if (criteria == null)
                 throw new NullReferenceException("Criteria cannot be empty");
             if (string.IsNullOrWhiteSpace(criteria.Start) || string.IsNullOrWhiteSpace(criteria.Destination))
-                throw new ArgumentException("Start and destination addresses need to be provided");
+                throw new ArgumentNullException("Start and destination addresses need to be provided");
 
             _criteria = criteria;
             _url = $"{_apiUrl}?origin={_criteria.Start}&destination={_criteria.Destination}&key={_apiId}";
