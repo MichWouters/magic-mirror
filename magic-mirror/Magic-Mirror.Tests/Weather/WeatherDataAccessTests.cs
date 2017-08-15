@@ -1,7 +1,5 @@
-﻿using MagicMirror.DataAccess;
-using MagicMirror.DataAccess.Entities.Weather;
+﻿using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Repos;
-using System;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
@@ -11,12 +9,10 @@ namespace MagicMirror.Tests.Weather
     public class WeatherDataAccessTests
     {
         private readonly IRepo<WeatherEntity> _repo;
-        private readonly SearchCriteria _criteria;
 
         public WeatherDataAccessTests()
         {
-            _criteria = new SearchCriteria { City = "London" };
-            _repo = new WeatherRepo(_criteria);
+            _repo = new WeatherRepo("London");
         }
 
         [Fact]
@@ -39,7 +35,7 @@ namespace MagicMirror.Tests.Weather
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(result.Name.ToLower().Trim(), _criteria.City.ToLower().Trim());
+            Assert.Equal(result.Name.ToLower().Trim(), "london");
             Assert.IsType<WeatherEntity>(result);
         }
 
@@ -53,21 +49,6 @@ namespace MagicMirror.Tests.Weather
             Assert.NotNull(result);
             Assert.True(result.IsSuccessStatusCode);
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
-        }
-
-        [Fact]
-        public void Empty_Input_Raises_Exception()
-        {
-            // Arrange
-            var exception = Record.Exception(() => new WeatherRepo(null));
-            var exception2 = Record.Exception(() => new WeatherRepo(new SearchCriteria()));
-
-            // Assert
-            Assert.NotNull(exception);
-            Assert.IsType(typeof(ArgumentNullException), exception);
-
-            Assert.NotNull(exception2);
-            Assert.IsType(typeof(ArgumentException), exception2);
         }
     }
 }

@@ -1,22 +1,16 @@
-﻿using Windows.UI.Xaml.Controls;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+﻿using MagicMirror.UniversalApp.ViewModels;
+using Windows.UI.Xaml.Controls;
 
 namespace MagicMirror.UniversalApp.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class MainPage
+    public sealed partial class MainPage : Page
     {
+        public MainPageViewModel ViewModel { get; } = new MainPageViewModel();
+
         public MainPage()
         {
-            this.InitializeComponent();
-        }
-
-        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(SettingPage));
+            DataContext = ViewModel;
+            InitializeComponent();
         }
     }
 }

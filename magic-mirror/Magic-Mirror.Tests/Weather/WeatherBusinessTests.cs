@@ -1,7 +1,5 @@
-﻿using System;
-using MagicMirror.Business.Models;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
-using MagicMirror.DataAccess;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -57,7 +55,6 @@ namespace MagicMirror.Tests.Weather
             Assert.Equal(-173.15, model.TemperatureCelsius);
             Assert.Equal(-279, model.TemperatureFahrenheit);
             Assert.Equal(100, model.TemperatureKelvin);
-
         }
     }
 }

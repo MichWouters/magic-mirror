@@ -15,6 +15,14 @@ namespace MagicMirror.Business.Models
         public DateTime HourOfArrival { get; set; }
 
         public TrafficDensity TrafficDensity { get; set; }
+
+        public string Summary
+        {
+            get
+            {
+                return $"{ Minutes } minutes ( including { TrafficDensity } traffic).";
+            }
+        }
     }
 
     public enum TrafficDensity

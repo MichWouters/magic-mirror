@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="DataAccessConfig.Designer.cs">
+    <Compile Update="Configuration\DataAccessConfig.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DataAccessConfig.resx</DependentUpon>
@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="DataAccessConfig.resx">
+    <EmbeddedResource Update="Configuration\DataAccessConfig.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DataAccessConfig.Designer.cs</LastGenOutput>
     </EmbeddedResource>

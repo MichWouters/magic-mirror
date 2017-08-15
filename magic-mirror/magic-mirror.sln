@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.DataAccess", "Magic-Mirror.DataAccess\MagicMirror.DataAccess.csproj", "{61B61B9C-649D-4C21-8D9B-F60905372A2D}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.Business", "Mag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.Business.Models", "MagicMirror.Business.Models\MagicMirror.Business.Models.csproj", "{6C1D40E7-E7DB-4C2A-ADC9-E6FDD4028C0B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontEnd", "FrontEnd", "{6914469F-1502-4552-BBA2-A06B184B22FE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PresentationLayer", "PresentationLayer", "{6914469F-1502-4552-BBA2-A06B184B22FE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BusinessLayer", "BusinessLayer", "{219B8BBE-B96E-4560-94FE-120C9C2ED1A8}"
 EndProject
@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{C760
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.ConsoleCore", "MagicMirror.ConsoleCore\MagicMirror.ConsoleCore.csproj", "{0C591037-F4E4-4707-8456-FE6E067EA40B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.Generic.Tests", "Acme.Generic.Tests\Acme.Generic.Tests.csproj", "{8588F6D2-627A-4D14-8A43-F4809C89F0E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.Generic.Tests", "Acme.Generic.Tests\Acme.Generic.Tests.csproj", "{8588F6D2-627A-4D14-8A43-F4809C89F0E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -205,5 +205,8 @@ Global
 		{230DEDBB-0D31-4DE4-A8AC-9F871F023A8F} = {219B8BBE-B96E-4560-94FE-120C9C2ED1A8}
 		{0C591037-F4E4-4707-8456-FE6E067EA40B} = {6914469F-1502-4552-BBA2-A06B184B22FE}
 		{8588F6D2-627A-4D14-8A43-F4809C89F0E1} = {C76044E1-B2F3-45E0-8A01-2EB81247E47F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB5F4222-80B3-4AC4-88C4-1102A60FA675}
 	EndGlobalSection
 EndGlobal

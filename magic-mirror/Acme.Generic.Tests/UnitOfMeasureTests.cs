@@ -9,7 +9,7 @@ namespace Acme.Generic.Tests
         {
             // Arrange
             double[] inputs = { 1, 25, 37.33 };
-            double[] expectedValues = {1.61, 40.23, 60.08 };
+            double[] expectedValues = { 1.61, 40.23, 60.08 };
 
             for (int i = 0; i < inputs.Length; i++)
             {
@@ -37,6 +37,5 @@ namespace Acme.Generic.Tests
                 Assert.Equal(result, expectedValues[i]);
             }
         }
-
     }
 }

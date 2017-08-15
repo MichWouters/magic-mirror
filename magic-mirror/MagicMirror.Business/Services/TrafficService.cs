@@ -1,5 +1,4 @@
 ﻿using MagicMirror.Business.Models;
-using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Repos;
 using MagicMirror.Entities.Traffic;
@@ -20,7 +19,7 @@ namespace MagicMirror.Business.Services
             if (string.IsNullOrWhiteSpace(criteria.Destination)) throw new ArgumentException("A destination address has to be provided");
 
             // Get entity from repository
-            _repo = new TrafficRepo(criteria);
+            _repo = new TrafficRepo(criteria.Start, criteria.Destination);
             TrafficEntity entity = await _repo.GetEntityAsync();
 
             // Map entity to model

@@ -1,6 +1,5 @@
 ﻿using Acme.Generic;
 using MagicMirror.Business.Models;
-using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Repos;
@@ -20,7 +19,7 @@ namespace MagicMirror.Business.Services
             if (string.IsNullOrWhiteSpace(criteria.City)) throw new ArgumentException("A city has to be provided");
 
             // Get entity from Repository.
-            _repo = new WeatherRepo(criteria);
+            _repo = new WeatherRepo(criteria.City);
             WeatherEntity entity = await _repo.GetEntityAsync();
 
             // Map entity to model.

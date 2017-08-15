@@ -1,4 +1,5 @@
-﻿using MagicMirror.DataAccess.Entities.Weather;
+﻿using MagicMirror.DataAccess.Configuration;
+using MagicMirror.DataAccess.Entities.Weather;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -14,12 +15,12 @@ namespace MagicMirror.DataAccess.Repos
 
         private HttpResponseMessage _response;
 
-        public WeatherRepo(SearchCriteria criteria)
+        public WeatherRepo(string city)
         {
-            if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
-            if (string.IsNullOrWhiteSpace(criteria.City)) throw new ArgumentNullException("A home city has to be provided");
+            if (string.IsNullOrWhiteSpace(city))
+                throw new ArgumentNullException("A home city has to be provided");
 
-            _url = string.Format("{0}/weather?q={1}&appid={2}", _apiUrl, criteria.City, _apiId);
+            _url = string.Format("{0}/weather?q={1}&appid={2}", _apiUrl, city, _apiId);
         }
 
         public async Task<WeatherEntity> GetEntityAsync()

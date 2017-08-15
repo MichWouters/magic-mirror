@@ -1,7 +1,5 @@
-﻿using MagicMirror.DataAccess;
-using MagicMirror.DataAccess.Repos;
+﻿using MagicMirror.DataAccess.Repos;
 using MagicMirror.Entities.Traffic;
-using System;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
@@ -14,13 +12,10 @@ namespace MagicMirror.Tests.Traffic
 
         public TrafficDataTests()
         {
-            var criteria = new SearchCriteria
-            {
-                Start = "Heikant 51 Houwaart Belgium",
-                Destination = "Earl Bakkenstraat 10, 6422 PJ Heerlen, Netherlands"
-            };
+            string start = "Heikant 51 Houwaart Belgium";
+            string destination = "Earl Bakkenstraat 10, 6422 PJ Heerlen, Netherlands";
 
-            _repo = new TrafficRepo(criteria);
+            _repo = new TrafficRepo(start, destination);
         }
 
         [Fact]
@@ -58,32 +53,6 @@ namespace MagicMirror.Tests.Traffic
             Assert.NotEqual(0, result.Routes.Count);
             Assert.NotNull(result.Routes[0].Legs[0].Duration);
             Assert.NotEqual(0, result.Routes[0].Legs[0].Duration.Value);
-        }
-
-        [Fact]
-        public void Empty_Input_Throws_Exception()
-        {
-            AssertEmptyInput(null, typeof(NullReferenceException));
-
-            var criteria = new SearchCriteria();
-            AssertEmptyInput(criteria, typeof(ArgumentException));
-
-            criteria.Start = "";
-            criteria.Destination = "London";
-            AssertEmptyInput(criteria, typeof(ArgumentException));
-
-            criteria.Start = "London";
-            criteria.Destination = "";
-            AssertEmptyInput(criteria, typeof(ArgumentException));
-        }
-
-        private void AssertEmptyInput(SearchCriteria criteria, Type type)
-        {
-            if (type == null) throw new ArgumentNullException(nameof(type));
-
-            Exception exception = Record.Exception(() => new TrafficRepo(criteria));
-            Assert.NotNull(exception);
-            Assert.IsType(type, exception);
         }
     }
 }
