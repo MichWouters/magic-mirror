@@ -1,4 +1,5 @@
-﻿using MagicMirror.Business.Models;
+﻿using Acme.Generic;
+using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Repos;
 using MagicMirror.Entities.Traffic;
@@ -10,16 +11,22 @@ namespace MagicMirror.Business.Services
     public class TrafficService : ServiceBase, IService<TrafficModel>
     {
         private IRepo<TrafficEntity> _repo;
+        private SearchCriteria _criteria;
 
-        public async Task<TrafficModel> GetModelAsync(SearchCriteria criteria)
+        public TrafficService(SearchCriteria criteria)
         {
             // Defensive coding
             if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
             if (string.IsNullOrWhiteSpace(criteria.HomeAddress)) throw new ArgumentException("A home address has to be provided");
             if (string.IsNullOrWhiteSpace(criteria.WorkAddress)) throw new ArgumentException("A destination address has to be provided");
 
+            _criteria = criteria;
+        }
+        public async Task<TrafficModel> GetModelAsync()
+        {
             // Get entity from repository
-            _repo = new TrafficRepo(criteria.HomeAddress, criteria.WorkAddress);
+            string homeAddress = $"{_criteria.HomeAddress} {_criteria.HomeCity}";
+            _repo = new TrafficRepo(homeAddress, _criteria.WorkAddress);
             TrafficEntity entity = await _repo.GetEntityAsync();
 
             // Map entity to model
@@ -36,6 +43,11 @@ namespace MagicMirror.Business.Services
             model.Minutes = (model.Minutes / 60);
             model.TrafficDensity = CalculateTrafficDensity(model.NumberOfIncidents);
             model.HourOfArrival = DateTime.Now.AddMinutes(model.Minutes);
+
+            if(_criteria.DistanceUOM == DistanceUOM.Imperial)
+            {
+                model.Distance = UnitOfMeasureHelper.KiloMetersToMiles(model.Distance, _criteria.Precision);
+            }
 
             return model;
         }

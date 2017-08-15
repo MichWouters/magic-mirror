@@ -29,8 +29,8 @@ namespace MagicMirror.UniversalApp.ViewModels
             _searchCriteria = appReference.Criteria;
 
             _commonService = new CommonService();
-            _weatherService = new WeatherService();
-            _trafficService = new TrafficService();
+            _weatherService = new WeatherService(_searchCriteria);
+            _trafficService = new TrafficService(_searchCriteria);
 
             Initialize();
             SetRefreshTimers();
