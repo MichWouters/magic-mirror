@@ -7,8 +7,6 @@ namespace MagicMirror.UniversalApp.Views
         public SettingPage()
         {
             InitializeComponent();
-            var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-            var str = loader.GetString("Name");
         }
     }
 }
