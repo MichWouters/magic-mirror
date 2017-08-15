@@ -25,10 +25,18 @@
                 OnContent="Light theme"
                 RelativePanel.AlignLeftWithPanel="True"/>
 
+        <TextBox x:Name="UserNameTextBox"
+                 HorizontalAlignment="Left"
+                 Header="User Name" 
+                 RelativePanel.AlignLeftWithPanel="True"
+                 RelativePanel.Below="ThemeSwitch"
+                 Text="{x:Bind ViewModel.SearchCriteria.UserName, Mode=TwoWay}" />
+
         <TextBox x:Name="BusyTextTextBox"
                      HorizontalAlignment="Left"
-                     Header="Busy text" RelativePanel.AlignLeftWithPanel="True"
-                     RelativePanel.Below="ThemeSwitch"
+                     Header="Busy text" 
+                 RelativePanel.AlignLeftWithPanel="True"
+                     RelativePanel.Below="UserNameTextBox"
                      Text="Loading..."/>
 
         <Button x:Name="BusyButton" 

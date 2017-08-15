@@ -2,9 +2,12 @@
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using MagicMirror.Business.Models;
+using MagicMirror.UniversalApp.Strings;
 
 namespace MagicMirror.UniversalApp
 {
@@ -13,15 +16,44 @@ namespace MagicMirror.UniversalApp
     /// </summary>
     sealed partial class App
     {
+        public SearchCriteria Criteria;
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
+            SetDefaults();
+            CreateSearchCriteriaSingleton();
         }
+
+        private void SetDefaults()
+        {
+            localSettings.Values[Settings.UserName] = "Michiel";
+            localSettings.Values[Settings.HomeAddress] = "Heikant 51";
+            localSettings.Values[Settings.HomeTown] = "Houwaart";
+            localSettings.Values[Settings.WorkAddress] = "Earl Bakkenstraat 10, Heerlen";
+        }
+
+        public SearchCriteria CreateSearchCriteriaSingleton()
+        {
+            if (Criteria == null)
+            {
+                Criteria = new SearchCriteria
+                {
+                    UserName = localSettings.Values[Settings.UserName].ToString(),
+                    HomeAddress = localSettings.Values[Settings.HomeAddress].ToString(),
+                    WorkAddress = localSettings.Values[Settings.WorkAddress].ToString(),
+                    HomeCity = localSettings.Values[Settings.HomeTown].ToString(),
+                };
+            }
+            return Criteria;
+        }
+
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
