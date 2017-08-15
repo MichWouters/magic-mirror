@@ -9,8 +9,8 @@ namespace MagicMirror.UniversalApp.Views
 
         public MainPage()
         {
-            this.DataContext = ViewModel;
-            this.InitializeComponent();
+            DataContext = ViewModel;
+            InitializeComponent();
         }
     }
 }

@@ -52,20 +52,5 @@ namespace MagicMirror.Tests.Weather
             Assert.True(result.IsSuccessStatusCode);
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
         }
-
-        [Fact]
-        public void Empty_Input_Raises_Exception()
-        {
-            // Arrange
-            var exception = Record.Exception(() => new WeatherRepo(null));
-            var exception2 = Record.Exception(() => new WeatherRepo(""));
-
-            // Assert
-            Assert.NotNull(exception);
-            Assert.IsType(typeof(ArgumentNullException), exception);
-
-            Assert.NotNull(exception2);
-            Assert.IsType(typeof(ArgumentException), exception2);
-        }
     }
 }

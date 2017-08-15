@@ -8,10 +8,6 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <Style x:Key="Foo" TargetType="RelativePanel">
-            <Setter Property="Padding" Value="10" />
-        </Style>
-
         <Style x:Key="WeatherType" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#FDF7C500" />
             <Setter Property="FontStyle" Value="Italic" />
@@ -86,7 +82,7 @@
             x:Name="SunriseTextBox"
             RelativePanel.AlignVerticalCenterWith="SunriseImage"
             RelativePanel.RightOf="SunriseImage"
-            Text="{x:Bind ViewModel.Weather.SunRise, FallbackValue='6:35 am'}" />
+            Text="{x:Bind ViewModel.Weather.SunRise, FallbackValue='0:00 am'}" />
 
         <Image
             x:Name="SunSetImage"
@@ -98,7 +94,7 @@
             x:Name="SunsetTextBox"
             RelativePanel.AlignVerticalCenterWith="SunSetImage"
             RelativePanel.RightOf="SunSetImage"
-            Text="{x:Bind ViewModel.Weather.SunSet, FallbackValue='19:35 am'}" />
+            Text="{x:Bind ViewModel.Weather.SunSet, FallbackValue='00:00 am'}" />
 
         <!--  Bottom of the page  -->
         <TextBlock
@@ -146,7 +142,9 @@
             FontSize="48"
             RelativePanel.AlignRightWithPanel="True"
             RelativePanel.Below="DateTextBlock"
-            Text="{x:Bind ViewModel.Date.Time, FallbackValue='00:00 am'}" />
+            Text="{Binding ViewModel.Time, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, FallbackValue='5:22 pm'}"
+            />
+
         <Button
             Content="Button"
             RelativePanel.Below="SunSetImage" />

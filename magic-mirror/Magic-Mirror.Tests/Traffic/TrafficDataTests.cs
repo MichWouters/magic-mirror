@@ -55,28 +55,5 @@ namespace MagicMirror.Tests.Traffic
             Assert.NotNull(result.Routes[0].Legs[0].Duration);
             Assert.NotEqual(0, result.Routes[0].Legs[0].Duration.Value);
         }
-
-        [Fact]
-        public void Empty_Input_Throws_Exception()
-        {
-            AssertEmptyInput(null, null, typeof(NullReferenceException));
-
-            string start = "";
-            string destination = "London";
-            AssertEmptyInput(start, destination, typeof(ArgumentNullException));
-
-            start = "London";
-            destination = "";
-            AssertEmptyInput(start, destination, typeof(ArgumentNullException));
-        }
-
-        private void AssertEmptyInput(string start, string destination, Type type)
-        {
-            if (type == null) throw new ArgumentNullException(nameof(type));
-
-            Exception exception = Record.Exception(() => new TrafficRepo(start, destination));
-            Assert.NotNull(exception);
-            Assert.IsType(type, exception);
-        }
     }
 }

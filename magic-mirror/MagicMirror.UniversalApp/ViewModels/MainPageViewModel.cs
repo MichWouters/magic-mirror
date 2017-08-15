@@ -2,7 +2,11 @@
 using MagicMirror.Business.Services;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
@@ -10,7 +14,7 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         private readonly IService<WeatherModel> _weatherService;
         private readonly IService<TrafficModel> _trafficService;
-        private SearchCriteria _searchCriteria;
+        private readonly SearchCriteria _searchCriteria;
 
         public MainPageViewModel()
         {
@@ -21,48 +25,84 @@ namespace MagicMirror.UniversalApp.ViewModels
                 Start = "Heikant 51 Houwaart",
                 UserName = "Michiel"
             };
-
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
+            SetRefreshTimers();
         }
+
+        private void SetRefreshTimers()
+        {
+            var autoEvent = new AutoResetEvent(false);
+
+            Timer timeTimer = new Timer(RefreshTime, autoEvent, 1000, 1000);
+            //Timer weatherTimer = new Timer(RefreshWeatherModel, autoEvent, 1000, 10000);
+            //Timer trafficTimer = new Timer(RefreshTrafficModel, autoEvent, 1000, 10000);
+        }
+
+        private void RefreshWeatherModel(object state)
+        {
+            Task.Run(() =>
+            {
+                WeatherModel result = Task.Run(() => _weatherService.GetModelAsync(_searchCriteria)).Result;
+                Weather = result;
+            });
+        }
+
+        private void RefreshTrafficModel(object state)
+        {
+            TrafficModel result = Task.Run(() => _trafficService.GetModelAsync(_searchCriteria)).Result;
+            Traffic = result;
+        }
+
+        private void RefreshTime(object state)
+        {
+            Time = DateTime.Now.ToString("HH:mm:ss");
+        }
+
+        private WeatherModel _weather;
 
         public WeatherModel Weather
         {
-            get
+            get => _weather;
+            set
             {
-                WeatherModel result = Task.Run(() => _weatherService.GetModelAsync(_searchCriteria)).Result;
-                return result;
+                _weather = value;
+                OnPropertyChanged();
             }
         }
+
+        private TrafficModel _traffic;
 
         public TrafficModel Traffic
         {
-            get
+            get => _traffic;
+            set
             {
-                TrafficModel result = Task.Run(() => _trafficService.GetModelAsync(_searchCriteria)).Result;
-                return result;
+                _traffic = value;
+                OnPropertyChanged();
             }
         }
 
-        public DateModel Date
-        {
-            get { return new DateModel(); }
-        }
+        public DateModel Date => new DateModel();
 
-        private string compliment;
-
-        public string Compliment
-        {
-            get { return "You look awful today"; }
-            set { compliment = value; }
-        }
+        private string _time;
 
         public string Time
         {
-            get
+            get => DateTime.Now.ToString("HH:mm:ss");
+            set
             {
-                return DateTime.Now.ToString("HH:mm");
+                _time = value;
+                OnPropertyChanged();
             }
+        }
+
+
+        public string Compliment => "You look awful today";
+
+        public void OnPropertyChanged([CallerMemberName] string property = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

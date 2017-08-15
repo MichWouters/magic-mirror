@@ -1,6 +1,5 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
-using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Repos;
 using MagicMirror.Entities.Traffic;
 using System.Threading.Tasks;
@@ -16,10 +15,13 @@ namespace MagicMirror.Tests.Traffic
 
         public TrafficBusinessTests()
         {
-            string start = "Heikant 51 3390 Houwaart";
-            string destination = "Generaal Armstrongweg 1 Antwerpen";
+            _criteria = new SearchCriteria()
+            {
+                Start = "Heikant 51 3390 Houwaart",
+                Destination = "Generaal Armstrongweg 1 Antwerpen",
+            };
 
-            _repo = new TrafficRepo(start, destination);
+            _repo = new TrafficRepo(_criteria.Start, _criteria.Destination);
             _service = new TrafficService();
         }
 
