@@ -3,7 +3,6 @@ using MagicMirror.Business.Services;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
@@ -13,6 +12,7 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         private readonly IService<WeatherModel> _weatherService;
         private readonly IService<TrafficModel> _trafficService;
+        private readonly CommonService _commonService;
         private readonly SearchCriteria _searchCriteria;
 
         public MainPageViewModel()
@@ -24,6 +24,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 Start = "Heikant 51 Houwaart",
                 UserName = "Michiel"
             };
+            _commonService = new CommonService();
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
             Initialize();
@@ -33,7 +34,8 @@ namespace MagicMirror.UniversalApp.ViewModels
         private void Initialize()
         {
             RefreshTime(null, null);
-            RefreshWeatherModel(null,null);
+            RefreshCompliment(null, null);
+            RefreshWeatherModel(null, null);
             RefreshTrafficModel(null, null);
         }
 
@@ -43,6 +45,11 @@ namespace MagicMirror.UniversalApp.ViewModels
             timeTimer.Tick += RefreshTime;
             timeTimer.Interval = new TimeSpan(0, 0, 1);
             timeTimer.Start();
+
+            var complimentTimer = new DispatcherTimer();
+            complimentTimer.Tick += RefreshCompliment;
+            complimentTimer.Interval = new TimeSpan(0, 0, 10);
+            complimentTimer.Start();
 
             var weatherTimer = new DispatcherTimer();
             weatherTimer.Tick += RefreshWeatherModel;
@@ -58,6 +65,11 @@ namespace MagicMirror.UniversalApp.ViewModels
         private void RefreshTime(object sender, object e)
         {
             Time = DateTime.Now.ToString("HH:mm:ss");
+        }
+
+        private void RefreshCompliment(object sender, object e)
+        {
+            Compliment = _commonService.GenerateCompliment();
         }
 
         private void RefreshWeatherModel(object sender, object e)
@@ -112,8 +124,17 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public string Compliment => "You look awful today";
+        private string _compliment;
 
+        public string Compliment
+        {
+            get => _compliment;
+            set
+            {
+                _compliment = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         public void OnPropertyChanged([CallerMemberName] string property = null)

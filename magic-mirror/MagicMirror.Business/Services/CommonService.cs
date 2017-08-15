@@ -13,23 +13,5 @@ namespace MagicMirror.Business.Services
 
             return compliment;
         }
-
-        public string GetNameOfDay()
-        {
-            var today = DateTime.Today.DayOfWeek.ToString();
-            return today;
-        }
-
-        public string GetNameOfDay(DateTime date)
-        {
-            var day = date.Day.ToString();
-            return day;
-        }
-
-        public string GetDateString()
-        {
-            var today = DateTime.Today.Date.ToString("D");
-            return today;
-        }
     }
 }
