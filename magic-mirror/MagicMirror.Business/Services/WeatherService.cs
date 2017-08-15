@@ -16,10 +16,10 @@ namespace MagicMirror.Business.Services
         {
             // Defensive coding
             if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
-            if (string.IsNullOrWhiteSpace(criteria.City)) throw new ArgumentException("A city has to be provided");
+            if (string.IsNullOrWhiteSpace(criteria.HomeCity)) throw new ArgumentException("A city has to be provided");
 
             // Get entity from Repository.
-            _repo = new WeatherRepo(criteria.City);
+            _repo = new WeatherRepo(criteria.HomeCity);
             WeatherEntity entity = await _repo.GetEntityAsync();
 
             // Map entity to model.

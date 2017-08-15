@@ -7,16 +7,16 @@
     {
         public string UserName { get; set; }
 
-        public string City { get; set; }
+        public string HomeCity { get; set; }
 
-        public string Start { get; set; }
+        public string HomeAddress { get; set; }
 
-        public string Destination { get; set; }
+        public string WorkAddress { get; set; }
 
         public override string ToString()
         {
             return $"Name: {this.UserName}\n" +
-                   $"City: {this.City}";
+                   $"HomeCity: {this.HomeCity}";
         }
     }
 }

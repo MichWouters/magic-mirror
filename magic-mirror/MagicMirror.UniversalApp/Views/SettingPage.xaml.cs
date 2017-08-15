@@ -1,14 +1,21 @@
 ﻿using Windows.UI.Xaml.Controls;
+using MagicMirror.UniversalApp.ViewModels;
 
 namespace MagicMirror.UniversalApp.Views
 {
     public sealed partial class SettingPage : Page
     {
+        public SettingPageViewModel ViewModel { get; } = new SettingPageViewModel();
+
         public SettingPage()
         {
+            DataContext = ViewModel;
             InitializeComponent();
-            var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-            var str = loader.GetString("Name");
+        }
+
+        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
         }
     }
 }

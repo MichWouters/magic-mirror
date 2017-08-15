@@ -2,25 +2,55 @@
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using MagicMirror.Business.Models;
+using MagicMirror.UniversalApp.Strings;
 
 namespace MagicMirror.UniversalApp
 {
-    /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
-    /// </summary>
     sealed partial class App
     {
+        public SearchCriteria Criteria;
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
+            SetDefaults();
+            CreateSearchCriteriaSingleton();
+        }
+
+        private void SetDefaults()
+        {
+            // Todo: place in settings file
+            localSettings.Values[Settings.UserName] = "Michiel";
+            localSettings.Values[Settings.HomeAddress] = "Heikant 51";
+            localSettings.Values[Settings.HomeTown] = "3390 Houwaart";
+            localSettings.Values[Settings.WorkAddress] = "Earl Bakkenstraat 10 6422 Heerlen";
+        }
+
+        public SearchCriteria CreateSearchCriteriaSingleton()
+        {
+            // Singleton pattern
+            if (Criteria == null)
+            {
+                Criteria = new SearchCriteria
+                {
+                    UserName = localSettings.Values[Settings.UserName].ToString(),
+                    HomeAddress = localSettings.Values[Settings.HomeAddress].ToString(),
+                    WorkAddress = localSettings.Values[Settings.WorkAddress].ToString(),
+                    HomeCity = localSettings.Values[Settings.HomeTown].ToString(),
+                };
+            }
+            return Criteria;
         }
 
         /// <summary>
@@ -32,8 +62,7 @@ namespace MagicMirror.UniversalApp
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
+            // Do not repeat app initialization when the Window already has content, just ensure that the window is active
             if (rootFrame == null)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
