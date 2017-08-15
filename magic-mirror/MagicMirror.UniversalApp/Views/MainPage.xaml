@@ -146,6 +146,6 @@
 
         <Button
             Content="Button"
-            RelativePanel.Below="SunSetImage" />
+            RelativePanel.Below="SunSetImage" Click="Button_Click" />
     </RelativePanel>
 </Page>

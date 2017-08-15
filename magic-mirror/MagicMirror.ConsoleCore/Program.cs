@@ -50,9 +50,9 @@ namespace MagicMirror.ConsoleCore
             var criteria = new SearchCriteria
             {
                 UserName = user,
-                Start = $"{address}, {city}",
-                City = city,
-                Destination = workAddress,
+                HomeAddress = $"{address}, {city}",
+                HomeCity = city,
+                WorkAddress = workAddress,
             };
 
             return criteria;

@@ -15,11 +15,11 @@ namespace MagicMirror.Business.Services
         {
             // Defensive coding
             if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
-            if (string.IsNullOrWhiteSpace(criteria.Start)) throw new ArgumentException("A home address has to be provided");
-            if (string.IsNullOrWhiteSpace(criteria.Destination)) throw new ArgumentException("A destination address has to be provided");
+            if (string.IsNullOrWhiteSpace(criteria.HomeAddress)) throw new ArgumentException("A home address has to be provided");
+            if (string.IsNullOrWhiteSpace(criteria.WorkAddress)) throw new ArgumentException("A destination address has to be provided");
 
             // Get entity from repository
-            _repo = new TrafficRepo(criteria.Start, criteria.Destination);
+            _repo = new TrafficRepo(criteria.HomeAddress, criteria.WorkAddress);
             TrafficEntity entity = await _repo.GetEntityAsync();
 
             // Map entity to model

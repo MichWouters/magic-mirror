@@ -17,11 +17,11 @@ namespace MagicMirror.Tests.Traffic
         {
             _criteria = new SearchCriteria()
             {
-                Start = "Heikant 51 3390 Houwaart",
-                Destination = "Generaal Armstrongweg 1 Antwerpen",
+                HomeAddress = "Heikant 51 3390 Houwaart",
+                WorkAddress = "Generaal Armstrongweg 1 Antwerpen",
             };
 
-            _repo = new TrafficRepo(_criteria.Start, _criteria.Destination);
+            _repo = new TrafficRepo(_criteria.HomeAddress, _criteria.WorkAddress);
             _service = new TrafficService();
         }
 

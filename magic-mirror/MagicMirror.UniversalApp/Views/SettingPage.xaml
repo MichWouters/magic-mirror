@@ -4,14 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Opacity="0.5">
+    mc:Ignorable="d">
 
     <Page.Resources>
         <Style TargetType="TextBox">
             <Setter Property="Width" Value="400" />
             <Setter Property="Margin" Value="0,12,20,0" />
         </Style>
-        
+
         <Style TargetType="RelativePanel">
             <Setter Property="Padding" Value="10"/>
         </Style>
@@ -29,9 +29,9 @@
                      HorizontalAlignment="Left"
                      Header="Busy text" RelativePanel.AlignLeftWithPanel="True"
                      RelativePanel.Below="ThemeSwitch"
-            />
+                     Text="Loading..."/>
 
-        <Button Command=""
+        <Button x:Name="BusyButton" 
                     Content="Show Busy"
                     RelativePanel.AlignBottomWith="BusyTextTextBox"
                     RelativePanel.RightOf="BusyTextTextBox" />
@@ -40,19 +40,22 @@
                      HorizontalAlignment="Left"
                      Header="Home street and number" 
                      RelativePanel.AlignLeftWithPanel="True"
-                     RelativePanel.Below="BusyTextTextBox"/>
+                     RelativePanel.Below="BusyTextTextBox"
+                     Text="{x:Bind ViewModel.SearchCriteria.HomeAddress, Mode=TwoWay}"   />
 
         <TextBox x:Name="HomeTownTextBox" 
                      HorizontalAlignment="Left"
                      Header="Home town" 
                      RelativePanel.AlignLeftWithPanel="True"
-                     RelativePanel.Below="HomeTextBox"/>
+                     RelativePanel.Below="HomeTextBox"
+                     Text="{x:Bind ViewModel.SearchCriteria.HomeCity, Mode=TwoWay}"/>
 
         <TextBox x:Name="WorkAddressTextBox" 
                      HorizontalAlignment="Left"
                      Header="Work Address" 
                      RelativePanel.AlignLeftWithPanel="True"
-                     RelativePanel.Below="HomeTownTextBox"/>
+                     RelativePanel.Below="HomeTownTextBox"
+                     Text="{x:Bind ViewModel.SearchCriteria.WorkAddress, Mode=TwoWay}"/>
 
         <Button Content="Save" 
                 RelativePanel.Below="WorkAddressTextBox" 

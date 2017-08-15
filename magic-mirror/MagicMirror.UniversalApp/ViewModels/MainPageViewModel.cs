@@ -19,9 +19,9 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             _searchCriteria = new SearchCriteria
             {
-                City = "Houwaart",
-                Destination = "Generaal ArmstrongWeg 1, Antwerpen",
-                Start = "Heikant 51 Houwaart",
+                HomeCity = "Houwaart",
+                WorkAddress = "Generaal ArmstrongWeg 1, Antwerpen",
+                HomeAddress = "Heikant 51 Houwaart",
                 UserName = "Michiel"
             };
             _commonService = new CommonService();
