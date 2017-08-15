@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
@@ -25,37 +26,53 @@ namespace MagicMirror.UniversalApp.ViewModels
             };
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
+            Initialize();
             SetRefreshTimers();
+        }
+
+        private void Initialize()
+        {
+            RefreshTime(null, null);
+            RefreshWeatherModel(null,null);
+            RefreshTrafficModel(null, null);
         }
 
         private void SetRefreshTimers()
         {
-            var autoEvent = new AutoResetEvent(false);
+            var timeTimer = new DispatcherTimer();
+            timeTimer.Tick += RefreshTime;
+            timeTimer.Interval = new TimeSpan(0, 0, 1);
+            timeTimer.Start();
 
-            Timer timeTimer = new Timer(RefreshTime, autoEvent, 1000, 1000);
-            //Timer weatherTimer = new Timer(RefreshWeatherModel, autoEvent, 1000, 10000);
-            //Timer trafficTimer = new Timer(RefreshTrafficModel, autoEvent, 1000, 10000);
+            var weatherTimer = new DispatcherTimer();
+            weatherTimer.Tick += RefreshWeatherModel;
+            weatherTimer.Interval = new TimeSpan(0, 30, 0);
+            weatherTimer.Start();
+
+            var trafficTimer = new DispatcherTimer();
+            trafficTimer.Tick += RefreshTrafficModel;
+            trafficTimer.Interval = new TimeSpan(0, 10, 1);
+            trafficTimer.Start();
         }
 
-        private void RefreshWeatherModel(object state)
+        private void RefreshTime(object sender, object e)
         {
-            Task.Run(() =>
-            {
-                WeatherModel result = Task.Run(() => _weatherService.GetModelAsync(_searchCriteria)).Result;
-                Weather = result;
-            });
+            Time = DateTime.Now.ToString("HH:mm:ss");
         }
 
-        private void RefreshTrafficModel(object state)
+        private void RefreshWeatherModel(object sender, object e)
+        {
+            WeatherModel result = Task.Run(() => _weatherService.GetModelAsync(_searchCriteria)).Result;
+            Weather = result;
+        }
+
+        private void RefreshTrafficModel(object sender, object e)
         {
             TrafficModel result = Task.Run(() => _trafficService.GetModelAsync(_searchCriteria)).Result;
             Traffic = result;
         }
 
-        private void RefreshTime(object state)
-        {
-            Time = DateTime.Now.ToString("HH:mm:ss");
-        }
+        #region Properties
 
         private WeatherModel _weather;
 
@@ -87,7 +104,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         public string Time
         {
-            get => DateTime.Now.ToString("HH:mm:ss");
+            get => _time;
             set
             {
                 _time = value;
@@ -96,6 +113,8 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         public string Compliment => "You look awful today";
+
+        #endregion
 
         public void OnPropertyChanged([CallerMemberName] string property = null)
         {
