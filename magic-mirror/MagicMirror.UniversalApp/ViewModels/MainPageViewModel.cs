@@ -17,16 +17,21 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         public MainPageViewModel()
         {
-            _searchCriteria = new SearchCriteria
-            {
-                HomeCity = "Houwaart",
-                WorkAddress = "Generaal ArmstrongWeg 1, Antwerpen",
-                HomeAddress = "Heikant 51 Houwaart",
-                UserName = "Michiel"
-            };
+            //_searchCriteria = new SearchCriteria
+            //{
+            //    HomeCity = "Houwaart",
+            //    WorkAddress = "Generaal ArmstrongWeg 1, Antwerpen",
+            //    HomeAddress = "Heikant 51 Houwaart",
+            //    UserName = "Michiel"
+            //};
+
+            var appReference = Application.Current as App;
+            _searchCriteria = appReference.Criteria;
+
             _commonService = new CommonService();
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
+
             Initialize();
             SetRefreshTimers();
         }

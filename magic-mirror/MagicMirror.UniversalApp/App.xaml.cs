@@ -11,9 +11,6 @@ using MagicMirror.UniversalApp.Strings;
 
 namespace MagicMirror.UniversalApp
 {
-    /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
-    /// </summary>
     sealed partial class App
     {
         public SearchCriteria Criteria;
@@ -33,14 +30,16 @@ namespace MagicMirror.UniversalApp
 
         private void SetDefaults()
         {
+            // Todo: place in settings file
             localSettings.Values[Settings.UserName] = "Michiel";
             localSettings.Values[Settings.HomeAddress] = "Heikant 51";
-            localSettings.Values[Settings.HomeTown] = "Houwaart";
-            localSettings.Values[Settings.WorkAddress] = "Earl Bakkenstraat 10, Heerlen";
+            localSettings.Values[Settings.HomeTown] = "3390 Houwaart";
+            localSettings.Values[Settings.WorkAddress] = "Earl Bakkenstraat 10 6422 Heerlen";
         }
 
         public SearchCriteria CreateSearchCriteriaSingleton()
         {
+            // Singleton pattern
             if (Criteria == null)
             {
                 Criteria = new SearchCriteria
@@ -54,7 +53,6 @@ namespace MagicMirror.UniversalApp
             return Criteria;
         }
 
-
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -64,8 +62,7 @@ namespace MagicMirror.UniversalApp
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
+            // Do not repeat app initialization when the Window already has content, just ensure that the window is active
             if (rootFrame == null)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page

@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using MagicMirror.Business.Models;
 
@@ -19,11 +18,17 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
             set
             {
-                _searchCriteria = value;
+                var appReference = Application.Current as App;
+
+                appReference.Criteria = value;
                 OnPropertyChanged();
             }
         }
 
+        public void ToggleLightTheme()
+        {
+
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

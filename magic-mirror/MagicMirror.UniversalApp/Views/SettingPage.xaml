@@ -23,7 +23,8 @@
                 IsOn="False"
                 OffContent="Dark theme" 
                 OnContent="Light theme"
-                RelativePanel.AlignLeftWithPanel="True"/>
+                RelativePanel.AlignLeftWithPanel="True"
+                Toggled="{x:Bind ViewModel.ToggleLightTheme}" />
 
         <TextBox x:Name="UserNameTextBox"
                  HorizontalAlignment="Left"
@@ -53,7 +54,7 @@
 
         <TextBox x:Name="HomeTownTextBox" 
                      HorizontalAlignment="Left"
-                     Header="Home town" 
+                     Header="Postal code Home town" 
                      RelativePanel.AlignLeftWithPanel="True"
                      RelativePanel.Below="HomeTextBox"
                      Text="{x:Bind ViewModel.SearchCriteria.HomeCity, Mode=TwoWay}"/>
@@ -68,7 +69,7 @@
         <Button Content="Save" 
                 RelativePanel.Below="WorkAddressTextBox" 
                 HorizontalAlignment="Center" 
-                Width="400" Margin="0,10,0,0"/>
+                Width="400" Margin="0,10,0,0" Click="Button_Click"/>
 
     </RelativePanel>
 </Page>
