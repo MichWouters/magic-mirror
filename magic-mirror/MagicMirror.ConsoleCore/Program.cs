@@ -60,10 +60,10 @@ namespace MagicMirror.ConsoleCore
 
         private static async Task<MagicMirrorDto> GenerateDto(SearchCriteria criteria)
         {
-            _weatherService = new WeatherService();
-            _trafficService = new TrafficService();
-            WeatherModel weatherModel = await _weatherService.GetModelAsync(criteria);
-            TrafficModel trafficModel = await _trafficService.GetModelAsync(criteria);
+            _weatherService = new WeatherService(criteria);
+            _trafficService = new TrafficService(criteria);
+            WeatherModel weatherModel = await _weatherService.GetModelAsync();
+            TrafficModel trafficModel = await _trafficService.GetModelAsync();
 
             var dto = new MagicMirrorDto
             {

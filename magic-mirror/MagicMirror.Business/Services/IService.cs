@@ -9,7 +9,7 @@ namespace MagicMirror.Business.Services
         /// Get the model without automapped and calculated fields.
         /// </summary>
         /// <returns></returns>
-        Task<T> GetModelAsync(SearchCriteria criteria);
+        Task<T> GetModelAsync();
 
         /// <summary>
         /// Calculate the model's fields which cannot be resolved using Automapper.

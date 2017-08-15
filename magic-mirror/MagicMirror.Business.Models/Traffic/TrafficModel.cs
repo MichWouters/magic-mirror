@@ -4,7 +4,7 @@ namespace MagicMirror.Business.Models
 {
     public class TrafficModel : Model
     {
-        public string Distance { get; set; }
+        public double Distance { get; set; }
 
         public int Minutes { get; set; }
 
@@ -23,10 +23,5 @@ namespace MagicMirror.Business.Models
                 return $"{ Minutes } minutes ( including { TrafficDensity } traffic).";
             }
         }
-    }
-
-    public enum TrafficDensity
-    {
-        Little, Light, Medium, Heavy
     }
 }
