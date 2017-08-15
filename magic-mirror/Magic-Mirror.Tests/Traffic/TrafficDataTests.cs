@@ -1,6 +1,5 @@
 ﻿using MagicMirror.DataAccess.Repos;
 using MagicMirror.Entities.Traffic;
-using System;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;

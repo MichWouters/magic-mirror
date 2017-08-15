@@ -2,11 +2,9 @@
 using MagicMirror.Business.Services;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
@@ -96,7 +94,6 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
-
 
         public string Compliment => "You look awful today";
 

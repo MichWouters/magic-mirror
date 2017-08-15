@@ -41,7 +41,7 @@
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <!--  Top Left elements  -->
-        <TextBlock x:Name="LocationTextBlock" 
+        <TextBlock x:Name="LocationTextBlock"
                    Text="{x:Bind ViewModel.Weather.Name, FallbackValue='Montgomery'}" />
 
         <Image
@@ -70,7 +70,7 @@
             RelativePanel.RightOf="TemperatureTextBlock"
             RelativePanel.Below="LocationTextBlock"
             Style="{StaticResource Degrees}"
-            Text="°"/>
+            Text="°" />
 
         <Image
             x:Name="SunriseImage"
@@ -142,8 +142,7 @@
             FontSize="48"
             RelativePanel.AlignRightWithPanel="True"
             RelativePanel.Below="DateTextBlock"
-            Text="{Binding ViewModel.Time, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, FallbackValue='5:22 pm'}"
-            />
+            Text="{Binding ViewModel.Time, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, FallbackValue='5:22 pm'}" />
 
         <Button
             Content="Button"

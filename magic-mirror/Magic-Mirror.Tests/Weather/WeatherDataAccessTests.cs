@@ -1,7 +1,5 @@
-﻿using MagicMirror.DataAccess;
-using MagicMirror.DataAccess.Entities.Weather;
+﻿using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Repos;
-using System;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;

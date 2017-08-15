@@ -1,5 +1,4 @@
 ﻿using MagicMirror.Business.Models;
-using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Repos;
 using MagicMirror.Entities.Traffic;
