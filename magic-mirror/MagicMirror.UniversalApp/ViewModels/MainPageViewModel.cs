@@ -53,7 +53,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
             var complimentTimer = new DispatcherTimer();
             complimentTimer.Tick += RefreshCompliment;
-            complimentTimer.Interval = new TimeSpan(0, 0, 10);
+            complimentTimer.Interval = new TimeSpan(0, 0, 60);
             complimentTimer.Start();
 
             var weatherTimer = new DispatcherTimer();
