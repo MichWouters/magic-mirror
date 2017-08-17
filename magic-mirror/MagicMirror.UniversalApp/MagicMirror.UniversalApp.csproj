@@ -120,6 +120,10 @@
     <None Include="MagicMirror.UniversalApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Weather\Alternative\cloudy.png" />
+    <Content Include="Assets\Weather\Alternative\cloudyInverse.png" />
+    <Content Include="Assets\Weather\Alternative\Weather-Partly-Cloudy-Day-icon.png" />
+    <Content Include="Assets\Weather\Alternative\Weather-Partly-Cloudy-Day-icon2.png" />
     <Content Include="Assets\Weather\clouds.png" />
     <Content Include="Assets\Weather\cloudsInverse.png" />
     <Content Include="Assets\Weather\heavyClouds.png" />

@@ -8,6 +8,10 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <Style TargetType="RelativePanel">
+            <Setter Property="Padding" Value="20"></Setter>
+        </Style>
+        
         <Style x:Key="WeatherType" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#FDF7C500" />
             <Setter Property="FontStyle" Value="Italic" />
@@ -49,7 +53,7 @@
             Width="50"
             Height="50"
             RelativePanel.Below="LocationTextBlock"
-            Source="ms-appx:///Assets/Weather/sunInverse.png" />
+            Source="ms-appx:///Assets/Weather/Alternative/cloudyInverse.png" />
 
         <TextBlock
             x:Name="WeatherTextBox"
