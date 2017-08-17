@@ -11,18 +11,18 @@ namespace MagicMirror.Tests.Traffic
     {
         private readonly IRepo<TrafficEntity> _repo;
         private readonly IService<TrafficModel> _service;
-        private readonly SearchCriteria _criteria;
 
         public TrafficBusinessTests()
         {
-            _criteria = new SearchCriteria()
+            var criteria = new SearchCriteria()
             {
-                HomeAddress = "Heikant 51 3390 Houwaart",
+                HomeAddress = "Heikant 51",
+                HomeCity = "3390 Houwaart",
                 WorkAddress = "Generaal Armstrongweg 1 Antwerpen",
             };
 
-            _repo = new TrafficRepo(_criteria.HomeAddress, _criteria.WorkAddress);
-            _service = new TrafficService();
+            _repo = new TrafficRepo(criteria.HomeAddress, criteria.WorkAddress);
+            _service = new TrafficService(criteria);
         }
 
         [Fact]
@@ -32,13 +32,12 @@ namespace MagicMirror.Tests.Traffic
             TrafficEntity entity = await _repo.GetEntityAsync();
 
             // Act
-            TrafficModel model = await _service.GetModelAsync(_criteria);
+            TrafficModel model = await _service.GetModelAsync();
 
             // Assert
             Assert.NotNull(model.Distance);
-            Assert.NotEqual("", model.Distance);
-            Assert.Equal(model.Distance, entity.Routes[0].Legs[0].Distance.Text);
-
+            Assert.NotEqual("0", model.Distance);
+                
             Assert.NotNull(model.Minutes);
             Assert.NotEqual(0, model.Minutes);
             Assert.Equal(model.Minutes, entity.Routes[0].Legs[0].Duration.Value / 60);
@@ -52,7 +51,7 @@ namespace MagicMirror.Tests.Traffic
         public void Calculated_Fields_Correct()
         {
             // Arrange
-            TrafficModel model = new TrafficModel
+            var model = new TrafficModel
             {
                 Minutes = 5400,
                 NumberOfIncidents = 3,

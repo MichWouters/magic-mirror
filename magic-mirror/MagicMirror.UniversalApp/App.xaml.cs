@@ -35,6 +35,7 @@ namespace MagicMirror.UniversalApp
             localSettings.Values[Settings.HomeAddress] = "Heikant 51";
             localSettings.Values[Settings.HomeTown] = "3390 Houwaart";
             localSettings.Values[Settings.WorkAddress] = "Earl Bakkenstraat 10 6422 Heerlen";
+            localSettings.Values[Settings.Precision] = 1;
         }
 
         public SearchCriteria CreateSearchCriteriaSingleton()
@@ -48,6 +49,7 @@ namespace MagicMirror.UniversalApp
                     HomeAddress = localSettings.Values[Settings.HomeAddress].ToString(),
                     WorkAddress = localSettings.Values[Settings.WorkAddress].ToString(),
                     HomeCity = localSettings.Values[Settings.HomeTown].ToString(),
+                    Precision =  (int) localSettings.Values[Settings.Precision]
                 };
             }
             return Criteria;

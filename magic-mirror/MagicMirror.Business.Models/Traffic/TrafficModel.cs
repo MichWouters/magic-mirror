@@ -4,7 +4,7 @@ namespace MagicMirror.Business.Models
 {
     public class TrafficModel : Model
     {
-        public double Distance { get; set; }
+        public string Distance { get; set; }
 
         public int Minutes { get; set; }
 

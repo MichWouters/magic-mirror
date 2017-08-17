@@ -79,13 +79,13 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private void RefreshWeatherModel(object sender, object e)
         {
-            WeatherModel result = Task.Run(() => _weatherService.GetModelAsync(_searchCriteria)).Result;
+            WeatherModel result = Task.Run(() => _weatherService.GetModelAsync()).Result;
             Weather = result;
         }
 
         private void RefreshTrafficModel(object sender, object e)
         {
-            TrafficModel result = Task.Run(() => _trafficService.GetModelAsync(_searchCriteria)).Result;
+            TrafficModel result = Task.Run(() => _trafficService.GetModelAsync()).Result;
             Traffic = result;
         }
 

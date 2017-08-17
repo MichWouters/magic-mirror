@@ -1,4 +1,6 @@
-﻿namespace MagicMirror.UniversalApp.Strings
+﻿using MagicMirror.Business.Models;
+
+namespace MagicMirror.UniversalApp.Strings
 {
     public class Settings
     {
@@ -11,5 +13,8 @@
         public static string WorkAddress = "workAddress";
 
         public static string SearchCriteria = "searchCriteria";
+
+        public static string Precision = "precision";
+
     }
 }

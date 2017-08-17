@@ -49,7 +49,7 @@
             Width="50"
             Height="50"
             RelativePanel.Below="LocationTextBlock"
-            Source="../Assets/Square150x150Logo.png" />
+            Source="ms-appx:///Assets/Weather/sunInverse.png" />
 
         <TextBlock
             x:Name="WeatherTextBox"

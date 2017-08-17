@@ -8,23 +8,25 @@ namespace MagicMirror.Tests.Weather
     public class WeatherBussinessTests
     {
         private readonly IService<WeatherModel> _service;
-        private SearchCriteria _criteria;
+        private SearchCriteria criteria;
 
         public WeatherBussinessTests()
         {
-            _criteria = new SearchCriteria
+            criteria = new SearchCriteria
             {
-                HomeCity = "London"
+                HomeCity = "London",
+                Precision = 1,
+               
             };
 
-            _service = new WeatherService();
+            _service = new WeatherService(criteria);
         }
 
         [Fact]
         public async Task AutoMapped_Fields_Correct()
         {
             // Arrange
-            WeatherModel model = await _service.GetModelAsync(_criteria);
+            WeatherModel model = await _service.GetModelAsync();
 
             // Assert
             Assert.NotEqual(0, model.TemperatureKelvin);
@@ -52,9 +54,13 @@ namespace MagicMirror.Tests.Weather
             // Assert
             Assert.Equal("04:41", model.SunRise);
             Assert.Equal("19:28", model.SunSet);
-            Assert.Equal(-173.15, model.TemperatureCelsius);
-            Assert.Equal(-279, model.TemperatureFahrenheit);
+            Assert.Equal(-173.1, model.TemperatureCelsius);
+            Assert.Equal(0, model.TemperatureFahrenheit);
             Assert.Equal(100, model.TemperatureKelvin);
+
+            criteria.TemperatureUOM = TemperatureUOM.Fahrenheit;
+            model = _service.CalculateMappedValues(model);
+            Assert.Equal(-279.4, model.TemperatureFahrenheit);
         }
     }
 }
