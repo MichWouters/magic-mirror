@@ -120,31 +120,33 @@
     <None Include="MagicMirror.UniversalApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Weather\01d.png" />
-    <Content Include="Assets\Weather\01n.png" />
-    <Content Include="Assets\Weather\02d.png" />
-    <Content Include="Assets\Weather\02n.png" />
-    <Content Include="Assets\Weather\03or4.png" />
-    <Content Include="Assets\Weather\09.png" />
-    <Content Include="Assets\Weather\10.png" />
-    <Content Include="Assets\Weather\11d.png" />
-    <Content Include="Assets\Weather\11n.png" />
-    <Content Include="Assets\Weather\13.png" />
-    <Content Include="Assets\Weather\50.png" />
     <Content Include="Assets\Weather\arrow-up.png" />
-    <Content Include="Assets\Weather\Backup\01d.png" />
-    <Content Include="Assets\Weather\Backup\01n.png" />
-    <Content Include="Assets\Weather\Backup\02d.png" />
-    <Content Include="Assets\Weather\Backup\02n.png" />
-    <Content Include="Assets\Weather\Backup\03or4.png" />
-    <Content Include="Assets\Weather\Backup\09.png" />
-    <Content Include="Assets\Weather\Backup\10.png" />
-    <Content Include="Assets\Weather\Backup\11d.png" />
-    <Content Include="Assets\Weather\Backup\11n.png" />
-    <Content Include="Assets\Weather\Backup\13.png" />
-    <Content Include="Assets\Weather\Backup\50.png" />
     <Content Include="Assets\Weather\car.png" />
+    <Content Include="Assets\Weather\Dark\010.png" />
+    <Content Include="Assets\Weather\Dark\011d.png" />
+    <Content Include="Assets\Weather\Dark\011n.png" />
+    <Content Include="Assets\Weather\Dark\013.png" />
+    <Content Include="Assets\Weather\Dark\01d.png" />
+    <Content Include="Assets\Weather\Dark\01n.png" />
+    <Content Include="Assets\Weather\Dark\02d.png" />
+    <Content Include="Assets\Weather\Dark\02n.png" />
+    <Content Include="Assets\Weather\Dark\050.png" />
+    <Content Include="Assets\Weather\Dark\09.png" />
+    <Content Include="Assets\Weather\Dark\3or4.png" />
+    <Content Include="Assets\Weather\Dark\noun_90839_cc.png" />
     <Content Include="Assets\Weather\icons.png" />
+    <Content Include="Assets\Weather\Light\010.png" />
+    <Content Include="Assets\Weather\Light\011d.png" />
+    <Content Include="Assets\Weather\Light\011n.png" />
+    <Content Include="Assets\Weather\Light\013.png" />
+    <Content Include="Assets\Weather\Light\01d.png" />
+    <Content Include="Assets\Weather\Light\01n.png" />
+    <Content Include="Assets\Weather\Light\02d.png" />
+    <Content Include="Assets\Weather\Light\02n.png" />
+    <Content Include="Assets\Weather\Light\050.png" />
+    <Content Include="Assets\Weather\Light\09.png" />
+    <Content Include="Assets\Weather\Light\3or4.png" />
+    <Content Include="Assets\Weather\Light\noun_90839_cc.png" />
     <Content Include="Assets\Weather\sunrise.png" />
     <Content Include="Assets\Weather\sunset.png" />
     <Content Include="Properties\Default.rd.xml" />
@@ -172,7 +174,9 @@
       <Name>MagicMirror.Business</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Assets\Weather\Backup\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\MainPage.xaml">
       <SubType>Designer</SubType>

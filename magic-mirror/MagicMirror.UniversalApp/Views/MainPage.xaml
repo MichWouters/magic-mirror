@@ -9,7 +9,7 @@
 
     <Page.Resources>
         <Style TargetType="RelativePanel">
-            <Setter Property="Padding" Value="10"></Setter>
+            <Setter Property="Padding" Value="20"></Setter>
         </Style>
         <Style x:Key="WeatherType" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#FDF7C500" />
@@ -52,10 +52,9 @@
             Width="100"
             Height="80"
             RelativePanel.Below="LocationTextBlock"
-            Source="{x:Bind ViewModel.Weather.Icon, 
-            FallbackValue=ms-appx:///Assets/Weather/01d.png}" 
+            Source="{x:Bind ViewModel.Weather.Icon, FallbackValue=ms-appx:///Assets/Weather/01d.png}" 
             />
-        
+
         <TextBlock
             x:Name="WeatherTextBox"
             RelativePanel.Below="WeatherImage"
