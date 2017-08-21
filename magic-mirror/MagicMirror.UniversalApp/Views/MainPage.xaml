@@ -8,6 +8,9 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <Style TargetType="RelativePanel">
+            <Setter Property="Padding" Value="10"></Setter>
+        </Style>
         <Style x:Key="WeatherType" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#FDF7C500" />
             <Setter Property="FontStyle" Value="Italic" />
@@ -49,7 +52,9 @@
             Width="100"
             Height="80"
             RelativePanel.Below="LocationTextBlock"
-            Source="{x:Bind ViewModel.Weather.Icon, FallbackValue=ms-appx:///Assets/Weather/01d.png}" Stretch="None" />
+            Source="{x:Bind ViewModel.Weather.Icon, 
+            FallbackValue=ms-appx:///Assets/Weather/01d.png}" 
+            />
         
         <TextBlock
             x:Name="WeatherTextBox"
@@ -75,7 +80,7 @@
         <Image
             x:Name="SunriseImage"
             RelativePanel.Below="WeatherTextBox"
-            Source="../Assets/Square44x44Logo.scale-200.png"
+            Source="ms-appx:///Assets/Weather/sunrise.png"
             Style="{StaticResource SunImage}" />
 
         <TextBlock
@@ -87,7 +92,7 @@
         <Image
             x:Name="SunSetImage"
             RelativePanel.Below="SunriseImage"
-            Source="../Assets/Square44x44Logo.scale-200.png"
+            Source="ms-appx:///Assets/Weather/sunset.png"
             Style="{StaticResource SunImage}" />
 
         <TextBlock
@@ -108,7 +113,7 @@
             x:Name="DurationImage"
             RelativePanel.Above="DurationTextBlock"
             RelativePanel.AlignLeftWithPanel="True"
-            Source="../Assets/Square44x44Logo.png"
+            Source="ms-appx:///Assets/Weather/car.png"
             Style="{StaticResource SunImage}" />
 
         <TextBlock
