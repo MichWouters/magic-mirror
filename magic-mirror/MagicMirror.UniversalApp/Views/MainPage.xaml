@@ -46,13 +46,11 @@
 
         <Image
             x:Name="WeatherImage"
-            Width="50"
-            Height="50"
+            Width="100"
+            Height="80"
             RelativePanel.Below="LocationTextBlock"
-            Source="ms-appx:///Assets/Weather/clouds.png" />
+            Source="{x:Bind ViewModel.Weather.Icon, FallbackValue=ms-appx:///Assets/Weather/01d.png}" Stretch="None" />
         
-
-
         <TextBlock
             x:Name="WeatherTextBox"
             RelativePanel.Below="WeatherImage"

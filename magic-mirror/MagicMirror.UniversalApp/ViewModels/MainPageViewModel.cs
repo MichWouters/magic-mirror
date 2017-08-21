@@ -80,6 +80,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         private void RefreshWeatherModel(object sender, object e)
         {
             WeatherModel result = Task.Run(() => _weatherService.GetModelAsync()).Result;
+            result.Icon = ConvertWeatherIcon(result.Icon);
             Weather = result;
         }
 
@@ -91,7 +92,9 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private string ConvertWeatherIcon(string icon)
         {
-            var res = "'";
+            string prefix = "ms-appx:///Assets/Weather/";
+            string res;
+
             switch (icon)
             {
                 case "01d":
@@ -136,7 +139,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                     res = "50.png";
                     break;
             }
-            return "/icons/" + res;
+            return prefix + res;
         }
 
         #region Properties
