@@ -89,6 +89,56 @@ namespace MagicMirror.UniversalApp.ViewModels
             Traffic = result;
         }
 
+        private string ConvertWeatherIcon(string icon)
+        {
+            var res = "'";
+            switch (icon)
+            {
+                case "01d":
+                    res = "01d.png";
+                    break;
+                case "01n":
+                    res = "01n.png";
+                    break;
+                case "02d":
+                    res = "02d.png";
+                    break;
+                case "02n":
+                    res = "02n.png";
+                    break;
+                case "03d":
+                case "03n":
+                case "04d":
+                case "04n":
+                    res = "03or4.png";
+                    break;
+                case "09n":
+                case "09d":
+                    res = "09.png";
+                    break;
+                case "10d":
+                case "10n":
+                    res = "09.png";
+                    break;
+                case "11d":
+                    res = "11d.png";
+                    break;
+                case "11n":
+                    res = "11n.png";
+                    break;
+                case "13d":
+                case "13n":
+                    res = "13.png";
+                    break;
+                case "50n":
+                case "50d":
+                default:
+                    res = "50.png";
+                    break;
+            }
+            return "/icons/" + res;
+        }
+
         #region Properties
 
         private WeatherModel _weather;

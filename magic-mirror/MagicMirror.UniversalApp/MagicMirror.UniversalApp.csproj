@@ -120,14 +120,19 @@
     <None Include="MagicMirror.UniversalApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Weather\clouds.png" />
-    <Content Include="Assets\Weather\cloudsInverse.png" />
-    <Content Include="Assets\Weather\heavyClouds.png" />
-    <Content Include="Assets\Weather\heavyCloudsInverse.png" />
-    <Content Include="Assets\Weather\rain.png" />
-    <Content Include="Assets\Weather\rainInverse.png" />
-    <Content Include="Assets\Weather\sun.png" />
-    <Content Include="Assets\Weather\sunInverse.png" />
+    <Content Include="Assets\Weather\01d.png" />
+    <Content Include="Assets\Weather\01n.png" />
+    <Content Include="Assets\Weather\02d.png" />
+    <Content Include="Assets\Weather\02n.png" />
+    <Content Include="Assets\Weather\03or4.png" />
+    <Content Include="Assets\Weather\09.png" />
+    <Content Include="Assets\Weather\10.png" />
+    <Content Include="Assets\Weather\11d.png" />
+    <Content Include="Assets\Weather\11n.png" />
+    <Content Include="Assets\Weather\13.png" />
+    <Content Include="Assets\Weather\50.png" />
+    <Content Include="Assets\Weather\arrow-up.png" />
+    <Content Include="Assets\Weather\icons.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
