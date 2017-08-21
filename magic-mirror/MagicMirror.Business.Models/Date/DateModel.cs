@@ -7,6 +7,6 @@ namespace MagicMirror.Business.Models
     {
         public string DayShort => DateTime.Now.DayOfWeek.ToShortDayNotation();
 
-        public string DateFull => DateTime.Now.ToString("dd MMMM yyyy");
+        public string DateFull => DateTime.Now.ToString("D");
     }
 }

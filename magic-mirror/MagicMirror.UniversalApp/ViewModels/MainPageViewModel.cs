@@ -46,30 +46,36 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private void SetRefreshTimers()
         {
+            // Todo: Set active hours
+            bool activeHours = true;
+
             var timeTimer = new DispatcherTimer();
             timeTimer.Tick += RefreshTime;
-            timeTimer.Interval = new TimeSpan(0, 0, 1);
+            timeTimer.Interval = new TimeSpan(0, 1, 0);
             timeTimer.Start();
 
             var complimentTimer = new DispatcherTimer();
             complimentTimer.Tick += RefreshCompliment;
-            complimentTimer.Interval = new TimeSpan(0, 0, 10);
+            complimentTimer.Interval = new TimeSpan(0, 10,0);
             complimentTimer.Start();
 
-            var weatherTimer = new DispatcherTimer();
-            weatherTimer.Tick += RefreshWeatherModel;
-            weatherTimer.Interval = new TimeSpan(0, 30, 0);
-            weatherTimer.Start();
+            if (activeHours)
+            {
+                var weatherTimer = new DispatcherTimer();
+                weatherTimer.Tick += RefreshWeatherModel;
+                weatherTimer.Interval = new TimeSpan(0, 30, 0);
+                weatherTimer.Start();
 
-            var trafficTimer = new DispatcherTimer();
-            trafficTimer.Tick += RefreshTrafficModel;
-            trafficTimer.Interval = new TimeSpan(0, 10, 1);
-            trafficTimer.Start();
+                var trafficTimer = new DispatcherTimer();
+                trafficTimer.Tick += RefreshTrafficModel;
+                trafficTimer.Interval = new TimeSpan(0, 10, 1);
+                trafficTimer.Start();
+            }
         }
 
         private void RefreshTime(object sender, object e)
         {
-            Time = DateTime.Now.ToString("HH:mm:ss");
+            Time = DateTime.Now.ToString("HH:mm");
         }
 
         private void RefreshCompliment(object sender, object e)
@@ -92,7 +98,8 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private string ConvertWeatherIcon(string icon)
         {
-            string prefix = "ms-appx:///Assets/Weather/";
+            string theme = "Dark";
+            string prefix = "ms-appx:///Assets/Weather";
             string res;
 
             switch (icon)
@@ -139,7 +146,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                     res = "50.png";
                     break;
             }
-            return prefix + res;
+            return $"{prefix}/{theme}/{res}";
         }
 
         #region Properties
