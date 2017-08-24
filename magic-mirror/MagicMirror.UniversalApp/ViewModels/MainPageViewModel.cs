@@ -68,7 +68,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 var trafficTimer = new DispatcherTimer();
                 trafficTimer.Tick += RefreshTrafficModel;
-                trafficTimer.Interval = new TimeSpan(0, 10, 1);
+                trafficTimer.Interval = new TimeSpan(0, 10, 0);
                 trafficTimer.Start();
             }
         }

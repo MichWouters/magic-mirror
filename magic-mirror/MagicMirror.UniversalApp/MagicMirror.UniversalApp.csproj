@@ -131,7 +131,7 @@
     <Content Include="Assets\Weather\Dark\02n.png" />
     <Content Include="Assets\Weather\Dark\050.png" />
     <Content Include="Assets\Weather\Dark\09.png" />
-    <Content Include="Assets\Weather\Dark\3or4.png" />
+    <Content Include="Assets\Weather\Dark\03or4.png" />
     <Content Include="Assets\Weather\Dark\noun_90839_cc.png" />
     <Content Include="Assets\Weather\Light\010.png" />
     <Content Include="Assets\Weather\Light\011d.png" />
@@ -143,7 +143,7 @@
     <Content Include="Assets\Weather\Light\02n.png" />
     <Content Include="Assets\Weather\Light\050.png" />
     <Content Include="Assets\Weather\Light\09.png" />
-    <Content Include="Assets\Weather\Light\3or4.png" />
+    <Content Include="Assets\Weather\Light\03or4.png" />
     <Content Include="Assets\Weather\Light\noun_90839_cc.png" />
     <Content Include="Assets\Weather\Dark\sunrise.png" />
     <Content Include="Assets\Weather\Dark\sunset.png" />

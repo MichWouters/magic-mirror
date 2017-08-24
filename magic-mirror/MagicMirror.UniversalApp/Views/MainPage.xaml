@@ -72,11 +72,10 @@
         <Image
             x:Name="WeatherImage"
             Source="{x:Bind ViewModel.Weather.Icon, FallbackValue=ms-appx:///Assets/Weather/01d.png}"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
             RelativePanel.RightOf="TemperatureSymbol"
+            RelativePanel.AlignVerticalCenterWith="TemperatureSymbol"
             Width="30"
-            Height="30" />
+            Height="30" Margin="10,0,0,0" Opacity="0.5" />
 
         <Image
             x:Name="SunriseImage"
