@@ -14,7 +14,6 @@ namespace MagicMirror.UniversalApp.ViewModels
         private readonly IService<TrafficModel> _trafficService;
         private readonly CommonService _commonService;
         private readonly SearchCriteria _searchCriteria;
-
         public MainPageViewModel()
         {
             //_searchCriteria = new SearchCriteria
@@ -24,7 +23,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             //    HomeAddress = "Heikant 51 Houwaart",
             //    UserName = "Michiel"
             //};
-
             var appReference = Application.Current as App;
             _searchCriteria = appReference.Criteria;
 
@@ -46,32 +44,38 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private void SetRefreshTimers()
         {
+            // Todo: Set active hours
+            bool activeHours = true;
+
             var timeTimer = new DispatcherTimer();
             timeTimer.Tick += RefreshTime;
-            timeTimer.Interval = new TimeSpan(0, 0, 1);
+            timeTimer.Interval = new TimeSpan(0, 1, 0);
             timeTimer.Start();
 
             var complimentTimer = new DispatcherTimer();
             complimentTimer.Tick += RefreshCompliment;
-            complimentTimer.Interval = new TimeSpan(0, 0, 60);
+            complimentTimer.Interval = new TimeSpan(0, 10, 0);
+
             complimentTimer.Start();
 
-            var weatherTimer = new DispatcherTimer();
-            weatherTimer.Tick += RefreshWeatherModel;
-            weatherTimer.Interval = new TimeSpan(0, 30, 0);
-            weatherTimer.Start();
+            if (activeHours)
+            {
+                var weatherTimer = new DispatcherTimer();
+                weatherTimer.Tick += RefreshWeatherModel;
+                weatherTimer.Interval = new TimeSpan(0, 30, 0);
+                weatherTimer.Start();
 
-            var trafficTimer = new DispatcherTimer();
-            trafficTimer.Tick += RefreshTrafficModel;
-            trafficTimer.Interval = new TimeSpan(0, 10, 1);
-            trafficTimer.Start();
+                var trafficTimer = new DispatcherTimer();
+                trafficTimer.Tick += RefreshTrafficModel;
+                trafficTimer.Interval = new TimeSpan(0, 10, 0);
+                trafficTimer.Start();
+            }
         }
 
         private void RefreshTime(object sender, object e)
         {
-            Time = DateTime.Now.ToString("HH:mm:ss");
+            Time = DateTime.Now.ToString("HH:mm");
         }
-
         private void RefreshCompliment(object sender, object e)
         {
             Compliment = _commonService.GenerateCompliment();
@@ -80,6 +84,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         private void RefreshWeatherModel(object sender, object e)
         {
             WeatherModel result = Task.Run(() => _weatherService.GetModelAsync()).Result;
+            result.Icon = ConvertWeatherIcon(result.Icon);
             Weather = result;
         }
 
@@ -87,6 +92,59 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             TrafficModel result = Task.Run(() => _trafficService.GetModelAsync()).Result;
             Traffic = result;
+        }
+
+        private string ConvertWeatherIcon(string icon)
+        {
+            string theme = "Dark";
+            string prefix = "ms-appx:///Assets/Weather";
+            string res;
+
+            switch (icon)
+            {
+                case "01d":
+                    res = "01d.png";
+                    break;
+                case "01n":
+                    res = "01n.png";
+                    break;
+                case "02d":
+                    res = "02d.png";
+                    break;
+                case "02n":
+                    res = "02n.png";
+                    break;
+                case "03d":
+                case "03n":
+                case "04d":
+                case "04n":
+                    res = "03or4.png";
+                    break;
+                case "09n":
+                case "09d":
+                    res = "09.png";
+                    break;
+                case "10d":
+                case "10n":
+                    res = "09.png";
+                    break;
+                case "11d":
+                    res = "11d.png";
+                    break;
+                case "11n":
+                    res = "11n.png";
+                    break;
+                case "13d":
+                case "13n":
+                    res = "13.png";
+                    break;
+                case "50n":
+                case "50d":
+                default:
+                    res = "50.png";
+                    break;
+            }
+            return $"{prefix}/{theme}/{res}";
         }
 
         #region Properties

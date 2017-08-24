@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
 using MagicMirror.Business.Models;
@@ -7,8 +8,6 @@ namespace MagicMirror.UniversalApp.ViewModels
 {
     public class SettingPageViewModel : INotifyPropertyChanged
     {
-        private SearchCriteria _searchCriteria;
-
         public SearchCriteria SearchCriteria
         {
             get
@@ -27,7 +26,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         public void ToggleLightTheme()
         {
-
+            throw new NotImplementedException();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
