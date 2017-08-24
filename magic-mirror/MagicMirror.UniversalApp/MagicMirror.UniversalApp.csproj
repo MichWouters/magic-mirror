@@ -147,6 +147,7 @@
     <Content Include="Assets\Weather\Light\noun_90839_cc.png" />
     <Content Include="Assets\Weather\Dark\sunrise.png" />
     <Content Include="Assets\Weather\Dark\sunset.png" />
+
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

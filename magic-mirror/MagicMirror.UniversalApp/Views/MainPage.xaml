@@ -9,7 +9,11 @@
 
     <Page.Resources>
         <Style TargetType="RelativePanel">
+
         </Style>
+
+        
+
         <Style x:Key="WeatherType" TargetType="TextBlock">
         </Style>
 
@@ -42,6 +46,7 @@
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <!--  Top Left elements  -->
+
         <!--  Main Temperature  -->
         <TextBlock
             x:Name="TemperatureTextBlock"
