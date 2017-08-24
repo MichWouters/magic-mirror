@@ -2,7 +2,8 @@
 using MagicMirror.Business.Services;
 using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
@@ -53,8 +54,8 @@ namespace MagicMirror.UniversalApp.ViewModels
 
             var complimentTimer = new DispatcherTimer();
             complimentTimer.Tick += RefreshCompliment;
-]           complimentTimer.Interval = new TimeSpan(0, 10,0);
-]
+            complimentTimer.Interval = new TimeSpan(0, 10, 0);
+
             complimentTimer.Start();
 
             if (activeHours)
@@ -83,15 +84,16 @@ namespace MagicMirror.UniversalApp.ViewModels
         private void RefreshWeatherModel(object sender, object e)
         {
             WeatherModel result = Task.Run(() => _weatherService.GetModelAsync()).Result;
-            result.Icon = ConvertWeatherIcon(result.Icon)
+            result.Icon = ConvertWeatherIcon(result.Icon);
             Weather = result;
-        
+        }
 
         private void RefreshTrafficModel(object sender, object e)
         {
             TrafficModel result = Task.Run(() => _trafficService.GetModelAsync()).Result;
             Traffic = result;
         }
+
         private string ConvertWeatherIcon(string icon)
         {
             string theme = "Dark";
@@ -100,7 +102,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
             switch (icon)
             {
-                case "01d"
+                case "01d":
                     res = "01d.png";
                     break;
                 case "01n":
