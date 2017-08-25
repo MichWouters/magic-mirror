@@ -25,12 +25,6 @@
         public TemperatureUOM TemperatureUOM { get; set; }
 
         public DistanceUOM DistanceUOM { get; set; }
-
-        public override string ToString()
-        {
-            return $"Name: {this.UserName}\n" +
-                   $"HomeCity: {this.HomeCity}";
-        }
     }
 
     

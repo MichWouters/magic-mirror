@@ -13,27 +13,23 @@ namespace MagicMirror.UniversalApp.ViewModels
         private readonly IService<WeatherModel> _weatherService;
         private readonly IService<TrafficModel> _trafficService;
         private readonly CommonService _commonService;
-        private readonly SearchCriteria _searchCriteria;
+
         public MainPageViewModel()
         {
-            //_searchCriteria = new SearchCriteria
-            //{
-            //    HomeCity = "Houwaart",
-            //    WorkAddress = "Generaal ArmstrongWeg 1, Antwerpen",
-            //    HomeAddress = "Heikant 51 Houwaart",
-            //    UserName = "Michiel"
-            //};
-            var appReference = Application.Current as App;
-            _searchCriteria = appReference.Criteria;
+            App appReference = Application.Current as App;
+            SearchCriteria searchCriteria = appReference.Criteria;
 
             _commonService = new CommonService();
-            _weatherService = new WeatherService(_searchCriteria);
-            _trafficService = new TrafficService(_searchCriteria);
+            _weatherService = new WeatherService(searchCriteria);
+            _trafficService = new TrafficService(searchCriteria);
 
             Initialize();
             SetRefreshTimers();
         }
 
+        /// <summary>
+        /// Call data immediately after app launch
+        /// </summary>
         private void Initialize()
         {
             RefreshTime(null, null);
@@ -42,6 +38,9 @@ namespace MagicMirror.UniversalApp.ViewModels
             RefreshTrafficModel(null, null);
         }
 
+        /// <summary>
+        /// Set timers at which data needs to be refreshed
+        /// </summary>
         private void SetRefreshTimers()
         {
             // Todo: Set active hours
@@ -76,6 +75,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             Time = DateTime.Now.ToString("HH:mm");
         }
+
         private void RefreshCompliment(object sender, object e)
         {
             Compliment = _commonService.GenerateCompliment();

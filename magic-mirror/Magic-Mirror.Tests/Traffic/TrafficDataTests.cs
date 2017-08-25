@@ -12,7 +12,7 @@ namespace MagicMirror.Tests.Traffic
 
         public TrafficDataTests()
         {
-            string start = "Heikant 51 Houwaart Belgium";
+            string start = "Generaal Armstrongweg 1 Antwerpen, Belgium";
             string destination = "Earl Bakkenstraat 10, 6422 PJ Heerlen, Netherlands";
 
             _repo = new TrafficRepo(start, destination);

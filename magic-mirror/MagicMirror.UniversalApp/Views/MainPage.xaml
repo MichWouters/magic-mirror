@@ -9,10 +9,14 @@
 
     <Page.Resources>
         <Style TargetType="RelativePanel">
-
+            <Setter Property="Padding" Value="10"></Setter>
         </Style>
 
-        
+        <Style x:Key="CurrentWeatherImage" TargetType="Image">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Margin" Value="10,0,0,0"></Setter>
+        </Style>
 
         <Style x:Key="WeatherType" TargetType="TextBlock">
         </Style>
@@ -71,16 +75,15 @@
                    Text="{x:Bind ViewModel.Weather.Name, Mode= OneWay,FallbackValue='Montgomery'}"
                    RelativePanel.Below="WeatherTextBox" 
                    FontSize="10" 
-                   Margin="0,0,0,10" 
-                    />
+                   Margin="0,0,0,10" />
 
         <Image
             x:Name="WeatherImage"
-            Source="{x:Bind ViewModel.Weather.Icon, FallbackValue=ms-appx:///Assets/Weather/01d.png}"
+            Source="{x:Bind ViewModel.Weather.Icon, FallbackValue=ms-appx:///Assets/Weather/Dark/01d.png}"
             RelativePanel.RightOf="TemperatureSymbol"
             RelativePanel.AlignVerticalCenterWith="TemperatureSymbol"
-            Width="30"
-            Height="30" Margin="10,0,0,0" Opacity="0.5" />
+            Style="{StaticResource CurrentWeatherImage}"
+            />
 
         <Image
             x:Name="SunriseImage"
@@ -125,7 +128,7 @@
             x:Name="TravelTimeTextBlock"
             RelativePanel.AlignTopWith="DurationImage"
             RelativePanel.RightOf="DurationImage"
-            Text="Travel Time" Margin="10,0,0,0" />
+            Text="Travel Time" Margin="5,0,0,0" />
 
         <TextBlock
             x:Name="DurationTextBlock"

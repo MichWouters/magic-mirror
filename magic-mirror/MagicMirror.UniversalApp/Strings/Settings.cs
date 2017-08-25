@@ -2,6 +2,9 @@
 
 namespace MagicMirror.UniversalApp.Strings
 {
+    /// <summary>
+    /// Helper file for setting names to avoid typos.
+    /// </summary>
     public class Settings
     {
         public static string UserName = "userName";

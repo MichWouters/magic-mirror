@@ -32,8 +32,8 @@ namespace MagicMirror.UniversalApp
         {
             // Todo: place in settings file
             localSettings.Values[Settings.UserName] = "Michiel";
-            localSettings.Values[Settings.HomeAddress] = "Heikant 51";
-            localSettings.Values[Settings.HomeTown] = "3390 Houwaart";
+            localSettings.Values[Settings.HomeAddress] = "Generaal Armstrongweg 1";
+            localSettings.Values[Settings.HomeTown] = "Antwerpen";
             localSettings.Values[Settings.WorkAddress] = "Earl Bakkenstraat 10 6422 Heerlen";
             localSettings.Values[Settings.Precision] = 1;
         }

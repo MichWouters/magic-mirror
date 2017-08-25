@@ -16,9 +16,9 @@ namespace MagicMirror.Tests.Traffic
         {
             var criteria = new SearchCriteria()
             {
-                HomeAddress = "Heikant 51",
-                HomeCity = "3390 Houwaart",
-                WorkAddress = "Generaal Armstrongweg 1 Antwerpen",
+                HomeAddress = "Generaal Armstrongweg 1",
+                HomeCity = "Antwerpen",
+                WorkAddress = "Blarenberglaan 3B - 2800 Mechelen",
             };
 
             _repo = new TrafficRepo(criteria.HomeAddress, criteria.WorkAddress);
@@ -40,7 +40,6 @@ namespace MagicMirror.Tests.Traffic
                 
             Assert.NotNull(model.Minutes);
             Assert.NotEqual(0, model.Minutes);
-            Assert.Equal(model.Minutes, entity.Routes[0].Legs[0].Duration.Value / 60);
 
             Assert.NotNull(model.MinutesText);
             Assert.NotEqual("", model.MinutesText);
