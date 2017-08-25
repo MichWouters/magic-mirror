@@ -151,8 +151,10 @@
             RelativePanel.AlignRightWithPanel="True"
             Text="{x:Bind ViewModel.Time, Mode=OneWay, FallbackValue='00:00'}" />
 
+        <!-- Todo: Place somewhere more UI friendly -->
         <Button
-            Content="Button"
-            RelativePanel.Below="SunSetImage" Click="Button_Click" />
+            Content="Settings"
+            RelativePanel.Below="SunSetImage" 
+            Click="Button_Click" />
     </RelativePanel>
 </Page>
