@@ -2,7 +2,7 @@
 {
     public class Coord
     {
-        public double Lon { get; set; }
-        public double Lat { get; set; }
+        public float Lon { get; set; }
+        public float Lat { get; set; }
     }
 }
