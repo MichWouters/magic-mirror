@@ -13,8 +13,8 @@
         </Style>
 
         <Style x:Key="CurrentWeatherImage" TargetType="Image">
-            <Setter Property="Width" Value="50"/>
-            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="50" />
+            <Setter Property="Height" Value="50" />
             <Setter Property="Margin" Value="10,0,0,0"></Setter>
         </Style>
 
@@ -73,8 +73,8 @@
 
         <TextBlock x:Name="LocationTextBlock"
                    Text="{x:Bind ViewModel.Weather.Name, Mode= OneWay,FallbackValue='Montgomery'}"
-                   RelativePanel.Below="WeatherTextBox" 
-                   FontSize="10" 
+                   RelativePanel.Below="WeatherTextBox"
+                   FontSize="10"
                    Margin="0,0,0,10" />
 
         <Image
@@ -82,8 +82,7 @@
             Source="{x:Bind ViewModel.Weather.Icon, FallbackValue=ms-appx:///Assets/Weather/Dark/01d.png}"
             RelativePanel.RightOf="TemperatureSymbol"
             RelativePanel.AlignVerticalCenterWith="TemperatureSymbol"
-            Style="{StaticResource CurrentWeatherImage}"
-            />
+            Style="{StaticResource CurrentWeatherImage}" />
 
         <Image
             x:Name="SunriseImage"
@@ -154,7 +153,7 @@
         <!-- Todo: Place somewhere more UI friendly -->
         <Button
             Content="Settings"
-            RelativePanel.Below="SunSetImage" 
+            RelativePanel.Below="SunSetImage"
             Click="Button_Click" />
     </RelativePanel>
 </Page>

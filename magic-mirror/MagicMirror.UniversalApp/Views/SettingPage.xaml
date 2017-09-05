@@ -13,7 +13,7 @@
         </Style>
 
         <Style TargetType="RelativePanel">
-            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Padding" Value="10" />
         </Style>
     </Page.Resources>
 
@@ -21,55 +21,54 @@
         <ToggleSwitch
                 x:Name="ThemeSwitch"
                 IsOn="False"
-                OffContent="Dark theme" 
+                OffContent="Dark theme"
                 OnContent="Light theme"
                 RelativePanel.AlignLeftWithPanel="True" />
                 <!--Toggled="{x:Bind ViewModel.ToggleLightTheme}" />-->
 
         <TextBox x:Name="UserNameTextBox"
                  HorizontalAlignment="Left"
-                 Header="User Name" 
+                 Header="User Name"
                  RelativePanel.AlignLeftWithPanel="True"
                  RelativePanel.Below="ThemeSwitch"
                  Text="{x:Bind ViewModel.SearchCriteria.UserName, Mode=TwoWay}" />
 
         <TextBox x:Name="BusyTextTextBox"
                      HorizontalAlignment="Left"
-                     Header="Busy text" 
+                     Header="Busy text"
                  RelativePanel.AlignLeftWithPanel="True"
                      RelativePanel.Below="UserNameTextBox"
-                     Text="Loading..."/>
+                     Text="Loading..." />
 
-        <Button x:Name="BusyButton" 
+        <Button x:Name="BusyButton"
                     Content="Show Busy"
                     RelativePanel.AlignBottomWith="BusyTextTextBox"
                     RelativePanel.RightOf="BusyTextTextBox" />
 
-        <TextBox x:Name="HomeTextBox" 
+        <TextBox x:Name="HomeTextBox"
                      HorizontalAlignment="Left"
-                     Header="Home street and number" 
+                     Header="Home street and number"
                      RelativePanel.AlignLeftWithPanel="True"
                      RelativePanel.Below="BusyTextTextBox"
-                     Text="{x:Bind ViewModel.SearchCriteria.HomeAddress, Mode=TwoWay}"   />
+                     Text="{x:Bind ViewModel.SearchCriteria.HomeAddress, Mode=TwoWay}" />
 
-        <TextBox x:Name="HomeTownTextBox" 
+        <TextBox x:Name="HomeTownTextBox"
                      HorizontalAlignment="Left"
-                     Header="Postal code Home town" 
+                     Header="Postal code Home town"
                      RelativePanel.AlignLeftWithPanel="True"
                      RelativePanel.Below="HomeTextBox"
-                     Text="{x:Bind ViewModel.SearchCriteria.HomeCity, Mode=TwoWay}"/>
+                     Text="{x:Bind ViewModel.SearchCriteria.HomeCity, Mode=TwoWay}" />
 
-        <TextBox x:Name="WorkAddressTextBox" 
+        <TextBox x:Name="WorkAddressTextBox"
                      HorizontalAlignment="Left"
-                     Header="Work Address" 
+                     Header="Work Address"
                      RelativePanel.AlignLeftWithPanel="True"
                      RelativePanel.Below="HomeTownTextBox"
-                     Text="{x:Bind ViewModel.SearchCriteria.WorkAddress, Mode=TwoWay}"/>
+                     Text="{x:Bind ViewModel.SearchCriteria.WorkAddress, Mode=TwoWay}" />
 
-        <Button Content="Save" 
-                RelativePanel.Below="WorkAddressTextBox" 
-                HorizontalAlignment="Center" 
-                Width="400" Margin="0,10,0,0" Click="Button_Click"/>
-
+        <Button Content="Save"
+                RelativePanel.Below="WorkAddressTextBox"
+                HorizontalAlignment="Center"
+                Width="400" Margin="0,10,0,0" Click="Button_Click" />
     </RelativePanel>
 </Page>

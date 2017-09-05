@@ -31,11 +31,11 @@ namespace MagicMirror.DataAccess.Repos
                 WeatherEntity entity = JsonConvert.DeserializeObject<WeatherEntity>(json);
                 return entity;
             }
-            catch(HttpRequestException e)
+            catch (HttpRequestException e)
             {
                 throw new HttpRequestException("A connection with the server could not be established", e);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new ArgumentException("Cannot convert Json to objects", e);
             }

@@ -110,7 +110,6 @@ namespace MagicMirror.DataAccess.Compliments
                 "Looking good dude!",
                 "If I had to choose between Mr.Rogers and you, I would pick you!",
                 "Learning from mistakes is better than not making mistakes",
-
             };
             return complimentList;
         }

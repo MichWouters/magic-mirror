@@ -1,5 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
-using MagicMirror.UniversalApp.ViewModels;
+﻿using MagicMirror.UniversalApp.ViewModels;
+using Windows.UI.Xaml.Controls;
 
 namespace MagicMirror.UniversalApp.Views
 {

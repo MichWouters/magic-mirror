@@ -26,8 +26,4 @@
 
         public DistanceUOM DistanceUOM { get; set; }
     }
-
-    
-
-
 }

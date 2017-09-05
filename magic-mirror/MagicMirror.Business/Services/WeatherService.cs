@@ -39,14 +39,16 @@ namespace MagicMirror.Business.Services
 
         public WeatherModel CalculateMappedValues(WeatherModel model)
         {
-            switch(_criteria.TemperatureUOM)
+            switch (_criteria.TemperatureUOM)
             {
                 case TemperatureUOM.Celsius:
                     model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, _criteria.Precision);
                     break;
+
                 case TemperatureUOM.Fahrenheit:
                     model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, _criteria.Precision);
                     break;
+
                 default:
                     break;
             }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace MagicMirror.DataAccess.Entities.Weather
+﻿namespace MagicMirror.DataAccess.Entities.Weather
 {
     public class WeatherEntity : Entity
     {

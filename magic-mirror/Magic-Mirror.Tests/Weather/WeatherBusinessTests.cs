@@ -16,7 +16,6 @@ namespace MagicMirror.Tests.Weather
             {
                 HomeCity = "London",
                 Precision = 1,
-               
             };
 
             _service = new WeatherService(criteria);
