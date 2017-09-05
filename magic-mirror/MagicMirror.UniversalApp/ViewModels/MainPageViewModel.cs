@@ -103,9 +103,9 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
-                WeatherModel result = Task.Run(() => _weatherService.GetModelAsync()).Result;
-                result.Icon = ConvertWeatherIcon(result.Icon);
-                Weather = result;
+                WeatherModel weatherModel =  await _weatherService.GetModelAsync();
+                weatherModel.Icon = ConvertWeatherIcon(weatherModel.Icon);
+                WeatherInfo = weatherModel;
 
                 if (!weatherTimer.IsEnabled) weatherTimer.Start();
             }
@@ -126,7 +126,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
-                TrafficModel result = Task.Run(() => _trafficService.GetModelAsync()).Result;
+                TrafficModel result = await _trafficService.GetModelAsync();
                 TrafficInfo = result;
 
                 if (!trafficTimer.IsEnabled) trafficTimer.Start();
@@ -232,7 +232,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private WeatherModel _weather;
 
-        public WeatherModel Weather
+        public WeatherModel WeatherInfo
         {
             get => _weather;
             set

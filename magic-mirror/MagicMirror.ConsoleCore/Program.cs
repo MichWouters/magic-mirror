@@ -81,8 +81,9 @@ namespace MagicMirror.ConsoleCore
         {
             Console.WriteLine($"Hello {dto.UserName}");
             Console.WriteLine($"Today is {DateTime.Now:D}. The current time is: {DateTime.Now:t}");
-            Console.WriteLine($"The current top-side temperature is {dto.DegreesCelsius} degrees Celsius with {dto.WeatherType}");
+            Console.WriteLine($"The current top-side temperature is {dto.DegreesCelsius} degrees Celsius with an estimated high of {dto.DegreesCelsius}. The current weather is {dto.WeatherType}");
             Console.WriteLine($"Your travel time is {dto.TravelTime} with {dto.TrafficDensity} traffic.");
+            Console.WriteLine("Have a safe and productive day");
         }
     }
 }

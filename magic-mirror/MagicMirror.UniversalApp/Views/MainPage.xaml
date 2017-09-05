@@ -55,7 +55,7 @@
         <TextBlock
             x:Name="TemperatureTextBlock"
             Style="{StaticResource Degrees}"
-            Text="{x:Bind ViewModel.Weather.TemperatureCelsius, Mode=OneWay, FallbackValue='-1'}"
+            Text="{x:Bind ViewModel.WeatherInfo.TemperatureCelsius, Mode=OneWay, FallbackValue='-1'}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center" />
 
@@ -69,17 +69,17 @@
             x:Name="WeatherTextBox"
             RelativePanel.Below="TemperatureTextBlock"
             Style="{StaticResource WeatherType}"
-            Text="{x:Bind ViewModel.Weather.WeatherType, Mode= OneWay, FallbackValue='Unavailable'}" />
+            Text="{x:Bind ViewModel.WeatherInfo.WeatherType, Mode= OneWay, FallbackValue='Unavailable'}" />
 
         <TextBlock x:Name="LocationTextBlock"
-                   Text="{x:Bind ViewModel.Weather.Name, Mode= OneWay,FallbackValue='Montgomery'}"
+                   Text="{x:Bind ViewModel.WeatherInfo.Name, Mode= OneWay,FallbackValue='Montgomery'}"
                    RelativePanel.Below="WeatherTextBox"
                    FontSize="10"
                    Margin="0,0,0,10" />
 
         <Image
             x:Name="WeatherImage"
-            Source="{x:Bind ViewModel.Weather.Icon, FallbackValue=ms-appx:///Assets/Weather/Dark/01d.png}"
+            Source="{x:Bind ViewModel.WeatherInfo.Icon, FallbackValue=ms-appx:///Assets/Weather/Dark/01d.png}"
             RelativePanel.RightOf="TemperatureSymbol"
             RelativePanel.AlignVerticalCenterWith="TemperatureSymbol"
             Style="{StaticResource CurrentWeatherImage}" />
@@ -94,7 +94,7 @@
             x:Name="SunriseTextBox"
             RelativePanel.AlignVerticalCenterWith="SunriseImage"
             RelativePanel.RightOf="SunriseImage"
-            Text="{x:Bind ViewModel.Weather.SunRise, Mode= OneWay, FallbackValue='0:00 am'}" />
+            Text="{x:Bind ViewModel.WeatherInfo.SunRise, Mode= OneWay, FallbackValue='0:00 am'}" />
 
         <Image
             x:Name="SunSetImage"
@@ -106,7 +106,7 @@
             x:Name="SunsetTextBox"
             RelativePanel.AlignVerticalCenterWith="SunSetImage"
             RelativePanel.RightOf="SunSetImage"
-            Text="{x:Bind ViewModel.Weather.SunSet, Mode= OneWay,FallbackValue='00:00 am'}" />
+            Text="{x:Bind ViewModel.WeatherInfo.SunSet, Mode= OneWay,FallbackValue='00:00 am'}" />
 
         <!--  Bottom of the page  -->
         <TextBlock
@@ -133,7 +133,7 @@
             x:Name="DurationTextBlock"
             RelativePanel.AlignBottomWithPanel="True"
             Style="{StaticResource BottomMetaDeta}"
-            Text="{x:Bind ViewModel.Traffic.Summary, Mode= OneWay, FallbackValue='Unavailable'}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            Text="{x:Bind ViewModel.TrafficInfo.Summary, Mode= OneWay, FallbackValue='Unavailable'}" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
         <!--  Top Right  -->
 
