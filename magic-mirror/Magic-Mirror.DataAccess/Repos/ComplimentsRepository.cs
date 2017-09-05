@@ -48,7 +48,6 @@ namespace MagicMirror.DataAccess.Compliments
                 "That color is perfect on you.",
                 "Hanging out with you is always a blast.",
                 "You always know -- and say -- exactly what I need to hear when I need to hear it.",
-                "Your're a giant fucking faggot and you know it.",
                 "You smell really good.",
                 "You may dance like no one's watching, but everyone's watching because you're an amazing dancer!",
                 "Being around you makes everything better!",
@@ -90,7 +89,6 @@ namespace MagicMirror.DataAccess.Compliments
                 "You're so thoughtful.",
                 "Your creative potential seems limitless.",
                 "Your name suits you to a T.",
-                "You're irresistible when you blush.",
                 "Actions speak louder than words, and yours tell an incredible story.",
                 "Somehow you make time stop and fly at the same time.",
                 "When you make up your mind about something, nothing stands in your way.",
@@ -110,7 +108,8 @@ namespace MagicMirror.DataAccess.Compliments
                 "You're really something special.",
                 "You're a gift to those around you",
                 "Looking good dude!",
-                "If I had to choose between Mr.Rogers and you, I would pick you!"
+                "If I had to choose between Mr.Rogers and you, I would pick you!",
+                "Learning from mistakes is better than not making mistakes",
             };
             return complimentList;
         }

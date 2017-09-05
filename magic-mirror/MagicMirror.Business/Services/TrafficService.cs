@@ -1,5 +1,4 @@
-﻿using Acme.Generic;
-using MagicMirror.Business.Models;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Repos;
 using MagicMirror.Entities.Traffic;
@@ -23,6 +22,7 @@ namespace MagicMirror.Business.Services
 
             _criteria = criteria;
         }
+
         public async Task<TrafficModel> GetModelAsync()
         {
             // Get entity from repository

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MagicMirror.Business.Models;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
-using MagicMirror.Business.Models;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {

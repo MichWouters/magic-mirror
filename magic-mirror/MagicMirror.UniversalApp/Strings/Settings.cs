@@ -1,6 +1,4 @@
-﻿using MagicMirror.Business.Models;
-
-namespace MagicMirror.UniversalApp.Strings
+﻿namespace MagicMirror.UniversalApp.Strings
 {
     /// <summary>
     /// Helper file for setting names to avoid typos.
@@ -18,6 +16,5 @@ namespace MagicMirror.UniversalApp.Strings
         public static string SearchCriteria = "searchCriteria";
 
         public static string Precision = "precision";
-
     }
 }
