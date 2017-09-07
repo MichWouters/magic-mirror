@@ -10,12 +10,5 @@ namespace MagicMirror.Business.Services
         /// </summary>
         /// <returns></returns>
         Task<T> GetModelAsync();
-
-        /// <summary>
-        /// Calculate the model's fields which cannot be resolved using Automapper.
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        T CalculateMappedValues(T model);
     }
 }

@@ -11,52 +11,61 @@ namespace MagicMirror.DataAccess.Repos
     {
         private readonly string _apiUrl = DataAccessConfig.OpenWeatherApiUrl;
         private readonly string _apiId = DataAccessConfig.OpenWeatherApiId;
-        private readonly string _url;
 
-        private HttpResponseMessage _response;
+        private readonly string _url;
 
         public WeatherRepo(string city)
         {
-            if (string.IsNullOrWhiteSpace(city))
-                throw new ArgumentNullException("A home city has to be provided");
+            // Defensive coding
+            if (string.IsNullOrWhiteSpace(city)) throw new ArgumentNullException("A home city has to be provided");
+            if (string.IsNullOrWhiteSpace(_apiUrl)) throw new ArgumentNullException("No API Url provided");
+            if (string.IsNullOrWhiteSpace(_apiId)) throw new ArgumentNullException("No Api Id provided");
 
             _url = string.Format("{0}/weather?q={1}&appid={2}", _apiUrl, city, _apiId);
         }
 
-        public async Task<WeatherEntity> GetEntityAsync()
+        public async Task<WeatherEntity> GetJsonAsync()
         {
             try
             {
-                string json = await GetJsonAsync();
-                WeatherEntity entity = JsonConvert.DeserializeObject<WeatherEntity>(json);
-                return entity;
-            }
-            catch (HttpRequestException e)
-            {
-                throw new HttpRequestException("A connection with the server could not be established", e);
+                var client = new HttpClient();
+                HttpResponseMessage _response = await client.GetAsync(_url);
+
+                if (_response.IsSuccessStatusCode)
+                {
+                    string json = await _response.Content.ReadAsStringAsync();
+                    var entity = ConvertJsonToEntity(json);
+
+                    return entity;
+                }
+                else
+                {
+                    throw new HttpRequestException("A connection with the server could not be established. Response: " + _response.StatusCode + ' ' + _response.ReasonPhrase);
+                }
             }
             catch (Exception e)
             {
-                throw new ArgumentException("Cannot convert Json to objects", e);
+                throw new ArgumentException("Could not retrieve Json from server", e);
             }
         }
 
-        public async Task<string> GetJsonAsync()
+        private WeatherEntity ConvertJsonToEntity(string json)
         {
-            _response = await GetJsonResponseAsync();
-
-            if (_response.IsSuccessStatusCode)
+            try
             {
-                string result = await _response.Content.ReadAsStringAsync();
-                return result;
+                WeatherEntity entity = JsonConvert.DeserializeObject<WeatherEntity>(json);
+                return entity;
             }
-            throw new HttpRequestException("A connection with the server could not be established");
+            catch (Exception e)
+            {
+                throw new ArgumentException("Cannot convert Json to Entity", e);
+            }
         }
 
-        public async Task<HttpResponseMessage> GetJsonResponseAsync()
+        public async Task<HttpResponseMessage> GetHttpResponseFromApi()
         {
             var client = new HttpClient();
-            _response = await client.GetAsync(_url);
+            HttpResponseMessage _response = await client.GetAsync(_url);
 
             return _response;
         }
