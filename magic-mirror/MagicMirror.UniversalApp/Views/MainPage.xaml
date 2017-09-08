@@ -87,7 +87,7 @@
         <Image
             x:Name="SunriseImage"
             RelativePanel.Below="LocationTextBlock"
-            Source="ms-appx:///Assets/Weather/Dark/sunrise.png"
+            Source="ms-appx:///Assets/Weather/Dark/sunset.png"
             Style="{StaticResource SunImage}" />
 
         <TextBlock
@@ -99,7 +99,7 @@
         <Image
             x:Name="SunSetImage"
             RelativePanel.Below="SunriseImage"
-            Source="ms-appx:///Assets/Weather/Dark/sunset.png"
+            Source="ms-appx:///Assets/Weather/Dark/sunrise.png"
             Style="{StaticResource SunImage}" />
 
         <TextBlock

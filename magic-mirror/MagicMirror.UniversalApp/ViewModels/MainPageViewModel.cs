@@ -5,21 +5,20 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
-    public class MainPageViewModel : INotifyPropertyChanged
+    public class MainPageViewModel : ViewModelBase, INotifyPropertyChanged
     {
         // Services from the Business Layer
         private readonly IService<WeatherModel> _weatherService;
-        private bool _contentDialogShown;
 
         private readonly IService<TrafficModel> _trafficService;
         private readonly CommonService _commonService;
 
         // Timers to refresh individual components
         private DispatcherTimer timeTimer;
+
         private DispatcherTimer complimentTimer;
         private DispatcherTimer weatherTimer;
         private DispatcherTimer trafficTimer;
@@ -52,12 +51,13 @@ namespace MagicMirror.UniversalApp.ViewModels
             RefreshWeatherModel(null, null);
             RefreshTrafficModel(null, null);
         }
+
         /// <summary>
         /// Set timers at which data needs to be refreshed
         /// </summary>
         private void SetRefreshTimers()
         {
-            SetUpTimer(timeTimer, new TimeSpan(0,0,1), RefreshTime);
+            SetUpTimer(timeTimer, new TimeSpan(0, 0, 1), RefreshTime);
             SetUpTimer(complimentTimer, new TimeSpan(0, 5, 0), RefreshCompliment);
             SetUpTimer(weatherTimer, new TimeSpan(0, 15, 0), RefreshWeatherModel);
             SetUpTimer(trafficTimer, new TimeSpan(0, 10, 0), RefreshTrafficModel);
@@ -103,7 +103,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
-                WeatherModel weatherModel =  await _weatherService.GetModelAsync();
+                WeatherModel weatherModel = await _weatherService.GetModelAsync();
                 WeatherInfo = weatherModel;
 
                 if (!weatherTimer.IsEnabled) weatherTimer.Start();
@@ -141,24 +141,6 @@ namespace MagicMirror.UniversalApp.ViewModels
                 await Task.Delay((minutes * 60) * 1000);
                 RefreshTrafficModel(null, null);
             }
-        }
-
-        // Todo: Only one dialog can be open
-        private async void DisplayErrorMessage(string title, string content = "")
-        {
-            if (!_contentDialogShown)
-            {
-                _contentDialogShown = true;
-                var errorMessage = new ContentDialog
-                {
-                    Title = title,
-                    Content = content,
-                    PrimaryButtonText = "Ok"
-                };
-                ContentDialogResult result = await errorMessage.ShowAsync();
-                _contentDialogShown = false;
-            }
-
         }
 
         #region Properties
