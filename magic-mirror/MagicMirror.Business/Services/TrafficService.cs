@@ -3,13 +3,14 @@ using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Repos;
 using MagicMirror.Entities.Traffic;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
     public class TrafficService : ServiceBase, IService<TrafficModel>
     {
-        private IRepo<TrafficEntity> _repo;
+        private IApiRepo<TrafficEntity> _repo;
         private SearchCriteria _criteria;
 
         public TrafficService(SearchCriteria criteria)
@@ -25,18 +26,27 @@ namespace MagicMirror.Business.Services
 
         public async Task<TrafficModel> GetModelAsync()
         {
-            // Get entity from repository
-            string homeAddress = $"{_criteria.HomeAddress} {_criteria.HomeCity}";
-            _repo = new TrafficRepo(homeAddress, _criteria.WorkAddress);
-            TrafficEntity entity = await _repo.GetEntityAsync();
+            try
+            {
+                // Get entity from repository
+                string homeAddress = $"{_criteria.HomeAddress} {_criteria.HomeCity}";
+                _repo = new TrafficRepo(homeAddress, _criteria.WorkAddress);
+                TrafficEntity entity = await _repo.GetEntityAsync();
 
-            // Map entity to model
-            TrafficModel model = MapEntityToModel(entity);
+                // Map entity to model
+                TrafficModel model = MapEntityToModel(entity);
 
-            // Calculate non-mappable values
-            model = CalculateMappedValues(model);
+                // Calculate non-mappable values
+                model = CalculateMappedValues(model);
 
-            return model;
+                return model;
+            }
+            catch (HttpRequestException) { throw; }
+            catch (ArgumentException) { throw; }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Unable to retrieve Traffic Model", ex);
+            }
         }
 
         public TrafficModel CalculateMappedValues(TrafficModel model)
@@ -77,7 +87,7 @@ namespace MagicMirror.Business.Services
             return result;
         }
 
-        private TrafficModel MapEntityToModel(Entity entity)
+        private TrafficModel MapEntityToModel(IEntity entity)
         {
             TrafficModel model = Mapper.Map<TrafficModel>(entity);
             return model;

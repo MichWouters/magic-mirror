@@ -39,27 +39,29 @@ namespace MagicMirror.Tests.Weather
         [Fact]
         public void Calculated_Fields_Correct()
         {
-            // Arrange
-            WeatherModel model = new WeatherModel
-            {
-                SunRiseMilliseconds = 1502426469,
-                SunSetMilliSeconds = 1502479731,
-                TemperatureKelvin = 100,
-            };
+            //// Arrange
+            //WeatherModel model = new WeatherModel
+            //{
+            //    SunRiseMilliseconds = 1502426469,
+            //    SunSetMilliSeconds = 1502479731,
+            //    TemperatureKelvin = 100,
+            //};
 
-            // Act
-            model = _service.CalculateMappedValues(model);
+            //// Act
+            //model = _service.CalculateMappedValues(model);
 
-            // Assert
-            Assert.Equal("04:41", model.SunRise);
-            Assert.Equal("19:28", model.SunSet);
-            Assert.Equal(-173.1, model.TemperatureCelsius);
-            Assert.Equal(0, model.TemperatureFahrenheit);
-            Assert.Equal(100, model.TemperatureKelvin);
+            //// Assert
+            //Assert.Equal("04:41", model.SunRise);
+            //Assert.Equal("19:28", model.SunSet);
+            //Assert.Equal(-173.1, model.TemperatureCelsius);
+            //Assert.Equal(0, model.TemperatureFahrenheit);
+            //Assert.Equal(100, model.TemperatureKelvin);
 
-            criteria.TemperatureUOM = TemperatureUOM.Fahrenheit;
-            model = _service.CalculateMappedValues(model);
-            Assert.Equal(-279.4, model.TemperatureFahrenheit);
+            //criteria.TemperatureUOM = TemperatureUOM.Fahrenheit;
+            //model = _service.CalculateMappedValues(model);
+            //Assert.Equal(-279.4, model.TemperatureFahrenheit);
+
+            Assert.True(false);
         }
     }
 }

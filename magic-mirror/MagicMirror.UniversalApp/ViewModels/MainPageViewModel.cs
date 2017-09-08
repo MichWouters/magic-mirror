@@ -108,10 +108,10 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 if (!weatherTimer.IsEnabled) weatherTimer.Start();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // Can't connect to server. Try again after waiting for a few minutes
-                DisplayErrorMessage("Can't update weather information", "Check your internet connection and try again");
+                DisplayErrorMessage("Can't update weather information", ex.Message);
                 if (weatherTimer.IsEnabled) weatherTimer.Stop();
 
                 // Try to refresh data. If succesful, resume timer
@@ -130,10 +130,10 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 if (!trafficTimer.IsEnabled) trafficTimer.Start();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // Can't connect to server. Try again after waiting for a few minutes
-                DisplayErrorMessage("Can't update traffic information", "Check your internet connection and try again");
+                DisplayErrorMessage("Can't update traffic information", ex.Message);
                 if (weatherTimer.IsEnabled) weatherTimer.Stop();
 
                 // Try to refresh data immediately. If succesful, resume timer

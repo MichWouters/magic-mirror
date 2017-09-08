@@ -1,73 +1,65 @@
 ﻿using MagicMirror.DataAccess.Configuration;
 using MagicMirror.DataAccess.Entities.Weather;
-using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class WeatherRepo : IRepo<WeatherEntity>
+    public class WeatherRepo : ApiRepoBase<WeatherEntity>
     {
-        private readonly string _apiUrl = DataAccessConfig.OpenWeatherApiUrl;
-        private readonly string _apiId = DataAccessConfig.OpenWeatherApiId;
-
-        private readonly string _url;
-
-        public WeatherRepo(string city)
+        public WeatherRepo(string city) : base()
         {
-            // Defensive coding
             if (string.IsNullOrWhiteSpace(city)) throw new ArgumentNullException("A home city has to be provided");
-            if (string.IsNullOrWhiteSpace(_apiUrl)) throw new ArgumentNullException("No API Url provided");
-            if (string.IsNullOrWhiteSpace(_apiId)) throw new ArgumentNullException("No Api Id provided");
 
-            _url = string.Format("{0}/weather?q={1}&appid={2}", _apiUrl, city, _apiId);
+            _apiUrl = DataAccessConfig.OpenWeatherApiUrl;
+            _apiId = DataAccessConfig.OpenWeatherApiId;
+
+            _url = $"{_apiUrl}/weather?q={city}&appid={_apiId}";
         }
 
-        public async Task<WeatherEntity> GetJsonAsync()
+        public override async Task<WeatherEntity> GetEntityAsync()
         {
             try
             {
-                var client = new HttpClient();
-                HttpResponseMessage _response = await client.GetAsync(_url);
+                HttpResponseMessage response = await GetHttpResponseFromApiAsync();
 
-                if (_response.IsSuccessStatusCode)
-                {
-                    string json = await _response.Content.ReadAsStringAsync();
-                    var entity = ConvertJsonToEntity(json);
-
-                    return entity;
-                }
-                else
-                {
-                    throw new HttpRequestException("A connection with the server could not be established. Response: " + _response.StatusCode + ' ' + _response.ReasonPhrase);
-                }
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException("Could not retrieve Json from server", e);
-            }
-        }
-
-        private WeatherEntity ConvertJsonToEntity(string json)
-        {
-            try
-            {
-                WeatherEntity entity = JsonConvert.DeserializeObject<WeatherEntity>(json);
+                string json = await response.Content.ReadAsStringAsync();
+                WeatherEntity entity = ConvertJsonToEntity(json);
                 return entity;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new ArgumentException("Cannot convert Json to Entity", e);
+                throw;
             }
         }
 
-        public async Task<HttpResponseMessage> GetHttpResponseFromApi()
+        public override async Task<HttpResponseMessage> GetHttpResponseFromApiAsync()
         {
-            var client = new HttpClient();
-            HttpResponseMessage _response = await client.GetAsync(_url);
+            try
+            {
+                HttpResponseMessage result = await base.GetHttpResponseFromApiAsync();
+                return result;
+            }
+            catch (HttpRequestException ex)
+            {
+                string errorMessage = $"A connection with the weather server could not be established.";
+                throw new HttpRequestException(errorMessage, ex);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
-            return _response;
+        private void SetApiParameters()
+        {
+            _apiUrl = DataAccessConfig.OpenWeatherApiUrl;
+            _apiId = DataAccessConfig.OpenWeatherApiId;
+
+            if (string.IsNullOrWhiteSpace(_apiUrl)) throw new ArgumentNullException("No Weather API Url provided");
+            if (string.IsNullOrWhiteSpace(_apiId)) throw new ArgumentNullException("No Weather Api Id provided");
+
         }
     }
 }

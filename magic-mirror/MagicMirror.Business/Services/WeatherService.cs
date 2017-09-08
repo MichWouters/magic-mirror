@@ -10,7 +10,7 @@ namespace MagicMirror.Business.Services
 {
     public class WeatherService : ServiceBase, IService<WeatherModel>
     {
-        private IRepo<WeatherEntity> _repo;
+        private IApiRepo<WeatherEntity> _repo;
         private SearchCriteria _criteria;
 
         public WeatherService(SearchCriteria criteria)
@@ -150,7 +150,7 @@ namespace MagicMirror.Business.Services
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        private WeatherModel MapEntityToModel(Entity entity)
+        private WeatherModel MapEntityToModel(IEntity entity)
         {
             WeatherModel model = Mapper.Map<WeatherModel>(entity);
             return model;

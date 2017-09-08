@@ -2,7 +2,7 @@
 
 namespace MagicMirror.DataAccess.Compliments
 {
-    public class ComplimentsRepository
+    public class ComplimentsRepo
     {
         public List<string> GetCompliments()
         {
