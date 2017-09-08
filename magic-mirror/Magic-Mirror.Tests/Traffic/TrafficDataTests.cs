@@ -8,7 +8,7 @@ namespace MagicMirror.Tests.Traffic
 {
     public class TrafficDataTests
     {
-        private readonly IRepo<TrafficEntity> _repo;
+        private readonly IApiRepo<TrafficEntity> _repo;
 
         public TrafficDataTests()
         {
@@ -21,7 +21,7 @@ namespace MagicMirror.Tests.Traffic
         [Fact]
         public async Task Can_Access_Api()
         {
-            var result = await _repo.GetJsonResponseAsync();
+            var result = await _repo.GetHttpResponseFromApiAsync();
 
             Assert.NotNull(result);
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);

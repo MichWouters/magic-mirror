@@ -5,11 +5,10 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
-    public class MainPageViewModel : INotifyPropertyChanged
+    public class MainPageViewModel : ViewModelBase, INotifyPropertyChanged
     {
         // Services from the Business Layer
         private readonly IService<WeatherModel> _weatherService;
@@ -58,21 +57,22 @@ namespace MagicMirror.UniversalApp.ViewModels
         /// </summary>
         private void SetRefreshTimers()
         {
-            timeTimer.Tick += RefreshTime;
-            timeTimer.Interval = new TimeSpan(0, 1, 0);
+            SetUpTimer(timeTimer, new TimeSpan(0, 0, 1), RefreshTime);
+            SetUpTimer(complimentTimer, new TimeSpan(0, 5, 0), RefreshCompliment);
+            SetUpTimer(weatherTimer, new TimeSpan(0, 15, 0), RefreshWeatherModel);
+            SetUpTimer(trafficTimer, new TimeSpan(0, 10, 0), RefreshTrafficModel);
+
+            //complimentTimer.Tick += RefreshCompliment;
+            //complimentTimer.Interval = new TimeSpan(0, 1, 0);
+            //if (!complimentTimer.IsEnabled) complimentTimer.Start();
+        }
+
+        //TODO: Make delegate?
+        private void SetUpTimer(DispatcherTimer timer, TimeSpan timeSpan, EventHandler<object> method)
+        {
+            timeTimer.Tick += method;
+            timeTimer.Interval = new TimeSpan(0, 0, 10);
             if (!timeTimer.IsEnabled) timeTimer.Start();
-
-            complimentTimer.Tick += RefreshCompliment;
-            complimentTimer.Interval = new TimeSpan(0, 1, 0);
-            if (!complimentTimer.IsEnabled) complimentTimer.Start();
-
-            weatherTimer.Tick += RefreshWeatherModel;
-            weatherTimer.Interval = new TimeSpan(0, 15, 0);
-            if (!weatherTimer.IsEnabled) weatherTimer.Start();
-
-            trafficTimer.Tick += RefreshTrafficModel;
-            trafficTimer.Interval = new TimeSpan(0, 10, 0);
-            if (!trafficTimer.IsEnabled) trafficTimer.Start();
         }
 
         private void RefreshTime(object sender, object e)
@@ -103,16 +103,15 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
-                WeatherModel weatherModel =  await _weatherService.GetModelAsync();
-                weatherModel.Icon = ConvertWeatherIcon(weatherModel.Icon);
+                WeatherModel weatherModel = await _weatherService.GetModelAsync();
                 WeatherInfo = weatherModel;
 
                 if (!weatherTimer.IsEnabled) weatherTimer.Start();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // Can't connect to server. Try again after waiting for a few minutes
-                DisplayErrorMessage("Can't update weather information", "Check your internet connection and try again");
+                DisplayErrorMessage("Can't update weather information", ex.Message);
                 if (weatherTimer.IsEnabled) weatherTimer.Stop();
 
                 // Try to refresh data. If succesful, resume timer
@@ -131,10 +130,10 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 if (!trafficTimer.IsEnabled) trafficTimer.Start();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // Can't connect to server. Try again after waiting for a few minutes
-                DisplayErrorMessage("Can't update traffic information", "Check your internet connection and try again");
+                DisplayErrorMessage("Can't update traffic information", ex.Message);
                 if (weatherTimer.IsEnabled) weatherTimer.Stop();
 
                 // Try to refresh data immediately. If succesful, resume timer
@@ -142,90 +141,6 @@ namespace MagicMirror.UniversalApp.ViewModels
                 await Task.Delay((minutes * 60) * 1000);
                 RefreshTrafficModel(null, null);
             }
-        }
-
-        // Todo: Refresh
-        private string ConvertWeatherIcon(string icon)
-        {
-            try
-            {
-                string theme = "Dark";
-                string prefix = "ms-appx:///Assets/Weather";
-                string res;
-
-                switch (icon)
-                {
-                    case "01d":
-                        res = "01d.png";
-                        break;
-
-                    case "01n":
-                        res = "01n.png";
-                        break;
-
-                    case "02d":
-                        res = "02d.png";
-                        break;
-
-                    case "02n":
-                        res = "02n.png";
-                        break;
-
-                    case "03d":
-                    case "03n":
-                    case "04d":
-                    case "04n":
-                        res = "03or4.png";
-                        break;
-
-                    case "09n":
-                    case "09d":
-                        res = "09.png";
-                        break;
-
-                    case "10d":
-                    case "10n":
-                        res = "09.png";
-                        break;
-
-                    case "11d":
-                        res = "11d.png";
-                        break;
-
-                    case "11n":
-                        res = "11n.png";
-                        break;
-
-                    case "13d":
-                    case "13n":
-                        res = "13.png";
-                        break;
-
-                    case "50n":
-                    case "50d":
-                    default:
-                        res = "50.png";
-                        break;
-                }
-                return $"{prefix}/{theme}/{res}";
-            }
-            catch (Exception ex)
-            {
-                DisplayErrorMessage("Cannot set weather icon");
-                return "";
-            }
-        }
-
-        // Todo: Only one dialog can be open
-        private async void DisplayErrorMessage(string title, string content = "")
-        {
-            var errorMessage = new ContentDialog
-            {
-                Title = title,
-                Content = content,
-                PrimaryButtonText = "Ok"
-            };
-            ContentDialogResult result = await errorMessage.ShowAsync();
         }
 
         #region Properties

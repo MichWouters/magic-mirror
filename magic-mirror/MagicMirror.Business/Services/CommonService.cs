@@ -7,7 +7,7 @@ namespace MagicMirror.Business.Services
     {
         public string GenerateCompliment()
         {
-            var compRepo = new ComplimentsRepository().GetCompliments();
+            var compRepo = new ComplimentsRepo().GetCompliments();
             int randomCompliment = new Random().Next(compRepo.Count);
             string compliment = compRepo[randomCompliment];
 

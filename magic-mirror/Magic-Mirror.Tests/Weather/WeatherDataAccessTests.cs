@@ -8,22 +8,33 @@ namespace MagicMirror.Tests.Weather
 {
     public class WeatherDataAccessTests
     {
-        private readonly IRepo<WeatherEntity> _repo;
+        private readonly IApiRepo<WeatherEntity> _repo;
 
         public WeatherDataAccessTests()
         {
             _repo = new WeatherRepo("London");
         }
 
+        // If this test fails, we know why other test fail
         [Fact]
-        public async Task Can_Retrieve_Json_Data()
+        public async Task Can_Connect_To_Api()
         {
             // Act
-            var result = await _repo.GetJsonAsync();
+            var result = await _repo.GetHttpResponseFromApiAsync();
 
             // Assert
-            Assert.NotEqual("", result);
-            Assert.NotEqual(0, result.Length);
+            Assert.NotNull(result);
+            Assert.True(result.IsSuccessStatusCode);
+            Assert.Equal("200", result.StatusCode.ToString());
+        }
+
+        [Fact]
+        public async Task Result_Not_Null()
+        {
+            // Act
+            var result = await _repo.GetEntityAsync();
+
+            // Assert
             Assert.NotNull(result);
         }
 
@@ -34,21 +45,8 @@ namespace MagicMirror.Tests.Weather
             var result = await _repo.GetEntityAsync();
 
             // Assert
-            Assert.NotNull(result);
             Assert.Equal(result.Name.ToLower().Trim(), "london");
             Assert.IsType<WeatherEntity>(result);
-        }
-
-        [Fact]
-        public async Task Connect_To_Api_Success()
-        {
-            // Act
-            var result = await _repo.GetJsonResponseAsync();
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.True(result.IsSuccessStatusCode);
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
         }
     }
 }

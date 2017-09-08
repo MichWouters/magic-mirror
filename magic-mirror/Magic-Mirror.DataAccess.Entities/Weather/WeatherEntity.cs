@@ -1,6 +1,6 @@
 ﻿namespace MagicMirror.DataAccess.Entities.Weather
 {
-    public class WeatherEntity : Entity
+    public class WeatherEntity : IEntity
     {
         public Coord Coord { get; set; }
         public Weather[] Weather { get; set; }

@@ -1,68 +1,65 @@
 ﻿using MagicMirror.DataAccess.Configuration;
 using MagicMirror.Entities.Traffic;
-using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class TrafficRepo : IRepo<TrafficEntity>
+    public class TrafficRepo : ApiRepoBase<TrafficEntity>
     {
-        private readonly string _apiId = DataAccessConfig.TrafficApiId;
-        private readonly string _apiUrl = DataAccessConfig.TrafficApiUrl;
-
-        private readonly string _url;
-
-        public TrafficRepo(string start, string destination)
+        public TrafficRepo(string start, string destination):base()
         {
-            if (string.IsNullOrWhiteSpace(start) || string.IsNullOrWhiteSpace(destination))
-                throw new ArgumentNullException("Start and destination addresses need to be provided");
+            if (string.IsNullOrWhiteSpace(start)) throw new ArgumentNullException("Start address need to be provided");
+            if (string.IsNullOrWhiteSpace(destination)) throw new ArgumentNullException("Destination address needs to be provided");
 
+            SetApiParameters();
+            
             _url = $"{_apiUrl}?origin={start}&destination={destination}&key={_apiId}";
         }
 
-        public async Task<TrafficEntity> GetEntityAsync()
-        {
-            string json = await GetJsonAsync();
-
-            TrafficEntity entity = JsonConvert.DeserializeObject<TrafficEntity>(json);
-            return entity;
-        }
-
-        public async Task<string> GetJsonAsync()
-        {
-            HttpResponseMessage response = await GetJsonResponseAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                string result = await response.Content.ReadAsStringAsync();
-                return result;
-            }
-            else
-            {
-                throw new HttpRequestException("Unable to retrieve Json Data. StatusCode: " + response.StatusCode);
-            }
-        }
-
-        public async Task<HttpResponseMessage> GetJsonResponseAsync()
+        public override async Task<TrafficEntity> GetEntityAsync()
         {
             try
             {
-                HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.GetAsync(_url);
+                HttpResponseMessage response = await GetHttpResponseFromApiAsync();
 
-                return response;
+                string json = await response.Content.ReadAsStringAsync();
+                TrafficEntity entity = ConvertJsonToEntity(json);
+                return entity;
             }
-            catch (InvalidOperationException e)
+            catch (Exception)
             {
-                throw new InvalidOperationException("An invalid url was provided", e);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
                 throw;
             }
+        }
+
+        public override async Task<HttpResponseMessage> GetHttpResponseFromApiAsync()
+        {
+            try
+            {
+                HttpResponseMessage result = await base.GetHttpResponseFromApiAsync();
+                return result;
+            }
+            catch (HttpRequestException ex)
+            {
+                string errorMessage = $"A connection with the traffic server could not be established.";
+                throw new HttpRequestException(errorMessage, ex);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private void SetApiParameters()
+        {
+            _apiUrl = DataAccessConfig.TrafficApiUrl;
+            _apiId = DataAccessConfig.TrafficApiId;
+
+            if (string.IsNullOrWhiteSpace(_apiUrl)) throw new ArgumentNullException("No Traffic API Url provided");
+            if (string.IsNullOrWhiteSpace(_apiId)) throw new ArgumentNullException("No Traffic Api Id provided");
+
         }
     }
 }

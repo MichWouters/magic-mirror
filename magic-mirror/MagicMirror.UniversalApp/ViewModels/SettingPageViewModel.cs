@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
-    public class SettingPageViewModel : INotifyPropertyChanged
+    public class SettingPageViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public SearchCriteria SearchCriteria
         {
@@ -26,7 +26,14 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         public void ToggleLightTheme()
         {
-            throw new NotImplementedException();
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch(Exception ex)
+            {
+                DisplayErrorMessage("Cannot switch theme at this time", ex.Message);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -9,7 +9,7 @@ namespace MagicMirror.Tests.Traffic
 {
     public class TrafficBusinessTests
     {
-        private readonly IRepo<TrafficEntity> _repo;
+        private readonly IApiRepo<TrafficEntity> _repo;
         private readonly IService<TrafficModel> _service;
 
         public TrafficBusinessTests()
@@ -49,19 +49,20 @@ namespace MagicMirror.Tests.Traffic
         [Fact]
         public void Calculated_Fields_Correct()
         {
-            // Arrange
-            var model = new TrafficModel
-            {
-                Minutes = 5400,
-                NumberOfIncidents = 3,
-            };
+            //// Arrange
+            //var model = new TrafficModel
+            //{
+            //    Minutes = 5400,
+            //    NumberOfIncidents = 3,
+            //};
 
-            // Act
-            model = _service.CalculateMappedValues(model);
+            //// Act
+            //model = _service.GetModelAsync();
 
-            // Assert
-            Assert.Equal(90, model.Minutes);
-            Assert.Equal(TrafficDensity.Heavy, model.TrafficDensity);
+            //// Assert
+            //Assert.Equal(90, model.Minutes);
+            //Assert.Equal(TrafficDensity.Heavy, model.TrafficDensity);
+            Assert.True(false);
         }
     }
 }

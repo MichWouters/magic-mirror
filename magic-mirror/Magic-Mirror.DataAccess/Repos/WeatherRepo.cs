@@ -1,64 +1,65 @@
 ﻿using MagicMirror.DataAccess.Configuration;
 using MagicMirror.DataAccess.Entities.Weather;
-using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class WeatherRepo : IRepo<WeatherEntity>
+    public class WeatherRepo : ApiRepoBase<WeatherEntity>
     {
-        private readonly string _apiUrl = DataAccessConfig.OpenWeatherApiUrl;
-        private readonly string _apiId = DataAccessConfig.OpenWeatherApiId;
-        private readonly string _url;
-
-        private HttpResponseMessage _response;
-
-        public WeatherRepo(string city)
+        public WeatherRepo(string city) : base()
         {
-            if (string.IsNullOrWhiteSpace(city))
-                throw new ArgumentNullException("A home city has to be provided");
+            if (string.IsNullOrWhiteSpace(city)) throw new ArgumentNullException("A home city has to be provided");
 
-            _url = string.Format("{0}/weather?q={1}&appid={2}", _apiUrl, city, _apiId);
+            _apiUrl = DataAccessConfig.OpenWeatherApiUrl;
+            _apiId = DataAccessConfig.OpenWeatherApiId;
+
+            _url = $"{_apiUrl}/weather?q={city}&appid={_apiId}";
         }
 
-        public async Task<WeatherEntity> GetEntityAsync()
+        public override async Task<WeatherEntity> GetEntityAsync()
         {
             try
             {
-                string json = await GetJsonAsync();
-                WeatherEntity entity = JsonConvert.DeserializeObject<WeatherEntity>(json);
+                HttpResponseMessage response = await GetHttpResponseFromApiAsync();
+
+                string json = await response.Content.ReadAsStringAsync();
+                WeatherEntity entity = ConvertJsonToEntity(json);
                 return entity;
             }
-            catch (HttpRequestException e)
+            catch (Exception)
             {
-                throw new HttpRequestException("A connection with the server could not be established", e);
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException("Cannot convert Json to objects", e);
+                throw;
             }
         }
 
-        public async Task<string> GetJsonAsync()
+        public override async Task<HttpResponseMessage> GetHttpResponseFromApiAsync()
         {
-            _response = await GetJsonResponseAsync();
-
-            if (_response.IsSuccessStatusCode)
+            try
             {
-                string result = await _response.Content.ReadAsStringAsync();
+                HttpResponseMessage result = await base.GetHttpResponseFromApiAsync();
                 return result;
             }
-            throw new HttpRequestException("A connection with the server could not be established");
+            catch (HttpRequestException ex)
+            {
+                string errorMessage = $"A connection with the weather server could not be established.";
+                throw new HttpRequestException(errorMessage, ex);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public async Task<HttpResponseMessage> GetJsonResponseAsync()
+        private void SetApiParameters()
         {
-            var client = new HttpClient();
-            _response = await client.GetAsync(_url);
+            _apiUrl = DataAccessConfig.OpenWeatherApiUrl;
+            _apiId = DataAccessConfig.OpenWeatherApiId;
 
-            return _response;
+            if (string.IsNullOrWhiteSpace(_apiUrl)) throw new ArgumentNullException("No Weather API Url provided");
+            if (string.IsNullOrWhiteSpace(_apiId)) throw new ArgumentNullException("No Weather Api Id provided");
+
         }
     }
 }

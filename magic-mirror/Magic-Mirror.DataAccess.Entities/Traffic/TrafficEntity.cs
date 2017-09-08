@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MagicMirror.Entities.Traffic
 {
-    public class TrafficEntity : Entity
+    public class TrafficEntity : IEntity
     {
         public List<GeocodedWaypoint> GeocodedWaypoints { get; set; }
         public List<Route> Routes { get; set; }
