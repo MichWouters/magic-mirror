@@ -24,6 +24,7 @@ namespace MagicMirror.UniversalApp
         {
             InitializeComponent();
             Suspending += OnSuspending;
+
             SetDefaults();
             CreateSearchCriteriaSingleton();
         }
@@ -55,6 +56,7 @@ namespace MagicMirror.UniversalApp
             return Criteria;
         }
 
+        #region BoilerPlate
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -118,5 +120,6 @@ namespace MagicMirror.UniversalApp
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+        #endregion
     }
 }

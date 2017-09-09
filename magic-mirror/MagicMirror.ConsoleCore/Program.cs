@@ -7,8 +7,8 @@ namespace MagicMirror.ConsoleCore
 {
     public class Program
     {
-        private static IService<WeatherModel> _weatherService;
-        private static IService<TrafficModel> _trafficService;
+        private static IApiService<WeatherModel> _weatherService;
+        private static IApiService<TrafficModel> _trafficService;
 
         public static void Main(string[] args)
         {

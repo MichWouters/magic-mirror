@@ -4,14 +4,12 @@ using MagicMirror.Business.Configuration;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Repos;
-using System;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public abstract class ServiceBase<T, Y> : IService<T>
-        where T : IModel
-        where Y : IEntity
+    public abstract class ServiceBase<T, Y> : IApiService<T> where T : IModel
+                                                          where Y : IEntity
     {
         protected IMapper Mapper;
         protected IApiRepo<Y> _repo;
@@ -22,31 +20,33 @@ namespace MagicMirror.Business.Services
             SetUpMapperConfiguration();
         }
 
-        // Child classes must implement abstract methods.
+        // Child classes MUST implement abstract methods.
         public abstract Task<T> GetModelAsync();
 
         /// <summary>
         /// Calculate the model's fields which cannot be resolved using Automapper.
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        protected abstract T CalculateMappedValues(T model);
+        protected abstract T CalculateUnMappableValues(T model);
 
-        // Child classes can override virtual methods.
+        /// <summary>
+        /// Retrieve unmodified entity from data layer
+        /// </summary>
+        protected abstract Task<Y> GetEntityAsync();
+
+        // Child classes CAN override virtual methods.
         /// <summary>
         /// Map Entity to Business Model using AutoMapper
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        protected virtual T MapEntityToModel(IEntity entity)
+        protected virtual T MapEntityToModel(Y entity)
         {
             T model = Mapper.Map<T>(entity);
             return model;
         }
 
         /// <summary>
-        /// Define a reference to the automapper configuration class
-        /// so Visual Studio knows which fields need be mapped between the Models and Entities
+        /// Define a reference to the automapper configuration class so Visual Studio knows which fields need be mapped between the Models and Entities
         /// </summary>
         private void SetUpMapperConfiguration()
         {
@@ -54,11 +54,6 @@ namespace MagicMirror.Business.Services
             baseMappings.AddProfile<AutoMapperConfiguration>();
             var config = new MapperConfiguration(baseMappings);
             Mapper = new Mapper(config);
-        }
-
-        protected virtual void SetUpServiceConfiguration()
-        {
-            throw new NotImplementedException();
         }
     }
 }

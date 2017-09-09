@@ -21,22 +21,27 @@ namespace MagicMirror.Business.Services
         public override async Task<WeatherModel> GetModelAsync()
         {
             // Get entity from Repository.
-            _repo = new WeatherRepo(_criteria.HomeCity);
-            WeatherEntity entity = await _repo.GetEntityAsync();
+            WeatherEntity entity = await GetEntityAsync();
 
             // Map entity to model.
             WeatherModel model = MapEntityToModel(entity);
 
             // Calculate non-mappable values
-            model = CalculateMappedValues(model);
-
-            // Set icon
+            model = CalculateUnMappableValues(model);
             model.Icon = ConvertWeatherIcon(model.Icon);
 
             return model;
         }
 
-        protected override WeatherModel CalculateMappedValues(WeatherModel model)
+        protected override async Task<WeatherEntity> GetEntityAsync()
+        {
+            var repo = new WeatherRepo(_criteria.HomeCity);
+            WeatherEntity entity = await repo.GetEntityAsync();
+
+            return entity;
+        }
+
+        protected override WeatherModel CalculateUnMappableValues(WeatherModel model)
         {
             switch (_criteria.TemperatureUOM)
             {
@@ -129,9 +134,8 @@ namespace MagicMirror.Business.Services
                 }
                 return $"{prefix}/{theme}/{res}";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //DisplayErrorMessage("Cannot set weather icon");
                 return "";
             }
         }

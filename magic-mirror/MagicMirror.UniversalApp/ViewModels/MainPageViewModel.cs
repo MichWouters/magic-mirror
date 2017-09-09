@@ -1,5 +1,6 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
+using MagicMirror.UniversalApp.Views;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -11,40 +12,74 @@ namespace MagicMirror.UniversalApp.ViewModels
     public class MainPageViewModel : ViewModelBase, INotifyPropertyChanged
     {
         // Services from the Business Layer
-        private readonly IService<WeatherModel> _weatherService;
+        private IApiService<WeatherModel> _weatherService;
 
-        private readonly IService<TrafficModel> _trafficService;
-        private readonly CommonService _commonService;
+        private IApiService<TrafficModel> _trafficService;
+
+        public void NavigateToSettings()
+        {
+            try
+            {
+                _navigationService.Navigate(typeof(SettingPage));
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorMessage("Unable to navigate to Settins", ex.Message);
+            }
+        }
+
+        private CommonService _commonService;
 
         // Timers to refresh individual components
         private DispatcherTimer timeTimer;
-
         private DispatcherTimer complimentTimer;
         private DispatcherTimer weatherTimer;
         private DispatcherTimer trafficTimer;
 
         public MainPageViewModel()
         {
-            App appReference = Application.Current as App;
-            SearchCriteria searchCriteria = appReference.Criteria;
-
-            _commonService = new CommonService();
-            _weatherService = new WeatherService(searchCriteria);
-            _trafficService = new TrafficService(searchCriteria);
-
-            timeTimer = new DispatcherTimer();
-            complimentTimer = new DispatcherTimer();
-            weatherTimer = new DispatcherTimer();
-            trafficTimer = new DispatcherTimer();
-
-            Initialize();
+            SetUpServices();
+            SetUpTimers();
+            LoadDataOnPageStartup();
             SetRefreshTimers();
+        }
+
+        private void SetUpServices()
+        {
+            try
+            {
+                App appReference = Application.Current as App;
+                SearchCriteria searchCriteria = appReference.Criteria;
+
+                _commonService = new CommonService();
+                _weatherService = new WeatherService(searchCriteria);
+                _trafficService = new TrafficService(searchCriteria);
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorMessage("Unable to initialize one or more services.", ex.Message);
+            }
+        }
+
+        private void SetUpTimers()
+        {
+            try
+            {
+                timeTimer = new DispatcherTimer();
+                complimentTimer = new DispatcherTimer();
+                weatherTimer = new DispatcherTimer();
+                trafficTimer = new DispatcherTimer();
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorMessage("Unable to initialize one or more timers.", ex.Message);
+            }
         }
 
         /// <summary>
         /// Call data immediately after app launch
         /// </summary>
-        private void Initialize()
+        private void LoadDataOnPageStartup()
         {
             RefreshTime(null, null);
             RefreshCompliment(null, null);
@@ -62,12 +97,12 @@ namespace MagicMirror.UniversalApp.ViewModels
             SetUpTimer(weatherTimer, new TimeSpan(0, 15, 0), RefreshWeatherModel);
             SetUpTimer(trafficTimer, new TimeSpan(0, 10, 0), RefreshTrafficModel);
 
+            //TODO: Write methods, then shorten them using new method
             //complimentTimer.Tick += RefreshCompliment;
             //complimentTimer.Interval = new TimeSpan(0, 1, 0);
             //if (!complimentTimer.IsEnabled) complimentTimer.Start();
         }
 
-        //TODO: Make delegate?
         private void SetUpTimer(DispatcherTimer timer, TimeSpan timeSpan, EventHandler<object> method)
         {
             timeTimer.Tick += method;
@@ -111,7 +146,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             catch (Exception ex)
             {
                 // Can't connect to server. Try again after waiting for a few minutes
-                DisplayErrorMessage("Can't update weather information", ex.Message);
+                DisplayErrorMessage("Can't update Weather information", ex.Message);
                 if (weatherTimer.IsEnabled) weatherTimer.Stop();
 
                 // Try to refresh data. If succesful, resume timer
@@ -133,7 +168,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             catch (Exception ex)
             {
                 // Can't connect to server. Try again after waiting for a few minutes
-                DisplayErrorMessage("Can't update traffic information", ex.Message);
+                DisplayErrorMessage("Can't update Traffic information", ex.Message);
                 if (weatherTimer.IsEnabled) weatherTimer.Stop();
 
                 // Try to refresh data immediately. If succesful, resume timer

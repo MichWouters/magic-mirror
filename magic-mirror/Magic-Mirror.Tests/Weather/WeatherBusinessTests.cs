@@ -7,7 +7,7 @@ namespace MagicMirror.Tests.Weather
 {
     public class WeatherBussinessTests
     {
-        private readonly IService<WeatherModel> _service;
+        private readonly IApiService<WeatherModel> _service;
         private SearchCriteria criteria;
 
         public WeatherBussinessTests()
