@@ -2,6 +2,9 @@
 {
     public enum TrafficDensity
     {
-        Little, Light, Medium, Heavy
+        Little,
+        Light,
+        Medium,
+        Heavy
     }
 }

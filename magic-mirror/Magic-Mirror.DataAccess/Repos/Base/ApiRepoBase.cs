@@ -4,7 +4,6 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-
 namespace MagicMirror.DataAccess.Repos
 {
     public abstract class ApiRepoBase<T> : IApiRepo<T> where T : IEntity

@@ -59,7 +59,6 @@ namespace MagicMirror.DataAccess.Repos
 
             if (string.IsNullOrWhiteSpace(_apiUrl)) throw new ArgumentNullException("No Weather API Url provided");
             if (string.IsNullOrWhiteSpace(_apiId)) throw new ArgumentNullException("No Weather Api Id provided");
-
         }
     }
 }

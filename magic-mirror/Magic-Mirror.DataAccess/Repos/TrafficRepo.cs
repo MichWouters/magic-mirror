@@ -8,13 +8,13 @@ namespace MagicMirror.DataAccess.Repos
 {
     public class TrafficRepo : ApiRepoBase<TrafficEntity>
     {
-        public TrafficRepo(string start, string destination):base()
+        public TrafficRepo(string start, string destination) : base()
         {
             if (string.IsNullOrWhiteSpace(start)) throw new ArgumentNullException("Start address need to be provided");
             if (string.IsNullOrWhiteSpace(destination)) throw new ArgumentNullException("Destination address needs to be provided");
 
             SetApiParameters();
-            
+
             _url = $"{_apiUrl}?origin={start}&destination={destination}&key={_apiId}";
         }
 
@@ -59,7 +59,6 @@ namespace MagicMirror.DataAccess.Repos
 
             if (string.IsNullOrWhiteSpace(_apiUrl)) throw new ArgumentNullException("No Traffic API Url provided");
             if (string.IsNullOrWhiteSpace(_apiId)) throw new ArgumentNullException("No Traffic Api Id provided");
-
         }
     }
 }
