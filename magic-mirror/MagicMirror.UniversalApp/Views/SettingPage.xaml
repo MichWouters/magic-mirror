@@ -23,8 +23,8 @@
                 IsOn="False"
                 OffContent="Dark theme"
                 OnContent="Light theme"
-                RelativePanel.AlignLeftWithPanel="True" />
-                <!--Toggled="{x:Bind ViewModel.ToggleLightTheme}" />-->
+                RelativePanel.AlignLeftWithPanel="True" 
+                Toggled="{x:Bind ViewModel.ToggleLightTheme}" />
 
         <TextBox x:Name="UserNameTextBox"
                  HorizontalAlignment="Left"

@@ -11,19 +11,24 @@ namespace MagicMirror.UniversalApp.ViewModels
     public class MainPageViewModel : ViewModelBase, INotifyPropertyChanged
     {
         // Services from the Business Layer
-        private readonly IService<WeatherModel> _weatherService;
-
-        private readonly IService<TrafficModel> _trafficService;
-        private readonly CommonService _commonService;
+        private IApiService<WeatherModel> _weatherService;
+        private IApiService<TrafficModel> _trafficService;
+        private CommonService _commonService;
 
         // Timers to refresh individual components
         private DispatcherTimer timeTimer;
-
         private DispatcherTimer complimentTimer;
         private DispatcherTimer weatherTimer;
         private DispatcherTimer trafficTimer;
 
         public MainPageViewModel()
+        {
+            Foo();
+            LoadDataOnPägeStartup();
+            SetRefreshTimers();
+        }
+
+        private void Foo()
         {
             App appReference = Application.Current as App;
             SearchCriteria searchCriteria = appReference.Criteria;
@@ -36,15 +41,14 @@ namespace MagicMirror.UniversalApp.ViewModels
             complimentTimer = new DispatcherTimer();
             weatherTimer = new DispatcherTimer();
             trafficTimer = new DispatcherTimer();
-
-            Initialize();
-            SetRefreshTimers();
         }
+
+
 
         /// <summary>
         /// Call data immediately after app launch
         /// </summary>
-        private void Initialize()
+        private void LoadDataOnPägeStartup()
         {
             RefreshTime(null, null);
             RefreshCompliment(null, null);

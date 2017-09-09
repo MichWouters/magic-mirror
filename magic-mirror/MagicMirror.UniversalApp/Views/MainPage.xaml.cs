@@ -15,7 +15,7 @@ namespace MagicMirror.UniversalApp.Views
 
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(SettingPage));
+            Frame.Navigate(typeof(SettingPage));
         }
     }
 }

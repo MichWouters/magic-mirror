@@ -10,11 +10,7 @@ namespace MagicMirror.DataAccess.Repos
     {
         public WeatherRepo(string city) : base()
         {
-            if (string.IsNullOrWhiteSpace(city)) throw new ArgumentNullException("A home city has to be provided");
-
-            _apiUrl = DataAccessConfig.OpenWeatherApiUrl;
-            _apiId = DataAccessConfig.OpenWeatherApiId;
-
+            ValidateInputParameters(city);
             _url = $"{_apiUrl}/weather?q={city}&appid={_apiId}";
         }
 
@@ -28,10 +24,7 @@ namespace MagicMirror.DataAccess.Repos
                 WeatherEntity entity = ConvertJsonToEntity(json);
                 return entity;
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            catch (Exception) { throw; }
         }
 
         public override async Task<HttpResponseMessage> GetHttpResponseFromApiAsync()
@@ -46,19 +39,18 @@ namespace MagicMirror.DataAccess.Repos
                 string errorMessage = $"A connection with the weather server could not be established.";
                 throw new HttpRequestException(errorMessage, ex);
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            catch (Exception) { throw; }
         }
 
-        private void SetApiParameters()
+        private void ValidateInputParameters(string city)
         {
             _apiUrl = DataAccessConfig.OpenWeatherApiUrl;
             _apiId = DataAccessConfig.OpenWeatherApiId;
 
             if (string.IsNullOrWhiteSpace(_apiUrl)) throw new ArgumentNullException("No Weather API Url provided");
             if (string.IsNullOrWhiteSpace(_apiId)) throw new ArgumentNullException("No Weather Api Id provided");
+            if (string.IsNullOrWhiteSpace(city)) throw new ArgumentNullException("A home city has to be provided");
+
         }
     }
 }

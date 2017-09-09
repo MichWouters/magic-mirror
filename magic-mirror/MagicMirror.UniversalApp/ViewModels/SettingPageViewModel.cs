@@ -24,6 +24,11 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
+        internal void SaveSettings()
+        {
+            throw new NotImplementedException();
+        }
+
         public void ToggleLightTheme()
         {
             try

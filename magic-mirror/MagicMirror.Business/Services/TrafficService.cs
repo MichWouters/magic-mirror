@@ -1,5 +1,4 @@
 ﻿using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Repos;
 using MagicMirror.Entities.Traffic;
 using System;
@@ -25,16 +24,14 @@ namespace MagicMirror.Business.Services
         {
             try
             {
-                // Get entity from repository
-                string homeAddress = $"{_criteria.HomeAddress} {_criteria.HomeCity}";
-                _repo = new TrafficRepo(homeAddress, _criteria.WorkAddress);
-                TrafficEntity entity = await _repo.GetEntityAsync();
+                // Get Entity
+                var entity = await GetEntityAsync();
 
                 // Map entity to model
                 TrafficModel model = MapEntityToModel(entity);
 
                 // Calculate non-mappable values
-                model = CalculateMappedValues(model);
+                model = CalculateUnMappableValues(model);
 
                 return model;
             }
@@ -46,7 +43,16 @@ namespace MagicMirror.Business.Services
             }
         }
 
-        protected override TrafficModel CalculateMappedValues(TrafficModel model)
+        protected override async Task<TrafficEntity> GetEntityAsync()
+        {
+            string homeAddress = $"{_criteria.HomeAddress} {_criteria.HomeCity}";
+            _repo = new TrafficRepo(homeAddress, _criteria.WorkAddress);
+            TrafficEntity entity = await _repo.GetEntityAsync();
+
+            return entity;
+        }
+
+        protected override TrafficModel CalculateUnMappableValues(TrafficModel model)
         {
             model.Minutes = (model.Minutes / 60);
             model.TrafficDensity = CalculateTrafficDensity(model.NumberOfIncidents);
@@ -80,14 +86,7 @@ namespace MagicMirror.Business.Services
                     result = TrafficDensity.Heavy;
                 }
             }
-
             return result;
-        }
-
-        private TrafficModel MapEntityToModel(IEntity entity)
-        {
-            TrafficModel model = Mapper.Map<TrafficModel>(entity);
-            return model;
         }
     }
 }
