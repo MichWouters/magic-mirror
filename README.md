@@ -1,4 +1,4 @@
-# magic-mirror
+ magic-mirror
 Public Repo for the MagicMirror app which anyone can fork and modify.
 
 Todo List:
@@ -6,7 +6,6 @@ Michiel
 * Move common functionality into abstract classes - Done.
 * Error Handling: Don't crash when no connection can be established - Done.
 * Error Handling: Crash on multiple error Content Dialogs - Done.
-
 * Error Handling: Crash when faulty location parameters are supplied.
 * Error Handling: Log errors.
 * Calendar (Show upcoming events)
