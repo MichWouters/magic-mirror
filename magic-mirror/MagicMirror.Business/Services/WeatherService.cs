@@ -1,6 +1,5 @@
 ﻿using Acme.Generic;
 using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Repos;
 using System;
@@ -8,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class WeatherService : ServiceBase, IService<WeatherModel>
+    public class WeatherService : ServiceBase<WeatherModel, WeatherEntity>
     {
-        private IApiRepo<WeatherEntity> _repo;
-        private SearchCriteria _criteria;
-
         public WeatherService(SearchCriteria criteria)
         {
             // Defensive coding
@@ -22,7 +18,7 @@ namespace MagicMirror.Business.Services
             _criteria = criteria;
         }
 
-        public async Task<WeatherModel> GetModelAsync()
+        public override async Task<WeatherModel> GetModelAsync()
         {
             // Get entity from Repository.
             _repo = new WeatherRepo(_criteria.HomeCity);
@@ -37,6 +33,30 @@ namespace MagicMirror.Business.Services
             // Set icon
             model.Icon = ConvertWeatherIcon(model.Icon);
 
+            return model;
+        }
+
+        protected override WeatherModel CalculateMappedValues(WeatherModel model)
+        {
+            switch (_criteria.TemperatureUOM)
+            {
+                case TemperatureUOM.Celsius:
+                    model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, _criteria.Precision);
+                    break;
+
+                case TemperatureUOM.Fahrenheit:
+                    model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, _criteria.Precision);
+                    break;
+
+                default:
+                    break;
+            }
+
+            DateTime sunrise = DateHelper.ConvertFromUnixTimestamp(model.SunRiseMilliseconds);
+            model.SunRise = sunrise.ToString("HH:mm");
+
+            DateTime sunset = DateHelper.ConvertFromUnixTimestamp(model.SunSetMilliSeconds);
+            model.SunSet = sunset.ToString("HH:mm");
             return model;
         }
 
@@ -114,46 +134,6 @@ namespace MagicMirror.Business.Services
                 //DisplayErrorMessage("Cannot set weather icon");
                 return "";
             }
-        }
-
-        /// <summary>
-        /// Calculate the model's fields which cannot be resolved using Automapper.
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        private WeatherModel CalculateMappedValues(WeatherModel model)
-        {
-            switch (_criteria.TemperatureUOM)
-            {
-                case TemperatureUOM.Celsius:
-                    model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, _criteria.Precision);
-                    break;
-
-                case TemperatureUOM.Fahrenheit:
-                    model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, _criteria.Precision);
-                    break;
-
-                default:
-                    break;
-            }
-
-            DateTime sunrise = DateHelper.ConvertFromUnixTimestamp(model.SunRiseMilliseconds);
-            model.SunRise = sunrise.ToString("HH:mm");
-
-            DateTime sunset = DateHelper.ConvertFromUnixTimestamp(model.SunSetMilliSeconds);
-            model.SunSet = sunset.ToString("HH:mm");
-            return model;
-        }
-
-        /// <summary>
-        /// Map Entity to Business Model using AutoMapper
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        private WeatherModel MapEntityToModel(IEntity entity)
-        {
-            WeatherModel model = Mapper.Map<WeatherModel>(entity);
-            return model;
         }
     }
 }

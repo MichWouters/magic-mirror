@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public abstract class ApiRepoBase<T> : IApiRepo<T> where T : IEntity
+    public abstract class ApiRepoBase<T> : IApiRepo<T> 
+        where T : IEntity
     {
         protected virtual string _apiUrl { get; set; }
         protected virtual string _apiId { get; set; }
         protected virtual string _url { get; set; }
 
-        public virtual Task<T> GetEntityAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract Task<T> GetEntityAsync();
 
         public async Task<string> GetJsonAsync()
         {
