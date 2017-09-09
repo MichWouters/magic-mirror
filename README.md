@@ -3,15 +3,17 @@ Public Repo for the MagicMirror app which anyone can fork and modify.
 
 Todo List:
 Michiel
-* Move common functionality into abstract classed - Done
-* Foutafhandeling: niet crashen bij geen verbinding - Done.
-* Foutafhandeling: Max 1 contentdialog kan gelijktijdig open zijn -> Geen error spam.
-* Foutafhandeling: Niet crashen bij verkeerde gegevens.
-* Foutafhandeling: Log errors.
-* Kalender (events tonen)
+* Move common functionality into abstract classes - Done.
+* Error Handling: Don't crash when no connection can be established - Done.
+* Error Handling: Crash on multiple error Content Dialogs - Done.
+
+* Error Handling: Crash when faulty location parameters are supplied.
+* Error Handling: Log errors.
+* Calendar (Show upcoming events)
 * Ordina feed (RSS)
-* Settings menu + opslaan lokaal
-* IP tonen in settings (ter informatie)
+* Settings Menu
+* Store, read and edit setting values in local Json file
+* Show Ip adress in Setting menu
 * Log Viewer in Setting Menu.
 
 Nice to have
