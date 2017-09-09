@@ -4,7 +4,6 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-
 namespace MagicMirror.DataAccess.Repos
 {
     public abstract class ApiRepoBase<T> : IApiRepo<T> where T : IEntity
@@ -13,11 +12,16 @@ namespace MagicMirror.DataAccess.Repos
         protected virtual string _apiId { get; set; }
         protected virtual string _url { get; set; }
 
-        public virtual Task<T> GetEntityAsync()
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Retrieve an Entity object from a Json Api source
+        /// </summary>
+        /// <returns></returns>
+        public abstract Task<T> GetEntityAsync();
 
+        /// <summary>
+        /// Retrieve a Json object as string from an Api
+        /// </summary>
+        /// <returns></returns>
         public async Task<string> GetJsonAsync()
         {
             try
@@ -33,6 +37,10 @@ namespace MagicMirror.DataAccess.Repos
             }
         }
 
+        /// <summary>
+        /// Get an HttpResponse (with data) from an API. Throws catchable exception if no connection can be made
+        /// </summary>
+        /// <returns></returns>
         public virtual async Task<HttpResponseMessage> GetHttpResponseFromApiAsync()
         {
             var client = new HttpClient();

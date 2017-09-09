@@ -2,6 +2,8 @@
 {
     public enum TemperatureUOM
     {
-        Celsius, Fahrenheit, Kelvin
+        Celsius,
+        Fahrenheit,
+        Kelvin
     }
 }

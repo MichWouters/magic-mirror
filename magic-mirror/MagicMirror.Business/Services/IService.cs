@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public interface IService<T> where T : Model
+    public interface IService<T> where T : IModel
     {
         /// <summary>
         /// Get the model without automapped and calculated fields.

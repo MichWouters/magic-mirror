@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class TrafficService : ServiceBase, IService<TrafficModel>
+    public class TrafficService : ServiceBase<TrafficModel, TrafficEntity>
     {
-        private IApiRepo<TrafficEntity> _repo;
-        private SearchCriteria _criteria;
-
         public TrafficService(SearchCriteria criteria)
         {
             // Defensive coding
@@ -24,7 +21,7 @@ namespace MagicMirror.Business.Services
             _criteria = criteria;
         }
 
-        public async Task<TrafficModel> GetModelAsync()
+        public override async Task<TrafficModel> GetModelAsync()
         {
             try
             {
@@ -49,7 +46,7 @@ namespace MagicMirror.Business.Services
             }
         }
 
-        public TrafficModel CalculateMappedValues(TrafficModel model)
+        protected override TrafficModel CalculateMappedValues(TrafficModel model)
         {
             model.Minutes = (model.Minutes / 60);
             model.TrafficDensity = CalculateTrafficDensity(model.NumberOfIncidents);
