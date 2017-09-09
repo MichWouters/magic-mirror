@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MagicMirror.UniversalApp.Services;
+using System;
 using Windows.UI.Xaml.Controls;
 
 namespace MagicMirror.UniversalApp.ViewModels
@@ -6,6 +7,13 @@ namespace MagicMirror.UniversalApp.ViewModels
     public abstract class ViewModelBase
     {
         private bool _contentDialogShown;
+
+        protected NavigationService _navigationService;
+
+        public ViewModelBase()
+        {
+            _navigationService = new NavigationService();
+        }
 
         protected async void DisplayErrorMessage(string title, string content = "")
         {
