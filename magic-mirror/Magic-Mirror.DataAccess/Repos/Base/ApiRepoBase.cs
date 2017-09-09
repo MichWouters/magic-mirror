@@ -6,15 +6,22 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public abstract class ApiRepoBase<T> : IApiRepo<T> 
-        where T : IEntity
+    public abstract class ApiRepoBase<T> : IApiRepo<T> where T : IEntity
     {
         protected virtual string _apiUrl { get; set; }
         protected virtual string _apiId { get; set; }
         protected virtual string _url { get; set; }
 
+        /// <summary>
+        /// Retrieve an Entity object from a Json Api source
+        /// </summary>
+        /// <returns></returns>
         public abstract Task<T> GetEntityAsync();
 
+        /// <summary>
+        /// Retrieve a Json object as string from an Api
+        /// </summary>
+        /// <returns></returns>
         public async Task<string> GetJsonAsync()
         {
             try
@@ -30,6 +37,10 @@ namespace MagicMirror.DataAccess.Repos
             }
         }
 
+        /// <summary>
+        /// Get an HttpResponse (with data) from an API. Throws catchable exception if no connection can be made
+        /// </summary>
+        /// <returns></returns>
         public virtual async Task<HttpResponseMessage> GetHttpResponseFromApiAsync()
         {
             var client = new HttpClient();
