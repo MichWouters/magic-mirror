@@ -3,6 +3,7 @@ Public Repo for the MagicMirror app which anyone can fork and modify.
 
 Todo List:
 Michiel
+* Move common functionality into abstract classed - Done
 * Foutafhandeling: niet crashen bij geen verbinding - Done.
 * Foutafhandeling: Max 1 contentdialog kan gelijktijdig open zijn -> Geen error spam.
 * Foutafhandeling: Niet crashen bij verkeerde gegevens.
