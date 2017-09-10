@@ -4,9 +4,11 @@ Public Repo for the MagicMirror app which anyone can fork and modify.
 Todo List:
 Michiel
 * Move common functionality into abstract classes - Done.
+* Implement functionality to read and write json data to localStorage - Done
 * Error Handling: Don't crash when no connection can be established - Done.
 * Error Handling: Crash on multiple error Content Dialogs - Done.
-* Error Handling: Crash when faulty location parameters are supplied.
+* Error Handling: Crash when faulty location parameters are supplied. - Done
+
 * Error Handling: Log errors.
 * Calendar (Show upcoming events)
 * Ordina feed (RSS)
