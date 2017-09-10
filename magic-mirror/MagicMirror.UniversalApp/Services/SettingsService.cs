@@ -1,4 +1,5 @@
-﻿using MagicMirror.Business.Models;
+﻿using Acme.Generic;
+using MagicMirror.Business.Models;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
@@ -21,7 +22,17 @@ namespace MagicMirror.UniversalApp.Services
 
         public async Task SaveSettings()
         {
-            UserSettings settings = new UserSettings
+            var settings = GetUserSettings();
+
+            string json = JsonConvert.SerializeObject(settings);
+            var localFolder = ApplicationData.Current.LocalFolder;
+
+            FileWriter.WriteJsonToFile(json, "settings.json", localFolder.Path);
+        }
+
+        private UserSettings GetUserSettings()
+        {
+            var settings = new UserSettings
             {
                 DistanceUOM = DistanceUOM.Metric,
                 HomeAddress = "Heikant 51",
@@ -29,20 +40,10 @@ namespace MagicMirror.UniversalApp.Services
                 Precision = 2,
                 TemperatureUOM = TemperatureUOM.Celsius,
                 UserName = "Michiel",
-                WorkAddress = "Generaal Armstrongweg 1, Antwerpen"
+                WorkAddress = "Heerlen, Netherlands"
             };
 
-            string json = JsonConvert.SerializeObject(settings);
-
-            await SaveJsonToLocalSettings(json);
-        }
-
-        private async Task SaveJsonToLocalSettings(string json)
-        {
-            var localFolder = ApplicationData.Current.LocalFolder;
-            StorageFile file = await localFolder.CreateFileAsync("userSettings.json", CreationCollisionOption.ReplaceExisting);
-
-            await FileIO.WriteTextAsync(file,json);
+            return settings;
         }
     }
 }

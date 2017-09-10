@@ -151,7 +151,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 // Try to refresh data. If succesful, resume timer
                 int minutes = 5;
-                await Task.Delay((minutes * 60) * 1000);
+                await Task.Delay((minutes * 60) * 10000);
                 RefreshWeatherModel(null, null);
             }
         }
@@ -173,7 +173,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 // Try to refresh data immediately. If succesful, resume timer
                 int minutes = 5;
-                await Task.Delay((minutes * 60) * 1000);
+                await Task.Delay((minutes * 60) * 10000);
                 RefreshTrafficModel(null, null);
             }
         }

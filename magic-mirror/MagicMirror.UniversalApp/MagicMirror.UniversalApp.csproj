@@ -163,6 +163,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Acme.Generic\Acme.Generic.csproj">
+      <Project>{230DEDBB-0D31-4DE4-A8AC-9F871F023A8F}</Project>
+      <Name>Acme.Generic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MagicMirror.Business.Models\MagicMirror.Business.Models.csproj">
       <Project>{6c1d40e7-e7db-4c2a-adc9-e6fdd4028c0b}</Project>
       <Name>MagicMirror.Business.Models</Name>
