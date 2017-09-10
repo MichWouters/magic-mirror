@@ -9,7 +9,6 @@ namespace MagicMirror.UniversalApp.ViewModels
 {
     public class SettingPageViewModel : ViewModelBase, INotifyPropertyChanged
     {
-
         public UserSettings SearchCriteria
         {
             get

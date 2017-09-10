@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class CommonService : ISettingsService
+    public class CommonService
     {
         public string GenerateCompliment()
         {
@@ -14,23 +14,5 @@ namespace MagicMirror.Business.Services
 
             return compliment;
         }
-
-        public void ReadSettings()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SaveSettings()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-
-    public class Settings
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
     }
 }

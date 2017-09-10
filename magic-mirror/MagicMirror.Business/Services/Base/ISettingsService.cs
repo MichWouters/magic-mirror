@@ -1,10 +1,8 @@
-﻿using System.Threading.Tasks;
-
-namespace MagicMirror.Business.Services
+﻿namespace MagicMirror.Business.Services
 {
     public interface ISettingsService
     {
-        Task SaveSettings();
+        void SaveSettings();
 
         void ReadSettings();
     }
