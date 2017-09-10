@@ -1,15 +1,17 @@
 ﻿using MagicMirror.Business.Models;
+using MagicMirror.UniversalApp.Services;
 using MagicMirror.UniversalApp.Views;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
     public class SettingPageViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        public UserSettings SearchCriteria
+        public UserSettings UserSettings
         {
             get
             {
@@ -25,10 +27,14 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public void NavigateToMain()
+        public async Task NavigateToMain()
         {
             try
             {
+                SettingsService _service = new SettingsService();
+                await _service.SaveSettings();
+
+                var IAmTired = _service.ReadSettings();
                 _navigationService.Navigate(typeof(MainPage));
             }
             catch (Exception ex)

@@ -1,10 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MagicMirror.UniversalApp.Services;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace MagicMirror.UniversalApp.Tests
 {
-    [TestClass]
     public class SettingsServiceTests
     {
         private SettingsService _service;
@@ -14,8 +14,8 @@ namespace MagicMirror.UniversalApp.Tests
             _service = new SettingsService();
         }
 
-        [TestMethod]
-        public async Task Save_Settings_Success()
+        [Fact]
+        public async void  Save_Settings_Success()
         {
             await _service.SaveSettings();
         }

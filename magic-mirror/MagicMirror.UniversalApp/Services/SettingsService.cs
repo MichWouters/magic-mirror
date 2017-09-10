@@ -8,9 +8,15 @@ namespace MagicMirror.UniversalApp.Services
 {
     public class SettingsService
     {
-        public void ReadSettings()
+        public async Task<UserSettings> ReadSettings()
         {
-            throw new NotImplementedException();
+            var localFolder = ApplicationData.Current.LocalFolder;
+            StorageFile file = await localFolder.GetFileAsync("userSettings.json");
+
+            string json = await FileIO.ReadTextAsync(file);
+            var result = JsonConvert.DeserializeObject<UserSettings>(json);
+
+            return result;
         }
 
         public async Task SaveSettings()
@@ -34,9 +40,9 @@ namespace MagicMirror.UniversalApp.Services
         private async Task SaveJsonToLocalSettings(string json)
         {
             var localFolder = ApplicationData.Current.LocalFolder;
-            StorageFile sampleFile = await localFolder.CreateFileAsync("dataFile.txt", CreationCollisionOption.ReplaceExisting);
+            StorageFile file = await localFolder.CreateFileAsync("userSettings.json", CreationCollisionOption.ReplaceExisting);
 
-            await FileIO.WriteTextAsync(sampleFile,json);
+            await FileIO.WriteTextAsync(file,json);
         }
     }
 }
