@@ -1,11 +1,11 @@
 ﻿namespace MagicMirror.Business.Models
 {
     /// <summary>
-    /// Generic helper class to pass search parameters from the business to the data-layer.
+    /// Helper class to pass search parameters from the business to the data-layer.
     /// </summary>
-    public class SearchCriteria
+    public class UserSettings
     {
-        public SearchCriteria()
+        public UserSettings()
         {
             Precision = 2;
             TemperatureUOM = TemperatureUOM.Celsius;

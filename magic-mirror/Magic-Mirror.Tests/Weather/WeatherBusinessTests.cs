@@ -8,11 +8,11 @@ namespace MagicMirror.Tests.Weather
     public class WeatherBussinessTests
     {
         private readonly IApiService<WeatherModel> _service;
-        private SearchCriteria criteria;
+        private UserSettings criteria;
 
         public WeatherBussinessTests()
         {
-            criteria = new SearchCriteria
+            criteria = new UserSettings
             {
                 HomeCity = "London",
                 Precision = 1,

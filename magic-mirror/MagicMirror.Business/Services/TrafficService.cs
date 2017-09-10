@@ -9,7 +9,7 @@ namespace MagicMirror.Business.Services
 {
     public class TrafficService : ServiceBase<TrafficModel, TrafficEntity>
     {
-        public TrafficService(SearchCriteria criteria)
+        public TrafficService(UserSettings criteria)
         {
             // Defensive coding
             if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));

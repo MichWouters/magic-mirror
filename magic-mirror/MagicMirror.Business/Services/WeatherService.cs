@@ -9,7 +9,7 @@ namespace MagicMirror.Business.Services
 {
     public class WeatherService : ServiceBase<WeatherModel, WeatherEntity>
     {
-        public WeatherService(SearchCriteria criteria)
+        public WeatherService(UserSettings criteria)
         {
             // Defensive coding
             if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));

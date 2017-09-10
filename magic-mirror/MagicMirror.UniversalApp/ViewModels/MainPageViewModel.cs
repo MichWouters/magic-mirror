@@ -49,7 +49,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             try
             {
                 App appReference = Application.Current as App;
-                SearchCriteria searchCriteria = appReference.Criteria;
+                UserSettings searchCriteria = appReference.Criteria;
 
                 _commonService = new CommonService();
                 _weatherService = new WeatherService(searchCriteria);

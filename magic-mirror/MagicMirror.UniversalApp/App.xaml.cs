@@ -13,7 +13,7 @@ namespace MagicMirror.UniversalApp
 {
     sealed partial class App
     {
-        public SearchCriteria Criteria;
+        public UserSettings Criteria;
         private ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         /// <summary>
@@ -39,12 +39,12 @@ namespace MagicMirror.UniversalApp
             localSettings.Values[Settings.Precision] = 1;
         }
 
-        public SearchCriteria CreateSearchCriteriaSingleton()
+        public UserSettings CreateSearchCriteriaSingleton()
         {
             // Singleton pattern
             if (Criteria == null)
             {
-                Criteria = new SearchCriteria
+                Criteria = new UserSettings
                 {
                     UserName = localSettings.Values[Settings.UserName].ToString(),
                     HomeAddress = localSettings.Values[Settings.HomeAddress].ToString(),
