@@ -31,7 +31,7 @@
                  Header="User Name"
                  RelativePanel.AlignLeftWithPanel="True"
                  RelativePanel.Below="ThemeSwitch"
-                 Text="{x:Bind ViewModel.SearchCriteria.UserName, Mode=TwoWay}" />
+                 Text="{x:Bind ViewModel.UserSettings.UserName, Mode=TwoWay}" />
 
         <TextBox x:Name="BusyTextTextBox"
                      HorizontalAlignment="Left"
@@ -50,21 +50,21 @@
                      Header="Home street and number"
                      RelativePanel.AlignLeftWithPanel="True"
                      RelativePanel.Below="BusyTextTextBox"
-                     Text="{x:Bind ViewModel.SearchCriteria.HomeAddress, Mode=TwoWay}" />
+                     Text="{x:Bind ViewModel.UserSettings.HomeAddress, Mode=TwoWay}" />
 
         <TextBox x:Name="HomeTownTextBox"
                      HorizontalAlignment="Left"
                      Header="Postal code Home town"
                      RelativePanel.AlignLeftWithPanel="True"
                      RelativePanel.Below="HomeTextBox"
-                     Text="{x:Bind ViewModel.SearchCriteria.HomeCity, Mode=TwoWay}" />
+                     Text="{x:Bind ViewModel.UserSettings.HomeCity, Mode=TwoWay}" />
 
         <TextBox x:Name="WorkAddressTextBox"
                      HorizontalAlignment="Left"
                      Header="Work Address"
                      RelativePanel.AlignLeftWithPanel="True"
                      RelativePanel.Below="HomeTownTextBox"
-                     Text="{x:Bind ViewModel.SearchCriteria.WorkAddress, Mode=TwoWay}" />
+                     Text="{x:Bind ViewModel.UserSettings.WorkAddress, Mode=TwoWay}" />
 
         <Button Content="Save"
                 RelativePanel.Below="WorkAddressTextBox"
