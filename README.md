@@ -8,7 +8,6 @@ Michiel
 * Error Handling: Don't crash when no connection can be established - Done.
 * Error Handling: Crash on multiple error Content Dialogs - Done.
 * Error Handling: Crash when faulty location parameters are supplied. - Done
-
 * Error Handling: Log errors.
 * Calendar (Show upcoming events)
 * Ordina feed (RSS)
