@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Networking.Connectivity;
 
 namespace MagicMirror.UniversalApp.Services
 {
@@ -18,6 +19,25 @@ namespace MagicMirror.UniversalApp.Services
             var result = JsonConvert.DeserializeObject<UserSettings>(json);
 
             return result;
+        }
+
+        public string GetIpAddress()
+        {
+            string result = "";
+            foreach (Windows.Networking.HostName localHostName in NetworkInformation.GetHostNames())
+            {
+                if (localHostName.IPInformation != null)
+                {
+                    if (localHostName.Type == Windows.Networking.HostNameType.Ipv4)
+                    {
+                        result = localHostName.ToString();
+                        break;
+                    }
+                }
+
+            }
+            return result;
+
         }
 
         public async Task SaveSettings()

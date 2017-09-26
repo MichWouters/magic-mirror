@@ -66,6 +66,12 @@
                      RelativePanel.Below="HomeTownTextBox"
                      Text="{x:Bind ViewModel.UserSettings.WorkAddress, Mode=TwoWay}" />
 
+        <TextBlock x:Name="IpAddressTextBlock"
+                     HorizontalAlignment="Left"
+                     RelativePanel.AlignBottomWithPanel="True"
+                     RelativePanel.AlignRightWithPanel="True"
+                     Text="{x:Bind ViewModel.IpAddress, Mode=OneWay}" />
+
         <Button Content="Save"
                 RelativePanel.Below="WorkAddressTextBox"
                 HorizontalAlignment="Center"
