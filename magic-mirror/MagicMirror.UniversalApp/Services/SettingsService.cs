@@ -8,7 +8,7 @@ using Windows.Networking.Connectivity;
 
 namespace MagicMirror.UniversalApp.Services
 {
-    public class SettingsService
+    public class SettingsService : ISettingsService
     {
         public async Task<UserSettings> ReadSettings()
         {
@@ -23,21 +23,31 @@ namespace MagicMirror.UniversalApp.Services
 
         public string GetIpAddress()
         {
-            string result = "";
-            foreach (Windows.Networking.HostName localHostName in NetworkInformation.GetHostNames())
+            try
             {
-                if (localHostName.IPInformation != null)
+                string result = "";
+                foreach (Windows.Networking.HostName localHostName in NetworkInformation.GetHostNames())
                 {
-                    if (localHostName.Type == Windows.Networking.HostNameType.Ipv4)
+                    if (localHostName.IPInformation != null)
                     {
-                        result = localHostName.ToString();
-                        break;
+                        if (localHostName.Type == Windows.Networking.HostNameType.Ipv4)
+                        {
+                            result = localHostName.ToString();
+                            break;
+                        }
                     }
+
                 }
 
-            }
-            return result;
+                if (string.IsNullOrEmpty(result)) throw new Exception();
+                return result;
 
+            }
+            catch (Exception)
+            {
+                return "Unable to retrieve IP Address";
+            }
+            
         }
 
         public async Task SaveSettings()

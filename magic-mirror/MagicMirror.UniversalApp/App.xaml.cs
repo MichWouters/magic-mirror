@@ -14,6 +14,8 @@ namespace MagicMirror.UniversalApp
     sealed partial class App
     {
         public UserSettings Criteria;
+
+        // TODO: Read from JSON file
         private ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         /// <summary>
@@ -25,18 +27,7 @@ namespace MagicMirror.UniversalApp
             InitializeComponent();
             Suspending += OnSuspending;
 
-            SetDefaults();
             CreateSearchCriteriaSingleton();
-        }
-
-        private void SetDefaults()
-        {
-            // Todo: place in settings file
-            localSettings.Values[Settings.UserName] = "Michiel";
-            localSettings.Values[Settings.HomeAddress] = "Generaal Armstrongweg 1";
-            localSettings.Values[Settings.HomeTown] = "Antwerpen";
-            localSettings.Values[Settings.WorkAddress] = "Earl Bakkenstraat 10 6422 Heerlen";
-            localSettings.Values[Settings.Precision] = 1;
         }
 
         public UserSettings CreateSearchCriteriaSingleton()
@@ -44,14 +35,12 @@ namespace MagicMirror.UniversalApp
             // Singleton pattern
             if (Criteria == null)
             {
-                Criteria = new UserSettings
-                {
-                    UserName = localSettings.Values[Settings.UserName].ToString(),
-                    HomeAddress = localSettings.Values[Settings.HomeAddress].ToString(),
-                    WorkAddress = localSettings.Values[Settings.WorkAddress].ToString(),
-                    HomeCity = localSettings.Values[Settings.HomeTown].ToString(),
-                    Precision = (int)localSettings.Values[Settings.Precision]
-                };
+                var UserName = localSettings.Values[Settings.UserName].ToString();
+                var HomeAddress = localSettings.Values[Settings.HomeAddress].ToString();
+                var WorkAddress = localSettings.Values[Settings.WorkAddress].ToString();
+                var HomeCity = localSettings.Values[Settings.HomeTown].ToString();
+
+                Criteria = new UserSettings(UserName, HomeAddress, WorkAddress, HomeCity);
             }
             return Criteria;
         }
