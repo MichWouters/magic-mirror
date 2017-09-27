@@ -37,9 +37,9 @@ namespace MagicMirror.UniversalApp.ViewModels
             try
             {
                 SettingsService _service = new SettingsService();
-                await _service.SaveSettings();
+                _service.SaveSettings();
 
-                var IAmTired = _service.ReadSettings();
+                var IAmTired = _service.LoadSettings();
                 _navigationService.Navigate(typeof(MainPage));
             }
             catch (Exception ex)

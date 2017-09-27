@@ -40,7 +40,7 @@ namespace MagicMirror.UniversalApp
                 var WorkAddress = localSettings.Values[Settings.WorkAddress].ToString();
                 var HomeCity = localSettings.Values[Settings.HomeTown].ToString();
 
-                Criteria = new UserSettings(UserName, HomeAddress, WorkAddress, HomeCity);
+                Criteria = new UserSettings(UserName, HomeAddress, WorkAddress, HomeCity, 3,TemperatureUOM.Kelvin, DistanceUOM.Imperial);
             }
             return Criteria;
         }

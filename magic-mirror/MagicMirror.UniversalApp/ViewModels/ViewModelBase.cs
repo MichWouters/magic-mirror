@@ -5,10 +5,12 @@ using System.ComponentModel;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
+    /// <summary>
+    /// Base class for ViewModels. Provides INotifPropertyChanged, navigation and error handling functionality
+    /// </summary>
     public abstract class ViewModelBase: INotifyPropertyChanged
     {
         private bool _contentDialogShown;
-
         protected NavigationService _navigationService;
 
         public ViewModelBase()

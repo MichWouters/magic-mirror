@@ -11,7 +11,6 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         // Services from the Business Layer
         private IApiService<WeatherModel> _weatherService;
-
         private IApiService<TrafficModel> _trafficService;
 
         public void NavigateToSettings()
@@ -22,7 +21,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
             catch (Exception ex)
             {
-                DisplayErrorMessage("Unable to navigate to Settins", ex.Message);
+                DisplayErrorMessage("Unable to navigate to Settings", ex.Message);
             }
         }
 
@@ -179,7 +178,6 @@ namespace MagicMirror.UniversalApp.ViewModels
         #region Properties
 
         private WeatherModel _weather;
-
         public WeatherModel WeatherInfo
         {
             get => _weather;
@@ -191,7 +189,6 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         private TrafficModel _traffic;
-
         public TrafficModel TrafficInfo
         {
             get => _traffic;
@@ -203,7 +200,6 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         public DateModel Date => new DateModel();
-
         private string _time;
 
         public string Time
@@ -215,7 +211,6 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
-
         private string _compliment;
 
         public string Compliment
@@ -227,9 +222,6 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
-
-       
-
         #endregion Properties
     }
 }

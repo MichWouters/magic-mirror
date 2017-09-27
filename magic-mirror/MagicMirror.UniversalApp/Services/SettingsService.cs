@@ -10,7 +10,7 @@ namespace MagicMirror.UniversalApp.Services
 {
     public class SettingsService : ISettingsService
     {
-        public async Task<UserSettings> ReadSettings()
+        public async Task<UserSettings> LoadSettings()
         {
             var localFolder = ApplicationData.Current.LocalFolder;
             StorageFile file = await localFolder.GetFileAsync("userSettings.json");
@@ -36,21 +36,18 @@ namespace MagicMirror.UniversalApp.Services
                             break;
                         }
                     }
-
                 }
 
                 if (string.IsNullOrEmpty(result)) throw new Exception();
                 return result;
-
             }
             catch (Exception)
             {
                 return "Unable to retrieve IP Address";
             }
-            
         }
 
-        public async Task SaveSettings()
+        public void SaveSettings()
         {
             var settings = GetUserSettings();
 
@@ -62,6 +59,7 @@ namespace MagicMirror.UniversalApp.Services
 
         private UserSettings GetUserSettings()
         {
+            // Todo: Load from file
             var settings = new UserSettings
             {
                 DistanceUOM = DistanceUOM.Metric,

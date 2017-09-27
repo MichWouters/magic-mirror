@@ -17,7 +17,7 @@ namespace MagicMirror.UniversalApp.Tests
         [Fact]
         public async void  Save_Settings_Success()
         {
-            await _service.SaveSettings();
+            _service.SaveSettings();
         }
     }
 }
