@@ -2,6 +2,7 @@
 using System;
 using Windows.UI.Xaml.Controls;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
@@ -35,7 +36,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string property = null)
+        public void OnPropertyChanged([CallerMemberName] string property = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
