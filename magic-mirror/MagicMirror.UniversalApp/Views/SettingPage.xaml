@@ -91,6 +91,7 @@
                   Header="Distance Unit of Measure"
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.Below="PrecisonSlider"
+                  SelectedValue="{x:Bind ViewModel.UserSettings.DistanceUOM}"
                      />
 
         <ComboBox x:Name="TemperatureUomComboBox"

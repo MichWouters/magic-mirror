@@ -1,6 +1,9 @@
-﻿using MagicMirror.DataAccess.Compliments;
+﻿using Acme.Generic;
+using MagicMirror.Business.Models;
+using MagicMirror.DataAccess.Compliments;
+using Newtonsoft.Json;
 using System;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace MagicMirror.Business.Services
 {
@@ -13,6 +16,20 @@ namespace MagicMirror.Business.Services
             string compliment = compRepo[randomCompliment];
 
             return compliment;
+        }
+
+        public UserSettings ReadSettings(string folder, string fileName)
+        {
+            string json = FileWriter.ReadFromFile(folder, fileName);
+            var result = JsonConvert.DeserializeObject<UserSettings>(json);
+
+            return result;
+        }
+
+        public void SaveSettings(string path, string USERSETTINGS, UserSettings settings)
+        {
+            string json = JsonConvert.SerializeObject(settings);
+            FileWriter.WriteJsonToFile(json, USERSETTINGS, path);
         }
     }
 }

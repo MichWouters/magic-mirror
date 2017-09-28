@@ -1,9 +1,12 @@
-﻿namespace MagicMirror.Business.Models
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace MagicMirror.Business.Models
 {
     /// <summary>
     /// Helper class to pass user parameters from the business to the data-layer.
     /// </summary>
-    public class UserSettings
+    public class UserSettings: INotifyPropertyChanged
     {
         public UserSettings()
         {
@@ -43,5 +46,12 @@
         public int Precision { get; set; }
         public TemperatureUOM TemperatureUOM { get; set; }
         public DistanceUOM DistanceUOM { get; set; }
+
+        public void OnPropertyChanged([CallerMemberName] string property = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

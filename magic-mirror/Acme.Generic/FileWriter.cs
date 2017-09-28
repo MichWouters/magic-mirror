@@ -25,13 +25,13 @@ namespace Acme.Generic
                 string result = File.ReadAllText($"{path}/{fileName}");
                 return result;
             }
-            catch(FileNotFoundException)
+            catch(FileNotFoundException e)
             {
-                throw;
+                throw new FileNotFoundException($"{fileName} does not exist", e);
             }
             catch (Exception e)
             {
-                throw new FileNotFoundException("Could not read text from file", e);
+                throw new Exception($"Could not read text from {fileName}", e);
             }
         }
 

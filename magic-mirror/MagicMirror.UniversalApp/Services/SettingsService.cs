@@ -1,24 +1,35 @@
-﻿using Acme.Generic;
-using MagicMirror.Business.Models;
-using Newtonsoft.Json;
+﻿using MagicMirror.Business.Models;
 using System;
-using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Networking.Connectivity;
+using MagicMirror.Business.Services;
+using System.IO;
 
 namespace MagicMirror.UniversalApp.Services
 {
     public class SettingsService : ISettingsService
     {
-        public async Task<UserSettings> LoadSettings()
+        private CommonService _commonService;
+        private const string USERSETTINGS = "userSettings.json";
+
+        public SettingsService()
         {
-            var localFolder = ApplicationData.Current.LocalFolder;
-            StorageFile file = await localFolder.GetFileAsync("userSettings.json");
+            _commonService = new CommonService();
+        }
 
-            string json = await FileIO.ReadTextAsync(file);
-            var result = JsonConvert.DeserializeObject<UserSettings>(json);
-
-            return result;
+        public UserSettings LoadSettings()
+        {
+            try
+            {
+                var localFolder = ApplicationData.Current.LocalFolder;
+                var result = _commonService.ReadSettings(localFolder.Path, USERSETTINGS);
+                return result;
+            }
+            catch (FileNotFoundException)
+            {
+                SaveSettings(new UserSettings());
+                throw;
+            }
         }
 
         public string GetIpAddress()
@@ -47,31 +58,10 @@ namespace MagicMirror.UniversalApp.Services
             }
         }
 
-        public void SaveSettings()
+        public void SaveSettings(UserSettings settings)
         {
-            var settings = GetUserSettings();
-
-            string json = JsonConvert.SerializeObject(settings);
             var localFolder = ApplicationData.Current.LocalFolder;
-
-            FileWriter.WriteJsonToFile(json, "settings.json", localFolder.Path);
-        }
-
-        private UserSettings GetUserSettings()
-        {
-            // Todo: Load from file
-            var settings = new UserSettings
-            {
-                DistanceUOM = DistanceUOM.Metric,
-                HomeAddress = "Heikant 51",
-                HomeCity = "Houwaart",
-                Precision = 2,
-                TemperatureUOM = TemperatureUOM.Celsius,
-                UserName = "Michiel",
-                WorkAddress = "Heerlen, Netherlands"
-            };
-
-            return settings;
+            _commonService.SaveSettings(localFolder.Path, USERSETTINGS, settings); 
         }
     }
 }
