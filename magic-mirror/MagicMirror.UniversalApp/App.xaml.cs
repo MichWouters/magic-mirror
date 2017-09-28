@@ -13,7 +13,7 @@ namespace MagicMirror.UniversalApp
 {
     sealed partial class App
     {
-        public UserSettings Criteria;
+        public UserSettings UserSettings;
 
         // TODO: Read from JSON file
         private ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
@@ -32,17 +32,24 @@ namespace MagicMirror.UniversalApp
 
         public UserSettings CreateSearchCriteriaSingleton()
         {
-            // Singleton pattern
-            if (Criteria == null)
+            try
             {
-                var UserName = localSettings.Values[Settings.UserName].ToString();
-                var HomeAddress = localSettings.Values[Settings.HomeAddress].ToString();
-                var WorkAddress = localSettings.Values[Settings.WorkAddress].ToString();
-                var HomeCity = localSettings.Values[Settings.HomeTown].ToString();
+                // Singleton pattern
+                if (UserSettings == null)
+                {
+                    var UserName = localSettings.Values[Settings.UserName].ToString();
+                    var HomeAddress = localSettings.Values[Settings.HomeAddress].ToString();
+                    var WorkAddress = localSettings.Values[Settings.WorkAddress].ToString();
+                    var HomeCity = localSettings.Values[Settings.HomeTown].ToString();
 
-                Criteria = new UserSettings(UserName, HomeAddress, WorkAddress, HomeCity, 3,TemperatureUOM.Kelvin, DistanceUOM.Imperial);
+                    UserSettings = new UserSettings(UserName, HomeAddress, WorkAddress, HomeCity, 3, TemperatureUOM.Kelvin, DistanceUOM.Imperial);
+                }
+                return UserSettings;
             }
-            return Criteria;
+            catch (Exception) {
+                UserSettings =  new UserSettings();
+                return UserSettings;
+            }
         }
 
         #region BoilerPlate

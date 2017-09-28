@@ -21,13 +21,13 @@ namespace MagicMirror.UniversalApp.ViewModels
             get
             {
                 var appReference = Application.Current as App;
-                return appReference.Criteria;
+                return appReference.UserSettings;
             }
             set
             {
                 var appReference = Application.Current as App;
 
-                appReference.Criteria = value;
+                appReference.UserSettings = value;
                 OnPropertyChanged();
             }
         }

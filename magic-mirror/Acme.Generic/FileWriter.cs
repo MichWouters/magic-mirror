@@ -25,7 +25,7 @@ namespace Acme.Generic
                 string result = File.ReadAllText($"{path}/{fileName}");
                 return result;
             }
-            catch(FileNotFoundException e)
+            catch(FileNotFoundException)
             {
                 throw;
             }
@@ -41,7 +41,7 @@ namespace Acme.Generic
             {
                 throw new NotImplementedException();
             }
-            catch (FileNotFoundException e)
+            catch (FileNotFoundException)
             {
                 throw;
             }

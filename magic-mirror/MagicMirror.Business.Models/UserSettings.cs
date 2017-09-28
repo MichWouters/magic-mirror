@@ -7,7 +7,7 @@
     {
         public UserSettings()
         {
-            UserName = "Joe";
+            UserName = "Billy";
             HomeAddress = "Generaal Armstrongweg 1";
             HomeCity = "Antwerpen";
             WorkAddress = "Earl Bakkenstraat 10 6422 Heerlen";
