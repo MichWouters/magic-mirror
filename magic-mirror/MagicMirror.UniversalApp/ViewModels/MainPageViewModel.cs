@@ -11,6 +11,7 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         // Services from the Business Layer
         private IApiService<WeatherModel> _weatherService;
+
         private IApiService<TrafficModel> _trafficService;
 
         public void NavigateToSettings()
@@ -29,6 +30,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         // Timers to refresh individual components
         private DispatcherTimer timeTimer;
+
         private DispatcherTimer complimentTimer;
         private DispatcherTimer weatherTimer;
         private DispatcherTimer trafficTimer;
@@ -178,6 +180,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         #region Properties
 
         private WeatherModel _weather;
+
         public WeatherModel WeatherInfo
         {
             get => _weather;
@@ -189,6 +192,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         private TrafficModel _traffic;
+
         public TrafficModel TrafficInfo
         {
             get => _traffic;
@@ -211,6 +215,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
         private string _compliment;
 
         public string Compliment
@@ -222,6 +227,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
         #endregion Properties
     }
 }

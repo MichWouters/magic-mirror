@@ -56,7 +56,9 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         #region Properties
+
         private string _ipAddress;
+
         public string IpAddress
         {
             get => _settingService.GetIpAddress();
@@ -66,6 +68,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
-        #endregion
+
+        #endregion Properties
     }
 }

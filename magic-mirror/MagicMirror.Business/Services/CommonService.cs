@@ -3,7 +3,6 @@ using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Compliments;
 using Newtonsoft.Json;
 using System;
-using System.IO;
 
 namespace MagicMirror.Business.Services
 {

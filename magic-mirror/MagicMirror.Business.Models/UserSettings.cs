@@ -6,7 +6,7 @@ namespace MagicMirror.Business.Models
     /// <summary>
     /// Helper class to pass user parameters from the business to the data-layer.
     /// </summary>
-    public class UserSettings: INotifyPropertyChanged
+    public class UserSettings : INotifyPropertyChanged
     {
         public UserSettings()
         {
@@ -19,7 +19,7 @@ namespace MagicMirror.Business.Models
             TemperatureUOM = TemperatureUOM.Celsius;
             DistanceUOM = DistanceUOM.Metric;
         }
-        
+
         // Empty constructor chaining
         public UserSettings(string userName, string homeAddress, string homeCity, string workAddress)
             : this()

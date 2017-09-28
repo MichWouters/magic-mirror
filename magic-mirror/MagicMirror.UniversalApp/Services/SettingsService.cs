@@ -1,9 +1,9 @@
 ﻿using MagicMirror.Business.Models;
-using System;
-using Windows.Storage;
-using Windows.Networking.Connectivity;
 using MagicMirror.Business.Services;
+using System;
 using System.IO;
+using Windows.Networking.Connectivity;
+using Windows.Storage;
 
 namespace MagicMirror.UniversalApp.Services
 {
@@ -61,7 +61,7 @@ namespace MagicMirror.UniversalApp.Services
         public void SaveSettings(UserSettings settings)
         {
             var localFolder = ApplicationData.Current.LocalFolder;
-            _commonService.SaveSettings(localFolder.Path, USERSETTINGS, settings); 
+            _commonService.SaveSettings(localFolder.Path, USERSETTINGS, settings);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.UniversalApp.ViewModels;
-using Windows.UI.Xaml.Controls;
 using System;
+using Windows.UI.Xaml.Controls;
 
 namespace MagicMirror.UniversalApp.Views
 {
@@ -36,7 +36,6 @@ namespace MagicMirror.UniversalApp.Views
             }
             catch (Exception e)
             {
-
             }
         }
     }
