@@ -27,19 +27,17 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         public UserSettings UserSettings
         {
-            get
-            {
-                return _userSettings;
-            }
+            get => _userSettings;
             set
             {
-                _settingService.SaveSettings(_userSettings);
+                _userSettings = value;
                 OnPropertyChanged();
             }
         }
 
         public void NavigateToMain()
         {
+            _settingService.SaveSettings(_userSettings);
             _navigationService.Navigate(typeof(MainPage));
         }
 
