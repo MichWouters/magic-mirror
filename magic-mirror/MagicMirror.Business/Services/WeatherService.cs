@@ -104,7 +104,7 @@ namespace MagicMirror.Business.Services
 
                     case "10d":
                     case "10n":
-                        res = "09.png";
+                        res = "010.png";
                         break;
 
                     case "11d":
@@ -126,7 +126,8 @@ namespace MagicMirror.Business.Services
                         res = "50.png";
                         break;
                 }
-                return $"{prefix}/{theme}/{res}";
+                //return $"{prefix}/{theme}/{res}";
+                return "ms - appx:///Assets/Weather/Dark/010.png";
             }
             catch (Exception)
             {

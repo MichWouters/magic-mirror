@@ -80,7 +80,7 @@
 
         <Image
             x:Name="WeatherImage"
-            Source="{x:Bind ViewModel.WeatherInfo.Icon, FallbackValue=ms-appx:///Assets/Weather/Dark/01d.png}"
+            Source="{x:Bind ViewModel.WeatherInfo.Icon, Mode=OneWay, FallbackValue=ms-appx:///Assets/Weather/Dark/01d.png}"
             RelativePanel.RightOf="TemperatureSymbol"
             RelativePanel.AlignVerticalCenterWith="TemperatureSymbol"
             Style="{StaticResource CurrentWeatherImage}" />

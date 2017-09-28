@@ -16,7 +16,6 @@ namespace MagicMirror.UniversalApp.ViewModels
         private UniversalApp.Services.ISettingsService _settingsService;
         private CommonService _commonService;
 
-
         // Timers to refresh individual components
         private DispatcherTimer timeTimer;
         private DispatcherTimer complimentTimer;

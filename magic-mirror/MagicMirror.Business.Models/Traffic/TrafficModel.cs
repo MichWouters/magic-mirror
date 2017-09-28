@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Acme.Generic;
+using System;
 
 namespace MagicMirror.Business.Models
 {
@@ -20,7 +21,7 @@ namespace MagicMirror.Business.Models
         {
             get
             {
-                return $"{ Minutes } minutes ( including { TrafficDensity } traffic).";
+                return $"{ Minutes.GetTimeNotation() } ( including { TrafficDensity } traffic).";
             }
         }
     }
