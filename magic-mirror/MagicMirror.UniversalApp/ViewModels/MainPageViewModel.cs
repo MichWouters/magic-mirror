@@ -114,6 +114,8 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
+                if (_commonService == null) _commonService = new CommonService();
+
                 Compliment = _commonService.GenerateCompliment();
             }
             catch (Exception ex)

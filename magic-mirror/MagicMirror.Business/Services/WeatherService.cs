@@ -48,25 +48,14 @@ namespace MagicMirror.Business.Services
 
         protected override WeatherModel CalculateUnMappableValues(WeatherModel model)
         {
-            switch (_criteria.TemperatureUOM)
-            {
-                case TemperatureUOM.Celsius:
-                    model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, _criteria.Precision);
-                    break;
-
-                case TemperatureUOM.Fahrenheit:
-                    model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, _criteria.Precision);
-                    break;
-
-                default:
-                    break;
-            }
+            model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, _criteria.Precision);
+            model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, _criteria.Precision);
 
             DateTime sunrise = DateHelper.ConvertFromUnixTimestamp(model.SunRiseMilliseconds);
-            model.SunRise = sunrise.ToString("HH:mm");
-
             DateTime sunset = DateHelper.ConvertFromUnixTimestamp(model.SunSetMilliSeconds);
+            model.SunRise = sunrise.ToString("HH:mm");
             model.SunSet = sunset.ToString("HH:mm");
+
             return model;
         }
 
