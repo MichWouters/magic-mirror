@@ -64,7 +64,7 @@
             RelativePanel.RightOf="TemperatureTextBlock"
             Style="{StaticResource Degrees}"
             Text="°"
-            Margin="0,10,0,0" />
+            Margin="0.333,2,-0.333,8" />
 
         <TextBlock
             x:Name="WeatherTextBox"
@@ -73,9 +73,9 @@
             Text="{x:Bind ViewModel.WeatherInfo.WeatherType, Mode= OneWay, FallbackValue='Unavailable'}" />
 
         <TextBlock x:Name="LocationTextBlock"
-                   Text="{x:Bind ViewModel.WeatherInfo.Name, Mode= OneWay,FallbackValue='Montgomery'}"
                    RelativePanel.Below="WeatherTextBox"
                    FontSize="10"
+                   Text="{x:Bind ViewModel.WeatherInfo.Name, Mode= OneWay,FallbackValue='Montgomery'}"
                    Margin="0,0,0,10" />
 
         <Image

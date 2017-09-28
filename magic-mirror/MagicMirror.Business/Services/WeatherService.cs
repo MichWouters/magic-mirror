@@ -28,7 +28,12 @@ namespace MagicMirror.Business.Services
 
             // Calculate non-mappable values
             model = CalculateUnMappableValues(model);
-            model.Icon = ConvertWeatherIcon(model.Icon);
+
+            // Todo: Implement bool if user wants metro or openweather icons
+            if (true)
+            {
+                model.Icon = ConvertWeatherIcon(model.Icon);
+            }
 
             return model;
         }

@@ -1,5 +1,4 @@
 ﻿using MagicMirror.Business.Models;
-using MagicMirror.Business.Services;
 using System;
 using System.IO;
 using Windows.Networking.Connectivity;
@@ -9,12 +8,12 @@ namespace MagicMirror.UniversalApp.Services
 {
     public class SettingsService : ISettingsService
     {
-        private CommonService _commonService;
+        private Business.Services.ISettingsService settingsService;
         private const string USERSETTINGS = "userSettings.json";
 
         public SettingsService()
         {
-            _commonService = new CommonService();
+            settingsService = new Business.Services.SettingsService();
         }
 
         public UserSettings LoadSettings()
@@ -22,7 +21,7 @@ namespace MagicMirror.UniversalApp.Services
             try
             {
                 var localFolder = ApplicationData.Current.LocalFolder;
-                var result = _commonService.ReadSettings(localFolder.Path, USERSETTINGS);
+                var result = settingsService.ReadSettings(localFolder.Path, USERSETTINGS);
                 return result;
             }
             catch (FileNotFoundException)
@@ -61,7 +60,7 @@ namespace MagicMirror.UniversalApp.Services
         public void SaveSettings(UserSettings settings)
         {
             var localFolder = ApplicationData.Current.LocalFolder;
-            _commonService.SaveSettings(localFolder.Path, USERSETTINGS, settings);
+            settingsService.SaveSettings(localFolder.Path, USERSETTINGS, settings);
         }
     }
 }

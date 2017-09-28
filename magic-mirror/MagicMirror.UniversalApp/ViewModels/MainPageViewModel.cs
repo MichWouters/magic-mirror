@@ -1,5 +1,6 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
+using MagicMirror.UniversalApp.Services;
 using MagicMirror.UniversalApp.Views;
 using System;
 using System.Threading.Tasks;
@@ -11,26 +12,13 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         // Services from the Business Layer
         private IApiService<WeatherModel> _weatherService;
-
         private IApiService<TrafficModel> _trafficService;
-
-        public void NavigateToSettings()
-        {
-            try
-            {
-                _navigationService.Navigate(typeof(SettingPage));
-            }
-            catch (Exception ex)
-            {
-                DisplayErrorMessage("Unable to navigate to Settings", ex.Message);
-            }
-        }
-
+        private UniversalApp.Services.ISettingsService _settingsService;
         private CommonService _commonService;
+
 
         // Timers to refresh individual components
         private DispatcherTimer timeTimer;
-
         private DispatcherTimer complimentTimer;
         private DispatcherTimer weatherTimer;
         private DispatcherTimer trafficTimer;
@@ -47,12 +35,13 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
-                App appReference = Application.Current as App;
-                UserSettings searchCriteria = appReference.UserSettings;
+                _settingsService = new Services.SettingsService();
+                UserSettings userSettings = _settingsService.LoadSettings();
 
+                _weatherService = new WeatherService(userSettings);
+                _trafficService = new TrafficService(userSettings);
                 _commonService = new CommonService();
-                _weatherService = new WeatherService(searchCriteria);
-                _trafficService = new TrafficService(searchCriteria);
+
             }
             catch (Exception ex)
             {
@@ -174,6 +163,18 @@ namespace MagicMirror.UniversalApp.ViewModels
                 int minutes = 5;
                 await Task.Delay((minutes * 60) * 10000);
                 RefreshTrafficModel(null, null);
+            }
+        }
+
+        public void NavigateToSettings()
+        {
+            try
+            {
+                _navigationService.Navigate(typeof(SettingPage));
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorMessage("Unable to navigate to Settings", ex.Message);
             }
         }
 

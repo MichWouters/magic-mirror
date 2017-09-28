@@ -10,6 +10,7 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         private SettingsService _settingService;
         private UserSettings _userSettings;
+        private string _ipAddress;
 
         public SettingPageViewModel()
         {
@@ -21,17 +22,9 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
             catch (FileNotFoundException)
             {
-                DisplayErrorMessage("No Settings File Found", "It looks like you're running this app for the first time. We created a new settings file with default values. Please enter your settings.");
-            }
-        }
-
-        public UserSettings UserSettings
-        {
-            get => _userSettings;
-            set
-            {
-                _userSettings = value;
-                OnPropertyChanged();
+                DisplayErrorMessage("No Settings File Found",
+                    "It looks like you're running this app for the first time." +
+                    " We created a new settings file with default values. Please enter your settings.");
             }
         }
 
@@ -54,9 +47,6 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         #region Properties
-
-        private string _ipAddress;
-
         public string IpAddress
         {
             get => _settingService.GetIpAddress();
@@ -67,6 +57,15 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
+        public UserSettings UserSettings
+        {
+            get => _userSettings;
+            set
+            {
+                _userSettings = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion Properties
     }
 }

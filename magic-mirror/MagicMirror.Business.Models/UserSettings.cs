@@ -10,10 +10,10 @@ namespace MagicMirror.Business.Models
     {
         public UserSettings()
         {
-            UserName = "Billy";
-            HomeAddress = "Generaal Armstrongweg 1";
-            HomeCity = "Antwerpen";
-            WorkAddress = "Earl Bakkenstraat 10 6422 Heerlen";
+            UserName = "UnkownUser";
+            HomeAddress = "709 Honey Creek ";
+            HomeCity = "New York, NY 10028";
+            WorkAddress = "3 South Sherman Street Astoria, NY 11106";
 
             Precision = 2;
             TemperatureUOM = TemperatureUOM.Celsius;

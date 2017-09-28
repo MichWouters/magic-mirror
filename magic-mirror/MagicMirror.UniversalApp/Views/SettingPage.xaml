@@ -43,23 +43,12 @@
                  RelativePanel.Below="ThemeSwitch"
                  Text="{x:Bind ViewModel.UserSettings.UserName, Mode=TwoWay}" />
 
-        <TextBox x:Name="BusyTextTextBox"
-                     HorizontalAlignment="Left"
-                     Header="Busy text"
-                        RelativePanel.AlignLeftWithPanel="True"
-                     RelativePanel.Below="UserNameTextBox"
-                     Text="Loading..." />
-
-        <Button x:Name="BusyButton"
-                    Content="Show Busy"
-                    RelativePanel.AlignBottomWith="BusyTextTextBox"
-                    RelativePanel.RightOf="BusyTextTextBox" />
 
         <TextBox x:Name="HomeTextBox"
                      HorizontalAlignment="Left"
                      Header="Home street and number"
                      RelativePanel.AlignLeftWithPanel="True"
-                     RelativePanel.Below="BusyTextTextBox"
+                     RelativePanel.Below="UserNameTextBox"
                      Text="{x:Bind ViewModel.UserSettings.HomeAddress, Mode=TwoWay}" />
 
         <TextBox x:Name="HomeTownTextBox"
