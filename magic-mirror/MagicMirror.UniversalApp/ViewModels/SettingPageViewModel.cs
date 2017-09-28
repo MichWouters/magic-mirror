@@ -1,16 +1,22 @@
 ﻿using MagicMirror.Business.Models;
+using MagicMirror.UniversalApp.Services;
 using MagicMirror.UniversalApp.Views;
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
-    public class SettingPageViewModel : ViewModelBase, INotifyPropertyChanged
+    public class SettingPageViewModel : ViewModelBase
     {
+        private SettingsService _settingService;
 
-        public SearchCriteria SearchCriteria
+        public SettingPageViewModel()
+        {
+            _settingService = new SettingsService();
+        }
+
+        public UserSettings UserSettings
         {
             get
             {
@@ -26,10 +32,14 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public void NavigateToMain()
+        public async Task NavigateToMain()
         {
             try
             {
+                SettingsService _service = new SettingsService();
+                _service.SaveSettings();
+
+                var IAmTired = _service.LoadSettings();
                 _navigationService.Navigate(typeof(MainPage));
             }
             catch (Exception ex)
@@ -50,11 +60,16 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private string _ipAddress;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public string IpAddress
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get => _settingService.GetIpAddress();
+            set
+            {
+                _ipAddress = value;
+                OnPropertyChanged();
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ namespace MagicMirror.Tests.Traffic
 
         public TrafficBusinessTests()
         {
-            var criteria = new SearchCriteria()
+            var criteria = new UserSettings()
             {
                 HomeAddress = "Generaal Armstrongweg 1",
                 HomeCity = "Antwerpen",

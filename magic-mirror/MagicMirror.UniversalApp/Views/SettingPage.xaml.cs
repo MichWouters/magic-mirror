@@ -1,5 +1,7 @@
-﻿using MagicMirror.UniversalApp.ViewModels;
+﻿using MagicMirror.Business.Models;
+using MagicMirror.UniversalApp.ViewModels;
 using Windows.UI.Xaml.Controls;
+using System;
 
 namespace MagicMirror.UniversalApp.Views
 {
@@ -13,9 +15,23 @@ namespace MagicMirror.UniversalApp.Views
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            ViewModel.NavigateToMain();
+            await ViewModel.NavigateToMain();
+        }
+
+        private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            FillDropDownLists();
+        }
+
+        private void FillDropDownLists()
+        {
+            TemperatureUomComboBox.ItemsSource = Enum.GetValues(typeof(TemperatureUOM));
+            TemperatureUomComboBox.SelectedIndex = (int)ViewModel.UserSettings.TemperatureUOM;
+
+            DistanceUomComboBox.ItemsSource = Enum.GetValues(typeof(DistanceUOM));
+            DistanceUomComboBox.SelectedIndex = (int)ViewModel.UserSettings.DistanceUOM;
         }
     }
 }

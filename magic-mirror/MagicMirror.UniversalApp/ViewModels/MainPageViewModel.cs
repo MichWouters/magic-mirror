@@ -2,18 +2,15 @@
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Views;
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
-    public class MainPageViewModel : ViewModelBase, INotifyPropertyChanged
+    public class MainPageViewModel : ViewModelBase
     {
         // Services from the Business Layer
         private IApiService<WeatherModel> _weatherService;
-
         private IApiService<TrafficModel> _trafficService;
 
         public void NavigateToSettings()
@@ -24,7 +21,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
             catch (Exception ex)
             {
-                DisplayErrorMessage("Unable to navigate to Settins", ex.Message);
+                DisplayErrorMessage("Unable to navigate to Settings", ex.Message);
             }
         }
 
@@ -49,7 +46,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             try
             {
                 App appReference = Application.Current as App;
-                SearchCriteria searchCriteria = appReference.Criteria;
+                UserSettings searchCriteria = appReference.Criteria;
 
                 _commonService = new CommonService();
                 _weatherService = new WeatherService(searchCriteria);
@@ -151,7 +148,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 // Try to refresh data. If succesful, resume timer
                 int minutes = 5;
-                await Task.Delay((minutes * 60) * 1000);
+                await Task.Delay((minutes * 60) * 10000);
                 RefreshWeatherModel(null, null);
             }
         }
@@ -173,7 +170,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 // Try to refresh data immediately. If succesful, resume timer
                 int minutes = 5;
-                await Task.Delay((minutes * 60) * 1000);
+                await Task.Delay((minutes * 60) * 10000);
                 RefreshTrafficModel(null, null);
             }
         }
@@ -181,7 +178,6 @@ namespace MagicMirror.UniversalApp.ViewModels
         #region Properties
 
         private WeatherModel _weather;
-
         public WeatherModel WeatherInfo
         {
             get => _weather;
@@ -193,7 +189,6 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         private TrafficModel _traffic;
-
         public TrafficModel TrafficInfo
         {
             get => _traffic;
@@ -205,7 +200,6 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         public DateModel Date => new DateModel();
-
         private string _time;
 
         public string Time
@@ -217,7 +211,6 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
-
         private string _compliment;
 
         public string Compliment
@@ -229,14 +222,6 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        public void OnPropertyChanged([CallerMemberName] string property = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         #endregion Properties
     }
 }
