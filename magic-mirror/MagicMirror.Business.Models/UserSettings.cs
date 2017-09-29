@@ -1,22 +1,25 @@
-﻿namespace MagicMirror.Business.Models
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace MagicMirror.Business.Models
 {
     /// <summary>
     /// Helper class to pass user parameters from the business to the data-layer.
     /// </summary>
-    public class UserSettings
+    public class UserSettings : INotifyPropertyChanged
     {
         public UserSettings()
         {
-            UserName = "Billy";
-            HomeAddress = "Generaal Armstrongweg 1";
-            HomeCity = "Antwerpen";
-            WorkAddress = "Earl Bakkenstraat 10 6422 Heerlen";
+            UserName = "UnkownUser";
+            HomeAddress = "709 Honey Creek ";
+            HomeCity = "New York, NY 10028";
+            WorkAddress = "3 South Sherman Street Astoria, NY 11106";
 
             Precision = 2;
             TemperatureUOM = TemperatureUOM.Celsius;
             DistanceUOM = DistanceUOM.Metric;
         }
-        
+
         // Empty constructor chaining
         public UserSettings(string userName, string homeAddress, string homeCity, string workAddress)
             : this()
@@ -43,5 +46,12 @@
         public int Precision { get; set; }
         public TemperatureUOM TemperatureUOM { get; set; }
         public DistanceUOM DistanceUOM { get; set; }
+
+        public void OnPropertyChanged([CallerMemberName] string property = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

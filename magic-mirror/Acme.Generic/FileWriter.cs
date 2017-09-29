@@ -11,7 +11,7 @@ namespace Acme.Generic
             {
                 File.WriteAllText($"{path}/{fileName}", json);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new IOException("Unable to write text to file", e);
             }
@@ -19,19 +19,18 @@ namespace Acme.Generic
 
         public static string ReadFromFile(string path, string fileName)
         {
-
             try
             {
                 string result = File.ReadAllText($"{path}/{fileName}");
                 return result;
             }
-            catch(FileNotFoundException)
+            catch (FileNotFoundException e)
             {
-                throw;
+                throw new FileNotFoundException($"{fileName} does not exist", e);
             }
             catch (Exception e)
             {
-                throw new FileNotFoundException("Could not read text from file", e);
+                throw new Exception($"Could not read text from {fileName}", e);
             }
         }
 

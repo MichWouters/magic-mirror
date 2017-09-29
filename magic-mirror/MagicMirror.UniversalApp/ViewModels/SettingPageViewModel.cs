@@ -2,50 +2,36 @@
 using MagicMirror.UniversalApp.Services;
 using MagicMirror.UniversalApp.Views;
 using System;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
+using System.IO;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
     public class SettingPageViewModel : ViewModelBase
     {
         private SettingsService _settingService;
+        private UserSettings _userSettings;
+        private string _ipAddress;
 
         public SettingPageViewModel()
         {
             _settingService = new SettingsService();
-        }
 
-        public UserSettings UserSettings
-        {
-            get
-            {
-                var appReference = Application.Current as App;
-                return appReference.UserSettings;
-            }
-            set
-            {
-                var appReference = Application.Current as App;
-
-                appReference.UserSettings = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public async Task NavigateToMain()
-        {
             try
             {
-                SettingsService _service = new SettingsService();
-                _service.SaveSettings();
-
-                var IAmTired = _service.LoadSettings();
-                _navigationService.Navigate(typeof(MainPage));
+                _userSettings = _settingService.LoadSettings();
             }
-            catch (Exception ex)
+            catch (FileNotFoundException)
             {
-                DisplayErrorMessage("Unable to save settings", ex.Message);
+                DisplayErrorMessage("No Settings File Found",
+                    "It looks like you're running this app for the first time." +
+                    " We created a new settings file with default values. Please enter your settings.");
             }
+        }
+
+        public void NavigateToMain()
+        {
+            _settingService.SaveSettings(_userSettings);
+            _navigationService.Navigate(typeof(MainPage));
         }
 
         public void ToggleLightTheme()
@@ -60,8 +46,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        private string _ipAddress;
-
+        #region Properties
         public string IpAddress
         {
             get => _settingService.GetIpAddress();
@@ -71,5 +56,16 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public UserSettings UserSettings
+        {
+            get => _userSettings;
+            set
+            {
+                _userSettings = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion Properties
     }
 }
