@@ -12,7 +12,8 @@ Michiel
 * Store, read and edit setting values in local Json file - Done
 * Show Ip adress in Setting menu - Done
 
-* Cortana + stemherkenning, voicecommands - In progress 
+* Cortana + stemherkenning, voicecommands - In progress
+* Error Handling: App keeps repeating last error message once an exception has been thrown - In progress
 * Implement IOC
 * Avoid deadlocks
 * Error Handling: Log errors.
