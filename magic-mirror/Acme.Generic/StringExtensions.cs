@@ -88,5 +88,12 @@ namespace Acme.Generic
             string result = (restMinutes != 0)? $"{hours} hours and {restMinutes} minutes": $"{hours} hours";
             return result;
         }
+
+        public static string ConvertCommaToDot(this string input)
+        {
+            var result = input.Replace(',', '.');
+
+            return result;
+        }
     }
 }

@@ -52,14 +52,25 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public async Task GetAddressModel()
+        public async Task<object> GetAddressModel()
         {
-            var pos = await _locationService.GetLocationAsync();
+            try
+            {
+                var coordinates = await _locationService.GetLocationAsync();
+                _addressService = new AddressService(coordinates.Coordinate.Latitude.ToString(), coordinates.Coordinate.Longitude.ToString());
+                AddressModel addressModel = await _addressService.GetModelAsync();
 
+                string address = $"{addressModel.Street}, {addressModel.HouseNumber}";
+                string city = $"{addressModel.PostalCode} {addressModel.City}, {addressModel.Country}";
 
-            _addressService = new Services.
-
-            AddressModel addressModel =  await _addressService.GetModelAsync();
+                // Todo: Convert anonymous type to strongly typed
+                return new { Address = address, City = city };
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorMessage("Unable to fetch location", ex.Message);
+                return null;
+            }
 
         }
 

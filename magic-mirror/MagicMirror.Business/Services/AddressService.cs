@@ -23,7 +23,6 @@ namespace MagicMirror.Business.Services
             {
                 var entity = await GetEntityAsync();
                 AddressModel model = MapEntityToModel(entity);
-                model = CalculateUnMappableValues(model);
 
                 return model;
             }
@@ -39,11 +38,6 @@ namespace MagicMirror.Business.Services
             AddressEntity entity = await _repo.GetEntityAsync();
 
             return entity;
-        }
-
-        protected override AddressModel CalculateUnMappableValues(AddressModel model)
-        {
-            throw new NotImplementedException();
         }
     }
 }

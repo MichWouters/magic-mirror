@@ -52,7 +52,7 @@ namespace MagicMirror.Business.Services
             return entity;
         }
 
-        protected override TrafficModel CalculateUnMappableValues(TrafficModel model)
+        protected TrafficModel CalculateUnMappableValues(TrafficModel model)
         {
             model.Minutes = (model.Minutes / 60);
             model.TrafficDensity = CalculateTrafficDensity(model.NumberOfIncidents);

@@ -24,11 +24,6 @@ namespace MagicMirror.Business.Services
         public abstract Task<T> GetModelAsync();
 
         /// <summary>
-        /// Calculate the model's fields which cannot be resolved using Automapper.
-        /// </summary>
-        protected abstract T CalculateUnMappableValues(T model);
-
-        /// <summary>
         /// Retrieve unmodified entity from data layer
         /// </summary>
         protected abstract Task<Y> GetEntityAsync();

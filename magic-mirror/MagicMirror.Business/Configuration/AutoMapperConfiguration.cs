@@ -23,7 +23,7 @@ namespace MagicMirror.Business.Configuration
                 .ForMember(dest => dest.MinutesText, source => source.MapFrom(src => src.Routes[0].Legs[0].Duration.Text))
                 .ReverseMap();
 
-            CreateMap<AddressEntity, GeoPosition>()
+            CreateMap<AddressEntity, AddressModel>()
                 .ForMember(dest => dest.HouseNumber, source => source.MapFrom(src => src.results[0].address_components[0].long_name))
                 .ForMember(dest => dest.Street, source => source.MapFrom(src => src.results[0].address_components[1].long_name))
                 .ForMember(dest => dest.City, source => source.MapFrom(src => src.results[0].address_components[2].long_name))

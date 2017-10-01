@@ -1,6 +1,7 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.UniversalApp.ViewModels;
 using System;
+using System.Reflection;
 using Windows.UI.Xaml.Controls;
 
 namespace MagicMirror.UniversalApp.Views
@@ -41,7 +42,11 @@ namespace MagicMirror.UniversalApp.Views
 
         private async void LocationButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            await ViewModel.GetAddressModel();
+            // Todo: Convert anonymous type to strongly typed
+            var result = await ViewModel.GetAddressModel();
+            HomeTextBox.Text = result?.GetType().GetProperty("Address")?.GetValue(result, null).ToString();
+            HomeTownTextBox.Text = result?.GetType().GetProperty("City")?.GetValue(result, null).ToString();
+
         }
     }
 }
