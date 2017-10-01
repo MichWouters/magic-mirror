@@ -3,18 +3,22 @@ using MagicMirror.UniversalApp.Services;
 using MagicMirror.UniversalApp.Views;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
     public class SettingPageViewModel : ViewModelBase
     {
-        private SettingsService _settingService;
+        private ISettingsService _settingService;
+        private ILocationService _locationService;
         private UserSettings _userSettings;
-        private string _ipAddress;
+
+        private string ipAddress;
 
         public SettingPageViewModel()
         {
             _settingService = new SettingsService();
+            _locationService = new LocationService();
 
             try
             {
@@ -46,13 +50,18 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
+        public async Task GetLocation()
+        {
+            await _locationService.GetLocationAsync();
+        }
+
         #region Properties
         public string IpAddress
         {
             get => _settingService.GetIpAddress();
             set
             {
-                _ipAddress = value;
+                ipAddress = value;
                 OnPropertyChanged();
             }
         }

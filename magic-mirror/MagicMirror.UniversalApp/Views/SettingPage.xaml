@@ -58,6 +58,13 @@
                      RelativePanel.Below="HomeTextBox"
                      Text="{x:Bind ViewModel.UserSettings.HomeCity, Mode=TwoWay}" />
 
+        <Button x:Name="LocationButton"
+                RelativePanel.RightOf="HomeTownTextBox"
+                RelativePanel.Below="UserNameTextBox"
+                RelativePanel.AlignBottomWith="HomeTownTextBox"
+                Content="Use current location" Click="LocationButton_Click"
+                />
+
         <TextBox x:Name="WorkAddressTextBox"
                  HorizontalAlignment="Left"
                  Header="Work Address"

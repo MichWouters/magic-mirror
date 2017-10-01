@@ -1,5 +1,5 @@
 ﻿using MagicMirror.DataAccess.Configuration;
-using MagicMirror.Entities.Traffic;
+using MagicMirror.DataAccess.Entities.Entities;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -60,5 +60,11 @@ namespace MagicMirror.DataAccess.Repos
             if (string.IsNullOrWhiteSpace(_apiUrl)) throw new ArgumentNullException("No Traffic API Url provided");
             if (string.IsNullOrWhiteSpace(_apiId)) throw new ArgumentNullException("No Traffic Api Id provided");
         }
+
+
+
+
+
+        
     }
 }

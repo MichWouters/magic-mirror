@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities.Weather;
-using MagicMirror.Entities.Traffic;
+using MagicMirror.DataAccess.Entities.Entities;
 
 namespace MagicMirror.Business.Configuration
 {

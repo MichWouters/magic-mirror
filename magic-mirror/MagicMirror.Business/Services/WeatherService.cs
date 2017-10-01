@@ -1,5 +1,6 @@
 ﻿using Acme.Generic;
 using MagicMirror.Business.Models;
+using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Entities.Weather;
 using MagicMirror.DataAccess.Repos;
 using System;

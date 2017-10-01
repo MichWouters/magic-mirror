@@ -1,7 +1,7 @@
-﻿using MagicMirror.DataAccess.Entities;
+﻿using MagicMirror.Entities.Traffic;
 using System.Collections.Generic;
 
-namespace MagicMirror.Entities.Traffic
+namespace MagicMirror.DataAccess.Entities.Entities
 {
     public class TrafficEntity : IEntity
     {
