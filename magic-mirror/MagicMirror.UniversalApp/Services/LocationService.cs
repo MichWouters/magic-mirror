@@ -10,7 +10,6 @@ namespace MagicMirror.UniversalApp.Services
         {
             var access = await RequestAccessAsync();
             await GetCoordinates();
-
         }
 
         private async Task<GeolocationAccessStatus> RequestAccessAsync()
@@ -33,10 +32,8 @@ namespace MagicMirror.UniversalApp.Services
             Geoposition pos = await geolocator.GetGeopositionAsync();
         }
 
-        private async Task GetAddress(Geoposition pos)
+        private async Task GetAddress(double latitude, double longitude)
         {
-
         }
-
     }
 }

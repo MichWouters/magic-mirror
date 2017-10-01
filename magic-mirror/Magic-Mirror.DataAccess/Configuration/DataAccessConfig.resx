@@ -127,6 +127,6 @@
     <value>AIzaSyBGoN7HTIWBLk6N9CqEqvJsV_KGFmwt8tw</value>
   </data>
   <data name="TrafficApiUrl" xml:space="preserve">
-    <value>https://maps.googleapis.com/maps/api/directions/json</value>
+    <value>https://maps.googleapis.com/maps/api</value>
   </data>
 </root>

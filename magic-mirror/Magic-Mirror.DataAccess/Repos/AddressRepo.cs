@@ -6,26 +6,26 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class TrafficRepo : ApiRepoBase<TrafficEntity>
+    public class AddressRepo : ApiRepoBase<AddressEntity>
     {
-        public TrafficRepo(string start, string destination) : base()
+        public AddressRepo(string latitude, string longitude) : base()
         {
-            if (string.IsNullOrWhiteSpace(start)) throw new ArgumentNullException("Start address need to be provided");
-            if (string.IsNullOrWhiteSpace(destination)) throw new ArgumentNullException("Destination address needs to be provided");
+            if (string.IsNullOrWhiteSpace(latitude)) throw new ArgumentNullException("Latitude need to be provided");
+            if (string.IsNullOrWhiteSpace(longitude)) throw new ArgumentNullException("Longitude needs to be provided");
 
             SetApiParameters();
 
-            _url = $"{_apiUrl}/directions/json?origin={start}&destination={destination}&key={_apiId}";
+            _url = $"{_apiUrl}/geocode/json?latlng={latitude},{longitude}&key={_apiId}";
         }
 
-        public override async Task<TrafficEntity> GetEntityAsync()
+        public override async Task<AddressEntity> GetEntityAsync()
         {
             try
             {
                 HttpResponseMessage response = await GetHttpResponseFromApiAsync();
 
                 string json = await response.Content.ReadAsStringAsync();
-                TrafficEntity entity = ConvertJsonToEntity(json);
+                AddressEntity entity = ConvertJsonToEntity(json);
                 return entity;
             }
             catch (Exception)
@@ -43,7 +43,7 @@ namespace MagicMirror.DataAccess.Repos
             }
             catch (HttpRequestException ex)
             {
-                string errorMessage = $"A connection with the traffic server for traffic duration could not be established.";
+                string errorMessage = $"A connection with the traffic server for address retrieval could not be established.";
                 throw new HttpRequestException(errorMessage, ex);
             }
             catch (Exception)
