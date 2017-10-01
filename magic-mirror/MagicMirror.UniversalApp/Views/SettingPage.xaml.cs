@@ -41,7 +41,7 @@ namespace MagicMirror.UniversalApp.Views
 
         private async void LocationButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            await ViewModel.GetLocation();
+            await ViewModel.GetAddressModel();
         }
     }
 }

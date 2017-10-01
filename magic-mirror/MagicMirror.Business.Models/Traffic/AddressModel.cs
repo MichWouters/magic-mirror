@@ -1,8 +1,12 @@
-﻿namespace MagicMirror.Business.Models.Traffic
+﻿namespace MagicMirror.Business.Models
 {
-    public class AddressModel:IModel
+    public class AddressModel : IModel
     {
-        public string Address { get; set; }
+        public string Street { get; set; }
+
+        public string HouseNumber { get; set; }
+
+        public string Country { get; set; }
 
         public string PostalCode { get; set; }
 

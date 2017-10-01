@@ -1,16 +1,14 @@
-﻿using System;
+﻿using MagicMirror.Business.Models;
+using MagicMirror.Business.Services;
+using System;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 
 namespace MagicMirror.UniversalApp.Services
 {
-    public class LocationService : ILocationService
+    public class LocationService
     {
-        public async Task GetLocationAsync()
-        {
-            var access = await RequestAccessAsync();
-            await GetCoordinates();
-        }
+        private AddressService _service;
 
         private async Task<GeolocationAccessStatus> RequestAccessAsync()
         {
@@ -26,14 +24,20 @@ namespace MagicMirror.UniversalApp.Services
             return accessStatus;
         }
 
-        private async Task GetCoordinates()
+        private async Task<Geoposition> GetCoordinates()
         {
             Geolocator geolocator = new Geolocator { DesiredAccuracyInMeters = 25 };
             Geoposition pos = await geolocator.GetGeopositionAsync();
+
+            return pos;
         }
 
-        private async Task GetAddress(double latitude, double longitude)
+        public async Task<Geoposition> GetLocationAsync()
         {
+            var access = await RequestAccessAsync();
+            var pos = await GetCoordinates();
+
+            return pos;
         }
     }
 }

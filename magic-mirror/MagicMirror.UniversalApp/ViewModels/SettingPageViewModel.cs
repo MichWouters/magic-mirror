@@ -1,4 +1,5 @@
 ﻿using MagicMirror.Business.Models;
+using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Services;
 using MagicMirror.UniversalApp.Views;
 using System;
@@ -9,15 +10,16 @@ namespace MagicMirror.UniversalApp.ViewModels
 {
     public class SettingPageViewModel : ViewModelBase
     {
-        private ISettingsService _settingService;
-        private ILocationService _locationService;
+        private Services.ISettingsService _settingService;
+        private LocationService _locationService;
+        private IApiService<AddressModel> _addressService;
         private UserSettings _userSettings;
 
         private string ipAddress;
 
         public SettingPageViewModel()
         {
-            _settingService = new SettingsService();
+            _settingService = new Services.SettingsService();
             _locationService = new LocationService();
 
             try
@@ -50,9 +52,15 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public async Task GetLocation()
+        public async Task GetAddressModel()
         {
-            await _locationService.GetLocationAsync();
+            var pos = await _locationService.GetLocationAsync();
+
+
+            _addressService = new Services.
+
+            AddressModel addressModel =  await _addressService.GetModelAsync();
+
         }
 
         #region Properties
