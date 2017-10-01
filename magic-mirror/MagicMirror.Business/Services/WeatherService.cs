@@ -1,6 +1,6 @@
 ﻿using Acme.Generic;
 using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities.Weather;
+using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
 using System;
 using System.Threading.Tasks;
@@ -46,7 +46,7 @@ namespace MagicMirror.Business.Services
             return entity;
         }
 
-        protected override WeatherModel CalculateUnMappableValues(WeatherModel model)
+        protected WeatherModel CalculateUnMappableValues(WeatherModel model)
         {
             model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, _criteria.Precision);
             model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, _criteria.Precision);

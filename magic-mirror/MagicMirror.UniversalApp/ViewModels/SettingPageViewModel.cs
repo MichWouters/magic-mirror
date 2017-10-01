@@ -1,20 +1,26 @@
 ﻿using MagicMirror.Business.Models;
+using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Services;
 using MagicMirror.UniversalApp.Views;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
     public class SettingPageViewModel : ViewModelBase
     {
-        private SettingsService _settingService;
+        private Services.ISettingsService _settingService;
+        private LocationService _locationService;
+        private IApiService<AddressModel> _addressService;
         private UserSettings _userSettings;
-        private string _ipAddress;
+
+        private string ipAddress;
 
         public SettingPageViewModel()
         {
-            _settingService = new SettingsService();
+            _settingService = new Services.SettingsService();
+            _locationService = new LocationService();
 
             try
             {
@@ -46,13 +52,37 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
+        public async Task<object> GetAddressModel()
+        {
+            try
+            {
+                var coordinates = await _locationService.GetLocationAsync();
+                _addressService = new AddressService(coordinates.Coordinate.Latitude.ToString(), coordinates.Coordinate.Longitude.ToString());
+                AddressModel addressModel = await _addressService.GetModelAsync();
+
+                string address = $"{addressModel.Street}, {addressModel.HouseNumber}";
+                string city = $"{addressModel.PostalCode} {addressModel.City}, {addressModel.Country}";
+
+                // Todo: Convert anonymous type to strongly typed
+                UserSettings.HomeAddress = address;
+                UserSettings.HomeCity = city;
+                return new { Address = address, City = city };
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorMessage("Unable to fetch location", ex.Message);
+                return null;
+            }
+
+        }
+
         #region Properties
         public string IpAddress
         {
             get => _settingService.GetIpAddress();
             set
             {
-                _ipAddress = value;
+                ipAddress = value;
                 OnPropertyChanged();
             }
         }

@@ -1,6 +1,6 @@
 ﻿using MagicMirror.Business.Models;
+using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
-using MagicMirror.Entities.Traffic;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -52,7 +52,7 @@ namespace MagicMirror.Business.Services
             return entity;
         }
 
-        protected override TrafficModel CalculateUnMappableValues(TrafficModel model)
+        protected TrafficModel CalculateUnMappableValues(TrafficModel model)
         {
             model.Minutes = (model.Minutes / 60);
             model.TrafficDensity = CalculateTrafficDensity(model.NumberOfIncidents);

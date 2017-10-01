@@ -1,5 +1,5 @@
 ﻿using MagicMirror.DataAccess.Configuration;
-using MagicMirror.DataAccess.Entities.Weather;
+using MagicMirror.DataAccess.Entities.Entities;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;

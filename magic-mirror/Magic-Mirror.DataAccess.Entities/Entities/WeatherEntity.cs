@@ -1,9 +1,11 @@
-﻿namespace MagicMirror.DataAccess.Entities.Weather
+﻿using MagicMirror.DataAccess.Entities.Weather;
+
+namespace MagicMirror.DataAccess.Entities.Entities
 {
     public class WeatherEntity : IEntity
     {
         public Coord Coord { get; set; }
-        public Weather[] Weather { get; set; }
+        public Weather.Weather[] Weather { get; set; }
         public string Base { get; set; }
         public Main Main { get; set; }
         public int Visibility { get; set; }
