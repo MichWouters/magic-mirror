@@ -17,6 +17,7 @@ namespace MagicMirror.Tests.Traffic
             _repo = new AddressRepo(latitude, longitude);
         }
         
+        // Todo: Complete tests. Add tests for business layer
         [Fact]
         public async Task Address_Test()
         {

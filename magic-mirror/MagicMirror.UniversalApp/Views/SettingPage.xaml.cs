@@ -44,6 +44,7 @@ namespace MagicMirror.UniversalApp.Views
         {
             // Todo: Convert anonymous type to strongly typed
             var result = await ViewModel.GetAddressModel();
+
             HomeTextBox.Text = result?.GetType().GetProperty("Address")?.GetValue(result, null).ToString();
             HomeTownTextBox.Text = result?.GetType().GetProperty("City")?.GetValue(result, null).ToString();
 

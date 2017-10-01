@@ -64,6 +64,8 @@ namespace MagicMirror.UniversalApp.ViewModels
                 string city = $"{addressModel.PostalCode} {addressModel.City}, {addressModel.Country}";
 
                 // Todo: Convert anonymous type to strongly typed
+                UserSettings.HomeAddress = address;
+                UserSettings.HomeCity = city;
                 return new { Address = address, City = city };
             }
             catch (Exception ex)
