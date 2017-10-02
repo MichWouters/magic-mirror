@@ -2,6 +2,7 @@
   "dependencies": {
     "AutoMapper": "6.1.1",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.4.0",
+    "Win2D.uwp": "1.21.0"
   },
   "frameworks": {
     "uap10.0.10586": {}

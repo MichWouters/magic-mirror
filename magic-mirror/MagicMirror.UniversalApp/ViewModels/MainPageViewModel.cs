@@ -9,7 +9,7 @@ using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
-    public class MainPageViewModel : ViewModelBase, INotifyPropertyChanged
+    public class MainPageViewModel : ViewModelBase
     {
         // Services from the Business Layer
         private IApiService<WeatherModel> _weatherService;
@@ -229,14 +229,6 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        public void OnPropertyChanged([CallerMemberName] string property = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         #endregion Properties
     }
 }

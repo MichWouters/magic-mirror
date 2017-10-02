@@ -117,6 +117,8 @@
             Style="{StaticResource Compliment}"
             Text="{x:Bind ViewModel.Compliment, Mode= OneWay, FallbackValue='Foo'}" />
 
+        <local:CameraFeed />
+
         <Image
             x:Name="DurationImage"
             RelativePanel.Above="DurationTextBlock"

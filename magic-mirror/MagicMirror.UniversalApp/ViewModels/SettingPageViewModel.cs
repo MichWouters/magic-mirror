@@ -7,7 +7,7 @@ using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
-    public class SettingPageViewModel : ViewModelBase, INotifyPropertyChanged
+    public class SettingPageViewModel : ViewModelBase
     {
 
         public SearchCriteria SearchCriteria
@@ -48,13 +48,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             {
                 DisplayErrorMessage("Cannot switch theme at this time", ex.Message);
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
