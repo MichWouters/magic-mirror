@@ -64,6 +64,7 @@ namespace MagicMirror.Business.Cognitive
         /// <returns></returns>
         public async Task<Guid> AddFaceAsync(Guid personId, Stream imageStream)
         {
+            imageStream.Position = 0;
             var result = await _faceApiClient.AddPersonFaceAsync(MAGIC_MIRROR_GROUP, personId, imageStream);
             StartTrainingAsync();
             return result.PersistedFaceId;
