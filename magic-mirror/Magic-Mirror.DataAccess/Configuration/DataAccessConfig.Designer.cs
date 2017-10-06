@@ -89,7 +89,7 @@ namespace MagicMirror.DataAccess.Configuration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://maps.googleapis.com/maps/api/directions/json.
+        ///   Looks up a localized string similar to https://maps.googleapis.com/maps/api.
         /// </summary>
         internal static string TrafficApiUrl {
             get {

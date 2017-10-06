@@ -4,10 +4,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Loaded="Page_Loaded">
 
     <Page.Resources>
+        <Style TargetType="ComboBox">
+            <Setter Property="Width" Value="400" />
+            <Setter Property="Margin" Value="0,12,20,0" />
+        </Style>
+
         <Style TargetType="TextBox">
+            <Setter Property="Width" Value="400" />
+            <Setter Property="Margin" Value="0,12,20,0" />
+        </Style>
+
+        <Style TargetType="Slider">
             <Setter Property="Width" Value="400" />
             <Setter Property="Margin" Value="0,12,20,0" />
         </Style>
@@ -23,7 +33,7 @@
                 IsOn="False"
                 OffContent="Dark theme"
                 OnContent="Light theme"
-                RelativePanel.AlignLeftWithPanel="True" 
+                RelativePanel.AlignLeftWithPanel="True"
                 Toggled="{x:Bind ViewModel.ToggleLightTheme}" />
 
         <TextBox x:Name="UserNameTextBox"
@@ -31,43 +41,67 @@
                  Header="User Name"
                  RelativePanel.AlignLeftWithPanel="True"
                  RelativePanel.Below="ThemeSwitch"
-                 Text="{x:Bind ViewModel.SearchCriteria.UserName, Mode=TwoWay}" />
+                 Text="{x:Bind ViewModel.UserSettings.UserName, Mode=TwoWay}" />
 
-        <TextBox x:Name="BusyTextTextBox"
-                     HorizontalAlignment="Left"
-                     Header="Busy text"
-                 RelativePanel.AlignLeftWithPanel="True"
-                     RelativePanel.Below="UserNameTextBox"
-                     Text="Loading..." />
-
-        <Button x:Name="BusyButton"
-                    Content="Show Busy"
-                    RelativePanel.AlignBottomWith="BusyTextTextBox"
-                    RelativePanel.RightOf="BusyTextTextBox" />
 
         <TextBox x:Name="HomeTextBox"
                      HorizontalAlignment="Left"
                      Header="Home street and number"
                      RelativePanel.AlignLeftWithPanel="True"
-                     RelativePanel.Below="BusyTextTextBox"
-                     Text="{x:Bind ViewModel.SearchCriteria.HomeAddress, Mode=TwoWay}" />
+                     RelativePanel.Below="UserNameTextBox"
+                     Text="{x:Bind ViewModel.UserSettings.HomeAddress, Mode=TwoWay}" />
 
         <TextBox x:Name="HomeTownTextBox"
                      HorizontalAlignment="Left"
                      Header="Postal code Home town"
                      RelativePanel.AlignLeftWithPanel="True"
                      RelativePanel.Below="HomeTextBox"
-                     Text="{x:Bind ViewModel.SearchCriteria.HomeCity, Mode=TwoWay}" />
+                     Text="{x:Bind ViewModel.UserSettings.HomeCity, Mode=TwoWay}" />
+
+        <Button x:Name="LocationButton"
+                RelativePanel.RightOf="HomeTownTextBox"
+                RelativePanel.Below="UserNameTextBox"
+                RelativePanel.AlignBottomWith="HomeTownTextBox"
+                Content="Use current location" Click="LocationButton_Click"
+                />
 
         <TextBox x:Name="WorkAddressTextBox"
+                 HorizontalAlignment="Left"
+                 Header="Work Address"
+                 RelativePanel.AlignLeftWithPanel="True"
+                 RelativePanel.Below="HomeTownTextBox"
+                 Text="{x:Bind ViewModel.UserSettings.WorkAddress, Mode=TwoWay}" />
+
+        <TextBox x:Name="PrecisonSlider"
+                 HorizontalAlignment="Left"
+                 Header="Number of decimals"
+                 RelativePanel.AlignLeftWithPanel="True"
+                 RelativePanel.Below="WorkAddressTextBox"
+                 InputScope="Digits"
+                 Text="{x:Bind ViewModel.UserSettings.Precision, Mode=TwoWay}" />
+
+        <ComboBox x:Name="DistanceUomComboBox"
+                  HorizontalAlignment="Left"
+                  Header="Distance Unit of Measure"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.Below="PrecisonSlider"
+                  SelectedValue="{x:Bind ViewModel.UserSettings.DistanceUOM}" />
+
+        <ComboBox x:Name="TemperatureUomComboBox"
+                  HorizontalAlignment="Left"
+                  Header="Temperature Unit of Measure"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.Below="DistanceUomComboBox"
+                  SelectedValue="{x:Bind ViewModel.UserSettings.TemperatureUOM}" />
+
+        <TextBlock x:Name="IpAddressTextBlock"
                      HorizontalAlignment="Left"
-                     Header="Work Address"
-                     RelativePanel.AlignLeftWithPanel="True"
-                     RelativePanel.Below="HomeTownTextBox"
-                     Text="{x:Bind ViewModel.SearchCriteria.WorkAddress, Mode=TwoWay}" />
+                     RelativePanel.AlignBottomWithPanel="True"
+                     RelativePanel.AlignRightWithPanel="True"
+                     Text="{x:Bind ViewModel.IpAddress, Mode=OneWay}" />
 
         <Button Content="Save"
-                RelativePanel.Below="WorkAddressTextBox"
+                RelativePanel.Below="TemperatureUomComboBox"
                 HorizontalAlignment="Center"
                 Width="400" Margin="0,10,0,0" Click="Button_Click" />
     </RelativePanel>

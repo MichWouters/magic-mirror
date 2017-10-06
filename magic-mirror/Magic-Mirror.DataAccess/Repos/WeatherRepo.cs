@@ -1,5 +1,5 @@
 ﻿using MagicMirror.DataAccess.Configuration;
-using MagicMirror.DataAccess.Entities.Weather;
+using MagicMirror.DataAccess.Entities.Entities;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -50,7 +50,6 @@ namespace MagicMirror.DataAccess.Repos
             if (string.IsNullOrWhiteSpace(_apiUrl)) throw new ArgumentNullException("No Weather API Url provided");
             if (string.IsNullOrWhiteSpace(_apiId)) throw new ArgumentNullException("No Weather Api Id provided");
             if (string.IsNullOrWhiteSpace(city)) throw new ArgumentNullException("A home city has to be provided");
-
         }
     }
 }

@@ -2,8 +2,6 @@
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Views;
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
@@ -13,21 +11,8 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         // Services from the Business Layer
         private IApiService<WeatherModel> _weatherService;
-
         private IApiService<TrafficModel> _trafficService;
-
-        public void NavigateToSettings()
-        {
-            try
-            {
-                _navigationService.Navigate(typeof(SettingPage));
-            }
-            catch (Exception ex)
-            {
-                DisplayErrorMessage("Unable to navigate to Settins", ex.Message);
-            }
-        }
-
+        private Services.ISettingsService _settingsService;
         private CommonService _commonService;
 
         // Timers to refresh individual components
@@ -48,12 +33,13 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
-                App appReference = Application.Current as App;
-                SearchCriteria searchCriteria = appReference.Criteria;
+                _settingsService = new Services.SettingsService();
+                UserSettings userSettings = _settingsService.LoadSettings();
 
+                _weatherService = new WeatherService(userSettings);
+                _trafficService = new TrafficService(userSettings);
                 _commonService = new CommonService();
-                _weatherService = new WeatherService(searchCriteria);
-                _trafficService = new TrafficService(searchCriteria);
+
             }
             catch (Exception ex)
             {
@@ -76,25 +62,21 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        /// <summary>
-        /// Call data immediately after app launch
-        /// </summary>
+        // Call data immediately after app launch
         private void LoadDataOnPageStartup()
         {
-            RefreshTime(null, null);
-            RefreshCompliment(null, null);
-            RefreshWeatherModel(null, null);
+            GetTime(null, null);
+            GetCompliment(null, null);
+            GetWeatherModel(null, null);
             RefreshTrafficModel(null, null);
         }
 
-        /// <summary>
-        /// Set timers at which data needs to be refreshed
-        /// </summary>
+        // Set timers at which data needs to be refreshed
         private void SetRefreshTimers()
         {
-            SetUpTimer(timeTimer, new TimeSpan(0, 0, 1), RefreshTime);
-            SetUpTimer(complimentTimer, new TimeSpan(0, 5, 0), RefreshCompliment);
-            SetUpTimer(weatherTimer, new TimeSpan(0, 15, 0), RefreshWeatherModel);
+            SetUpTimer(timeTimer, new TimeSpan(0, 0, 1), GetTime);
+            SetUpTimer(complimentTimer, new TimeSpan(0, 5, 0), GetCompliment);
+            SetUpTimer(weatherTimer, new TimeSpan(0, 15, 0), GetWeatherModel);
             SetUpTimer(trafficTimer, new TimeSpan(0, 10, 0), RefreshTrafficModel);
 
             //TODO: Write methods, then shorten them using new method
@@ -110,7 +92,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             if (!timeTimer.IsEnabled) timeTimer.Start();
         }
 
-        private void RefreshTime(object sender, object e)
+        private void GetTime(object sender, object e)
         {
             try
             {
@@ -122,10 +104,12 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        private void RefreshCompliment(object sender, object e)
+        private void GetCompliment(object sender, object e)
         {
             try
             {
+                if (_commonService == null) _commonService = new CommonService();
+
                 Compliment = _commonService.GenerateCompliment();
             }
             catch (Exception ex)
@@ -134,7 +118,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        private async void RefreshWeatherModel(object sender, object e)
+        private async void GetWeatherModel(object sender, object e)
         {
             try
             {
@@ -151,8 +135,8 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 // Try to refresh data. If succesful, resume timer
                 int minutes = 5;
-                await Task.Delay((minutes * 60) * 1000);
-                RefreshWeatherModel(null, null);
+                await Task.Delay((minutes * 60) * 10000);
+                GetWeatherModel(null, null);
             }
         }
 
@@ -173,8 +157,20 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 // Try to refresh data immediately. If succesful, resume timer
                 int minutes = 5;
-                await Task.Delay((minutes * 60) * 1000);
+                await Task.Delay((minutes * 60) * 10000);
                 RefreshTrafficModel(null, null);
+            }
+        }
+
+        public void NavigateToSettings()
+        {
+            try
+            {
+                _navigationService.Navigate(typeof(SettingPage));
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorMessage("Unable to navigate to Settings", ex.Message);
             }
         }
 
@@ -205,7 +201,6 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         public DateModel Date => new DateModel();
-
         private string _time;
 
         public string Time
@@ -229,6 +224,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
         #endregion Properties
     }
 }

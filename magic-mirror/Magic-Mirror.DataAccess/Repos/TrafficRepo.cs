@@ -1,5 +1,5 @@
 ﻿using MagicMirror.DataAccess.Configuration;
-using MagicMirror.Entities.Traffic;
+using MagicMirror.DataAccess.Entities.Entities;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -15,7 +15,7 @@ namespace MagicMirror.DataAccess.Repos
 
             SetApiParameters();
 
-            _url = $"{_apiUrl}?origin={start}&destination={destination}&key={_apiId}";
+            _url = $"{_apiUrl}/directions/json?origin={start}&destination={destination}&key={_apiId}";
         }
 
         public override async Task<TrafficEntity> GetEntityAsync()
@@ -43,7 +43,7 @@ namespace MagicMirror.DataAccess.Repos
             }
             catch (HttpRequestException ex)
             {
-                string errorMessage = $"A connection with the traffic server could not be established.";
+                string errorMessage = $"A connection with the traffic server for traffic duration could not be established.";
                 throw new HttpRequestException(errorMessage, ex);
             }
             catch (Exception)

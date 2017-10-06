@@ -71,12 +71,29 @@ namespace Acme.Generic
         /// <summary>
         /// Returns the first 3 letters of this string. Used to shorten the name of a day. Eg: Monday -> Mon.
         /// </summary>
-        /// <param name="day"></param>
-        /// <returns></returns>
         public static string ToShortDayNotation(this DayOfWeek day)
         {
             string shortDay = day.ToString().Substring(0, 3);
             return shortDay;
+        }
+
+        /// <summary>
+        /// Converts an amount of minutes into time as X hours and Y minutes
+        /// </summary>
+        public static string GetTimeNotation(this int minutes)
+        {
+            double hours = minutes / 60;
+            double restMinutes = minutes % 60;
+
+            string result = (restMinutes != 0)? $"{hours} hours and {restMinutes} minutes": $"{hours} hours";
+            return result;
+        }
+
+        public static string ConvertCommaToDot(this string input)
+        {
+            var result = input.Replace(',', '.');
+
+            return result;
         }
     }
 }

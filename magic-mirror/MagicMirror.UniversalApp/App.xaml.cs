@@ -13,7 +13,9 @@ namespace MagicMirror.UniversalApp
 {
     sealed partial class App
     {
-        public SearchCriteria Criteria;
+        public UserSettings UserSettings;
+
+        // TODO: Read from JSON file
         private ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         /// <summary>
@@ -25,38 +27,34 @@ namespace MagicMirror.UniversalApp
             InitializeComponent();
             Suspending += OnSuspending;
 
-            SetDefaults();
             CreateSearchCriteriaSingleton();
         }
 
-        private void SetDefaults()
+        public UserSettings CreateSearchCriteriaSingleton()
         {
-            // Todo: place in settings file
-            localSettings.Values[Settings.UserName] = "Michiel";
-            localSettings.Values[Settings.HomeAddress] = "Generaal Armstrongweg 1";
-            localSettings.Values[Settings.HomeTown] = "Antwerpen";
-            localSettings.Values[Settings.WorkAddress] = "Earl Bakkenstraat 10 6422 Heerlen";
-            localSettings.Values[Settings.Precision] = 1;
-        }
-
-        public SearchCriteria CreateSearchCriteriaSingleton()
-        {
-            // Singleton pattern
-            if (Criteria == null)
+            try
             {
-                Criteria = new SearchCriteria
+                // Singleton pattern
+                if (UserSettings == null)
                 {
-                    UserName = localSettings.Values[Settings.UserName].ToString(),
-                    HomeAddress = localSettings.Values[Settings.HomeAddress].ToString(),
-                    WorkAddress = localSettings.Values[Settings.WorkAddress].ToString(),
-                    HomeCity = localSettings.Values[Settings.HomeTown].ToString(),
-                    Precision = (int)localSettings.Values[Settings.Precision]
-                };
+                    var UserName = localSettings.Values[Settings.UserName].ToString();
+                    var HomeAddress = localSettings.Values[Settings.HomeAddress].ToString();
+                    var WorkAddress = localSettings.Values[Settings.WorkAddress].ToString();
+                    var HomeCity = localSettings.Values[Settings.HomeTown].ToString();
+
+                    UserSettings = new UserSettings(UserName, HomeAddress, WorkAddress, HomeCity, 3, TemperatureUOM.Kelvin, DistanceUOM.Imperial);
+                }
+                return UserSettings;
             }
-            return Criteria;
+            catch (Exception)
+            {
+                UserSettings = new UserSettings();
+                return UserSettings;
+            }
         }
 
         #region BoilerPlate
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -120,6 +118,7 @@ namespace MagicMirror.UniversalApp
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
-        #endregion
+
+        #endregion BoilerPlate
     }
 }

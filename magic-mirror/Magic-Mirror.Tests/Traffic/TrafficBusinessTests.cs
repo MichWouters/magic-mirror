@@ -1,5 +1,6 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
+using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
 using MagicMirror.Entities.Traffic;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace MagicMirror.Tests.Traffic
 
         public TrafficBusinessTests()
         {
-            var criteria = new SearchCriteria()
+            var criteria = new UserSettings()
             {
                 HomeAddress = "Generaal Armstrongweg 1",
                 HomeCity = "Antwerpen",

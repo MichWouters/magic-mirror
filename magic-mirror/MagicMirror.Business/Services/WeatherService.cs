@@ -1,6 +1,6 @@
 ﻿using Acme.Generic;
 using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities.Weather;
+using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
 using System;
 using System.Threading.Tasks;
@@ -9,7 +9,7 @@ namespace MagicMirror.Business.Services
 {
     public class WeatherService : ServiceBase<WeatherModel, WeatherEntity>
     {
-        public WeatherService(SearchCriteria criteria)
+        public WeatherService(UserSettings criteria)
         {
             // Defensive coding
             if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
@@ -28,7 +28,12 @@ namespace MagicMirror.Business.Services
 
             // Calculate non-mappable values
             model = CalculateUnMappableValues(model);
-            model.Icon = ConvertWeatherIcon(model.Icon);
+
+            // Todo: Implement bool if user wants metro or openweather icons
+            if (true)
+            {
+                model.Icon = ConvertWeatherIcon(model.Icon);
+            }
 
             return model;
         }
@@ -41,27 +46,16 @@ namespace MagicMirror.Business.Services
             return entity;
         }
 
-        protected override WeatherModel CalculateUnMappableValues(WeatherModel model)
+        protected WeatherModel CalculateUnMappableValues(WeatherModel model)
         {
-            switch (_criteria.TemperatureUOM)
-            {
-                case TemperatureUOM.Celsius:
-                    model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, _criteria.Precision);
-                    break;
-
-                case TemperatureUOM.Fahrenheit:
-                    model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, _criteria.Precision);
-                    break;
-
-                default:
-                    break;
-            }
+            model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, _criteria.Precision);
+            model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, _criteria.Precision);
 
             DateTime sunrise = DateHelper.ConvertFromUnixTimestamp(model.SunRiseMilliseconds);
-            model.SunRise = sunrise.ToString("HH:mm");
-
             DateTime sunset = DateHelper.ConvertFromUnixTimestamp(model.SunSetMilliSeconds);
+            model.SunRise = sunrise.ToString("HH:mm");
             model.SunSet = sunset.ToString("HH:mm");
+
             return model;
         }
 
@@ -110,7 +104,7 @@ namespace MagicMirror.Business.Services
 
                     case "10d":
                     case "10n":
-                        res = "09.png";
+                        res = "010.png";
                         break;
 
                     case "11d":
@@ -132,7 +126,8 @@ namespace MagicMirror.Business.Services
                         res = "50.png";
                         break;
                 }
-                return $"{prefix}/{theme}/{res}";
+                //return $"{prefix}/{theme}/{res}";
+                return "ms - appx:///Assets/Weather/Dark/010.png";
             }
             catch (Exception)
             {

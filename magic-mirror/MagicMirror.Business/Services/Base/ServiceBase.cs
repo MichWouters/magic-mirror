@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace MagicMirror.Business.Services
 {
     public abstract class ServiceBase<T, Y> : IApiService<T> where T : IModel
-                                                          where Y : IEntity
+                                                             where Y : IEntity
     {
         protected IMapper Mapper;
         protected IApiRepo<Y> _repo;
-        protected SearchCriteria _criteria;
+        protected UserSettings _criteria;
 
         protected ServiceBase()
         {
@@ -22,11 +22,6 @@ namespace MagicMirror.Business.Services
 
         // Child classes MUST implement abstract methods.
         public abstract Task<T> GetModelAsync();
-
-        /// <summary>
-        /// Calculate the model's fields which cannot be resolved using Automapper.
-        /// </summary>
-        protected abstract T CalculateUnMappableValues(T model);
 
         /// <summary>
         /// Retrieve unmodified entity from data layer

@@ -14,7 +14,7 @@ namespace MagicMirror.ConsoleCore
         {
             try
             {
-                SearchCriteria criteria = GatherUserInformation();
+                UserSettings criteria = GatherUserInformation();
                 Console.WriteLine("Crunching the numbers...");
                 Console.WriteLine();
 
@@ -32,7 +32,7 @@ namespace MagicMirror.ConsoleCore
             }
         }
 
-        private static SearchCriteria GatherUserInformation()
+        private static UserSettings GatherUserInformation()
         {
             Console.WriteLine("Hello User!");
             Console.WriteLine("Please enter your name: ");
@@ -47,7 +47,7 @@ namespace MagicMirror.ConsoleCore
             Console.WriteLine("Please enter your work address: ");
             string workAddress = Console.ReadLine();
 
-            var criteria = new SearchCriteria
+            var criteria = new UserSettings
             {
                 UserName = user,
                 HomeAddress = $"{address}, {city}",
@@ -58,7 +58,7 @@ namespace MagicMirror.ConsoleCore
             return criteria;
         }
 
-        private static async Task<MagicMirrorDto> GenerateDto(SearchCriteria criteria)
+        private static async Task<MagicMirrorDto> GenerateDto(UserSettings criteria)
         {
             _weatherService = new WeatherService(criteria);
             _trafficService = new TrafficService(criteria);

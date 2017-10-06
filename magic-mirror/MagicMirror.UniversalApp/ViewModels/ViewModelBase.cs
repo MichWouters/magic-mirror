@@ -6,10 +6,12 @@ using Windows.UI.Xaml.Controls;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
-    public abstract class ViewModelBase: INotifyPropertyChanged
+    /// <summary>
+    /// Base class for ViewModels. Provides INotifPropertyChanged, navigation and error handling functionality
+    /// </summary>
+    public abstract class ViewModelBase : INotifyPropertyChanged
     {
         private bool _contentDialogShown;
-
         protected NavigationService _navigationService;
 
         public ViewModelBase()
@@ -34,11 +36,11 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public void OnPropertyChanged([CallerMemberName] string property = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
