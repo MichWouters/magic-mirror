@@ -34,7 +34,7 @@ namespace MagicMirror.Business.Services
             return model;
         }
 
-        protected override UserProfileModel CalculateUnMappableValues(UserProfileModel model)
+        protected UserProfileModel CalculateUnMappableValues(UserProfileModel model)
         {
             return model;
         }
