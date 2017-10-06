@@ -18,6 +18,8 @@ using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
 using MagicMirror.Business.Models.Cognitive;
 using MagicMirror.DataAccess.Entities.User;
+using Windows.UI.Xaml;
+using Windows.UI.Core;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
@@ -53,22 +55,25 @@ namespace MagicMirror.UniversalApp.ViewModels
         public CameraFeedViewModel()
         {
             _faceService = new FaceService();
-            _faceService.CreateGroupIfNotExists().Wait();
             _user = new UserEntity()
             {
                 Id = Guid.NewGuid(),
                 FirstName = "Tom",
                 LastName = "Vandevoorde"
             };
-            _user.PersonId =  _faceService.CreatePersonAsync($"{_user.FirstName} {_user.LastName}").Result;
-            InitializeCamera();
+            var t = Task.Run(() => _faceService.CreatePersonAsync($"{_user.FirstName} {_user.LastName}"));
+           _user.PersonId =  t.Result;
+
+            Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                await InitializeCamera();
+            });
         }
 
-        private async void InitializeCamera()
+        private async Task InitializeCamera()
         {
             _requestStopCancellationToken = new CancellationTokenSource();
             _captureElement = new CaptureElement();
-            await _faceService.Initialize();
             var videoCaptureDevices = await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture);
             var camera = videoCaptureDevices.FirstOrDefault();
             MediaCaptureInitializationSettings initialisationSettings = new MediaCaptureInitializationSettings()
@@ -111,9 +116,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                                 });
 
                                 var detectedPerson = await _faceService.DetectFace(stream.AsStream());
-
                                 
-
                                 await Task.Delay(60000, _requestStopCancellationToken.Token);
                             }
                             lastFrameTime = frame.RelativeTime;
