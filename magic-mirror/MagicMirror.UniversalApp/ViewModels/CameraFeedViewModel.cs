@@ -68,6 +68,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             _requestStopCancellationToken = new CancellationTokenSource();
             _captureElement = new CaptureElement();
+            await _faceService.Initialize();
             var videoCaptureDevices = await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture);
             var camera = videoCaptureDevices.FirstOrDefault();
             MediaCaptureInitializationSettings initialisationSettings = new MediaCaptureInitializationSettings()

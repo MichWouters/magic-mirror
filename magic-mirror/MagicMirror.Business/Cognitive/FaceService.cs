@@ -22,6 +22,10 @@ namespace MagicMirror.Business.Cognitive
             _faceApiClient = new FaceServiceClient(API_KEY, API_ENDPOINT);
         }
 
+        public async Task Initialize()
+        {
+            await CreateGroupIfNotExists();
+        }
         /// <summary>
         /// Creates the default PersonGroup
         /// </summary>
