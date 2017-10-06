@@ -6,6 +6,11 @@ namespace MagicMirror.DataAccess.Entities.User
 {
     public class UserEntity: IEntity
     {
+        public UserEntity()
+        {
+            Addresses = new List<UserAddres>();
+            Faces = new List<UserFace>();
+        }
         public Guid Id { get; set; }
         public Guid FaceId { get; set; }
         public string FirstName { get; set; }
