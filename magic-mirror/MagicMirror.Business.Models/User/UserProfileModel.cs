@@ -6,8 +6,9 @@ namespace MagicMirror.Business.Models.User
 {
     public class UserProfileModel: IModel
     {
-        public int Id { get; set; }
-        public Guid FaceId { get; set; }
+        public Guid Id { get; set; }
+        public Guid PersonId { get; set; }
+        public Guid[] FaceIds { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public List<AddressModel> Addresses { get; set; }
@@ -15,7 +16,7 @@ namespace MagicMirror.Business.Models.User
 
     public class AddressModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public int AddressTypeId { get; set; }
         public int AddressTypeName { get; set; }
         public int AddressId { get; set; }

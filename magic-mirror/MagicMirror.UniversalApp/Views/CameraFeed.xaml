@@ -8,6 +8,19 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-
-    <ContentControl x:Name="captureElement" Content="{Binding ViewModel.CaptureElement}" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <ContentControl Grid.ColumnSpan="3" x:Name="captureElement" Content="{Binding ViewModel.CaptureElement}" />
+        <TextBlock Text="{Binding ViewModel.FaceId}" Grid.Row="1" Grid.Column="0" />
+        <TextBlock Text="{Binding ViewModel.Age}" Grid.Row="1" Grid.Column="1" />
+        <TextBlock Text="{Binding ViewModel.Gender}" Grid.Row="1" Grid.Column="2" />
+    </Grid>
 </UserControl>

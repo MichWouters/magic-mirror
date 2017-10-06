@@ -1,8 +1,10 @@
-﻿namespace MagicMirror.DataAccess.Entities.User
+﻿using System;
+
+namespace MagicMirror.DataAccess.Entities.User
 {
     public class Address : IEntity
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Street { get; set; }
         public string HouseNumber { get; set; }
         public string HouseNumberSuffix { get; set; }

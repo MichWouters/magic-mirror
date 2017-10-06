@@ -105,6 +105,7 @@
     <Compile Include="ViewModels\Strings\Settings.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\SettingPageViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\CameraFeed.xaml.cs">
       <DependentUpon>CameraFeed.xaml</DependentUpon>
@@ -166,6 +167,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Magic-Mirror.DataAccess.Entities\MagicMirror.DataAccess.Entities.csproj">
+      <Project>{06257571-7A42-4A83-9230-B7A954F92439}</Project>
+      <Name>MagicMirror.DataAccess.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Magic-Mirror.DataAccess\MagicMirror.DataAccess.csproj">
       <Project>{61B61B9C-649D-4C21-8D9B-F60905372A2D}</Project>
       <Name>MagicMirror.DataAccess</Name>

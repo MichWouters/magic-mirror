@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MagicMirror.Business.Cognitive;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -15,6 +16,8 @@ using Windows.Media.FaceAnalysis;
 using Windows.Media.MediaProperties;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
+using MagicMirror.Business.Models.Cognitive;
+using MagicMirror.DataAccess.Entities.User;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
@@ -23,7 +26,10 @@ namespace MagicMirror.UniversalApp.ViewModels
         protected CancellationTokenSource _requestStopCancellationToken;
         protected CaptureElement _captureElement;
         protected MediaCapture _mediaCapture;
-        protected Queue<Stream> _pictureQueue;
+        private readonly FaceService _faceService;
+        private IEnumerable<FaceInfoModel> _faceData;
+        private UserEntity _user;
+
         public CaptureElement CaptureElement
         {
             get
@@ -32,9 +38,29 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
+        public IEnumerable<FaceInfoModel> FaceData {
+            get
+            {
+                return _faceData;
+            }
+            private set
+            {
+                _faceData = value;
+                OnPropertyChanged();
+            }
+        }
+
         public CameraFeedViewModel()
         {
-            _pictureQueue = new Queue<Stream>();
+            _faceService = new FaceService();
+            _faceService.CreateGroupIfNotExists().Wait();
+            _user = new UserEntity()
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "Tom",
+                LastName = "Vandevoorde"
+            };
+            _user.PersonId =  _faceService.CreatePersonAsync($"{_user.FirstName} {_user.LastName}").Result;
             InitializeCamera();
         }
 
@@ -76,11 +102,17 @@ namespace MagicMirror.UniversalApp.ViewModels
                                 BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
                                 encoder.SetSoftwareBitmap(convertedRgba16Bitmap);
                                 await encoder.FlushAsync();
-                                _pictureQueue.Enqueue(stream.AsStream());
-                                if (_pictureQueue.Count > 2)
+
+                                var id = await _faceService.AddFaceAsync(_user.PersonId, stream.AsStream());
+                                _user.Faces.Add(new UserFace
                                 {
-                                    _pictureQueue.Dequeue();
-                                }
+                                    Id = id
+                                });
+
+                                var detectedPerson = await _faceService.DetectFace(stream.AsStream());
+
+                                
+
                                 await Task.Delay(60000, _requestStopCancellationToken.Token);
                             }
                             lastFrameTime = frame.RelativeTime;
