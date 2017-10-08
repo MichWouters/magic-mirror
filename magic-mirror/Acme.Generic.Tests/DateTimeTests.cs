@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Acme.Generic.Extensions;
+using System;
 using Xunit;
 
 namespace Acme.Generic.Tests
@@ -13,8 +14,8 @@ namespace Acme.Generic.Tests
             int sunset = 1501357935;
 
             // Act
-            DateTime sunriseDate = DateHelper.ConvertFromUnixTimestamp(sunrise);
-            DateTime sunsetDate = DateHelper.ConvertFromUnixTimestamp(sunset);
+            DateTime sunriseDate =sunrise.ConvertFromUnixTimestamp();
+            DateTime sunsetDate = sunset.ConvertFromUnixTimestamp();
 
             // Assert
             DateTime expectedSunRise = new DateTime(2017, 7, 29, 4, 20, 43);
@@ -32,8 +33,8 @@ namespace Acme.Generic.Tests
             DateTime sunsetDate = new DateTime(2017, 7, 29, 19, 52, 15);
 
             // Act
-            var sunrise = DateHelper.ConvertToUnixTimestamp(sunriseDate);
-            var sunset = DateHelper.ConvertToUnixTimestamp(sunsetDate);
+            var sunrise = sunriseDate.ConvertToUnixTimestamp();
+            var sunset = sunsetDate.ConvertToUnixTimestamp();
 
             // Assert
             Assert.Equal(1501294843, sunrise);
