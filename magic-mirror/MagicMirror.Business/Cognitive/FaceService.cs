@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Cognitive
@@ -13,9 +12,10 @@ namespace MagicMirror.Business.Cognitive
     public class FaceService
     {
         // TODO: app settings (https://docs.microsoft.com/en-us/windows/uwp/app-settings/app-settings-and-data)
-        const string API_KEY = "2857aeacf78c475c80fa2467fa917397";
-        const string API_ENDPOINT = "https://westeurope.api.cognitive.microsoft.com/face/v1.0";
-        const string MAGIC_MIRROR_GROUP = "magic-mirror-group";
+        private const string API_KEY = "2857aeacf78c475c80fa2467fa917397";
+
+        private const string API_ENDPOINT = "https://westeurope.api.cognitive.microsoft.com/face/v1.0";
+        private const string MAGIC_MIRROR_GROUP = "magic-mirror-group";
 
         private readonly FaceServiceClient _faceApiClient;
 
@@ -25,7 +25,7 @@ namespace MagicMirror.Business.Cognitive
             var t = Task.Run(() => CreateGroupIfNotExists());
             t.Wait();
         }
-        
+
         /// <summary>
         /// Creates the default PersonGroup
         /// </summary>
@@ -144,7 +144,6 @@ namespace MagicMirror.Business.Cognitive
             {
                 return null;
             }
-
 
             var candidate = identification.First().Candidates.Where(x => x.Confidence >= 0.7).FirstOrDefault();
 

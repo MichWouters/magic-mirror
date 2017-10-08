@@ -18,10 +18,10 @@ namespace MagicMirror.Business.Configuration
                     .ForMember(dest => dest.Icon, source => source.MapFrom(src => src.Weather[0].Icon))
                     .ForMember(dest => dest.Description, source => source.MapFrom(src => src.Weather[0].Description))
                     .ForMember(dest => dest.TemperatureKelvin, source => source.MapFrom(src => src.Main.Temp))
-                    //.ForMember(dest => dest.TemperatureCelsius, source => source.Ignore())
-                    //.ForMember(dest => dest.TemperatureFahrenheit, source => source.Ignore())
-                    //.ForMember(dest => dest.SunRise, source => source.Ignore())
-                    //.ForMember(dest => dest.SunSet, source => source.Ignore())
+                //.ForMember(dest => dest.TemperatureCelsius, source => source.Ignore())
+                //.ForMember(dest => dest.TemperatureFahrenheit, source => source.Ignore())
+                //.ForMember(dest => dest.SunRise, source => source.Ignore())
+                //.ForMember(dest => dest.SunSet, source => source.Ignore())
                 .ReverseMap();
 
             CreateMap<TrafficEntity, TrafficModel>()

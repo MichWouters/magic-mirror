@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using MagicMirror.Business.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace MagicMirror.Tests.Automapper
 {
-
     public class AutomapperTest
     {
         [Fact]

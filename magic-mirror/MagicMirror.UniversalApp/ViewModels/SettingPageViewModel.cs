@@ -73,10 +73,10 @@ namespace MagicMirror.UniversalApp.ViewModels
                 DisplayErrorMessage("Unable to fetch location", ex.Message);
                 return null;
             }
-
         }
 
         #region Properties
+
         public string IpAddress
         {
             get => _settingService.GetIpAddress();
@@ -96,6 +96,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
         #endregion Properties
     }
 }

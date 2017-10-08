@@ -43,7 +43,6 @@
                  RelativePanel.Below="ThemeSwitch"
                  Text="{x:Bind ViewModel.UserSettings.UserName, Mode=TwoWay}" />
 
-
         <TextBox x:Name="HomeTextBox"
                      HorizontalAlignment="Left"
                      Header="Home street and number"
@@ -62,8 +61,7 @@
                 RelativePanel.RightOf="HomeTownTextBox"
                 RelativePanel.Below="UserNameTextBox"
                 RelativePanel.AlignBottomWith="HomeTownTextBox"
-                Content="Use current location" Click="LocationButton_Click"
-                />
+                Content="Use current location" Click="LocationButton_Click" />
 
         <TextBox x:Name="WorkAddressTextBox"
                  HorizontalAlignment="Left"

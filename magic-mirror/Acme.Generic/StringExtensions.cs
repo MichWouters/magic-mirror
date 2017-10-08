@@ -85,7 +85,7 @@ namespace Acme.Generic
             double hours = minutes / 60;
             double restMinutes = minutes % 60;
 
-            string result = (restMinutes != 0)? $"{hours} hours and {restMinutes} minutes": $"{hours} hours";
+            string result = (restMinutes != 0) ? $"{hours} hours and {restMinutes} minutes" : $"{hours} hours";
             return result;
         }
 

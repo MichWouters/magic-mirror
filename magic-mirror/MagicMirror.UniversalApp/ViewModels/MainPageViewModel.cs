@@ -11,12 +11,14 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         // Services from the Business Layer
         private IApiService<WeatherModel> _weatherService;
+
         private IApiService<TrafficModel> _trafficService;
         private Services.ISettingsService _settingsService;
         private CommonService _commonService;
 
         // Timers to refresh individual components
         private DispatcherTimer timeTimer;
+
         private DispatcherTimer complimentTimer;
         private DispatcherTimer weatherTimer;
         private DispatcherTimer trafficTimer;
@@ -39,7 +41,6 @@ namespace MagicMirror.UniversalApp.ViewModels
                 _weatherService = new WeatherService(userSettings);
                 _trafficService = new TrafficService(userSettings);
                 _commonService = new CommonService();
-
             }
             catch (Exception ex)
             {
