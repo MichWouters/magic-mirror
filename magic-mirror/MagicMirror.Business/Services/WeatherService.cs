@@ -74,7 +74,7 @@ namespace MagicMirror.Business.Services
             try
             {
                 string json = model.ToJson();
-                FileWriter.WriteJsonToFile(json, "offlineWeatherModel.json", "null");
+                FileWriter.WriteJsonToFile(json, OFFLINEMODELNAME, path);
             }
             catch (Exception e)
             {
@@ -108,11 +108,6 @@ namespace MagicMirror.Business.Services
             model.SunSet = sunset.ToString("HH:mm");
 
             return model;
-        }
-
-        protected override Task<WeatherEntity> GetEntityAsync()
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>

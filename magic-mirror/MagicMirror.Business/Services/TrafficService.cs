@@ -18,6 +18,7 @@ namespace MagicMirror.Business.Services
             if (string.IsNullOrWhiteSpace(criteria.WorkAddress)) throw new ArgumentNullException("A destination address has to be provided");
 
             _criteria = criteria;
+            _repo = new TrafficRepo($"{_criteria.HomeAddress} {_criteria.HomeCity}", _criteria.WorkAddress);
         }
 
         public override async Task<TrafficModel> GetModelAsync()
@@ -25,7 +26,7 @@ namespace MagicMirror.Business.Services
             try
             {
                 // Get Entity
-                var entity = await GetEntityAsync();
+                var entity = await _repo.GetEntityAsync();
 
                 // Map entity to model
                 TrafficModel model = MapEntityToModel(entity);
@@ -41,15 +42,6 @@ namespace MagicMirror.Business.Services
             {
                 throw new ArgumentException("Unable to retrieve Traffic Model", ex);
             }
-        }
-
-        protected override async Task<TrafficEntity> GetEntityAsync()
-        {
-            string homeAddress = $"{_criteria.HomeAddress} {_criteria.HomeCity}";
-            _repo = new TrafficRepo(homeAddress, _criteria.WorkAddress);
-            TrafficEntity entity = await _repo.GetEntityAsync();
-
-            return entity;
         }
 
         protected TrafficModel CalculateUnMappableValues(TrafficModel model)

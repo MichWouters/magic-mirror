@@ -15,13 +15,16 @@ namespace MagicMirror.Business.Services
         {
             _latitude = latitude;
             _longitude = longitude;
+
+            _repo = new AddressRepo(_latitude, _longitude);
+
         }
 
         public override async Task<AddressModel> GetModelAsync()
         {
             try
             {
-                var entity = await GetEntityAsync();
+                var entity = await _repo.GetEntityAsync();
                 AddressModel model = MapEntityToModel(entity);
 
                 return model;
@@ -40,14 +43,6 @@ namespace MagicMirror.Business.Services
         public override void SaveOfflineModel(AddressModel model, string path)
         {
             throw new NotImplementedException();
-        }
-
-        protected override async Task<AddressEntity> GetEntityAsync()
-        {
-            _repo = new AddressRepo(_latitude, _longitude);
-            AddressEntity entity = await _repo.GetEntityAsync();
-
-            return entity;
         }
     }
 }

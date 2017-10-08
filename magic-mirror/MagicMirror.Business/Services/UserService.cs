@@ -27,7 +27,7 @@ namespace MagicMirror.Business.Services
 
         public override async Task<UserProfileModel> GetModelAsync()
         {
-            UserEntity entity = await GetEntityAsync();
+            UserEntity entity = await _userRepo.GetUserByPersonId(PersonId);
             UserProfileModel model = MapEntityToModel(entity);
             model = CalculateUnMappableValues(model);
             return model;
@@ -46,13 +46,6 @@ namespace MagicMirror.Business.Services
         protected UserProfileModel CalculateUnMappableValues(UserProfileModel model)
         {
             return model;
-        }
-
-        protected override async Task<UserEntity> GetEntityAsync()
-        {
-            UserEntity entity = await _userRepo.GetUserByPersonId(PersonId);
-
-            return entity;
         }
     }
 }

@@ -33,11 +33,6 @@ namespace MagicMirror.Business.Services
         /// </summary>
         public abstract void SaveOfflineModel(T model, string path);
 
-        /// <summary>
-        /// Retrieve unmodified entity from data layer
-        /// </summary>
-        protected abstract Task<Y> GetEntityAsync();
-
         // Child classes CAN override virtual methods.
         /// <summary>
         /// Map Entity to Business Model using AutoMapper
