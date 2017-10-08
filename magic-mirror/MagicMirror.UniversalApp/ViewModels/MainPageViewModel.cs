@@ -13,17 +13,17 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         // Services from the Business Layer
         private IApiService<WeatherModel> _weatherService;
-
         private IApiService<TrafficModel> _trafficService;
         private Services.ISettingsService _settingsService;
         private CommonService _commonService;
 
         // Timers to refresh individual components
         private DispatcherTimer timeTimer;
-
         private DispatcherTimer complimentTimer;
         private DispatcherTimer weatherTimer;
         private DispatcherTimer trafficTimer;
+
+        StorageFolder localFolder = ApplicationData.Current.LocalFolder;
 
         public MainPageViewModel()
         {
@@ -130,7 +130,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             catch (HttpRequestException)
             {
                 // No internet connection. Display dummy data.
-                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
                 WeatherModel weatherModel = _weatherService.GetOfflineModelAsync(localFolder.Path);
                 WeatherInfo = weatherModel;
 
@@ -161,7 +160,18 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 if (!trafficTimer.IsEnabled) trafficTimer.Start();
             }
-            catch (Exception ex)
+            catch (HttpRequestException)
+            {
+                // No internet connection. Display dummy data.
+                TrafficModel trafficModel = _trafficService.GetOfflineModelAsync(localFolder.Path);
+                TrafficInfo = trafficModel;
+
+                // Try to refresh data. If succesful, resume timer
+                int minutes = 5;
+                await Task.Delay((minutes * 60) * 10000);
+                RefreshTrafficModel(null, null);
+            }
+            catch (Exception)
             {
                 // Can't connect to server. Try again after waiting for a few minutes
                 //DisplayErrorMessage("Can't update Traffic information", ex.Message);

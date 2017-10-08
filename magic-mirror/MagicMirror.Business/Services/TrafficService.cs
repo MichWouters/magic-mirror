@@ -1,7 +1,10 @@
-﻿using MagicMirror.Business.Models;
+﻿using Acme.Generic;
+using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
+using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -9,6 +12,8 @@ namespace MagicMirror.Business.Services
 {
     public class TrafficService : ServiceBase<TrafficModel, TrafficEntity>
     {
+        private const string OFFLINEMODELNAME = "TrafficOfflineModel.json";
+
         public TrafficService(UserSettings criteria)
         {
             // Defensive coding
@@ -37,7 +42,6 @@ namespace MagicMirror.Business.Services
                 return model;
             }
             catch (HttpRequestException) { throw; }
-            catch (ArgumentException) { throw; }
             catch (Exception ex)
             {
                 throw new ArgumentException("Unable to retrieve Traffic Model", ex);
@@ -83,12 +87,53 @@ namespace MagicMirror.Business.Services
 
         public override TrafficModel GetOfflineModelAsync(string path)
         {
-            throw new NotImplementedException();
+            try
+            {
+                // Try reading Json object
+                string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
+                TrafficModel model = JsonConvert.DeserializeObject<TrafficModel>(json);
+
+                return model;
+            }
+            catch (FileNotFoundException)
+            {
+                // Object does not exist. Create a new one
+                TrafficModel offlineModel = GenerateOfflineModel();
+                SaveOfflineModel(offlineModel, path);
+
+                return GetOfflineModelAsync(path);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException("Could not read offline Weathermodel", e);
+            }
         }
 
         public override void SaveOfflineModel(TrafficModel model, string path)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string json = model.ToJson();
+                FileWriter.WriteJsonToFile(json, OFFLINEMODELNAME, path);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException("Could not save offline Traffic Model", e);
+            }
+        }
+
+        private TrafficModel GenerateOfflineModel()
+        {
+            var model = new TrafficModel
+            {
+                Distance = "40.5 km",
+                Minutes = (32 * 60),
+                NumberOfIncidents = 2,
+            };
+
+            model = CalculateUnMappableValues(model);
+
+            return model;
         }
     }
 }

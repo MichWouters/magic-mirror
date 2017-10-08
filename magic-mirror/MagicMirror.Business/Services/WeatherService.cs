@@ -6,6 +6,7 @@ using MagicMirror.DataAccess.Repos;
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
@@ -27,22 +28,30 @@ namespace MagicMirror.Business.Services
 
         public override async Task<WeatherModel> GetModelAsync()
         {
-            // Get entity from Repository.
-            WeatherEntity entity = await _repo.GetEntityAsync();
-
-            // Map entity to model.
-            WeatherModel model = MapEntityToModel(entity);
-
-            // Calculate non-mappable values
-            model = CalculateUnMappableValues(model);
-
-            // Todo: Implement bool if user wants metro or openweather icons
-            if (true)
+            try
             {
-                model.Icon = ConvertWeatherIcon(model.Icon);
-            }
+                // Get entity from Repository.
+                WeatherEntity entity = await _repo.GetEntityAsync();
 
-            return model;
+                // Map entity to model.
+                WeatherModel model = MapEntityToModel(entity);
+
+                // Calculate non-mappable values
+                model = CalculateUnMappableValues(model);
+
+                // Todo: Implement bool if user wants metro or openweather icons
+                if (true)
+                {
+                    model.Icon = ConvertWeatherIcon(model.Icon);
+                }
+
+                return model;
+            }
+            catch (HttpRequestException) { throw; }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Unable to retrieve Weather Model", ex);
+            }
         }
 
         public override WeatherModel GetOfflineModelAsync(string path)
@@ -58,7 +67,7 @@ namespace MagicMirror.Business.Services
             catch (FileNotFoundException)
             {
                 // Object does not exist. Create a new one
-                var offlineModel = GenerateOfflineModel();
+                WeatherModel offlineModel = GenerateOfflineModel();
                 SaveOfflineModel(offlineModel, path);
 
                 return GetOfflineModelAsync(path);
@@ -78,7 +87,7 @@ namespace MagicMirror.Business.Services
             }
             catch (Exception e)
             {
-                throw new ArgumentException("Could not save offline WeatherModel", e);
+                throw new ArgumentException("Could not save offline Weather Model", e);
             }
         }
 
