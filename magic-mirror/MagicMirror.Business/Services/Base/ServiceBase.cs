@@ -26,12 +26,12 @@ namespace MagicMirror.Business.Services
         /// <summary>
         /// Provide dummy data when no internet connection can be established
         /// </summary>
-        public abstract Task<T> GetOfflineModelAsync();
+        public abstract T GetOfflineModelAsync(string path);
 
         /// <summary>
         /// Save dummy data for when no internet connection can be established.
         /// </summary>
-        public abstract Task SaveOfflineModel(T model);
+        public abstract void SaveOfflineModel(T model, string path);
 
         /// <summary>
         /// Retrieve unmodified entity from data layer

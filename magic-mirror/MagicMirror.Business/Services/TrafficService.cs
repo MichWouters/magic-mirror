@@ -89,12 +89,12 @@ namespace MagicMirror.Business.Services
             return result;
         }
 
-        public override Task<TrafficModel> GetOfflineModelAsync()
+        public override TrafficModel GetOfflineModelAsync(string path)
         {
             throw new NotImplementedException();
         }
 
-        public override Task SaveOfflineModel(TrafficModel model)
+        public override void SaveOfflineModel(TrafficModel model, string path)
         {
             throw new NotImplementedException();
         }

@@ -32,12 +32,12 @@ namespace MagicMirror.Business.Services
             }
         }
 
-        public override Task<AddressModel> GetOfflineModelAsync()
+        public override AddressModel GetOfflineModelAsync(string path)
         {
             throw new NotImplementedException();
         }
 
-        public override Task SaveOfflineModel(AddressModel model)
+        public override void SaveOfflineModel(AddressModel model, string path)
         {
             throw new NotImplementedException();
         }

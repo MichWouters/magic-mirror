@@ -33,12 +33,12 @@ namespace MagicMirror.Business.Services
             return model;
         }
 
-        public override Task<UserProfileModel> GetOfflineModelAsync()
+        public override UserProfileModel GetOfflineModelAsync(string path)
         {
             throw new NotImplementedException();
         }
 
-        public override Task SaveOfflineModel(UserProfileModel model)
+        public override void SaveOfflineModel(UserProfileModel model, string path)
         {
             throw new NotImplementedException();
         }

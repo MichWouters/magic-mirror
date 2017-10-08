@@ -2,7 +2,9 @@
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Views;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
@@ -68,7 +70,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             GetTime(null, null);
             GetCompliment(null, null);
-            GetWeatherModel(null, null);
+            RefreshWeatherModel(null, null);
             RefreshTrafficModel(null, null);
         }
 
@@ -77,13 +79,10 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             SetUpTimer(timeTimer, new TimeSpan(0, 0, 1), GetTime);
             SetUpTimer(complimentTimer, new TimeSpan(0, 5, 0), GetCompliment);
-            SetUpTimer(weatherTimer, new TimeSpan(0, 15, 0), GetWeatherModel);
+            SetUpTimer(weatherTimer, new TimeSpan(0, 15, 0), RefreshWeatherModel);
             SetUpTimer(trafficTimer, new TimeSpan(0, 10, 0), RefreshTrafficModel);
 
-            //TODO: Write methods, then shorten them using new method
-            //complimentTimer.Tick += RefreshCompliment;
-            //complimentTimer.Interval = new TimeSpan(0, 1, 0);
-            //if (!complimentTimer.IsEnabled) complimentTimer.Start();
+            //TODO: Write methods, then shorten them using new method            //complimentTimer.Tick += RefreshCompliment;            //complimentTimer.Interval = new TimeSpan(0, 1, 0);            //if (!complimentTimer.IsEnabled) complimentTimer.Start();
         }
 
         private void SetUpTimer(DispatcherTimer timer, TimeSpan timeSpan, EventHandler<object> method)
@@ -119,7 +118,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        private async void GetWeatherModel(object sender, object e)
+        private async void RefreshWeatherModel(object sender, object e)
         {
             try
             {
@@ -128,16 +127,28 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 if (!weatherTimer.IsEnabled) weatherTimer.Start();
             }
-            catch (Exception ex)
+            catch (HttpRequestException)
             {
-                // Can't connect to server. Try again after waiting for a few minutes
+                // No internet connection. Display dummy data.
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                WeatherModel weatherModel = _weatherService.GetOfflineModelAsync(localFolder.Path);
+                WeatherInfo = weatherModel;
+
+                // Try to refresh data. If succesful, resume timer
+                int minutes = 5;
+                await Task.Delay((minutes * 60) * 10000);
+                RefreshWeatherModel(null, null);
+            }
+            catch (Exception)
+            {
+                // Can't connect to server. Try again after waiting for a few minutes.
                 //DisplayErrorMessage("Can't update Weather information", ex.Message);
                 if (weatherTimer.IsEnabled) weatherTimer.Stop();
 
                 // Try to refresh data. If succesful, resume timer
                 int minutes = 5;
                 await Task.Delay((minutes * 60) * 10000);
-                GetWeatherModel(null, null);
+                RefreshWeatherModel(null, null);
             }
         }
 

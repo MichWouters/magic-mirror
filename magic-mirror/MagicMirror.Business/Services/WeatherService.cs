@@ -3,13 +3,17 @@ using Acme.Generic.Extensions;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
+using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
     public class WeatherService : ServiceBase<WeatherModel, WeatherEntity>
     {
+        private const string OFFLINEMODELNAME = "WeatherOfflineModel.json";
+
         public WeatherService(UserSettings criteria)
         {
             // Defensive coding
@@ -41,21 +45,36 @@ namespace MagicMirror.Business.Services
             return model;
         }
 
-        public override async Task<WeatherModel> GetOfflineModelAsync()
+        public override WeatherModel GetOfflineModelAsync(string path)
         {
-            // Try reading Json object
-            throw new NotImplementedException();
+            try
+            {
+                // Try reading Json object
+                string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
+                WeatherModel model = JsonConvert.DeserializeObject<WeatherModel>(json);
 
-            // Object does not exist. Create a new one
+                return model;
+            }
+            catch (FileNotFoundException)
+            {
+                // Object does not exist. Create a new one
+                var offlineModel = GenerateOfflineModel();
+                SaveOfflineModel(offlineModel, path);
+
+                return GetOfflineModelAsync(path);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException("Could not read offline Weathermodel", e);
+            }
         }
 
-        public override Task SaveOfflineModel(WeatherModel model)
+        public override void SaveOfflineModel(WeatherModel model, string path)
         {
             try
             {
                 string json = model.ToJson();
                 FileWriter.WriteJsonToFile(json, "offlineWeatherModel.json", "null");
-                return null;
             }
             catch (Exception e)
             {

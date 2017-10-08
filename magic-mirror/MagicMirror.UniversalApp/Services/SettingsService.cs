@@ -10,6 +10,7 @@ namespace MagicMirror.UniversalApp.Services
     {
         private Business.Services.ISettingsService settingsService;
         private const string USERSETTINGS = "userSettings.json";
+        private StorageFolder localFolder = ApplicationData.Current.LocalFolder;
 
         public SettingsService()
         {
@@ -20,7 +21,6 @@ namespace MagicMirror.UniversalApp.Services
         {
             try
             {
-                var localFolder = ApplicationData.Current.LocalFolder;
                 var result = settingsService.ReadSettings(localFolder.Path, USERSETTINGS);
                 return result;
             }
@@ -59,7 +59,6 @@ namespace MagicMirror.UniversalApp.Services
 
         public void SaveSettings(UserSettings settings)
         {
-            var localFolder = ApplicationData.Current.LocalFolder;
             settingsService.SaveSettings(localFolder.Path, USERSETTINGS, settings);
         }
     }
