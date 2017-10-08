@@ -140,11 +140,17 @@ namespace MagicMirror.UniversalApp.ViewModels
                                             user.PersonId = detectedPersonId.Value;
                                             user = await _userService.AddUserAsync(user);
                                         }
-                                        UserViewModel.SetValuesAsync(User, user);
+                                        await UserViewModel.SetValuesAsync(User, user);
                                     }
                                     else
                                     {
-                                        stream.Seek(0);
+                                        // bug: when a person was not detected, the stream gets disposed
+                                        //stream.Seek(0);
+                                        stream = new InMemoryRandomAccessStream();
+                                        encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
+                                        encoder.SetSoftwareBitmap(convertedRgba16Bitmap);
+                                        await encoder.FlushAsync();
+
                                         // TODO: ask new user for initial profile data
                                         var user = new UserProfileModel().RandomData();
                                         user.PersonId = await _faceService.CreatePersonAsync(user.FullName);
@@ -152,7 +158,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                                         faceIds.Add(await _faceService.AddFaceAsync(user.PersonId, stream.AsStream()));
                                         user.FaceIds = faceIds.ToArray();
                                         user = await _userService.AddUserAsync(user);
-                                        UserViewModel.SetValuesAsync(User, user);
+                                        await UserViewModel.SetValuesAsync(User, user);
                                     }
 
                                     await Task.Delay(60000, _requestStopCancellationToken.Token);

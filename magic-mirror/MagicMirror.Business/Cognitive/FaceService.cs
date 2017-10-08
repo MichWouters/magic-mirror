@@ -140,12 +140,20 @@ namespace MagicMirror.Business.Cognitive
 
             var identification = await _faceApiClient.IdentifyAsync(MAGIC_MIRROR_GROUP, faces.Select(f => f.FaceId).ToArray());
 
-            if (identification == null || identification.Length < 1 || identification.Length > 1)
+            if (identification == null || identification.Length != 1 || !identification.First().Candidates.Any())
             {
                 return null;
             }
-            
-            return identification.First().Candidates.First().PersonId;
+
+
+            var candidate = identification.First().Candidates.Where(x => x.Confidence >= 0.7).FirstOrDefault();
+
+            if (candidate == null)
+            {
+                return null;
+            }
+
+            return candidate.PersonId;
         }
     }
 }
