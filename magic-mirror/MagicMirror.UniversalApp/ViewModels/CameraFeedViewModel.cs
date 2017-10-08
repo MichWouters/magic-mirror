@@ -24,6 +24,7 @@ using MagicMirror.Business.Services;
 using MagicMirror.DataAccess;
 using MagicMirror.Business.Models.User;
 using Windows.UI.Popups;
+using System.Diagnostics;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
@@ -34,8 +35,8 @@ namespace MagicMirror.UniversalApp.ViewModels
         protected MediaCapture _mediaCapture;
         private readonly FaceService _faceService;
         private readonly UserService _userService;
-        private IEnumerable<FaceInfoModel> _faceData;
         private UserViewModel _user = new UserViewModel();
+        private string _apiOfflineText;
 
         public UserViewModel User
         {
@@ -59,18 +60,21 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public IEnumerable<FaceInfoModel> FaceData
+
+        public string ApiOfflineText
         {
             get
             {
-                return _faceData;
+                return _apiOfflineText;
             }
-            private set
+            set
             {
-                _faceData = value;
+                _apiOfflineText = value;
                 OnPropertyChanged();
             }
         }
+
+
 
         public CameraFeedViewModel()
         {
@@ -82,7 +86,19 @@ namespace MagicMirror.UniversalApp.ViewModels
 
             Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                await InitializeCamera();
+                try
+                {
+                    await InitializeCamera();
+                    ApiOfflineText = "";
+                }
+                catch (Exception ex)
+                {
+                    if (ex is System.Net.Http.HttpRequestException)
+                    {
+                        ApiOfflineText = "Offline";
+                    }
+                    Debug.WriteLine(ex.Message);
+                }
             });
         }
 
@@ -161,7 +177,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                                         await UserViewModel.SetValuesAsync(User, user);
                                     }
 
-                                    await Task.Delay(60000, _requestStopCancellationToken.Token);
+                                    await Task.Delay(10000, _requestStopCancellationToken.Token);
                                 }
                             }
                             lastFrameTime = frame.RelativeTime;

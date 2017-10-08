@@ -20,6 +20,9 @@
             Height="100"/>
         <StackPanel Grid.Row="1" Orientation="Vertical">
             <TextBlock 
+            Foreground="Red"
+            Text="{x:Bind ViewModel.ApiOfflineText}" />
+            <TextBlock 
             Foreground="Yellow"
             Text="Hello" />
             <TextBlock 
