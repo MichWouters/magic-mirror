@@ -29,17 +29,6 @@ namespace MagicMirror.Tests.Traffic
         }
 
         [Fact]
-        public async Task Can_Retrieve_Json()
-        {
-            // Act
-            string result = await _repo.GetJsonAsync();
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.NotEqual("", result);
-        }
-
-        [Fact]
         public async Task Can_Convert_Json_To_Entity()
         {
             // Act

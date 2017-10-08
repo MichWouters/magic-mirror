@@ -32,6 +32,16 @@ namespace MagicMirror.Business.Services
             }
         }
 
+        public override Task<AddressModel> GetOfflineModelAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task SaveOfflineModel(AddressModel model)
+        {
+            throw new NotImplementedException();
+        }
+
         protected override async Task<AddressEntity> GetEntityAsync()
         {
             _repo = new AddressRepo(_latitude, _longitude);

@@ -9,6 +9,9 @@ namespace Acme.Generic
         {
             try
             {
+                if (Path.GetExtension(fileName) != ".json")
+                    fileName += ".json";
+
                 File.WriteAllText($"{path}/{fileName}", json);
             }
             catch (Exception e)

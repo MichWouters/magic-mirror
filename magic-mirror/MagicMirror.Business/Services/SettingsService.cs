@@ -16,7 +16,7 @@ namespace MagicMirror.Business.Services
 
         public void SaveSettings(string path, string USERSETTINGS, UserSettings settings)
         {
-            string json = JsonConvert.SerializeObject(settings);
+            string json = settings.ToJson();
             FileWriter.WriteJsonToFile(json, USERSETTINGS, path);
         }
     }

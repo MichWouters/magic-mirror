@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Acme.Generic.Extensions
+﻿namespace Acme.Generic.Extensions
 {
     public static class IntExtensions
     {

@@ -10,5 +10,9 @@ namespace MagicMirror.Business.Services
         /// </summary>
         /// <returns></returns>
         Task<T> GetModelAsync();
+
+        Task<T> GetOfflineModelAsync();
+
+        Task SaveOfflineModel(T model);
     }
 }

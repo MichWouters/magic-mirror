@@ -1,4 +1,5 @@
 ﻿using Acme.Generic;
+using Acme.Generic.Extensions;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
@@ -15,13 +16,15 @@ namespace MagicMirror.Business.Services
             if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
             if (string.IsNullOrWhiteSpace(criteria.HomeCity)) throw new ArgumentException("A city has to be provided");
 
+            // Set up parameters
             _criteria = criteria;
+            _repo = new WeatherRepo(_criteria.HomeCity);
         }
 
         public override async Task<WeatherModel> GetModelAsync()
         {
             // Get entity from Repository.
-            WeatherEntity entity = await GetEntityAsync();
+            WeatherEntity entity = await _repo.GetEntityAsync();
 
             // Map entity to model.
             WeatherModel model = MapEntityToModel(entity);
@@ -38,12 +41,41 @@ namespace MagicMirror.Business.Services
             return model;
         }
 
-        protected override async Task<WeatherEntity> GetEntityAsync()
+        public override async Task<WeatherModel> GetOfflineModelAsync()
         {
-            var repo = new WeatherRepo(_criteria.HomeCity);
-            WeatherEntity entity = await repo.GetEntityAsync();
+            // Try reading Json object
+            throw new NotImplementedException();
 
-            return entity;
+            // Object does not exist. Create a new one
+        }
+
+        public override Task SaveOfflineModel(WeatherModel model)
+        {
+            try
+            {
+                string json = model.ToJson();
+                FileWriter.WriteJsonToFile(json, "offlineWeatherModel.json", "null");
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException("Could not save offline WeatherModel", e);
+            }
+        }
+
+        private WeatherModel GenerateOfflineModel()
+        {
+            return new WeatherModel
+            {
+                Description = "Sunny",
+                Icon = "01d",
+                Name = "Mechelen",
+                SunRise = "06:44",
+                SunSet = "19:42",
+                TemperatureCelsius = 13,
+                TemperatureFahrenheit = 55.40,
+                TemperatureKelvin = 286.15
+            };
         }
 
         protected WeatherModel CalculateUnMappableValues(WeatherModel model)
@@ -51,12 +83,17 @@ namespace MagicMirror.Business.Services
             model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, _criteria.Precision);
             model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, _criteria.Precision);
 
-            DateTime sunrise = DateHelper.ConvertFromUnixTimestamp(model.SunRiseMilliseconds);
-            DateTime sunset = DateHelper.ConvertFromUnixTimestamp(model.SunSetMilliSeconds);
+            DateTime sunrise = model.SunRiseMilliseconds.ConvertFromUnixTimestamp();
+            DateTime sunset = model.SunSetMilliSeconds.ConvertFromUnixTimestamp();
             model.SunRise = sunrise.ToString("HH:mm");
             model.SunSet = sunset.ToString("HH:mm");
 
             return model;
+        }
+
+        protected override Task<WeatherEntity> GetEntityAsync()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -64,7 +101,6 @@ namespace MagicMirror.Business.Services
         /// </summary>
         /// <param name="icon">OpenweatherMap icon to convert</param>
         /// <param name="theme">The colour scheme. Choice between light and dark</param>
-        /// <returns></returns>
         private string ConvertWeatherIcon(string icon, string theme = "Dark")
         {
             try
@@ -126,8 +162,7 @@ namespace MagicMirror.Business.Services
                         res = "50.png";
                         break;
                 }
-                //return $"{prefix}/{theme}/{res}";
-                return "ms - appx:///Assets/Weather/Dark/010.png";
+                return $"{prefix}/{theme}/{res}";
             }
             catch (Exception)
             {

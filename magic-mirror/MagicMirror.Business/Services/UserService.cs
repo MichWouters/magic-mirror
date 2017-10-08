@@ -33,6 +33,16 @@ namespace MagicMirror.Business.Services
             return model;
         }
 
+        public override Task<UserProfileModel> GetOfflineModelAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task SaveOfflineModel(UserProfileModel model)
+        {
+            throw new NotImplementedException();
+        }
+
         protected UserProfileModel CalculateUnMappableValues(UserProfileModel model)
         {
             return model;

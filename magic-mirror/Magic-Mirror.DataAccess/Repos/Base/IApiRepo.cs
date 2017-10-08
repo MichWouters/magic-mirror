@@ -8,8 +8,6 @@ namespace MagicMirror.DataAccess.Repos
     {
         Task<T> GetEntityAsync();
 
-        Task<string> GetJsonAsync();
-
         Task<HttpResponseMessage> GetHttpResponseFromApiAsync();
     }
 }

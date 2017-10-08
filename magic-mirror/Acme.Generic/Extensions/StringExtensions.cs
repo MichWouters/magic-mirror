@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Text;
 
@@ -85,6 +86,15 @@ namespace Acme.Generic
             var result = input.Replace(',', '.');
 
             return result;
+        }
+
+        /// <summary>
+        /// Convert an object to a Json object
+        /// </summary>
+        public static string ToJson(this object input)
+        {
+            string json = JsonConvert.SerializeObject(input);
+            return json;
         }
     }
 }

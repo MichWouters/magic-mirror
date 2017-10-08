@@ -14,7 +14,7 @@ namespace Acme.Generic.Tests
             int sunset = 1501357935;
 
             // Act
-            DateTime sunriseDate =sunrise.ConvertFromUnixTimestamp();
+            DateTime sunriseDate = sunrise.ConvertFromUnixTimestamp();
             DateTime sunsetDate = sunset.ConvertFromUnixTimestamp();
 
             // Assert

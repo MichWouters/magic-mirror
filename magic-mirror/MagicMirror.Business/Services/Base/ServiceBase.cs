@@ -24,6 +24,16 @@ namespace MagicMirror.Business.Services
         public abstract Task<T> GetModelAsync();
 
         /// <summary>
+        /// Provide dummy data when no internet connection can be established
+        /// </summary>
+        public abstract Task<T> GetOfflineModelAsync();
+
+        /// <summary>
+        /// Save dummy data for when no internet connection can be established.
+        /// </summary>
+        public abstract Task SaveOfflineModel(T model);
+
+        /// <summary>
         /// Retrieve unmodified entity from data layer
         /// </summary>
         protected abstract Task<Y> GetEntityAsync();
