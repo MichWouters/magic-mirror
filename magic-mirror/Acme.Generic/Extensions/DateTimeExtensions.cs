@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Acme.Generic
+namespace Acme.Generic.Extensions
 {
-    public static class DateHelper
+    public static class DateTimeExtensions
     {
         /// <summary>
         /// Calculates a DateTime object by adding a number of seconds to 1/1/1970

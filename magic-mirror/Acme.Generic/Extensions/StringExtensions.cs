@@ -78,17 +78,8 @@ namespace Acme.Generic
         }
 
         /// <summary>
-        /// Converts an amount of minutes into time as X hours and Y minutes
+        /// Replace all the dots (.) in a string with a comma (,)
         /// </summary>
-        public static string GetTimeNotation(this int minutes)
-        {
-            double hours = minutes / 60;
-            double restMinutes = minutes % 60;
-
-            string result = (restMinutes != 0) ? $"{hours} hours and {restMinutes} minutes" : $"{hours} hours";
-            return result;
-        }
-
         public static string ConvertCommaToDot(this string input)
         {
             var result = input.Replace(',', '.');
