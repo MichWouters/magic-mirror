@@ -124,6 +124,14 @@
             Source="ms-appx:///Assets/Weather/Other/car.png"
             Style="{StaticResource SunImage}" />
 
+        <local:CameraFeed
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            RelativePanel.AlignRightWithPanel="True"
+            RelativePanel.AlignBottomWithPanel="True"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"
+            />
+
         <TextBlock
             x:Name="TravelTimeTextBlock"
             RelativePanel.AlignTopWith="DurationImage"
@@ -157,5 +165,6 @@
             Content="Settings"
             RelativePanel.Below="SunSetImage"
             Click="Button_Click" />
+
     </RelativePanel>
 </Page>

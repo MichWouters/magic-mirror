@@ -41,6 +41,17 @@ namespace MagicMirror.Business.Services
         }
 
         /// <summary>
+        /// Map Business Model to Entity using AutoMapper
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        protected virtual Y MapModelToEntity(T model)
+        {
+            Y entity = Mapper.Map<Y>(model);
+            return entity;
+        }
+
+        /// <summary>
         /// Define a reference to the automapper configuration class so Visual Studio knows which fields need be mapped between the Models and Entities
         /// </summary>
         private void SetUpMapperConfiguration()

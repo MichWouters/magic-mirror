@@ -1,5 +1,6 @@
 ﻿using MagicMirror.UniversalApp.ViewModels;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace MagicMirror.UniversalApp.Views
 {
@@ -11,6 +12,7 @@ namespace MagicMirror.UniversalApp.Views
         {
             DataContext = ViewModel;
             InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
