@@ -12,6 +12,8 @@ Michiel
 * Store, read and edit setting values in local Json file - Done
 * Show Ip adress in Setting menu - Done
 * Set home address using Gps / Wifi - Done
+* Local Json file with dummy data to display when no internet connection can be established - Done
+* Secret screen in which user can modify offline dummy data
 
 * Cortana + stemherkenning, voicecommands - In progress
 * Error Handling: App keeps repeating last error message once an exception has been thrown - In progress
