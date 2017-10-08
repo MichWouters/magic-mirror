@@ -117,14 +117,20 @@
             Style="{StaticResource Compliment}"
             Text="{x:Bind ViewModel.Compliment, Mode= OneWay, FallbackValue='Foo'}" />
 
-        <local:CameraFeed Width="300" Height="150" Margin="0, 400, 0, 0" />
-
         <Image
             x:Name="DurationImage"
             RelativePanel.Above="DurationTextBlock"
             RelativePanel.AlignLeftWithPanel="True"
             Source="ms-appx:///Assets/Weather/Other/car.png"
             Style="{StaticResource SunImage}" />
+
+        <local:CameraFeed
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            RelativePanel.AlignRightWithPanel="True"
+            RelativePanel.AlignBottomWithPanel="True"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"
+            />
 
         <TextBlock
             x:Name="TravelTimeTextBlock"
@@ -159,5 +165,6 @@
             Content="Settings"
             RelativePanel.Below="SunSetImage"
             Click="Button_Click" />
+
     </RelativePanel>
 </Page>

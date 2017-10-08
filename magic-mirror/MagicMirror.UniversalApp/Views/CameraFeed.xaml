@@ -13,14 +13,21 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <ContentControl Grid.ColumnSpan="3" x:Name="captureElement" Content="{Binding ViewModel.CaptureElement}" />
-        <TextBlock Text="{Binding ViewModel.FaceId}" Grid.Row="1" Grid.Column="0" />
-        <TextBlock Text="{Binding ViewModel.Age}" Grid.Row="1" Grid.Column="1" />
-        <TextBlock Text="{Binding ViewModel.Gender}" Grid.Row="1" Grid.Column="2" />
+        <ContentControl 
+            x:Name="captureElement" 
+            Content="{x:Bind ViewModel.CaptureElement}"
+            Width="150"
+            Height="100"/>
+        <StackPanel Grid.Row="1" Orientation="Vertical">
+            <TextBlock 
+            Foreground="Yellow"
+            Text="Hello" />
+            <TextBlock 
+            Foreground="Yellow"
+            Text="{x:Bind ViewModel.User.FirstName, Mode=OneWay}" />
+            <TextBlock 
+            Foreground="Yellow"
+            Text="{x:Bind ViewModel.User.LastName, Mode=OneWay}" />
+        </StackPanel>
     </Grid>
 </UserControl>

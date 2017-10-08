@@ -12,7 +12,6 @@ namespace MagicMirror.DataAccess.Entities.User
             Faces = new List<UserFace>();
         }
         public Guid Id { get; set; }
-        public Guid FaceId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public List<UserAddres> Addresses { get; set; }

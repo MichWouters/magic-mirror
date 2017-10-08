@@ -28,7 +28,6 @@ namespace MagicMirror.Tests.User
             var faceId = Guid.NewGuid();
             var entity = await _repo.AddUserAsync(new UserEntity
             {
-                FaceId = faceId,
                 FirstName = "Jon",
                 LastName = "Stark",
                 Addresses = new List<UserAddres>
@@ -50,10 +49,10 @@ namespace MagicMirror.Tests.User
                 }
             });
 
-            var result = await _repo.GetUserByFaceIdAsync(faceId);
+            var result = await _repo.GetUserByPersonId(faceId);
 
             Assert.NotNull(result);
-            Assert.Equal(faceId, result.FaceId);
+            Assert.Equal("Jon", result.FirstName);
 
             _context.DeleteDatabase();
         }
@@ -64,7 +63,6 @@ namespace MagicMirror.Tests.User
             var faceId = Guid.NewGuid();
             var entity = await _repo.AddUserAsync(new UserEntity
             {
-                FaceId = faceId,
                 FirstName = "Jon",
                 LastName = "Stark",
                 Addresses = new List<UserAddres>
@@ -86,14 +84,14 @@ namespace MagicMirror.Tests.User
                 }
             });
 
-            var result = await _repo.GetUserByFaceIdAsync(faceId);
+            var result = await _repo.GetUserByPersonId(faceId);
 
             result.Addresses.First().Address.HouseNumber = "100";
             result.LastName = "Snow";
 
             var changedEntity = await _repo.UpdateUserAsync(result);
 
-            var result2 = await _repo.GetUserByFaceIdAsync(faceId);
+            var result2 = await _repo.GetUserByPersonId(faceId);
 
             Assert.NotNull(result2);
             Assert.Equal(result.LastName, result2.LastName);
@@ -108,7 +106,6 @@ namespace MagicMirror.Tests.User
             var faceId = Guid.NewGuid();
             var entity = await _repo.AddUserAsync(new UserEntity
             {
-                FaceId = faceId,
                 FirstName = "Jon",
                 LastName = "Stark",
                 Addresses = new List<UserAddres>
@@ -130,11 +127,11 @@ namespace MagicMirror.Tests.User
                 }
             });
 
-            var result = await _repo.GetUserByFaceIdAsync(faceId);
+            var result = await _repo.GetUserByPersonId(faceId);
 
             await _repo.DeleteUserAsync(result);
 
-            var result2 = await _repo.GetUserByFaceIdAsync(faceId);
+            var result2 = await _repo.GetUserByPersonId(faceId);
 
             _context.DeleteDatabase();
         }

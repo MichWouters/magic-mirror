@@ -17,7 +17,7 @@ namespace MagicMirror.Business.Services
         {
             _userRepo = new UserRepo(context);
         }
-        public Guid FaceId { get; set; }
+        public Guid PersonId { get; set; }
 
         public async Task<UserProfileModel> AddUserAsync(UserProfileModel model)
         {
@@ -41,7 +41,7 @@ namespace MagicMirror.Business.Services
 
         protected override async Task<UserEntity> GetEntityAsync()
         {
-            UserEntity entity = await _userRepo.GetUserByFaceIdAsync(FaceId);
+            UserEntity entity = await _userRepo.GetUserByPersonId(PersonId);
 
             return entity;
         }

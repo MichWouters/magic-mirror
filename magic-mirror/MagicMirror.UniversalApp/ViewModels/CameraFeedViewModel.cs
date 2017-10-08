@@ -20,6 +20,10 @@ using MagicMirror.Business.Models.Cognitive;
 using MagicMirror.DataAccess.Entities.User;
 using Windows.UI.Xaml;
 using Windows.UI.Core;
+using MagicMirror.Business.Services;
+using MagicMirror.DataAccess;
+using MagicMirror.Business.Models.User;
+using Windows.UI.Popups;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
@@ -29,8 +33,23 @@ namespace MagicMirror.UniversalApp.ViewModels
         protected CaptureElement _captureElement;
         protected MediaCapture _mediaCapture;
         private readonly FaceService _faceService;
+        private readonly UserService _userService;
         private IEnumerable<FaceInfoModel> _faceData;
-        private UserEntity _user;
+        private UserViewModel _user = new UserViewModel();
+
+        public UserViewModel User
+        {
+            get
+            {
+                return _user;
+            }
+            set
+            {
+                _user = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public CaptureElement CaptureElement
         {
@@ -40,7 +59,8 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public IEnumerable<FaceInfoModel> FaceData {
+        public IEnumerable<FaceInfoModel> FaceData
+        {
             get
             {
                 return _faceData;
@@ -54,15 +74,11 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         public CameraFeedViewModel()
         {
+            User.FirstName = "John";
+            User.LastName = "Doe";
+            var sqlContext = new SqliteContext();
+            _userService = new UserService(sqlContext);
             _faceService = new FaceService();
-            _user = new UserEntity()
-            {
-                Id = Guid.NewGuid(),
-                FirstName = "Tom",
-                LastName = "Vandevoorde"
-            };
-            var t = Task.Run(() => _faceService.CreatePersonAsync($"{_user.FirstName} {_user.LastName}"));
-           _user.PersonId =  t.Result;
 
             Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
@@ -103,21 +119,44 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                             if ((!lastFrameTime.HasValue) || (lastFrameTime != frame.RelativeTime))
                             {
-                                var convertedRgba16Bitmap = SoftwareBitmap.Convert(frame.SoftwareBitmap, BitmapPixelFormat.Rgba16);
-                                InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream();
-                                BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
-                                encoder.SetSoftwareBitmap(convertedRgba16Bitmap);
-                                await encoder.FlushAsync();
-
-                                var id = await _faceService.AddFaceAsync(_user.PersonId, stream.AsStream());
-                                _user.Faces.Add(new UserFace
+                                var detectedFaces = await detector.DetectFacesAsync(frame.SoftwareBitmap);
+                                if (detectedFaces.Count == 1)
                                 {
-                                    Id = id
-                                });
+                                    var convertedRgba16Bitmap = SoftwareBitmap.Convert(frame.SoftwareBitmap, BitmapPixelFormat.Rgba16);
+                                    InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream();
+                                    BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
+                                    encoder.SetSoftwareBitmap(convertedRgba16Bitmap);
+                                    await encoder.FlushAsync();
 
-                                var detectedPerson = await _faceService.DetectFace(stream.AsStream());
-                                
-                                await Task.Delay(60000, _requestStopCancellationToken.Token);
+                                    var detectedPersonId = await _faceService.DetectFace(stream.AsStream());
+
+                                    if (detectedPersonId.HasValue)
+                                    {
+                                        _userService.PersonId = detectedPersonId.Value;
+                                        var user = await _userService.GetModelAsync();
+                                        if (user == null)
+                                        {
+                                            user = new UserProfileModel().RandomData();
+                                            user.PersonId = detectedPersonId.Value;
+                                            user = await _userService.AddUserAsync(user);
+                                        }
+                                        UserViewModel.SetValuesAsync(User, user);
+                                    }
+                                    else
+                                    {
+                                        stream.Seek(0);
+                                        // TODO: ask new user for initial profile data
+                                        var user = new UserProfileModel().RandomData();
+                                        user.PersonId = await _faceService.CreatePersonAsync(user.FullName);
+                                        var faceIds = new List<Guid>();
+                                        faceIds.Add(await _faceService.AddFaceAsync(user.PersonId, stream.AsStream()));
+                                        user.FaceIds = faceIds.ToArray();
+                                        user = await _userService.AddUserAsync(user);
+                                        UserViewModel.SetValuesAsync(User, user);
+                                    }
+
+                                    await Task.Delay(60000, _requestStopCancellationToken.Token);
+                                }
                             }
                             lastFrameTime = frame.RelativeTime;
                         }
@@ -131,6 +170,16 @@ namespace MagicMirror.UniversalApp.ViewModels
             await _mediaCapture.StopPreviewAsync();
             _captureElement.Source = null;
             _requestStopCancellationToken.Dispose();
+        }
+
+        internal void Start()
+        {
+            _requestStopCancellationToken = new CancellationTokenSource();
+        }
+
+        internal void Stop()
+        {
+            _requestStopCancellationToken.Cancel();
         }
 
         public void Dispose()

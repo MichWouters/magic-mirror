@@ -13,9 +13,9 @@ namespace MagicMirror.DataAccess.Repos
         {
         }
 
-        public async Task<UserEntity> GetUserByFaceIdAsync(Guid faceId)
+        public async Task<UserEntity> GetUserByPersonId(Guid faceId)
         {
-            return await GetEntityAsync(x => x.FaceId == faceId);
+            return await GetEntityAsync(x => x.PersonId == faceId);
         }
 
         public async Task<UserEntity> AddUserAsync(UserEntity user)

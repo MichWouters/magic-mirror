@@ -12,9 +12,11 @@ namespace MagicMirror.Business.Cognitive
 {
     public class FaceService
     {
+        // TODO: app settings (https://docs.microsoft.com/en-us/windows/uwp/app-settings/app-settings-and-data)
         const string API_KEY = "2857aeacf78c475c80fa2467fa917397";
         const string API_ENDPOINT = "https://westeurope.api.cognitive.microsoft.com/face/v1.0";
         const string MAGIC_MIRROR_GROUP = "magic-mirror-group";
+
         private readonly FaceServiceClient _faceApiClient;
 
         public FaceService()
@@ -123,7 +125,7 @@ namespace MagicMirror.Business.Cognitive
         /// </summary>
         /// <param name="imageStream">Stream imageStream</param>
         /// <returns>Guid personId</returns>
-        public async Task<Guid> DetectFace(Stream imageStream)
+        public async Task<Guid?> DetectFace(Stream imageStream)
         {
             var faces = await _faceApiClient.DetectAsync(imageStream, true, true, new List<FaceAttributeType>
             {
@@ -138,15 +140,11 @@ namespace MagicMirror.Business.Cognitive
 
             var identification = await _faceApiClient.IdentifyAsync(MAGIC_MIRROR_GROUP, faces.Select(f => f.FaceId).ToArray());
 
-            if (identification == null || identification.Length < 1)
+            if (identification == null || identification.Length < 1 || identification.Length > 1)
             {
-                throw new FaceServiceException(FaceServiceExceptionType.NoFaceDetected);
+                return null;
             }
-            else if (identification.Length > 1)
-            {
-                throw new FaceServiceException(FaceServiceExceptionType.MultipleFacesDetected);
-            }
-
+            
             return identification.First().Candidates.First().PersonId;
         }
     }
