@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MagicMirror.Business.Models.User
 {
@@ -10,6 +9,7 @@ namespace MagicMirror.Business.Models.User
         {
             Id = Guid.NewGuid();
         }
+
         public Guid Id { get; set; }
         public Guid PersonId { get; set; }
         public Guid[] FaceIds { get; set; }
@@ -34,7 +34,8 @@ namespace MagicMirror.Business.Models.User
 
     public static class UserProfileModelExtensions
     {
-        static Random _random = new Random();
+        private static Random _random = new Random();
+
         public static UserProfileModel RandomData(this UserProfileModel model)
         {
             model.FirstName = "User";

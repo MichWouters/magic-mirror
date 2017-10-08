@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Text;
 
@@ -78,22 +79,22 @@ namespace Acme.Generic
         }
 
         /// <summary>
-        /// Converts an amount of minutes into time as X hours and Y minutes
+        /// Replace all the dots (.) in a string with a comma (,)
         /// </summary>
-        public static string GetTimeNotation(this int minutes)
-        {
-            double hours = minutes / 60;
-            double restMinutes = minutes % 60;
-
-            string result = (restMinutes != 0)? $"{hours} hours and {restMinutes} minutes": $"{hours} hours";
-            return result;
-        }
-
         public static string ConvertCommaToDot(this string input)
         {
             var result = input.Replace(',', '.');
 
             return result;
+        }
+
+        /// <summary>
+        /// Convert an object to a Json object
+        /// </summary>
+        public static string ToJson(this object input)
+        {
+            string json = JsonConvert.SerializeObject(input);
+            return json;
         }
     }
 }

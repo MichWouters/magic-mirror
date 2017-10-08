@@ -129,8 +129,7 @@
             RelativePanel.AlignRightWithPanel="True"
             RelativePanel.AlignBottomWithPanel="True"
             HorizontalContentAlignment="Stretch"
-            VerticalContentAlignment="Stretch"
-            />
+            VerticalContentAlignment="Stretch" />
 
         <TextBlock
             x:Name="TravelTimeTextBlock"
@@ -165,6 +164,5 @@
             Content="Settings"
             RelativePanel.Below="SunSetImage"
             Click="Button_Click" />
-
     </RelativePanel>
 </Page>

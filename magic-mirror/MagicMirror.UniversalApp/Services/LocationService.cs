@@ -1,5 +1,4 @@
-﻿using MagicMirror.Business.Models;
-using MagicMirror.Business.Services;
+﻿using MagicMirror.Business.Services;
 using System;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;

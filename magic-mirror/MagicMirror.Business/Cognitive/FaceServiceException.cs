@@ -9,13 +9,14 @@ namespace MagicMirror.Business.Cognitive
         {
         }
 
-        public FaceServiceException(FaceServiceExceptionType exceptionType): base(exceptionType.ToString())
+        public FaceServiceException(FaceServiceExceptionType exceptionType) : base(exceptionType.ToString())
         {
             ExceptionType = exceptionType;
         }
 
         public FaceServiceExceptionType ExceptionType { get; private set; }
     }
+
     public enum FaceServiceExceptionType
     {
         NoFaceDetected,

@@ -1,10 +1,13 @@
 ﻿using MagicMirror.Business.Cognitive;
+using MagicMirror.Business.Models.User;
+using MagicMirror.Business.Services;
+using MagicMirror.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
@@ -15,16 +18,8 @@ using Windows.Media.Capture;
 using Windows.Media.FaceAnalysis;
 using Windows.Media.MediaProperties;
 using Windows.Storage.Streams;
-using Windows.UI.Xaml.Controls;
-using MagicMirror.Business.Models.Cognitive;
-using MagicMirror.DataAccess.Entities.User;
-using Windows.UI.Xaml;
 using Windows.UI.Core;
-using MagicMirror.Business.Services;
-using MagicMirror.DataAccess;
-using MagicMirror.Business.Models.User;
-using Windows.UI.Popups;
-using System.Diagnostics;
+using Windows.UI.Xaml.Controls;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
@@ -51,7 +46,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-
         public CaptureElement CaptureElement
         {
             get
@@ -59,7 +53,6 @@ namespace MagicMirror.UniversalApp.ViewModels
                 return _captureElement;
             }
         }
-
 
         public string ApiOfflineText
         {
@@ -73,8 +66,6 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
-
-
 
         public CameraFeedViewModel()
         {

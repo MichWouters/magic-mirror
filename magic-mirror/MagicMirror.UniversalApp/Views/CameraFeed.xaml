@@ -13,22 +13,22 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ContentControl 
-            x:Name="captureElement" 
+        <ContentControl
+            x:Name="captureElement"
             Content="{x:Bind ViewModel.CaptureElement}"
             Width="150"
-            Height="100"/>
+            Height="100" />
         <StackPanel Grid.Row="1" Orientation="Vertical">
-            <TextBlock 
+            <TextBlock
             Foreground="Red"
             Text="{x:Bind ViewModel.ApiOfflineText}" />
-            <TextBlock 
+            <TextBlock
             Foreground="Yellow"
             Text="Hello" />
-            <TextBlock 
+            <TextBlock
             Foreground="Yellow"
             Text="{x:Bind ViewModel.User.FirstName, Mode=OneWay}" />
-            <TextBlock 
+            <TextBlock
             Foreground="Yellow"
             Text="{x:Bind ViewModel.User.LastName, Mode=OneWay}" />
         </StackPanel>

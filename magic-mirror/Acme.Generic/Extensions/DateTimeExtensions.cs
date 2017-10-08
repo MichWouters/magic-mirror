@@ -1,15 +1,15 @@
 ﻿using System;
 
-namespace Acme.Generic
+namespace Acme.Generic.Extensions
 {
-    public static class DateHelper
+    public static class DateTimeExtensions
     {
         /// <summary>
         /// Calculates a DateTime object by adding a number of seconds to 1/1/1970
         /// </summary>
         /// <param name="timestamp">The amount of seconds passed since the first of January 1970</param>
         /// <returns>DateTime</returns>
-        public static DateTime ConvertFromUnixTimestamp(int timestamp)
+        public static DateTime ConvertFromUnixTimestamp(this int timestamp)
         {
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             return origin.AddSeconds(timestamp);
@@ -20,7 +20,7 @@ namespace Acme.Generic
         /// </summary>
         /// <param name="date"></param>
         /// <returns>Seconds since 1/1/1970</returns>
-        public static double ConvertToUnixTimestamp(DateTime date)
+        public static double ConvertToUnixTimestamp(this DateTime date)
         {
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             TimeSpan diff = date.ToUniversalTime() - origin;

@@ -47,7 +47,6 @@ namespace MagicMirror.UniversalApp.Views
 
             HomeTextBox.Text = result?.GetType().GetProperty("Address")?.GetValue(result, null).ToString();
             HomeTownTextBox.Text = result?.GetType().GetProperty("City")?.GetValue(result, null).ToString();
-
         }
     }
 }

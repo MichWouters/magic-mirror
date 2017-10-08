@@ -1,49 +1,109 @@
 ﻿using Acme.Generic;
+using Acme.Generic.Extensions;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
+using Newtonsoft.Json;
 using System;
+using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
     public class WeatherService : ServiceBase<WeatherModel, WeatherEntity>
     {
+        private const string OFFLINEMODELNAME = "WeatherOfflineModel.json";
+
         public WeatherService(UserSettings criteria)
         {
             // Defensive coding
             if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
             if (string.IsNullOrWhiteSpace(criteria.HomeCity)) throw new ArgumentException("A city has to be provided");
 
+            // Set up parameters
             _criteria = criteria;
+            _repo = new WeatherRepo(_criteria.HomeCity);
         }
 
         public override async Task<WeatherModel> GetModelAsync()
         {
-            // Get entity from Repository.
-            WeatherEntity entity = await GetEntityAsync();
-
-            // Map entity to model.
-            WeatherModel model = MapEntityToModel(entity);
-
-            // Calculate non-mappable values
-            model = CalculateUnMappableValues(model);
-
-            // Todo: Implement bool if user wants metro or openweather icons
-            if (true)
+            try
             {
-                model.Icon = ConvertWeatherIcon(model.Icon);
-            }
+                // Get entity from Repository.
+                WeatherEntity entity = await _repo.GetEntityAsync();
 
-            return model;
+                // Map entity to model.
+                WeatherModel model = MapEntityToModel(entity);
+
+                // Calculate non-mappable values
+                model = CalculateUnMappableValues(model);
+
+                // Todo: Implement bool if user wants metro or openweather icons
+                if (true)
+                {
+                    model.Icon = ConvertWeatherIcon(model.Icon);
+                }
+
+                return model;
+            }
+            catch (HttpRequestException) { throw; }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Unable to retrieve Weather Model", ex);
+            }
         }
 
-        protected override async Task<WeatherEntity> GetEntityAsync()
+        public override WeatherModel GetOfflineModelAsync(string path)
         {
-            var repo = new WeatherRepo(_criteria.HomeCity);
-            WeatherEntity entity = await repo.GetEntityAsync();
+            try
+            {
+                // Try reading Json object
+                string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
+                WeatherModel model = JsonConvert.DeserializeObject<WeatherModel>(json);
 
-            return entity;
+                return model;
+            }
+            catch (FileNotFoundException)
+            {
+                // Object does not exist. Create a new one
+                WeatherModel offlineModel = GenerateOfflineModel();
+                SaveOfflineModel(offlineModel, path);
+
+                return GetOfflineModelAsync(path);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException("Could not read offline Weathermodel", e);
+            }
+        }
+
+        public override void SaveOfflineModel(WeatherModel model, string path)
+        {
+            try
+            {
+                string json = model.ToJson();
+                FileWriter.WriteJsonToFile(json, OFFLINEMODELNAME, path);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException("Could not save offline Weather Model", e);
+            }
+        }
+
+        private WeatherModel GenerateOfflineModel()
+        {
+            return new WeatherModel
+            {
+                Description = "Sunny",
+                Icon = "01d",
+                Name = "Mechelen",
+                SunRise = "06:44",
+                SunSet = "19:42",
+                TemperatureCelsius = 13,
+                TemperatureFahrenheit = 55.40,
+                TemperatureKelvin = 286.15
+            };
         }
 
         protected WeatherModel CalculateUnMappableValues(WeatherModel model)
@@ -51,8 +111,8 @@ namespace MagicMirror.Business.Services
             model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, _criteria.Precision);
             model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, _criteria.Precision);
 
-            DateTime sunrise = DateHelper.ConvertFromUnixTimestamp(model.SunRiseMilliseconds);
-            DateTime sunset = DateHelper.ConvertFromUnixTimestamp(model.SunSetMilliSeconds);
+            DateTime sunrise = model.SunRiseMilliseconds.ConvertFromUnixTimestamp();
+            DateTime sunset = model.SunSetMilliSeconds.ConvertFromUnixTimestamp();
             model.SunRise = sunrise.ToString("HH:mm");
             model.SunSet = sunset.ToString("HH:mm");
 
@@ -64,7 +124,6 @@ namespace MagicMirror.Business.Services
         /// </summary>
         /// <param name="icon">OpenweatherMap icon to convert</param>
         /// <param name="theme">The colour scheme. Choice between light and dark</param>
-        /// <returns></returns>
         private string ConvertWeatherIcon(string icon, string theme = "Dark")
         {
             try
@@ -126,8 +185,7 @@ namespace MagicMirror.Business.Services
                         res = "50.png";
                         break;
                 }
-                //return $"{prefix}/{theme}/{res}";
-                return "ms - appx:///Assets/Weather/Dark/010.png";
+                return $"{prefix}/{theme}/{res}";
             }
             catch (Exception)
             {

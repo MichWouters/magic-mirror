@@ -5,10 +5,10 @@ namespace MagicMirror.Business.Services
 {
     public interface IApiService<T> where T : IModel
     {
-        /// <summary>
-        /// Get the model without automapped and calculated fields.
-        /// </summary>
-        /// <returns></returns>
         Task<T> GetModelAsync();
+
+        T GetOfflineModelAsync(string path);
+
+        void SaveOfflineModel(T model, string path);
     }
 }

@@ -3,8 +3,6 @@ using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities.User;
 using MagicMirror.DataAccess.Repos;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
@@ -17,6 +15,7 @@ namespace MagicMirror.Business.Services
         {
             _userRepo = new UserRepo(context);
         }
+
         public Guid PersonId { get; set; }
 
         public async Task<UserProfileModel> AddUserAsync(UserProfileModel model)
@@ -28,22 +27,25 @@ namespace MagicMirror.Business.Services
 
         public override async Task<UserProfileModel> GetModelAsync()
         {
-            UserEntity entity = await GetEntityAsync();
+            UserEntity entity = await _userRepo.GetUserByPersonId(PersonId);
             UserProfileModel model = MapEntityToModel(entity);
             model = CalculateUnMappableValues(model);
             return model;
         }
 
+        public override UserProfileModel GetOfflineModelAsync(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SaveOfflineModel(UserProfileModel model, string path)
+        {
+            throw new NotImplementedException();
+        }
+
         protected UserProfileModel CalculateUnMappableValues(UserProfileModel model)
         {
             return model;
-        }
-
-        protected override async Task<UserEntity> GetEntityAsync()
-        {
-            UserEntity entity = await _userRepo.GetUserByPersonId(PersonId);
-
-            return entity;
         }
     }
 }

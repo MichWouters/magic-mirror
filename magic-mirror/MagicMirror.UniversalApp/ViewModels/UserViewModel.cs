@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MagicMirror.UniversalApp.ViewModels
@@ -22,6 +20,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 model.Addresses = UserAddressViewModel.BuildAddresses(userProfile.Addresses);
             });
         }
+
         private Guid _id;
         private Guid _personId;
         private ObservableCollection<Guid> _faceIds;
@@ -81,7 +80,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-
         public string LastName
         {
             get
@@ -107,7 +105,6 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
-
     }
 
     public class UserAddressViewModel : ViewModelBase
@@ -134,6 +131,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public Guid AddressTypeId
         {
             get
@@ -146,6 +144,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public string AddressTypeName
         {
             get
@@ -158,6 +157,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public Guid AddressId
         {
             get
@@ -170,6 +170,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public string AddressStreet
         {
             get
@@ -182,6 +183,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public string AddressHouseNumber
         {
             get
@@ -194,6 +196,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public string AddressHouseNumberSuffix
         {
             get
@@ -206,6 +209,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public string AddressPostCode
         {
             get
@@ -218,6 +222,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public string AddressCity
         {
             get

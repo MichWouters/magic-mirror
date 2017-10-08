@@ -1,13 +1,9 @@
 ﻿using MagicMirror.DataAccess.Entities.User;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MagicMirror.DataAccess
 {
-    public class SqliteContext: DbContext
+    public class SqliteContext : DbContext
     {
         private string _dbFile = "magicmirror.db";
 
@@ -37,7 +33,6 @@ namespace MagicMirror.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
             optionsBuilder.UseSqlite($"Data Source={_dbFile}");
         }
 

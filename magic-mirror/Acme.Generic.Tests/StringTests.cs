@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Acme.Generic.Extensions;
+using Xunit;
 
 namespace Acme.Generic.Tests
 {
@@ -25,7 +26,7 @@ namespace Acme.Generic.Tests
             // Act
             for (int i = 0; i < input.Length; i++)
             {
-                string result = input[i].GetTimeNotation();
+                string result = input[i].ConvertMinutesToHoursAndMinutes();
 
                 // Assert
                 Assert.Equal(result, expectedResults[i]);

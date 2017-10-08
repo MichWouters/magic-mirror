@@ -1,13 +1,9 @@
 ﻿using MagicMirror.DataAccess.Entities;
-using Newtonsoft.Json;
 using System;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Threading;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
@@ -32,7 +28,8 @@ namespace MagicMirror.DataAccess.Repos
 
         public Task<T> InsertEntityAsync(T entity)
         {
-            return Task.Run(() => {
+            return Task.Run(() =>
+            {
                 Context.Set<T>().AddAsync(entity);
                 Context.SaveChangesAsync();
                 return entity;
@@ -72,7 +69,8 @@ namespace MagicMirror.DataAccess.Repos
 
         public Task<IEnumerable<T>> InsertEntitiesAsync(IEnumerable<T> entities)
         {
-            return Task.Run(() => {
+            return Task.Run(() =>
+            {
                 Context.Set<T>().AddRangeAsync(entities);
                 Context.SaveChangesAsync();
                 return entities;
