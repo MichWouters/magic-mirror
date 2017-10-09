@@ -105,6 +105,7 @@
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="ViewModels\CameraFeedViewModel.cs" />
+    <Compile Include="ViewModels\OfflineDataViewModel.cs" />
     <Compile Include="ViewModels\Strings\Settings.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\SettingPageViewModel.cs" />
@@ -115,6 +116,9 @@
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OffllineDataPage.xaml.cs">
+      <DependentUpon>OffllineDataPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
@@ -211,6 +215,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OffllineDataPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

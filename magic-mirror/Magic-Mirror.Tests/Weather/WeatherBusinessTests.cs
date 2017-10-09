@@ -31,7 +31,7 @@ namespace MagicMirror.Tests.Weather
             Assert.NotEqual(0, model.TemperatureKelvin);
             Assert.NotEqual("", model.Description);
             Assert.NotEqual("", model.Icon);
-            Assert.NotEqual("", model.Name);
+            Assert.NotEqual("", model.Location);
             Assert.NotEqual(0, model.SunRiseMilliseconds);
             Assert.NotEqual(0, model.SunSetMilliSeconds);
         }

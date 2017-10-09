@@ -21,6 +21,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         private DispatcherTimer timeTimer;
         private DispatcherTimer complimentTimer;
         private DispatcherTimer weatherTimer;
+
         private DispatcherTimer trafficTimer;
 
         StorageFolder localFolder = ApplicationData.Current.LocalFolder;
@@ -130,7 +131,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             catch (HttpRequestException)
             {
                 // No internet connection. Display dummy data.
-                WeatherModel weatherModel = _weatherService.GetOfflineModelAsync(localFolder.Path);
+                WeatherModel weatherModel = _weatherService.GetOfflineModel(localFolder.Path);
                 WeatherInfo = weatherModel;
 
                 // Try to refresh data. If succesful, resume timer
@@ -163,7 +164,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             catch (HttpRequestException)
             {
                 // No internet connection. Display dummy data.
-                TrafficModel trafficModel = _trafficService.GetOfflineModelAsync(localFolder.Path);
+                TrafficModel trafficModel = _trafficService.GetOfflineModel(localFolder.Path);
                 TrafficInfo = trafficModel;
 
                 // Try to refresh data. If succesful, resume timer
@@ -193,6 +194,18 @@ namespace MagicMirror.UniversalApp.ViewModels
             catch (Exception ex)
             {
                 DisplayErrorMessage("Unable to navigate to Settings", ex.Message);
+            }
+        }
+
+        public void NavigateToOfflineData()
+        {
+            try
+            {
+                _navigationService.Navigate(typeof(OffllineDataPage));
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorMessage("Unable to navigate to Offline Data", ex.Message);
             }
         }
 
