@@ -44,7 +44,7 @@ namespace MagicMirror.Business.Services
             catch (HttpRequestException) { throw; }
             catch (Exception ex)
             {
-                throw new ArgumentException("Unable to retrieve Weather Model", ex);
+                throw new ArgumentException("Unable to retrieve RSS Model", ex);
             }
         }
         

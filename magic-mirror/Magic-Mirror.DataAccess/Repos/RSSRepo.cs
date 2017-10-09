@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace MagicMirror.DataAccess.Repos
 {
@@ -18,14 +19,18 @@ namespace MagicMirror.DataAccess.Repos
         public RSSRepo() : base()
         {
             //TODO : config
+
             _feed = "http://www.theonion.com/feeds/rss";
+           // _feed = "http://www.hln.be/bizar/rss.xml";
         }
 
         public override async Task<RSSEntity> GetEntityAsync()
         {
             try
             {
-                using (XmlReader reader = XmlReader.Create(_feed))
+                var client = new HttpClient();
+                var stream = await client.GetStreamAsync(_feed);
+                using (XmlReader reader = XmlReader.Create(stream))
                 {
                     var feedReader = new RssFeedReader(reader);
                     var result = new RSSEntity();

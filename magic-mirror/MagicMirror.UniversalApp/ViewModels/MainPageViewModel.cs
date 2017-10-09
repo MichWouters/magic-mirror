@@ -44,6 +44,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 _weatherService = new WeatherService(userSettings);
                 _trafficService = new TrafficService(userSettings);
+                _rssService = new RSSService();
                 _commonService = new CommonService();
             }
             catch (Exception ex)
@@ -174,129 +175,129 @@ namespace MagicMirror.UniversalApp.ViewModels
                 await Task.Delay((minutes * 60) * 10000);
                 RefreshRSSModel(null, null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // Can't connect to server. Try again after waiting for a few minutes.
                 //DisplayErrorMessage("Can't update Weather information", ex.Message);
-                if (weatherTimer.IsEnabled) weatherTimer.Stop();
+                if (weatherTimer.IsEnabled) rssTimer.Stop();
 
                 // Try to refresh data. If succesful, resume timer
                 int minutes = 5;
                 await Task.Delay((minutes * 60) * 10000);
-                RefreshWeatherModel(null, null);
+                RefreshRSSModel(null, null);
             }
         }
+
+        private async void RefreshTrafficModel(object sender, object e)
+        {
+            try
+            {
+                TrafficModel result = await _trafficService.GetModelAsync();
+                TrafficInfo = result;
+
+                if (!trafficTimer.IsEnabled) trafficTimer.Start();
+            }
+            catch (HttpRequestException)
+            {
+                // No internet connection. Display dummy data.
+                TrafficModel trafficModel = _trafficService.GetOfflineModelAsync(localFolder.Path);
+                TrafficInfo = trafficModel;
+
+                // Try to refresh data. If succesful, resume timer
+                int minutes = 5;
+                await Task.Delay((minutes * 60) * 10000);
+                RefreshTrafficModel(null, null);
+            }
+            catch (Exception)
+            {
+                // Can't connect to server. Try again after waiting for a few minutes
+                //DisplayErrorMessage("Can't update Traffic information", ex.Message);
+                if (weatherTimer.IsEnabled) weatherTimer.Stop();
+
+                // Try to refresh data immediately. If succesful, resume timer
+                int minutes = 5;
+                await Task.Delay((minutes * 60) * 10000);
+                RefreshTrafficModel(null, null);
+            }
+        }
+
+        public void NavigateToSettings()
+        {
+            try
+            {
+                _navigationService.Navigate(typeof(SettingPage));
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorMessage("Unable to navigate to Settings", ex.Message);
+            }
+        }
+
+        #region Properties
+
+        private WeatherModel _weather;
+
+        public WeatherModel WeatherInfo
+        {
+            get => _weather;
+            set
+            {
+                _weather = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private RSSModel _rss;
+
+        public RSSModel RSSInfo
+        {
+            get => _rss;
+            set
+            {
+                _rss = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private TrafficModel _traffic;
+
+        public TrafficModel TrafficInfo
+        {
+            get => _traffic;
+            set
+            {
+                _traffic = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateModel Date => new DateModel();
+        private string _time;
+
+        public string Time
+        {
+            get => _time;
+            set
+            {
+                _time = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _compliment;
+
+        public string Compliment
+        {
+            get => _compliment;
+            set
+            {
+                _compliment = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion Properties
     }
-
-    private async void RefreshTrafficModel(object sender, object e)
-    {
-        try
-        {
-            TrafficModel result = await _trafficService.GetModelAsync();
-            TrafficInfo = result;
-
-            if (!trafficTimer.IsEnabled) trafficTimer.Start();
-        }
-        catch (HttpRequestException)
-        {
-            // No internet connection. Display dummy data.
-            TrafficModel trafficModel = _trafficService.GetOfflineModelAsync(localFolder.Path);
-            TrafficInfo = trafficModel;
-
-            // Try to refresh data. If succesful, resume timer
-            int minutes = 5;
-            await Task.Delay((minutes * 60) * 10000);
-            RefreshTrafficModel(null, null);
-        }
-        catch (Exception)
-        {
-            // Can't connect to server. Try again after waiting for a few minutes
-            //DisplayErrorMessage("Can't update Traffic information", ex.Message);
-            if (weatherTimer.IsEnabled) weatherTimer.Stop();
-
-            // Try to refresh data immediately. If succesful, resume timer
-            int minutes = 5;
-            await Task.Delay((minutes * 60) * 10000);
-            RefreshTrafficModel(null, null);
-        }
-    }
-
-    public void NavigateToSettings()
-    {
-        try
-        {
-            _navigationService.Navigate(typeof(SettingPage));
-        }
-        catch (Exception ex)
-        {
-            DisplayErrorMessage("Unable to navigate to Settings", ex.Message);
-        }
-    }
-
-    #region Properties
-
-    private WeatherModel _weather;
-
-    public WeatherModel WeatherInfo
-    {
-        get => _weather;
-        set
-        {
-            _weather = value;
-            OnPropertyChanged();
-        }
-    }
-
-
-    private RSSModel _rss;
-
-    public RSSModel RSSInfo
-    {
-        get => _rss;
-        set
-        {
-            _rss = value;
-            OnPropertyChanged();
-        }
-    }
-
-
-    private TrafficModel _traffic;
-
-    public TrafficModel TrafficInfo
-    {
-        get => _traffic;
-        set
-        {
-            _traffic = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public DateModel Date => new DateModel();
-    private string _time;
-
-    public string Time
-    {
-        get => _time;
-        set
-        {
-            _time = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private string _compliment;
-
-    public string Compliment
-    {
-        get => _compliment;
-        set
-        {
-            _compliment = value;
-            OnPropertyChanged();
-        }
-    }
-
-    #endregion Properties
 }
