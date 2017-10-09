@@ -13,11 +13,23 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private StorageFolder localFolder = ApplicationData.Current.LocalFolder;
 
-        public void NavigateToMain()
+        public OfflineDataViewModel()
         {
             _navigationService.Navigate(typeof(MainPage));
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
+        }
+
+        public void NavigateToMain()
+        {
+            try
+            {
+                _navigationService.Navigate(typeof(MainPage));
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorMessage("Unable to navigate to Main Page", ex.Message);
+            }
         }
 
         public void SaveData(OfflineDataViewModel viewModel)
@@ -45,7 +57,10 @@ namespace MagicMirror.UniversalApp.ViewModels
         private WeatherModel _weatherModel;
         public WeatherModel WeatherModel
         {
-            get => _weatherModel;
+            get
+            {
+                return _weatherService.GetOfflineModel(localFolder.Path);
+            }
             set
             {
                 _weatherModel = value;
@@ -56,7 +71,10 @@ namespace MagicMirror.UniversalApp.ViewModels
         private TrafficModel _trafficModel;
         public TrafficModel TrafficModel
         {
-            get => _trafficModel;
+            get
+            {
+                return _trafficService.GetOfflineModel(localFolder.Path);
+            }
             set
             {
                 _trafficModel = value;

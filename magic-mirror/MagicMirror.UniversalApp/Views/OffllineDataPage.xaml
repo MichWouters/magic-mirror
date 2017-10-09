@@ -7,6 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="350" />
+            <Setter Property="Margin" Value="0,12,20,0" />
+        </Style>
+    </Page.Resources>
+
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock Text="Offline Dummy Data" FontSize="36"/>
         <StackPanel Orientation="Horizontal">

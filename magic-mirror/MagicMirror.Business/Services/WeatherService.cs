@@ -103,7 +103,8 @@ namespace MagicMirror.Business.Services
                 SunSet = "19:42",
                 TemperatureCelsius = 13,
                 TemperatureFahrenheit = 55.40,
-                TemperatureKelvin = 286.15
+                TemperatureKelvin = 286.15,
+                WeatherType = "Sunny"
             };
         }
 
