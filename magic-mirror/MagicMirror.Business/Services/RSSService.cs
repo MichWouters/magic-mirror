@@ -5,13 +5,14 @@ using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class RSSService : ServiceBase<WeatherModel, WeatherEntity>
+    public class RSSService : ServiceBase<RSSModel, RSSEntity>
     {
         private const string OFFLINEMODELNAME = "WeatherOfflineModel.json";
 
@@ -28,15 +29,15 @@ namespace MagicMirror.Business.Services
             _repo = new RSSRepo();
         }
 
-        public override async Task<WeatherModel> GetModelAsync()
+        public override async Task<RSSModel> GetModelAsync()
         {
             try
             {
                 // Get entity from Repository.
-                var entities = await _repo.GetEntityAsync();
+                var entity = await _repo.GetEntityAsync();
 
                 // Map entity to model.
-                RSSModel model = MapEntityToModel(entity);
+                var model = MapEntityToModel(entity);
                 
                 return model;
             }
@@ -46,14 +47,7 @@ namespace MagicMirror.Business.Services
                 throw new ArgumentException("Unable to retrieve Weather Model", ex);
             }
         }
-
-        public override RSSModel MapEntityToModel(List<RSSEntity> entity)
-        {
-            var model = new RSSModel();
-            model.Items = new List<Items>();
-            model.Items = Mapper.Map<List<RSSItem>>(entity);
-            return model;
-        }
+        
         public override RSSModel GetOfflineModelAsync(string path)
         {
             try
@@ -78,7 +72,7 @@ namespace MagicMirror.Business.Services
             }
         }
 
-        public override void SaveOfflineModel(WeatherModel model, string path)
+        public override void SaveOfflineModel(RSSModel model, string path)
         {
             try
             {
@@ -90,16 +84,16 @@ namespace MagicMirror.Business.Services
                 throw new ArgumentException("Could not save offline RSS Model", e);
             }
         }
-
-        private WeatherModel GenerateOfflineModel()
+        
+        private RSSModel GenerateOfflineModel()
         {
             return new RSSModel
             {
                 items = new List<RSSItem>
                 {
-                    new RSSItem{ Titel = "Aarde vergaan, Trump schuldig", Summary = "",Url=""},
-                    new RSSItem{ Titel = "Leven na de dood bewezen", Summary = "",Url=""},
-                    new RSSItem{ Titel = "Kerkbezoek sterk gestegen", Summary = "",Url=""}
+                    new RSSItem{ Title = "Aarde vergaan, Trump schuldig", Summary = "",Link=""},
+                    new RSSItem{ Title = "Leven na de dood bewezen, kerkbezoek sterk gestegen", Summary = "",Link=""},
+                    new RSSItem{ Title = "Grote terugroepactie Tedepi V9", Summary = "",Link=""}
                 }
             }; 
         }

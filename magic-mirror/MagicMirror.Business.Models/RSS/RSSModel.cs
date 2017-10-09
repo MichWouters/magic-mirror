@@ -1,4 +1,6 @@
-﻿namespace MagicMirror.Business.Models
+﻿using System.Collections.Generic;
+
+namespace MagicMirror.Business.Models
 {
     public class RSSModel : IModel
     {
@@ -7,7 +9,6 @@
 
     public class RSSItem
     {
-
         public string Title { get; set; }
         public string Summary { get; set; }
         public string Link { get; set; }
