@@ -18,7 +18,7 @@ namespace MagicMirror.DataAccess.Repos
         public RSSRepo() : base()
         {
             //TODO : config
-            _feed = "";
+            _feed = "http://www.theonion.com/feeds/rss";
         }
 
         public override async Task<RSSEntity> GetEntityAsync()
