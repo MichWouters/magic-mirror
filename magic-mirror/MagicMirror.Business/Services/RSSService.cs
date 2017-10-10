@@ -14,18 +14,10 @@ namespace MagicMirror.Business.Services
 {
     public class RSSService : ServiceBase<RSSModel, RSSEntity>
     {
-        private const string OFFLINEMODELNAME = "WeatherOfflineModel.json";
+        private const string OFFLINEMODELNAME = "RssOfflineModel.json";
 
         public RSSService()
         {
-            // Defensive coding
-          //  if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
-           // if (string.IsNullOrWhiteSpace(criteria.HomeCity)) throw new ArgumentException("A city has to be provided");
-
-            //TODO Config RSS feed
-
-            // Set up parameters
-        //    _criteria = criteria;
             _repo = new RSSRepo();
         }
 
@@ -93,11 +85,13 @@ namespace MagicMirror.Business.Services
                 {
                     new RSSItem{ Title = "Aarde vergaan, Trump schuldig", Summary = "",Link=""},
                     new RSSItem{ Title = "Leven na de dood bewezen, kerkbezoek sterk gestegen", Summary = "",Link=""},
-                    new RSSItem{ Title = "Grote terugroepactie Tedepi V9", Summary = "",Link=""}
+                    new RSSItem{ Title = "Grote terugroepactie Tedepi V9", Summary = "",Link=""},
+                    new RSSItem{ Title = "Slimme spiegel in ontwikkeling, Experts maken zich zorgen.", Summary = "",Link=""},
+                    new RSSItem{ Title = "Studie toont aan dat minder meer is. Min of meer", Summary = "",Link=""},
+                    new RSSItem{ Title = "Man red kat uit boom, buren verrukt", Summary = "",Link=""},
+                    new RSSItem{ Title = "Trein komt op tijd aan. Wetenschappers verstomd", Summary = "",Link=""},
                 }
             }; 
-        }
-        
-        
+        }     
     }
 }
