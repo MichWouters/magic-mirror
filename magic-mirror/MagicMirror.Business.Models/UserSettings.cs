@@ -10,7 +10,7 @@ namespace MagicMirror.Business.Models
     {
         public UserSettings()
         {
-            UserName = "UnkownUser";
+            UserName = "Unknown User";
             HomeAddress = "709 Honey Creek ";
             HomeCity = "New York, NY 10028";
             WorkAddress = "3 South Sherman Street Astoria, NY 11106";

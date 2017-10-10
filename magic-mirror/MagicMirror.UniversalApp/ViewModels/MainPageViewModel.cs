@@ -4,7 +4,6 @@ using MagicMirror.UniversalApp.Views;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Windows.Storage;
 using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
@@ -13,20 +12,17 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         // Services from the Business Layer
         private IApiService<WeatherModel> _weatherService;
-        private RSSService _rssService;
+        private IApiService<RSSModel> _rssService;
         private IApiService<TrafficModel> _trafficService;
-        private Services.ISettingsService _settingsService;
+        private ISettingsService _settingsService;
         private CommonService _commonService;
 
         // Timers to refresh individual components
         private DispatcherTimer timeTimer;
         private DispatcherTimer complimentTimer;
         private DispatcherTimer weatherTimer;
-
         private DispatcherTimer trafficTimer;
         private DispatcherTimer rssTimer;
-
-        StorageFolder localFolder = ApplicationData.Current.LocalFolder;
 
         public MainPageViewModel()
         {
@@ -36,17 +32,18 @@ namespace MagicMirror.UniversalApp.ViewModels
             SetRefreshTimers();
         }
 
+        #region Methods
         private void SetUpServices()
         {
             try
             {
-                _settingsService = new Services.SettingsService();
-                UserSettings userSettings = _settingsService.LoadSettings();
+                _settingsService = new SettingsService();
+                UserSettings userSettings = _settingsService.ReadSettings(localFolder, SETTING_FILE);
 
                 _weatherService = new WeatherService(userSettings);
                 _trafficService = new TrafficService(userSettings);
-                _rssService = new RSSService();
                 _commonService = new CommonService();
+                _rssService = new RSSService();
             }
             catch (Exception ex)
             {
@@ -87,8 +84,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             SetUpTimer(weatherTimer, new TimeSpan(0, 15, 0), RefreshWeatherModel);
             SetUpTimer(rssTimer, new TimeSpan(0, 10, 0), RefreshRSSModel);
             SetUpTimer(trafficTimer, new TimeSpan(0, 10, 0), RefreshTrafficModel);
-
-            //TODO: Write methods, then shorten them using new method            //complimentTimer.Tick += RefreshCompliment;            //complimentTimer.Interval = new TimeSpan(0, 1, 0);            //if (!complimentTimer.IsEnabled) complimentTimer.Start();
         }
 
         private void SetUpTimer(DispatcherTimer timer, TimeSpan timeSpan, EventHandler<object> method)
@@ -100,14 +95,8 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private void GetTime(object sender, object e)
         {
-            try
-            {
-                Time = DateTime.Now.ToString("HH:mm");
-            }
-            catch (Exception ex)
-            {
-                DisplayErrorMessage("Cannot set Time", ex.Message);
-            }
+            try { Time = DateTime.Now.ToString("HH:mm"); }
+            catch (Exception ex) { DisplayErrorMessage("Cannot set Time", ex.Message); }
         }
 
         private void GetCompliment(object sender, object e)
@@ -136,7 +125,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             catch (HttpRequestException)
             {
                 // No internet connection. Display dummy data.
-                WeatherModel weatherModel = _weatherService.GetOfflineModel(localFolder.Path);
+                WeatherModel weatherModel = _weatherService.GetOfflineModel(localFolder);
                 WeatherInfo = weatherModel;
 
                 // Try to refresh data. If succesful, resume timer
@@ -156,33 +145,29 @@ namespace MagicMirror.UniversalApp.ViewModels
                 RefreshWeatherModel(null, null);
             }
         }
+
         private async void RefreshRSSModel(object sender, object e)
         {
             try
             {
-                var rssModel = await _rssService.GetModelAsync();
+                RSSModel rssModel = await _rssService.GetModelAsync();
                 RSSInfo = rssModel;
 
                 if (!rssTimer.IsEnabled) rssTimer.Start();
             }
             catch (HttpRequestException)
             {
-                // No internet connection. Display dummy data.
-                var rssModel = _rssService.GetOfflineModelAsync(localFolder.Path);
+                var rssModel = _rssService.GetOfflineModel(localFolder);
                 RSSInfo = rssModel;
 
-                // Try to refresh data. If succesful, resume timer
                 int minutes = 30;
                 await Task.Delay((minutes * 60) * 10000);
                 RefreshRSSModel(null, null);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // Can't connect to server. Try again after waiting for a few minutes.
-                //DisplayErrorMessage("Can't update Weather information", ex.Message);
-                if (weatherTimer.IsEnabled) rssTimer.Stop();
+                if (rssTimer.IsEnabled) rssTimer.Stop();
 
-                // Try to refresh data. If succesful, resume timer
                 int minutes = 5;
                 await Task.Delay((minutes * 60) * 10000);
                 RefreshRSSModel(null, null);
@@ -200,28 +185,26 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
             catch (HttpRequestException)
             {
-                // No internet connection. Display dummy data.
-                TrafficModel trafficModel = _trafficService.GetOfflineModel(localFolder.Path);
+                TrafficModel trafficModel = _trafficService.GetOfflineModel(localFolder);
                 TrafficInfo = trafficModel;
 
-                // Try to refresh data. If succesful, resume timer
                 int minutes = 5;
                 await Task.Delay((minutes * 60) * 10000);
                 RefreshTrafficModel(null, null);
             }
             catch (Exception)
             {
-                // Can't connect to server. Try again after waiting for a few minutes
-                //DisplayErrorMessage("Can't update Traffic information", ex.Message);
-                if (weatherTimer.IsEnabled) weatherTimer.Stop();
+                if (trafficTimer.IsEnabled) trafficTimer.Stop();
 
-                // Try to refresh data immediately. If succesful, resume timer
                 int minutes = 5;
                 await Task.Delay((minutes * 60) * 10000);
                 RefreshTrafficModel(null, null);
             }
         }
 
+        #endregion
+
+        #region Navigation
         public void NavigateToSettings()
         {
             try
@@ -245,6 +228,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 DisplayErrorMessage("Unable to navigate to Offline Data", ex.Message);
             }
         }
+        #endregion
 
         #region Properties
 
@@ -260,7 +244,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-
         private RSSModel _rss;
 
         public RSSModel RSSInfo
@@ -272,7 +255,6 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
-
 
         private TrafficModel _traffic;
 

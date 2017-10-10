@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 
 namespace MagicMirror.UniversalApp.ViewModels
@@ -13,6 +14,9 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         private bool _contentDialogShown;
         protected NavigationService _navigationService;
+
+        protected readonly string localFolder = ApplicationData.Current.LocalFolder.Path;
+        protected const string SETTING_FILE = "settings.json";
 
         public ViewModelBase()
         {

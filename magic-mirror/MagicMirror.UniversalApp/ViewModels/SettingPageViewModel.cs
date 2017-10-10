@@ -5,38 +5,40 @@ using MagicMirror.UniversalApp.Views;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Windows.Networking.Connectivity;
+using Windows.Storage;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
     public class SettingPageViewModel : ViewModelBase
     {
-        private Services.ISettingsService _settingService;
         private LocationService _locationService;
-        private IApiService<AddressModel> _addressService;
         private UserSettings _userSettings;
+        private ISettingsService _settingsService;
+        private IApiService<AddressModel> _addressService;
 
-        private string ipAddress;
+
 
         public SettingPageViewModel()
         {
-            _settingService = new Services.SettingsService();
+            _settingsService = new SettingsService();
             _locationService = new LocationService();
 
             try
             {
-                _userSettings = _settingService.LoadSettings();
+                _userSettings = LoadSettings();
             }
             catch (FileNotFoundException)
             {
                 DisplayErrorMessage("No Settings File Found",
                     "It looks like you're running this app for the first time." +
-                    " We created a new settings file with default values. Please enter your settings.");
+                    " We created a new settings file with default values. Please enter your settings now.");
             }
         }
 
         public void NavigateToMain()
         {
-            _settingService.SaveSettings(_userSettings);
+            SaveSettings(localFolder, SETTING_FILE, _userSettings);
             _navigationService.Navigate(typeof(MainPage));
         }
 
@@ -75,11 +77,61 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
+        private void SaveSettings(string path, string fileName, UserSettings settings)
+        {
+            _settingsService.SaveSettings(path, fileName, settings);
+        }
+
+        public UserSettings LoadSettings()
+        {
+            try
+            {
+                var result = _settingsService.ReadSettings(localFolder, SETTING_FILE);
+
+                if (result == null) throw new FileNotFoundException();
+
+                return result;
+            }
+            catch (FileNotFoundException)
+            {
+                SaveSettings(localFolder, SETTING_FILE, new UserSettings());
+                throw;
+            }
+            catch (Exception) { throw; }
+        }
+
+        public string GetIpAddress()
+        {
+            try
+            {
+                string result = "";
+                foreach (Windows.Networking.HostName localHostName in NetworkInformation.GetHostNames())
+                {
+                    if (localHostName.IPInformation != null)
+                    {
+                        if (localHostName.Type == Windows.Networking.HostNameType.Ipv4)
+                        {
+                            result = localHostName.ToString();
+                            break;
+                        }
+                    }
+                }
+
+                if (string.IsNullOrEmpty(result)) throw new Exception();
+                return result;
+            }
+            catch (Exception)
+            {
+                return "Unable to retrieve IP Address";
+            }
+        }
+
         #region Properties
 
+        private string ipAddress;
         public string IpAddress
         {
-            get => _settingService.GetIpAddress();
+            get => GetIpAddress();
             set
             {
                 ipAddress = value;
