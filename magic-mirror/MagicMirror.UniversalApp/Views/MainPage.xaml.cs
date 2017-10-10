@@ -24,10 +24,5 @@ namespace MagicMirror.UniversalApp.Views
         {
             ViewModel.NavigateToOfflineData();
         }
-
-        private void ScrolltoBottom()
-        {
-            var foo = VisualTreeHelper.GetChild(RSSTextBlock, 0);
-        }
     }
 }
