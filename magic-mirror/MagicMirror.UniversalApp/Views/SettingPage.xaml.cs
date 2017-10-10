@@ -1,7 +1,7 @@
 ﻿using MagicMirror.Business.Models;
+using MagicMirror.Business.Models.Traffic;
 using MagicMirror.UniversalApp.ViewModels;
 using System;
-using System.Reflection;
 using Windows.UI.Xaml.Controls;
 
 namespace MagicMirror.UniversalApp.Views
@@ -18,7 +18,7 @@ namespace MagicMirror.UniversalApp.Views
 
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            ViewModel.NavigateToMain();
+            ViewModel.SaveSettings();
         }
 
         private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -42,11 +42,13 @@ namespace MagicMirror.UniversalApp.Views
 
         private async void LocationButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            // Todo: Convert anonymous type to strongly typed
-            var result = await ViewModel.GetAddressModel();
+            FetchedAddress result = await ViewModel.GetAddressModel();
 
-            HomeTextBox.Text = result?.GetType().GetProperty("Address")?.GetValue(result, null).ToString();
-            HomeTownTextBox.Text = result?.GetType().GetProperty("City")?.GetValue(result, null).ToString();
+            if (result != null)
+            {
+                HomeTextBox.Text = result.Address;
+                HomeTownTextBox.Text = result.City;
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Acme.Generic;
-using Acme.Generic.Extensions;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
@@ -30,7 +29,7 @@ namespace MagicMirror.Business.Services
 
                 // Map entity to model.
                 var model = MapEntityToModel(entity);
-                
+
                 return model;
             }
             catch (HttpRequestException) { throw; }
@@ -42,36 +41,30 @@ namespace MagicMirror.Business.Services
 
         public override RSSModel GetOfflineModel(string path)
         {
-            return new RSSModel
-            {
-                items = new List<RSSItem>
+            string[] funnyPages = new string[]
                 {
-                    new RSSItem
-                    {
-                        Title = "Amerikaanse wapenfabrikanten betreuren overlijden van trouwe klant"
-                    },
-                    new RSSItem
-                    {
-                        Title = "Grondwettelijk Hof stelt Rich meet Beautiful open voor cougars, milfs en andere sugar mommy’s"
-                    },
-                    new RSSItem
-                    {
-                        Title = "Man die na vijftien jaar uit coma ontwaakt, vraagt om meteen opnieuw in slaap gebracht te worden"
-                    },
-                    new RSSItem
-                    {
-                        Title = "Geheime liefdescorrespondentie Donald Trump en Kim Jong-Un gelekt"
-                    },
-                    new RSSItem
-                    {
-                        Title = "Tien redenen waarom Theo Francken geen nazi is"
-                    },
-                    new RSSItem
-                    {
-                        Title = "Soedanese identificatiemissie vraagt asiel aan"
-                    }
-                }
-            };
+                    "Amerikaanse wapenfabrikanten betreuren overlijden van trouwe klant",
+                    "Grondwettelijk Hof stelt voor 'Rich meet Beautiful open voor cougars, milfs en andere sugar mommy’s'",
+                    "Man die na vijftien jaar uit coma ontwaakt, vraagt om meteen opnieuw in slaap gebracht te worden",
+                    "Geheime liefdescorrespondentie Donald Trump en Kim Jong-Un gelekt",
+                    "Leven na de dood bewezen, kerkbezoek sterk gestegen",
+                    "Grote terugroepactie Tedepi V9",
+                    "Slimme spiegel in ontwikkeling, Experts maken zich zorgen",
+                    "Studie toont aan dat minder meer is. Min of meer",
+                    "Man red kat uit boom, buren verrukt",
+                    "Trein komt op tijd aan. Wetenschappers voor raadsel"
+                };
+
+            var model = new RSSModel();
+            var items = new List<RSSItem>();
+
+            foreach (string page in funnyPages)
+            {
+                items.Add(new RSSItem { Title = page });
+            }
+
+            model.items = items;
+            return model;
         }
 
         public RSSModel GetOfflineModelAsync(string path)
@@ -110,7 +103,7 @@ namespace MagicMirror.Business.Services
                 throw new ArgumentException("Could not save offline RSS Model", e);
             }
         }
-        
+
         private RSSModel GenerateOfflineModel()
         {
             return new RSSModel
@@ -125,7 +118,7 @@ namespace MagicMirror.Business.Services
                     new RSSItem{ Title = "Man red kat uit boom, buren verrukt", Summary = "",Link=""},
                     new RSSItem{ Title = "Trein komt op tijd aan. Wetenschappers verstomd", Summary = "",Link=""},
                 }
-            }; 
-        }     
+            };
+        }
     }
 }

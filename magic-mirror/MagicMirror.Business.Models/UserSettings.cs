@@ -8,6 +8,8 @@ namespace MagicMirror.Business.Models
     /// </summary>
     public class UserSettings : INotifyPropertyChanged
     {
+        #region Constructors
+
         public UserSettings()
         {
             UserName = "Unknown User";
@@ -39,13 +41,95 @@ namespace MagicMirror.Business.Models
             DistanceUOM = distanceUOM;
         }
 
-        public string UserName { get; set; }
-        public string HomeCity { get; set; }
-        public string HomeAddress { get; set; }
-        public string WorkAddress { get; set; }
-        public int Precision { get; set; }
-        public TemperatureUOM TemperatureUOM { get; set; }
-        public DistanceUOM DistanceUOM { get; set; }
+        #endregion Constructors
+
+        #region Properties
+
+        private string _userName;
+
+        public string UserName
+        {
+            get => _userName;
+            set
+            {
+                _userName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _homeCity;
+
+        public string HomeCity
+        {
+            get => _homeCity;
+            set
+            {
+                _homeCity = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _homeAddress;
+
+        public string HomeAddress
+        {
+            get => _homeAddress;
+            set
+            {
+                _homeAddress = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _workAddress;
+
+        public string WorkAddress
+        {
+            get => _workAddress;
+            set
+            {
+                _workAddress = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _precision;
+
+        public int Precision
+        {
+            get => _precision;
+            set
+            {
+                _precision = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TemperatureUOM _temperatureUOM;
+
+        public TemperatureUOM TemperatureUOM
+        {
+            get => _temperatureUOM;
+            set
+            {
+                _temperatureUOM = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DistanceUOM _distanceUOM;
+
+        public DistanceUOM DistanceUOM
+        {
+            get => _distanceUOM;
+            set
+            {
+                _distanceUOM = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion Properties
 
         public void OnPropertyChanged([CallerMemberName] string property = null)
         {

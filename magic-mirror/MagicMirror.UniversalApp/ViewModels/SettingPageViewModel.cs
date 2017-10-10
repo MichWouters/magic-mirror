@@ -1,4 +1,5 @@
 ﻿using MagicMirror.Business.Models;
+using MagicMirror.Business.Models.Traffic;
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Services;
 using MagicMirror.UniversalApp.Views;
@@ -6,7 +7,6 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
-using Windows.Storage;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
@@ -16,8 +16,6 @@ namespace MagicMirror.UniversalApp.ViewModels
         private UserSettings _userSettings;
         private ISettingsService _settingsService;
         private IApiService<AddressModel> _addressService;
-
-
 
         public SettingPageViewModel()
         {
@@ -36,9 +34,8 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public void NavigateToMain()
+        private void NavigateToMain()
         {
-            SaveSettings(localFolder, SETTING_FILE, _userSettings);
             _navigationService.Navigate(typeof(MainPage));
         }
 
@@ -54,7 +51,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public async Task<object> GetAddressModel()
+        public async Task<FetchedAddress> GetAddressModel()
         {
             try
             {
@@ -65,24 +62,42 @@ namespace MagicMirror.UniversalApp.ViewModels
                 string address = $"{addressModel.Street}, {addressModel.HouseNumber}";
                 string city = $"{addressModel.PostalCode} {addressModel.City}, {addressModel.Country}";
 
-                // Todo: Convert anonymous type to strongly typed
                 UserSettings.HomeAddress = address;
                 UserSettings.HomeCity = city;
-                return new { Address = address, City = city };
+                return new FetchedAddress { Address = address, City = city };
             }
-            catch (Exception ex)
+            catch(UnauthorizedAccessException e)
             {
-                DisplayErrorMessage("Unable to fetch location", ex.Message);
+                DisplayErrorMessage("Unable to fetch location", e.Message);
+                return null;
+            }
+            catch (Exception e)
+            {
+                DisplayErrorMessage("Unable to fetch location", e.Message);
                 return null;
             }
         }
 
-        private void SaveSettings(string path, string fileName, UserSettings settings)
+        public void SaveSettings()
         {
-            _settingsService.SaveSettings(path, fileName, settings);
+            try
+            {
+                if (_userSettings == null)
+                {
+                    DisplayErrorMessage("Unable to save Settings. Please check your input");
+                }
+                else
+                {
+                    _settingsService.SaveSettings(localFolder, SETTING_FILE, _userSettings);
+                }
+            }
+            catch(Exception e)
+            {
+                DisplayErrorMessage("Unable to save Settings.", e.Message);
+            }
         }
 
-        public UserSettings LoadSettings()
+        private UserSettings LoadSettings()
         {
             try
             {
@@ -94,13 +109,14 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
             catch (FileNotFoundException)
             {
-                SaveSettings(localFolder, SETTING_FILE, new UserSettings());
+                SaveSettings();
+                _userSettings = LoadSettings();
                 throw;
             }
             catch (Exception) { throw; }
         }
 
-        public string GetIpAddress()
+        private string GetIpAddress()
         {
             try
             {
