@@ -50,6 +50,30 @@ namespace MagicMirror.Business.Services
             }
         }
 
+        public override TrafficModel GetOfflineModel(string path)
+        {
+            try
+            {
+                // Try reading Json object
+                string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
+                TrafficModel model = JsonConvert.DeserializeObject<TrafficModel>(json);
+
+                return model;
+            }
+            catch (FileNotFoundException)
+            {
+                // Object does not exist. Create a new one
+                TrafficModel offlineModel = GenerateOfflineModel();
+                SaveOfflineModel(offlineModel, path);
+
+                return GetOfflineModel(path);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException("Could not read offline Weathermodel", e);
+            }
+        }
+
         protected TrafficModel CalculateUnMappableValues(TrafficModel model)
         {
             model.Minutes = (model.Minutes / 60);
@@ -87,29 +111,7 @@ namespace MagicMirror.Business.Services
             return result;
         }
 
-        public override TrafficModel GetOfflineModel(string path)
-        {
-            try
-            {
-                // Try reading Json object
-                string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
-                TrafficModel model = JsonConvert.DeserializeObject<TrafficModel>(json);
-
-                return model;
-            }
-            catch (FileNotFoundException)
-            {
-                // Object does not exist. Create a new one
-                TrafficModel offlineModel = GenerateOfflineModel();
-                SaveOfflineModel(offlineModel, path);
-
-                return GetOfflineModel(path);
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException("Could not read offline Weathermodel", e);
-            }
-        }
+        
 
         public override void SaveOfflineModel(TrafficModel model, string path)
         {

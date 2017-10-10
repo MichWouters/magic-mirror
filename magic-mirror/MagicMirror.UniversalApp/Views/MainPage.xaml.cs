@@ -1,6 +1,6 @@
 ﻿using MagicMirror.UniversalApp.ViewModels;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Media;
 
 namespace MagicMirror.UniversalApp.Views
 {
@@ -12,7 +12,7 @@ namespace MagicMirror.UniversalApp.Views
         {
             DataContext = ViewModel;
             InitializeComponent();
-            NavigationCacheMode = NavigationCacheMode.Enabled;
+
         }
 
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -23,6 +23,11 @@ namespace MagicMirror.UniversalApp.Views
         private void TemperatureTextBlock_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
         {
             ViewModel.NavigateToOfflineData();
+        }
+
+        private void ScrolltoBottom()
+        {
+            var foo = VisualTreeHelper.GetChild(RSSTextBlock, 0);
         }
     }
 }

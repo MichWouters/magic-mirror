@@ -41,34 +41,6 @@ namespace MagicMirror.Business.Services
 
         public override RSSModel GetOfflineModel(string path)
         {
-            string[] funnyPages = new string[]
-                {
-                    "Amerikaanse wapenfabrikanten betreuren overlijden van trouwe klant",
-                    "Grondwettelijk Hof stelt voor 'Rich meet Beautiful open voor cougars, milfs en andere sugar mommy’s'",
-                    "Man die na vijftien jaar uit coma ontwaakt, vraagt om meteen opnieuw in slaap gebracht te worden",
-                    "Geheime liefdescorrespondentie Donald Trump en Kim Jong-Un gelekt",
-                    "Leven na de dood bewezen, kerkbezoek sterk gestegen",
-                    "Grote terugroepactie Tedepi V9",
-                    "Slimme spiegel in ontwikkeling, Experts maken zich zorgen",
-                    "Studie toont aan dat minder meer is. Min of meer",
-                    "Man red kat uit boom, buren verrukt",
-                    "Trein komt op tijd aan. Wetenschappers voor raadsel"
-                };
-
-            var model = new RSSModel();
-            var items = new List<RSSItem>();
-
-            foreach (string page in funnyPages)
-            {
-                items.Add(new RSSItem { Title = page });
-            }
-
-            model.items = items;
-            return model;
-        }
-
-        public RSSModel GetOfflineModelAsync(string path)
-        {
             try
             {
                 // Try reading Json object
@@ -83,7 +55,7 @@ namespace MagicMirror.Business.Services
                 var offlineModel = GenerateOfflineModel();
                 SaveOfflineModel(offlineModel, path);
 
-                return GetOfflineModelAsync(path);
+                return GetOfflineModel(path);
             }
             catch (Exception e)
             {
@@ -106,19 +78,30 @@ namespace MagicMirror.Business.Services
 
         private RSSModel GenerateOfflineModel()
         {
-            return new RSSModel
+            string[] funnyPages = new string[]
+               {
+                    "Amerikaanse wapenfabrikanten betreuren overlijden van trouwe klant",
+                    "Grondwettelijk Hof stelt voor 'Rich meet Beautiful open voor cougars, milfs en andere sugar mommy’s'",
+                    "Man die na vijftien jaar uit coma ontwaakt, vraagt om meteen opnieuw in slaap gebracht te worden",
+                    "Geheime liefdescorrespondentie Donald Trump en Kim Jong-Un gelekt",
+                    "Leven na de dood bewezen, kerkbezoek sterk gestegen",
+                    "Grote terugroepactie Tedepi V9",
+                    "Slimme spiegel in ontwikkeling, Experts maken zich zorgen",
+                    "Studie toont aan dat minder meer is. Min of meer",
+                    "Man red kat uit boom, buren verrukt",
+                    "Trein komt op tijd aan. Wetenschappers voor raadsel"
+               };
+
+            var model = new RSSModel();
+            var items = new List<RSSItem>();
+
+            foreach (string page in funnyPages)
             {
-                items = new List<RSSItem>
-                {
-                    new RSSItem{ Title = "Aarde vergaan, Trump schuldig", Summary = "",Link=""},
-                    new RSSItem{ Title = "Leven na de dood bewezen, kerkbezoek sterk gestegen", Summary = "",Link=""},
-                    new RSSItem{ Title = "Grote terugroepactie Tedepi V9", Summary = "",Link=""},
-                    new RSSItem{ Title = "Slimme spiegel in ontwikkeling, Experts maken zich zorgen.", Summary = "",Link=""},
-                    new RSSItem{ Title = "Studie toont aan dat minder meer is. Min of meer", Summary = "",Link=""},
-                    new RSSItem{ Title = "Man red kat uit boom, buren verrukt", Summary = "",Link=""},
-                    new RSSItem{ Title = "Trein komt op tijd aan. Wetenschappers verstomd", Summary = "",Link=""},
-                }
-            };
+                items.Add(new RSSItem { Title = page });
+            }
+
+            model.items = items;
+            return model;
         }
     }
 }

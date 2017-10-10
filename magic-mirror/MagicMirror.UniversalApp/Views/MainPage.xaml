@@ -43,7 +43,7 @@
         </Style>
 
         <Style x:Key="BottomMetaDeta" TargetType="TextBlock">
-            <Setter Property="Width" Value="150" />
+            <Setter Property="Width" Value="250" />
             <Setter Property="TextWrapping" Value="WrapWholeWords" />
         </Style>
     </Page.Resources>
@@ -123,21 +123,6 @@
             RelativePanel.AlignLeftWithPanel="True"
             Source="ms-appx:///Assets/Weather/Other/car.png"
             Style="{StaticResource SunImage}" />
-        
-        <TextBlock
-            x:Name="RSSTextBlock"
-            RelativePanel.AlignBottomWithPanel="True"
-            RelativePanel.AlignHorizontalCenterWithPanel="True"
-            Style="{StaticResource Compliment}"
-            Text="{x:Bind ViewModel.RSSInfo.Summary, Mode= OneWay, FallbackValue='No RSS for you'}" FontSize="12" />
-        
-        <local:CameraFeed
-            x:Name="CameraFeed"
-            RelativePanel.AlignHorizontalCenterWithPanel="True"
-            RelativePanel.AlignRightWithPanel="True"
-            RelativePanel.AlignBottomWithPanel="True"
-            HorizontalContentAlignment="Stretch"
-            VerticalContentAlignment="Stretch" />
 
         <TextBlock
             x:Name="TravelTimeTextBlock"
@@ -151,7 +136,27 @@
             Style="{StaticResource BottomMetaDeta}"
             Text="{x:Bind ViewModel.TrafficInfo.Summary, Mode= OneWay, FallbackValue='Unavailable'}"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center" />
+            VerticalAlignment="Center" 
+            FontSize="18" />
+
+        <TextBlock
+            x:Name="RSSTextBlock"
+            RelativePanel.RightOf="DurationTextBlock"
+            RelativePanel.AlignBottomWithPanel="True"
+            RelativePanel.AlignTopWith="DurationImage"
+            Text="{x:Bind ViewModel.RSSInfo.Summary, Mode= OneWay, FallbackValue='No RSS for you'}"
+            FontSize="24"
+            MaxHeight="25"
+            TextAlignment="Left" ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+            />
+
+        <local:CameraFeed
+            x:Name="CameraFeed"
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            RelativePanel.AlignRightWithPanel="True"
+            RelativePanel.AlignBottomWithPanel="True"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch" />
 
         <!--  Top Right  -->
         <TextBlock

@@ -66,7 +66,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 UserSettings.HomeCity = city;
                 return new FetchedAddress { Address = address, City = city };
             }
-            catch(UnauthorizedAccessException e)
+            catch (UnauthorizedAccessException e)
             {
                 DisplayErrorMessage("Unable to fetch location", e.Message);
                 return null;
@@ -82,16 +82,15 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
-                if (_userSettings == null)
-                {
-                    DisplayErrorMessage("Unable to save Settings. Please check your input");
-                }
-                else
+                if (_userSettings != null)
                 {
                     _settingsService.SaveSettings(localFolder, SETTING_FILE, _userSettings);
+                    NavigateToMain();
                 }
+                else
+                    DisplayErrorMessage("Unable to save Settings. Please check your input");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 DisplayErrorMessage("Unable to save Settings.", e.Message);
             }

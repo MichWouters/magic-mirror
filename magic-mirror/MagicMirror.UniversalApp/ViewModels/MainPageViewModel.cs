@@ -74,6 +74,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             GetCompliment(null, null);
             RefreshWeatherModel(null, null);
             RefreshTrafficModel(null, null);
+            RefreshRSSModel(null, null);
         }
 
         // Set timers at which data needs to be refreshed
@@ -82,8 +83,8 @@ namespace MagicMirror.UniversalApp.ViewModels
             SetUpTimer(timeTimer, new TimeSpan(0, 0, 1), GetTime);
             SetUpTimer(complimentTimer, new TimeSpan(0, 5, 0), GetCompliment);
             SetUpTimer(weatherTimer, new TimeSpan(0, 15, 0), RefreshWeatherModel);
-            SetUpTimer(rssTimer, new TimeSpan(0, 10, 0), RefreshRSSModel);
             SetUpTimer(trafficTimer, new TimeSpan(0, 10, 0), RefreshTrafficModel);
+            SetUpTimer(rssTimer, new TimeSpan(0, 10, 0), RefreshRSSModel);
         }
 
         private void SetUpTimer(DispatcherTimer timer, TimeSpan timeSpan, EventHandler<object> method)
