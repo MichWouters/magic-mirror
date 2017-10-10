@@ -33,7 +33,7 @@ namespace MagicMirror.Business.Services
             return model;
         }
 
-        public override UserProfileModel GetOfflineModelAsync(string path)
+        public override UserProfileModel GetOfflineModel(string path)
         {
             throw new NotImplementedException();
         }

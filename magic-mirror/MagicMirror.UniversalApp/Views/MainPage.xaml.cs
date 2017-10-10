@@ -19,5 +19,10 @@ namespace MagicMirror.UniversalApp.Views
         {
             ViewModel.NavigateToSettings();
         }
+
+        private void TemperatureTextBlock_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
+        {
+            ViewModel.NavigateToOfflineData();
+        }
     }
 }

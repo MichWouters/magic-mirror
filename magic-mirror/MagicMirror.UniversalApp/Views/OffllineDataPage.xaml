@@ -1,0 +1,58 @@
+﻿<Page
+    x:Class="MagicMirror.UniversalApp.Views.OffllineDataPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MagicMirror.UniversalApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="350" />
+            <Setter Property="Margin" Value="0,12,20,0" />
+        </Style>
+    </Page.Resources>
+
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock Text="Offline Dummy Data" FontSize="36"/>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Margin="10
+                        ,0,20,0">
+                <!--<TextBox 
+                 Header="User Name"
+                 Text="{x:Bind ViewModel.WeatherModel.Icon, Mode=TwoWay}" />-->
+
+                <TextBox 
+                 Header="User Name"
+                 Text="{x:Bind ViewModel.WeatherModel.SunRise, Mode=TwoWay}" />
+
+                <TextBox 
+                 Header="User Name"
+                 Text="{x:Bind ViewModel.WeatherModel.SunSet, Mode=TwoWay}" />
+
+                <TextBox 
+                 Header="User Name"
+                 Text="{x:Bind ViewModel.WeatherModel.TemperatureCelsius, Mode=TwoWay}" />
+
+            </StackPanel>
+
+            <StackPanel>
+                <TextBox 
+                 Header="User Name"
+                 Text="{x:Bind ViewModel.TrafficModel.Distance , Mode=TwoWay}" />
+
+                <TextBox 
+                 Header="Minutes"
+                 Text="{x:Bind ViewModel.TrafficModel.Minutes , Mode=TwoWay}" />
+
+                <TextBox 
+                 Header="User Name"
+                 Text="{x:Bind ViewModel.TrafficModel.NumberOfIncidents , Mode=TwoWay}" />
+
+            </StackPanel>
+        </StackPanel>
+
+        <Button Content="Save offline Data" Margin="10,10,0,0" Click="Button_Click"/>
+    </StackPanel>
+</Page>

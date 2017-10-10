@@ -2,8 +2,7 @@
 {
     public class WeatherModel : IModel
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string Location { get; set; }
         public string Icon { get; set; }
         public double TemperatureCelsius { get; set; }
         public double TemperatureKelvin { get; set; }

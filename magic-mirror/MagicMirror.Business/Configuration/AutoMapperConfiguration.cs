@@ -12,12 +12,11 @@ namespace MagicMirror.Business.Configuration
         public AutoMapperConfiguration()
         {
             CreateMap<WeatherEntity, WeatherModel>()
-                    .ForMember(dest => dest.SunRiseMilliseconds, source => source.MapFrom(src => src.Sys.Sunrise))
-                    .ForMember(dest => dest.SunSetMilliSeconds, source => source.MapFrom(src => src.Sys.Sunset))
-                    .ForMember(dest => dest.WeatherType, source => source.MapFrom(src => src.Weather[0].Main))
-                    .ForMember(dest => dest.Icon, source => source.MapFrom(src => src.Weather[0].Icon))
-                    .ForMember(dest => dest.Description, source => source.MapFrom(src => src.Weather[0].Description))
-                    .ForMember(dest => dest.TemperatureKelvin, source => source.MapFrom(src => src.Main.Temp))
+               .ForMember(dest => dest.SunRiseMilliseconds, source => source.MapFrom(src => src.Sys.Sunrise))
+               .ForMember(dest => dest.SunSetMilliSeconds, source => source.MapFrom(src => src.Sys.Sunset))
+               .ForMember(dest => dest.WeatherType, source => source.MapFrom(src => src.Weather[0].Main))
+               .ForMember(dest => dest.Icon, source => source.MapFrom(src => src.Weather[0].Icon))
+               .ForMember(dest => dest.TemperatureKelvin, source => source.MapFrom(src => src.Main.Temp))
                 //.ForMember(dest => dest.TemperatureCelsius, source => source.Ignore())
                 //.ForMember(dest => dest.TemperatureFahrenheit, source => source.Ignore())
                 //.ForMember(dest => dest.SunRise, source => source.Ignore())
@@ -43,9 +42,12 @@ namespace MagicMirror.Business.Configuration
 
             CreateMap<UserEntity, UserProfileModel>()
                 .ForMember(dest => dest.FaceIds, source => source.MapFrom(src => src.Faces.Select(f => f.Id).ToArray()));
+
             CreateMap<UserProfileModel, UserEntity>()
                 .ForMember(dest => dest.Faces, source => source.MapFrom(src => src.FaceIds.Select(fId => new UserFace { Id = fId })));
-            CreateMap<UserAddres, UserAddressModel>().ReverseMap();
+
+            CreateMap<UserAddres, UserAddressModel>()
+                .ReverseMap();
         }
     }
 }

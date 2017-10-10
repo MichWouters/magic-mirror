@@ -35,7 +35,7 @@ namespace MagicMirror.Business.Services
             }
         }
 
-        public override AddressModel GetOfflineModelAsync(string path)
+        public override AddressModel GetOfflineModel(string path)
         {
             throw new NotImplementedException();
         }

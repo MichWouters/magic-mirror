@@ -7,7 +7,7 @@ namespace MagicMirror.Business.Services
     {
         Task<T> GetModelAsync();
 
-        T GetOfflineModelAsync(string path);
+        T GetOfflineModel(string path);
 
         void SaveOfflineModel(T model, string path);
     }

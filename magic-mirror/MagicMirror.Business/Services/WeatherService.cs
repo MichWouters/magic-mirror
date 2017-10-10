@@ -15,6 +15,8 @@ namespace MagicMirror.Business.Services
     {
         private const string OFFLINEMODELNAME = "WeatherOfflineModel.json";
 
+        public WeatherService() { }
+
         public WeatherService(UserSettings criteria)
         {
             // Defensive coding
@@ -54,7 +56,7 @@ namespace MagicMirror.Business.Services
             }
         }
 
-        public override WeatherModel GetOfflineModelAsync(string path)
+        public override WeatherModel GetOfflineModel(string path)
         {
             try
             {
@@ -70,7 +72,7 @@ namespace MagicMirror.Business.Services
                 WeatherModel offlineModel = GenerateOfflineModel();
                 SaveOfflineModel(offlineModel, path);
 
-                return GetOfflineModelAsync(path);
+                return GetOfflineModel(path);
             }
             catch (Exception e)
             {
@@ -95,14 +97,14 @@ namespace MagicMirror.Business.Services
         {
             return new WeatherModel
             {
-                Description = "Sunny",
                 Icon = "01d",
-                Name = "Mechelen",
+                Location = "Mechelen",
                 SunRise = "06:44",
                 SunSet = "19:42",
                 TemperatureCelsius = 13,
                 TemperatureFahrenheit = 55.40,
-                TemperatureKelvin = 286.15
+                TemperatureKelvin = 286.15,
+                WeatherType = "Sunny"
             };
         }
 

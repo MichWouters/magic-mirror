@@ -14,6 +14,8 @@ namespace MagicMirror.Business.Services
     {
         private const string OFFLINEMODELNAME = "TrafficOfflineModel.json";
 
+        public TrafficService() { }
+
         public TrafficService(UserSettings criteria)
         {
             // Defensive coding
@@ -85,7 +87,7 @@ namespace MagicMirror.Business.Services
             return result;
         }
 
-        public override TrafficModel GetOfflineModelAsync(string path)
+        public override TrafficModel GetOfflineModel(string path)
         {
             try
             {
@@ -101,7 +103,7 @@ namespace MagicMirror.Business.Services
                 TrafficModel offlineModel = GenerateOfflineModel();
                 SaveOfflineModel(offlineModel, path);
 
-                return GetOfflineModelAsync(path);
+                return GetOfflineModel(path);
             }
             catch (Exception e)
             {
