@@ -35,8 +35,9 @@ namespace MagicMirror.UniversalApp.Views
                 TemperatureUomComboBox.SelectedIndex = (int)ViewModel.UserSettings.TemperatureUOM;
                 DistanceUomComboBox.SelectedIndex = (int)ViewModel.UserSettings.DistanceUOM;
             }
-            catch (Exception e)
+            catch (Exception)
             {
+                throw;
             }
         }
 

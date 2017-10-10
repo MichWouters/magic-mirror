@@ -69,7 +69,7 @@ namespace MagicMirror.Business.Cognitive
         {
             imageStream.Position = 0;
             var result = await _faceApiClient.AddPersonFaceAsync(MAGIC_MIRROR_GROUP, personId, imageStream);
-            StartTrainingAsync();
+            await StartTrainingAsync();
             return result.PersistedFaceId;
         }
 

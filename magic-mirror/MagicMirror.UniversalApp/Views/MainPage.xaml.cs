@@ -20,7 +20,7 @@ namespace MagicMirror.UniversalApp.Views
             SetUpTimer(rssTimerRefresh, new TimeSpan(0, 0, 5), Scroll);
         }
 
-        private void Scroll(object sender ,object e)
+        private void Scroll(object sender, object e)
         {
             double pixelsToScroll = Fml.FontSize * 2;
             if (Fml.VerticalOffset + pixelsToScroll + 10 <= RSSTextBlock.ActualHeight)
