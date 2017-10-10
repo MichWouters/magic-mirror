@@ -75,7 +75,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             _userService = new UserService(sqlContext);
             _faceService = new FaceService();
 
-            Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
             {
                 try
                 {
@@ -135,16 +135,16 @@ namespace MagicMirror.UniversalApp.ViewModels
                                     encoder.SetSoftwareBitmap(convertedRgba16Bitmap);
                                     await encoder.FlushAsync();
 
-                                    var detectedPersonId = await _faceService.DetectFace(stream.AsStream());
+                                    var detectedPerson = await _faceService.DetectFace(stream.AsStream());
 
-                                    if (detectedPersonId.HasValue)
+                                    if (detectedPerson != null && detectedPerson.PersonId.HasValue)
                                     {
-                                        _userService.PersonId = detectedPersonId.Value;
+                                        _userService.PersonId = detectedPerson.PersonId.Value;
                                         var user = await _userService.GetModelAsync();
                                         if (user == null)
                                         {
-                                            user = new UserProfileModel().RandomData();
-                                            user.PersonId = detectedPersonId.Value;
+                                            user = new UserProfileModel().RandomData(detectedPerson.Gender);
+                                            user.PersonId = detectedPerson.PersonId.Value;
                                             user = await _userService.AddUserAsync(user);
                                         }
                                         await UserViewModel.SetValuesAsync(User, user);
@@ -159,7 +159,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                                         await encoder.FlushAsync();
 
                                         // TODO: ask new user for initial profile data
-                                        var user = new UserProfileModel().RandomData();
+                                        var user = new UserProfileModel().RandomData(detectedPerson.Gender);
                                         user.PersonId = await _faceService.CreatePersonAsync(user.FullName);
                                         var faceIds = new List<Guid>();
                                         faceIds.Add(await _faceService.AddFaceAsync(user.PersonId, stream.AsStream()));
@@ -176,13 +176,20 @@ namespace MagicMirror.UniversalApp.ViewModels
                     }
                 }, _requestStopCancellationToken.Token);
             }
-            catch (InvalidOperationException)
+            catch (Microsoft.ProjectOxford.Face.FaceAPIException fex)
             {
-                throw;
+                Debug.WriteLine(fex.ErrorMessage);
             }
-            await _mediaCapture.StopPreviewAsync();
-            _captureElement.Source = null;
-            _requestStopCancellationToken.Dispose();
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            if (_requestStopCancellationToken.IsCancellationRequested)
+            {
+                await _mediaCapture.StopPreviewAsync();
+                _captureElement.Source = null;
+                _requestStopCancellationToken.Dispose();
+            }
         }
 
         internal void Start()
