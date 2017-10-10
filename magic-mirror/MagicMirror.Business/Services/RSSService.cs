@@ -39,8 +39,42 @@ namespace MagicMirror.Business.Services
                 throw new ArgumentException("Unable to retrieve RSS Model", ex);
             }
         }
-        
-        public override RSSModel GetOfflineModelAsync(string path)
+
+        public override RSSModel GetOfflineModel(string path)
+        {
+            return new RSSModel
+            {
+                items = new List<RSSItem>
+                {
+                    new RSSItem
+                    {
+                        Title = "Amerikaanse wapenfabrikanten betreuren overlijden van trouwe klant"
+                    },
+                    new RSSItem
+                    {
+                        Title = "Grondwettelijk Hof stelt Rich meet Beautiful open voor cougars, milfs en andere sugar mommy’s"
+                    },
+                    new RSSItem
+                    {
+                        Title = "Man die na vijftien jaar uit coma ontwaakt, vraagt om meteen opnieuw in slaap gebracht te worden"
+                    },
+                    new RSSItem
+                    {
+                        Title = "Geheime liefdescorrespondentie Donald Trump en Kim Jong-Un gelekt"
+                    },
+                    new RSSItem
+                    {
+                        Title = "Tien redenen waarom Theo Francken geen nazi is"
+                    },
+                    new RSSItem
+                    {
+                        Title = "Soedanese identificatiemissie vraagt asiel aan"
+                    }
+                }
+            };
+        }
+
+        public RSSModel GetOfflineModelAsync(string path)
         {
             try
             {
