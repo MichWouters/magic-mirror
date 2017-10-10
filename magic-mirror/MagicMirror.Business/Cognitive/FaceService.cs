@@ -1,4 +1,5 @@
-﻿using Microsoft.ProjectOxford.Face;
+﻿using MagicMirror.Business.Models.Cognitive;
+using Microsoft.ProjectOxford.Face;
 using Microsoft.ProjectOxford.Face.Contract;
 using System;
 using System.Collections.Generic;
@@ -125,7 +126,7 @@ namespace MagicMirror.Business.Cognitive
         /// </summary>
         /// <param name="imageStream">Stream imageStream</param>
         /// <returns>Guid personId</returns>
-        public async Task<Guid?> DetectFace(Stream imageStream)
+        public async Task<FaceInfoModel> DetectFace(Stream imageStream)
         {
             var faces = await _faceApiClient.DetectAsync(imageStream, true, true, new List<FaceAttributeType>
             {
@@ -142,17 +143,32 @@ namespace MagicMirror.Business.Cognitive
 
             if (identification == null || identification.Length != 1 || !identification.First().Candidates.Any())
             {
-                return null;
+                return new FaceInfoModel
+                {
+                    PersonId = null,
+                    Age = faces.FirstOrDefault()?.FaceAttributes?.Age,
+                    Gender = faces.FirstOrDefault()?.FaceAttributes?.Gender
+                };
             }
 
-            var candidate = identification.First().Candidates.Where(x => x.Confidence >= 0.7).FirstOrDefault();
+            var candidate = identification.First().Candidates.Where(x => x.Confidence >= 0.1).FirstOrDefault();
 
             if (candidate == null)
             {
-                return null;
+                return new FaceInfoModel
+                {
+                    PersonId = null,
+                    Age = faces.FirstOrDefault()?.FaceAttributes?.Age,
+                    Gender = faces.FirstOrDefault()?.FaceAttributes?.Gender
+                };
             }
 
-            return candidate.PersonId;
+            return new FaceInfoModel
+            {
+                PersonId = candidate.PersonId,
+                Age = faces.FirstOrDefault()?.FaceAttributes?.Age,
+                Gender = faces.FirstOrDefault()?.FaceAttributes?.Gender
+            };
         }
     }
 }
