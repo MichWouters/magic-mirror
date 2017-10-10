@@ -136,19 +136,27 @@
             Style="{StaticResource BottomMetaDeta}"
             Text="{x:Bind ViewModel.TrafficInfo.Summary, Mode= OneWay, FallbackValue='Unavailable'}"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center" 
+            VerticalAlignment="Center"
             FontSize="18" />
 
-        <TextBlock
-            x:Name="RSSTextBlock"
+        <ScrollViewer 
+            x:Name="Fml"
             RelativePanel.RightOf="DurationTextBlock"
             RelativePanel.AlignBottomWithPanel="True"
             RelativePanel.AlignTopWith="DurationImage"
-            Text="{x:Bind ViewModel.RSSInfo.Summary, Mode= OneWay, FallbackValue='No RSS for you'}"
-            FontSize="24"
-            MaxHeight="25"
-            TextAlignment="Left" ScrollViewer.HorizontalScrollBarVisibility="Visible" 
-            />
+            MaxHeight="60"
+             HorizontalScrollMode="Enabled"
+                  VerticalScrollMode="Enabled"
+                  HorizontalScrollBarVisibility="Hidden"
+                  VerticalScrollBarVisibility="Hidden"
+            >
+            <TextBlock
+                    x:Name="RSSTextBlock"
+                    Text="{x:Bind ViewModel.RSSInfo.Summary, Mode= OneWay, FallbackValue='No RSS for you'}"
+                    FontSize="24"
+                    TextAlignment="Left" 
+                    />
+        </ScrollViewer>
 
         <local:CameraFeed
             x:Name="CameraFeed"

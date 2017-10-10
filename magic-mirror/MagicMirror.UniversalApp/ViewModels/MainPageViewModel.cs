@@ -89,9 +89,9 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private void SetUpTimer(DispatcherTimer timer, TimeSpan timeSpan, EventHandler<object> method)
         {
-            timeTimer.Tick += method;
-            timeTimer.Interval = new TimeSpan(0, 0, 10);
-            if (!timeTimer.IsEnabled) timeTimer.Start();
+            timer.Tick += method;
+            timer.Interval = timeSpan;
+            if (!timer.IsEnabled) timer.Start();
         }
 
         private void GetTime(object sender, object e)
