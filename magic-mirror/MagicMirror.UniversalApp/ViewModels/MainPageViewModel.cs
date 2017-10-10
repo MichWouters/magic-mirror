@@ -13,6 +13,7 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         // Services from the Business Layer
         private IApiService<WeatherModel> _weatherService;
+        private IApiService<RSSModel> _rssService;
         private IApiService<TrafficModel> _trafficService;
         private Services.ISettingsService _settingsService;
         private CommonService _commonService;
@@ -23,6 +24,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         private DispatcherTimer weatherTimer;
 
         private DispatcherTimer trafficTimer;
+        private DispatcherTimer rssTimer;
 
         StorageFolder localFolder = ApplicationData.Current.LocalFolder;
 
@@ -43,6 +45,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 _weatherService = new WeatherService(userSettings);
                 _trafficService = new TrafficService(userSettings);
+                _rssService = new RSSService();
                 _commonService = new CommonService();
             }
             catch (Exception ex)
@@ -58,6 +61,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 timeTimer = new DispatcherTimer();
                 complimentTimer = new DispatcherTimer();
                 weatherTimer = new DispatcherTimer();
+                rssTimer = new DispatcherTimer();
                 trafficTimer = new DispatcherTimer();
             }
             catch (Exception ex)
@@ -81,6 +85,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             SetUpTimer(timeTimer, new TimeSpan(0, 0, 1), GetTime);
             SetUpTimer(complimentTimer, new TimeSpan(0, 5, 0), GetCompliment);
             SetUpTimer(weatherTimer, new TimeSpan(0, 15, 0), RefreshWeatherModel);
+            SetUpTimer(rssTimer, new TimeSpan(0, 10, 0), RefreshRSSModel);
             SetUpTimer(trafficTimer, new TimeSpan(0, 10, 0), RefreshTrafficModel);
 
             //TODO: Write methods, then shorten them using new method            //complimentTimer.Tick += RefreshCompliment;            //complimentTimer.Interval = new TimeSpan(0, 1, 0);            //if (!complimentTimer.IsEnabled) complimentTimer.Start();
@@ -149,6 +154,38 @@ namespace MagicMirror.UniversalApp.ViewModels
                 int minutes = 5;
                 await Task.Delay((minutes * 60) * 10000);
                 RefreshWeatherModel(null, null);
+            }
+        }
+        private async void RefreshRSSModel(object sender, object e)
+        {
+            try
+            {
+                var rssModel = await _rssService.GetModelAsync();
+                RSSInfo = rssModel;
+
+                if (!rssTimer.IsEnabled) rssTimer.Start();
+            }
+            catch (HttpRequestException)
+            {
+                // No internet connection. Display dummy data.
+                var rssModel = _rssService.GetOfflineModelAsync(localFolder.Path);
+                RSSInfo = rssModel;
+
+                // Try to refresh data. If succesful, resume timer
+                int minutes = 30;
+                await Task.Delay((minutes * 60) * 10000);
+                RefreshRSSModel(null, null);
+            }
+            catch (Exception ex)
+            {
+                // Can't connect to server. Try again after waiting for a few minutes.
+                //DisplayErrorMessage("Can't update Weather information", ex.Message);
+                if (weatherTimer.IsEnabled) rssTimer.Stop();
+
+                // Try to refresh data. If succesful, resume timer
+                int minutes = 5;
+                await Task.Delay((minutes * 60) * 10000);
+                RefreshRSSModel(null, null);
             }
         }
 
@@ -222,6 +259,20 @@ namespace MagicMirror.UniversalApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
+
+        private RSSModel _rss;
+
+        public RSSModel RSSInfo
+        {
+            get => _rss;
+            set
+            {
+                _rss = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private TrafficModel _traffic;
 
