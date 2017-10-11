@@ -44,10 +44,10 @@ namespace MagicMirror.Business.Services
             try
             {
                 // Try reading Json object
-                string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
-                var model = JsonConvert.DeserializeObject<RSSModel>(json);
+           /*     string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
+                var model = JsonConvert.DeserializeObject<RSSModel>(json);*/
 
-                return model;
+                return GenerateOfflineModel();
             }
             catch (FileNotFoundException)
             {
@@ -67,8 +67,8 @@ namespace MagicMirror.Business.Services
         {
             try
             {
-                string json = model.ToJson();
-                FileWriter.WriteJsonToFile(json, OFFLINEMODELNAME, path);
+             /*   string json = model.ToJson();
+                FileWriter.WriteJsonToFile(json, OFFLINEMODELNAME, path);*/
             }
             catch (Exception e)
             {

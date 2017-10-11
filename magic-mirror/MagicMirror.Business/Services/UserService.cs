@@ -35,7 +35,16 @@ namespace MagicMirror.Business.Services
 
         public override UserProfileModel GetOfflineModel(string path)
         {
-            throw new NotImplementedException();
+            var upm = new UserProfileModel
+                {
+                Addresses = new System.Collections.Generic.List<UserAddressModel>(),
+                FaceIds = {},
+                FirstName = "Teddy",
+                LastName = "Offline",
+                Id = Guid.NewGuid(),
+                PersonId = Guid.NewGuid()
+                };
+            return upm;
         }
 
         public override void SaveOfflineModel(UserProfileModel model, string path)

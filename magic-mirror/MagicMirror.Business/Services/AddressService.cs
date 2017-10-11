@@ -37,7 +37,11 @@ namespace MagicMirror.Business.Services
 
         public override AddressModel GetOfflineModel(string path)
         {
-            throw new NotImplementedException();
+            var am = new AddressModel
+            {
+
+            };
+            return am;
         }
 
         public override void SaveOfflineModel(AddressModel model, string path)

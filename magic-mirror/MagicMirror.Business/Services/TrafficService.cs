@@ -54,11 +54,13 @@ namespace MagicMirror.Business.Services
         {
             try
             {
-                // Try reading Json object
+              /*  // Try reading Json object
                 string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
                 TrafficModel model = JsonConvert.DeserializeObject<TrafficModel>(json);
 
-                return model;
+                return model;*/
+                //TODO fix file writing
+                return GenerateOfflineModel();
             }
             catch (FileNotFoundException)
             {
