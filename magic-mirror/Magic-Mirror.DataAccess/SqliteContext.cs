@@ -20,11 +20,7 @@ namespace MagicMirror.DataAccess
 
         private void CheckDb()
         {
-            if (!System.IO.File.Exists(_dbFile))
-            {
-                Database.EnsureDeleted();
-                Database.EnsureCreated();
-            }
+            Database.EnsureCreated();
         }
 
         public DbSet<UserEntity> Users { get; set; }
