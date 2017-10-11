@@ -43,7 +43,7 @@
         </Style>
 
         <Style x:Key="BottomMetaDeta" TargetType="TextBlock">
-            <Setter Property="Width" Value="250" />
+            <Setter Property="Width" Value="200" />
             <Setter Property="TextWrapping" Value="WrapWholeWords" />
         </Style>
     </Page.Resources>
@@ -139,11 +139,19 @@
             VerticalAlignment="Center"
             FontSize="18" />
 
+
+        <Image
+            x:Name="RssImage"
+            RelativePanel.Above="DurationTextBlock"
+            RelativePanel.RightOf="DurationTextBlock"
+            Source="ms-appx:///Assets/Weather/Other/car.png"
+            Style="{StaticResource SunImage}" />
+
         <ScrollViewer
             x:Name="Fml"
-            RelativePanel.RightOf="DurationTextBlock"
+            RelativePanel.RightOf="RssImage"
             RelativePanel.AlignBottomWithPanel="True"
-            RelativePanel.AlignTopWith="DurationImage"
+            RelativePanel.AlignTopWith="RssImage"
             MaxHeight="60"
              HorizontalScrollMode="Enabled"
                   VerticalScrollMode="Enabled"
@@ -153,7 +161,7 @@
                     x:Name="RSSTextBlock"
                     Text="{x:Bind ViewModel.RSSInfo.Summary, Mode= OneWay, FallbackValue='No RSS for you'}"
                     FontSize="24"
-                    TextAlignment="Left" />
+                    TextAlignment="Left" VerticalAlignment="Top" HorizontalAlignment="Left" />
         </ScrollViewer>
 
         <local:CameraFeed
