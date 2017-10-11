@@ -15,7 +15,6 @@ namespace MagicMirror.Business.Models
                 return items.Select(i => i.Title).Aggregate((a, b) => a + Environment.NewLine + Environment.NewLine + b);
             }
         }
-            
     }
 
     public class RSSItem

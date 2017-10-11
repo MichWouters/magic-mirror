@@ -15,44 +15,54 @@
     </Page.Resources>
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Text="Offline Dummy Data" FontSize="36"/>
+        <TextBlock Text="Offline Dummy Data" FontSize="36" />
         <StackPanel Orientation="Horizontal">
             <StackPanel Margin="10
                         ,0,20,0">
-                <!--<TextBox 
+                <!--<TextBox
                  Header="User Name"
                  Text="{x:Bind ViewModel.WeatherModel.Icon, Mode=TwoWay}" />-->
 
-                <TextBox 
-                 Header="User Name"
+                <TextBox
+                 Header="SunRise"
                  Text="{x:Bind ViewModel.WeatherModel.SunRise, Mode=TwoWay}" />
 
-                <TextBox 
-                 Header="User Name"
+                <TextBox
+                 Header="Sunset"
                  Text="{x:Bind ViewModel.WeatherModel.SunSet, Mode=TwoWay}" />
 
-                <TextBox 
-                 Header="User Name"
+                <TextBox
+                 Header="Degrees Celsius"
                  Text="{x:Bind ViewModel.WeatherModel.TemperatureCelsius, Mode=TwoWay}" />
 
+                <TextBox
+                 Header="Location"
+                 Text="{x:Bind ViewModel.WeatherModel.Location, Mode=TwoWay}" />
+
+                <TextBox
+                 Header="Icon"
+                 Text="{x:Bind ViewModel.WeatherModel.Icon, Mode=TwoWay}" />
+
+                <TextBox
+                 Header="WeatherType"
+                 Text="{x:Bind ViewModel.WeatherModel.WeatherType, Mode=TwoWay}" />
             </StackPanel>
 
             <StackPanel>
-                <TextBox 
+                <TextBox
                  Header="User Name"
                  Text="{x:Bind ViewModel.TrafficModel.Distance , Mode=TwoWay}" />
 
-                <TextBox 
+                <TextBox
                  Header="Minutes"
                  Text="{x:Bind ViewModel.TrafficModel.Minutes , Mode=TwoWay}" />
 
-                <TextBox 
+                <TextBox
                  Header="User Name"
                  Text="{x:Bind ViewModel.TrafficModel.NumberOfIncidents , Mode=TwoWay}" />
-
             </StackPanel>
         </StackPanel>
 
-        <Button Content="Save offline Data" Margin="10,10,0,0" Click="Button_Click"/>
+        <Button Content="Save offline Data" Margin="10,10,0,0" Click="Button_Click" />
     </StackPanel>
 </Page>

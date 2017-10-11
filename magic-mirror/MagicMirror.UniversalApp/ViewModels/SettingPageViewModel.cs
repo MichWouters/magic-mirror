@@ -34,11 +34,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        private void NavigateToMain()
-        {
-            _navigationService.Navigate(typeof(MainPage));
-        }
-
         public void ToggleLightTheme()
         {
             try
@@ -78,10 +73,16 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public void SaveSettings()
+        public void SaveSettings(bool createNewSettings = false)
         {
             try
             {
+                if (createNewSettings)
+                {
+                    _userSettings = new UserSettings();
+                    DisplayErrorMessage("Default settings created", "No settings file found! Creating a new one with default settings");
+                }
+
                 if (_userSettings != null)
                 {
                     _settingsService.SaveSettings(localFolder, SETTING_FILE, _userSettings);
@@ -108,7 +109,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
             catch (FileNotFoundException)
             {
-                SaveSettings();
+                SaveSettings(true);
                 _userSettings = LoadSettings();
                 throw;
             }
@@ -144,6 +145,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         #region Properties
 
         private string ipAddress;
+
         public string IpAddress
         {
             get => GetIpAddress();

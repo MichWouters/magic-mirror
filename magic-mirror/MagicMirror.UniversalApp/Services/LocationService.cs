@@ -7,8 +7,6 @@ namespace MagicMirror.UniversalApp.Services
 {
     public class LocationService
     {
-        private AddressService _service;
-
         private async Task<GeolocationAccessStatus> RequestAccessAsync()
         {
             GeolocationAccessStatus accessStatus = await Geolocator.RequestAccessAsync();

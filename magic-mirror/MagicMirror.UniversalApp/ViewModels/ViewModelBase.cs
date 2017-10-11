@@ -1,4 +1,5 @@
 ﻿using MagicMirror.UniversalApp.Services;
+using MagicMirror.UniversalApp.Views;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -46,5 +47,45 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #region Navigation
+
+        public void NavigateToMain()
+        {
+            try
+            {
+                _navigationService.Navigate(typeof(MainPage));
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorMessage("Unable to navigate to Offline Data", ex.Message);
+            }
+        }
+
+        public void NavigateToSettings()
+        {
+            try
+            {
+                _navigationService.Navigate(typeof(SettingPage));
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorMessage("Unable to navigate to Settings", ex.Message);
+            }
+        }
+
+        public void NavigateToOfflineData()
+        {
+            try
+            {
+                _navigationService.Navigate(typeof(OffllineDataPage));
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorMessage("Unable to navigate to Offline Data", ex.Message);
+            }
+        }
+
+        #endregion Navigation
     }
 }
