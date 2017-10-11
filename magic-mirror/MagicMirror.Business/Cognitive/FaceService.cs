@@ -151,7 +151,7 @@ namespace MagicMirror.Business.Cognitive
                 };
             }
 
-            var candidate = identification.First().Candidates.Where(x => x.Confidence >= 0.1).FirstOrDefault();
+            var candidate = identification.First().Candidates.OrderByDescending(x => x.Confidence).FirstOrDefault();
 
             if (candidate == null)
             {
