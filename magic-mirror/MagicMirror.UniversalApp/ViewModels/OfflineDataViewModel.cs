@@ -1,8 +1,7 @@
-﻿using System;
-using MagicMirror.Business.Models;
-using MagicMirror.UniversalApp.Views;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
-using Windows.Storage;
+using MagicMirror.UniversalApp.Views;
+using System;
 
 namespace MagicMirror.UniversalApp.ViewModels
 {
@@ -11,55 +10,48 @@ namespace MagicMirror.UniversalApp.ViewModels
         private WeatherService _weatherService;
         private TrafficService _trafficService;
 
-        private StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-
         public OfflineDataViewModel()
         {
             _navigationService.Navigate(typeof(MainPage));
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
-        }
 
-        public void NavigateToMain()
-        {
-            try
-            {
-                _navigationService.Navigate(typeof(MainPage));
-            }
-            catch (Exception ex)
-            {
-                DisplayErrorMessage("Unable to navigate to Main Page", ex.Message);
-            }
+            _weatherModel = _weatherService.GetOfflineModel(localFolder);
+            _trafficModel = _trafficService.GetOfflineModel(localFolder);
         }
 
         public void SaveData(OfflineDataViewModel viewModel)
         {
             try
             {
-                _weatherService.SaveOfflineModel(viewModel.WeatherModel, localFolder.Path);
+                _weatherService.SaveOfflineModel(viewModel.WeatherModel, localFolder);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 DisplayErrorMessage("Unable to save offline Weather data", ex.Message);
             }
 
             try
             {
-                _weatherService.SaveOfflineModel(viewModel.WeatherModel, localFolder.Path);
+                _weatherService.SaveOfflineModel(viewModel.WeatherModel, localFolder);
             }
             catch (Exception ex)
             {
                 DisplayErrorMessage("Unable to save offline Traffic data", ex.Message);
             }
+
+            NavigateToMain();
         }
 
         #region Properties
+
         private WeatherModel _weatherModel;
+
         public WeatherModel WeatherModel
         {
             get
             {
-                return _weatherService.GetOfflineModel(localFolder.Path);
+                return _weatherModel;
             }
             set
             {
@@ -69,19 +61,20 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         private TrafficModel _trafficModel;
+
         public TrafficModel TrafficModel
         {
             get
             {
-                return _trafficService.GetOfflineModel(localFolder.Path);
+                return _trafficModel;
             }
             set
             {
                 _trafficModel = value;
                 OnPropertyChanged();
             }
-        } 
+        }
 
-        #endregion
+        #endregion Properties
     }
 }

@@ -34,11 +34,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        private void NavigateToMain()
-        {
-            _navigationService.Navigate(typeof(MainPage));
-        }
-
         public void ToggleLightTheme()
         {
             try
@@ -144,6 +139,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         #region Properties
 
         private string ipAddress;
+
         public string IpAddress
         {
             get => GetIpAddress();
