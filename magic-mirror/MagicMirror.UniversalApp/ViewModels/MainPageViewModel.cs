@@ -1,6 +1,7 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
@@ -49,6 +50,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 DisplayErrorMessage("Unable to initialize one or more services.", ex.Message);
             }
         }
@@ -65,6 +67,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 DisplayErrorMessage("Unable to initialize one or more timers.", ex.Message);
             }
         }
@@ -99,7 +102,11 @@ namespace MagicMirror.UniversalApp.ViewModels
         private void GetTime(object sender, object e)
         {
             try { Time = DateTime.Now.ToString("HH:mm"); }
-            catch (Exception ex) { DisplayErrorMessage("Cannot set Time", ex.Message); }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                DisplayErrorMessage("Cannot set Time", ex.Message);
+            }
         }
 
         private void GetCompliment(object sender, object e)

@@ -49,5 +49,10 @@ namespace MagicMirror.UniversalApp.Views
         {
             ViewModel.NavigateToOfflineData();
         }
+
+        private void DbAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.NavigateToDbAdmin();
+        }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Rss;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -76,7 +77,11 @@ namespace MagicMirror.DataAccess.Repos
                     return result;
                 }
             }
-            catch (Exception) { throw; }
+            catch (Exception ex )
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
         }
     }
 }

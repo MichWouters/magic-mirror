@@ -45,6 +45,7 @@ namespace MagicMirror.Business.Cognitive
             {
                 Debug.WriteLine(ex.Message);
                 // TODO: logging
+                throw;
             }
         }
 
@@ -139,6 +140,11 @@ namespace MagicMirror.Business.Cognitive
                 FaceAttributeType.Smile
             });
 
+            if (faces.Length < 1)
+            {
+                return null;
+            }
+
             var identification = await _faceApiClient.IdentifyAsync(MAGIC_MIRROR_GROUP, faces.Select(f => f.FaceId).ToArray());
 
             if (identification == null || identification.Length != 1 || !identification.First().Candidates.Any())
@@ -146,6 +152,7 @@ namespace MagicMirror.Business.Cognitive
                 return new FaceInfoModel
                 {
                     PersonId = null,
+                    FaceId = null,
                     Age = faces.FirstOrDefault()?.FaceAttributes?.Age,
                     Gender = faces.FirstOrDefault()?.FaceAttributes?.Gender
                 };
@@ -158,6 +165,7 @@ namespace MagicMirror.Business.Cognitive
                 return new FaceInfoModel
                 {
                     PersonId = null,
+                    FaceId = null,
                     Age = faces.FirstOrDefault()?.FaceAttributes?.Age,
                     Gender = faces.FirstOrDefault()?.FaceAttributes?.Gender
                 };
@@ -166,6 +174,7 @@ namespace MagicMirror.Business.Cognitive
             return new FaceInfoModel
             {
                 PersonId = candidate.PersonId,
+                FaceId = identification.First().FaceId,
                 Age = faces.FirstOrDefault()?.FaceAttributes?.Age,
                 Gender = faces.FirstOrDefault()?.FaceAttributes?.Gender
             };

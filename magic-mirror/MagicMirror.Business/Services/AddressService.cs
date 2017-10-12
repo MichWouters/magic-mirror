@@ -2,6 +2,7 @@
 using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
@@ -31,6 +32,7 @@ namespace MagicMirror.Business.Services
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 throw new ArgumentException("Unable to retrieve Address Model", ex);
             }
         }
@@ -46,6 +48,7 @@ namespace MagicMirror.Business.Services
 
         public override void SaveOfflineModel(AddressModel model, string path)
         {
+            Debug.WriteLine("AddressService.SaveOfflineModel not implemented but used");
             throw new NotImplementedException();
         }
     }

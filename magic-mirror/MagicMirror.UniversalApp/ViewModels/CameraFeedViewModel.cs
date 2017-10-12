@@ -145,6 +145,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                                         {
                                             user = new UserProfileModel().RandomData(detectedPerson.Gender);
                                             user.PersonId = detectedPerson.PersonId.Value;
+                                            user.FaceIds.Add(detectedPerson.FaceId.Value);
                                             user = await _userService.AddUserAsync(user);
                                         }
                                         await UserViewModel.SetValuesAsync(User, user);
@@ -163,7 +164,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                                         user.PersonId = await _faceService.CreatePersonAsync(user.FullName);
                                         var faceIds = new List<Guid>();
                                         faceIds.Add(await _faceService.AddFaceAsync(user.PersonId, stream.AsStream()));
-                                        user.FaceIds = faceIds.ToArray();
+                                        user.FaceIds.AddRange(faceIds);
                                         user = await _userService.AddUserAsync(user);
                                         await UserViewModel.SetValuesAsync(User, user);
                                     }

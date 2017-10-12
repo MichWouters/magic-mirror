@@ -103,6 +103,7 @@
     <Compile Include="Services\LocationService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="ViewModels\CameraFeedViewModel.cs" />
+    <Compile Include="ViewModels\DbAdminPageViewModel.cs" />
     <Compile Include="ViewModels\OfflineDataViewModel.cs" />
     <Compile Include="ViewModels\Strings\Settings.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
@@ -111,6 +112,9 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\CameraFeed.xaml.cs">
       <DependentUpon>CameraFeed.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DbAdminPage.xaml.cs">
+      <DependentUpon>DbAdminPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -209,6 +213,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\CameraFeed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DbAdminPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

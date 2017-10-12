@@ -2,6 +2,7 @@
 using MagicMirror.UniversalApp.Strings;
 using MagicMirror.UniversalApp.Views;
 using System;
+using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
@@ -46,8 +47,9 @@ namespace MagicMirror.UniversalApp
                 }
                 return UserSettings;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 UserSettings = new UserSettings();
                 return UserSettings;
             }

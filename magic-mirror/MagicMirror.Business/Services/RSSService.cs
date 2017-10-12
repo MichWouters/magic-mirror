@@ -5,6 +5,7 @@ using MagicMirror.DataAccess.Repos;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -32,9 +33,14 @@ namespace MagicMirror.Business.Services
 
                 return model;
             }
-            catch (HttpRequestException) { throw; }
+            catch (HttpRequestException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 throw new ArgumentException("Unable to retrieve RSS Model", ex);
             }
         }
@@ -49,8 +55,9 @@ namespace MagicMirror.Business.Services
 
                 return GenerateOfflineModel();
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException ex)
             {
+                Debug.WriteLine(ex.Message);
                 // Object does not exist. Create a new one
                 var offlineModel = GenerateOfflineModel();
                 SaveOfflineModel(offlineModel, path);
@@ -59,6 +66,7 @@ namespace MagicMirror.Business.Services
             }
             catch (Exception e)
             {
+                Debug.WriteLine(e.Message);
                 throw new ArgumentException("Could not read offline RSS model", e);
             }
         }
@@ -72,6 +80,7 @@ namespace MagicMirror.Business.Services
             }
             catch (Exception e)
             {
+                Debug.WriteLine(e.Message);
                 throw new ArgumentException("Could not save offline RSS Model", e);
             }
         }

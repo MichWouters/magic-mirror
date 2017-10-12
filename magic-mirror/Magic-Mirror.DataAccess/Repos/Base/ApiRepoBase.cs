@@ -1,6 +1,7 @@
 ﻿using MagicMirror.DataAccess.Entities;
 using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -33,6 +34,7 @@ namespace MagicMirror.DataAccess.Repos
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 throw new ArgumentException("Unable to retrieve JSON from server", ex);
             }
         }
@@ -52,7 +54,9 @@ namespace MagicMirror.DataAccess.Repos
             }
             else
             {
-                throw new HttpRequestException($"{_response.StatusCode}: {_response.ReasonPhrase}");
+                var msg = $"{_response.StatusCode}: {_response.ReasonPhrase}";
+                Debug.WriteLine(msg);
+                throw new HttpRequestException(msg);
             }
         }
 
@@ -70,6 +74,7 @@ namespace MagicMirror.DataAccess.Repos
             }
             catch (Exception e)
             {
+                Debug.WriteLine(e.Message);
                 throw new ArgumentException("Cannot convert Json to Entity", e);
             }
         }
