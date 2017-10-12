@@ -12,7 +12,7 @@ namespace MagicMirror.Business.Models
         {
             get
             {
-                return items.Select(i => i.Title).Aggregate((a, b) => a + Environment.NewLine + Environment.NewLine + b);
+                return items.Select(i => i.Title).Aggregate((a, b) => a + Environment.NewLine + b);
             }
         }
     }

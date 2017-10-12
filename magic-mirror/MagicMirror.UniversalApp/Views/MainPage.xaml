@@ -152,7 +152,7 @@
             RelativePanel.RightOf="RssImage"
             RelativePanel.AlignBottomWithPanel="True"
             RelativePanel.AlignTopWith="RssImage"
-            MaxHeight="60"
+            MaxHeight="95"
              HorizontalScrollMode="Enabled"
                   VerticalScrollMode="Enabled"
                   HorizontalScrollBarVisibility="Hidden"

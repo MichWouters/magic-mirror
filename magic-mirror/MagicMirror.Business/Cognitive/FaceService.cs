@@ -45,6 +45,7 @@ namespace MagicMirror.Business.Cognitive
             {
                 Debug.WriteLine(ex.Message);
                 // TODO: logging
+                throw;
             }
         }
 
@@ -138,6 +139,11 @@ namespace MagicMirror.Business.Cognitive
                 FaceAttributeType.HeadPose,
                 FaceAttributeType.Smile
             });
+
+            if (faces.Length < 1)
+            {
+                return null;
+            }
 
             var identification = await _faceApiClient.IdentifyAsync(MAGIC_MIRROR_GROUP, faces.Select(f => f.FaceId).ToArray());
 

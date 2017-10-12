@@ -1,6 +1,7 @@
 ﻿using MagicMirror.DataAccess.Configuration;
 using MagicMirror.DataAccess.Entities.Entities;
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -28,8 +29,9 @@ namespace MagicMirror.DataAccess.Repos
                 TrafficEntity entity = ConvertJsonToEntity(json);
                 return entity;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 throw;
             }
         }
@@ -43,11 +45,13 @@ namespace MagicMirror.DataAccess.Repos
             }
             catch (HttpRequestException ex)
             {
+                Debug.WriteLine(ex.Message);
                 string errorMessage = $"A connection with the traffic server for traffic duration could not be established.";
                 throw new HttpRequestException(errorMessage, ex);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 throw;
             }
         }

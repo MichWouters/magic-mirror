@@ -4,6 +4,7 @@ using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
 using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -43,9 +44,14 @@ namespace MagicMirror.Business.Services
 
                 return model;
             }
-            catch (HttpRequestException) { throw; }
+            catch (HttpRequestException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 throw new ArgumentException("Unable to retrieve Traffic Model", ex);
             }
         }
@@ -62,8 +68,9 @@ namespace MagicMirror.Business.Services
                 //TODO fix file writing
                 return GenerateOfflineModel();
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException ex)
             {
+                Debug.WriteLine(ex.Message);
                 // Object does not exist. Create a new one
                 TrafficModel offlineModel = GenerateOfflineModel();
                 SaveOfflineModel(offlineModel, path);
@@ -72,6 +79,7 @@ namespace MagicMirror.Business.Services
             }
             catch (Exception e)
             {
+                Debug.WriteLine(e.Message);
                 throw new ArgumentException("Could not read offline Weathermodel", e);
             }
         }
@@ -124,6 +132,7 @@ namespace MagicMirror.Business.Services
             }
             catch (Exception e)
             {
+                Debug.WriteLine(e.Message);
                 throw new ArgumentException("Could not save offline Traffic Model", e);
             }
         }

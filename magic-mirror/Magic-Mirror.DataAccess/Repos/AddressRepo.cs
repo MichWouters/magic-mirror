@@ -1,6 +1,7 @@
 ﻿using MagicMirror.DataAccess.Configuration;
 using MagicMirror.DataAccess.Entities.Entities;
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -31,8 +32,9 @@ namespace MagicMirror.DataAccess.Repos
                 AddressEntity entity = ConvertJsonToEntity(json);
                 return entity;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 throw;
             }
         }
@@ -49,8 +51,9 @@ namespace MagicMirror.DataAccess.Repos
                 string errorMessage = $"A connection with the traffic server for address retrieval could not be established.";
                 throw new HttpRequestException(errorMessage, ex);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 throw;
             }
         }
