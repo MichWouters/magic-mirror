@@ -86,6 +86,18 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
+        public void NavigateToDbAdmin()
+        {
+            try
+            {
+                _navigationService.Navigate(typeof(DbAdminPage));
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorMessage("Unable to navigate to DbAdmin", ex.Message);
+            }
+        }
+
         #endregion Navigation
     }
 }

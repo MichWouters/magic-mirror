@@ -152,6 +152,7 @@ namespace MagicMirror.Business.Cognitive
                 return new FaceInfoModel
                 {
                     PersonId = null,
+                    FaceId = null,
                     Age = faces.FirstOrDefault()?.FaceAttributes?.Age,
                     Gender = faces.FirstOrDefault()?.FaceAttributes?.Gender
                 };
@@ -164,6 +165,7 @@ namespace MagicMirror.Business.Cognitive
                 return new FaceInfoModel
                 {
                     PersonId = null,
+                    FaceId = null,
                     Age = faces.FirstOrDefault()?.FaceAttributes?.Age,
                     Gender = faces.FirstOrDefault()?.FaceAttributes?.Gender
                 };
@@ -172,6 +174,7 @@ namespace MagicMirror.Business.Cognitive
             return new FaceInfoModel
             {
                 PersonId = candidate.PersonId,
+                FaceId = identification.First().FaceId,
                 Age = faces.FirstOrDefault()?.FaceAttributes?.Age,
                 Gender = faces.FirstOrDefault()?.FaceAttributes?.Gender
             };

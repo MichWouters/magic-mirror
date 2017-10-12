@@ -188,8 +188,13 @@
 
         <!-- Todo: Place somewhere more UI friendly -->
         <Button
+            x:Name="SettingsBtn"
             Content="Settings"
             RelativePanel.Below="SunSetImage"
             Click="Button_Click" />
+        <!--<Button
+            Content="DbAdmin"
+            RelativePanel.Below="SettingsBtn"
+            Click="DbAdmin_Click" />-->
     </RelativePanel>
 </Page>
