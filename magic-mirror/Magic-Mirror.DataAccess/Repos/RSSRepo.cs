@@ -20,7 +20,8 @@ namespace MagicMirror.DataAccess.Repos
         {
             //TODO : config
 
-            _feed = "http://www.theonion.com/feeds/rss";
+            _feed = "https://tvolen.wordpress.com/feed/;
+           // _feed = "http://www.theonion.com/feeds/rss";
            // _feed = "http://www.hln.be/bizar/rss.xml";
         }
 
