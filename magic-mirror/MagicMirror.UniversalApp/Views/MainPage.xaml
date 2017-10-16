@@ -154,7 +154,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontSize="18" 
-            Width="150" />
+            Width="200" />
 
         <Image
             x:Name="RssImage"
@@ -174,12 +174,16 @@
              HorizontalScrollMode="Enabled"
                   VerticalScrollMode="Enabled"
                   HorizontalScrollBarVisibility="Hidden"
-                  VerticalScrollBarVisibility="Hidden" Margin="0,0,0,24">
+                  VerticalScrollBarVisibility="Hidden">
             <TextBlock
                     x:Name="RSSTextBlock"
                     Text="{x:Bind ViewModel.RSSInfo.Summary, Mode= OneWay, FallbackValue='No RSS for you'}"
                     FontSize="20"
-                    TextAlignment="Left" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    TextAlignment="Left" VerticalAlignment="Top" 
+                HorizontalAlignment="Left" 
+                Width="350" 
+                TextWrapping="WrapWholeWords" 
+                Height="25" />
         </ScrollViewer>
 
         <local:CameraFeed
