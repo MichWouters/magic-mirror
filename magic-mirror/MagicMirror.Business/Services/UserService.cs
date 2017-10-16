@@ -3,6 +3,7 @@ using MagicMirror.DataAccess;
 using MagicMirror.DataAccess.Entities.User;
 using MagicMirror.DataAccess.Repos;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
@@ -31,6 +32,12 @@ namespace MagicMirror.Business.Services
             UserProfileModel model = MapEntityToModel(entity);
             model = CalculateUnMappableValues(model);
             return model;
+        }
+
+        public IEnumerable<UserProfileModel> GetAllUsers()
+        {
+            var entities = _userRepo.GetAll();
+            return MapEntityToModel(entities);
         }
 
         public override UserProfileModel GetOfflineModel(string path)

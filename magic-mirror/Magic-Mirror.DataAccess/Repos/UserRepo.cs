@@ -1,5 +1,6 @@
 ﻿using MagicMirror.DataAccess.Entities.User;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,19 +19,18 @@ namespace MagicMirror.DataAccess.Repos
 
         public async Task<UserEntity> AddUserAsync(UserEntity user)
         {
+            foreach (var a in user.Addresses)
+            {
+                a.AddressType = Context.AddressTypes.Find(a.AddressType.Id);
+            }
             return await InsertEntityAsync(user);
         }
 
         public async Task<UserEntity> UpdateUserAsync(UserEntity user)
         {
-            foreach (var ua in user.Addresses)
+            foreach (var a in user.Addresses)
             {
-                Context.Set<UserAddres>().Attach(ua);
-                Context.Set<Address>().Attach(ua.Address);
-            }
-            foreach (var f in user.Faces)
-            {
-                Context.Set<UserFace>().Attach(f);
+                a.AddressType = Context.AddressTypes.Find(a.AddressType.Id);
             }
             return await UpdateEntityAsync(x => x.Id == user.Id, user);
         }
@@ -38,6 +38,11 @@ namespace MagicMirror.DataAccess.Repos
         public async Task<UserEntity> DeleteUserAsync(UserEntity user)
         {
             return await DeleteEntityAsync(x => x.Id == user.Id);
+        }
+
+        public IEnumerable<UserEntity> GetAll()
+        {
+            return Context.Users.AsEnumerable();
         }
     }
 }

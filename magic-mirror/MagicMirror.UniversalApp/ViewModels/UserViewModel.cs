@@ -10,7 +10,7 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         public static async Task SetValuesAsync(UserViewModel model, UserProfileModel userProfile)
         {
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
                 model.Id = userProfile.Id;
                 model.PersonId = userProfile.PersonId;

@@ -43,7 +43,6 @@ namespace MagicMirror.DataAccess.Repos
                 var entity = Context.Set<T>().SingleOrDefault(expression);
                 if (entity != null)
                 {
-                    // TODO: graphdiff
                     Context.Entry(entity).CurrentValues.SetValues(values);
                 }
                 Context.SaveChanges();

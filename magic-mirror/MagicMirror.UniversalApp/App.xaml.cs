@@ -1,7 +1,11 @@
 ﻿using MagicMirror.Business.Models;
+using MagicMirror.Business.Services;
+using MagicMirror.DataAccess;
+using MagicMirror.DataAccess.Repos;
 using MagicMirror.UniversalApp.Strings;
 using MagicMirror.UniversalApp.Views;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -27,7 +31,9 @@ namespace MagicMirror.UniversalApp
         {
             InitializeComponent();
             Suspending += OnSuspending;
-
+            //var ctx = new SqliteContext();
+            //SetSingleton<SqliteContext>(ctx);
+            //SetSingleton<UserService>(new UserService(ctx));
             CreateSearchCriteriaSingleton();
         }
 
@@ -122,5 +128,31 @@ namespace MagicMirror.UniversalApp
         }
 
         #endregion BoilerPlate
+
+
+
+        private static Dictionary<string, Lazy<object>> _container = new Dictionary<string, Lazy<object>>();
+
+        public static void SetSingleton<T>(object value = null)
+        {
+            var name = typeof(T).Name;
+            _container[name] = new Lazy<object>(() => value ?? Activator.CreateInstance<T>());
+        }
+
+        public static T GetSingleton<T>()
+        {
+            var name = typeof(T).Name;
+            return (T)_container[name].Value;
+        }
+
+        public static void SetSingleton<T>(string name, object value = null)
+        {
+            _container[name] = new Lazy<object>(() => value ?? Activator.CreateInstance<T>());
+        }
+
+        public static T GetSingleton<T>(string name)
+        {
+            return (T)_container[name].Value;
+        }
     }
 }

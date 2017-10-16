@@ -13,7 +13,7 @@ namespace MagicMirror.Business.Cognitive
     public class FaceService
     {
         // TODO: app settings (https://docs.microsoft.com/en-us/windows/uwp/app-settings/app-settings-and-data)
-        private const string API_KEY = "2857aeacf78c475c80fa2467fa917397";
+        private const string API_KEY = "2857aeacf78c475c80fa2467fa917397"; //"94125687ef704084a503c60792359f5d"; //ORDINA KEY
 
         private const string API_ENDPOINT = "https://westeurope.api.cognitive.microsoft.com/face/v1.0";
         private const string MAGIC_MIRROR_GROUP = "magic-mirror-group";

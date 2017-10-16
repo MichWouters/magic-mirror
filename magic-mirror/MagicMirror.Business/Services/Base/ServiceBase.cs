@@ -4,6 +4,7 @@ using MagicMirror.Business.Configuration;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Repos;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
@@ -42,6 +43,12 @@ namespace MagicMirror.Business.Services
         protected virtual T MapEntityToModel(Y entity)
         {
             T model = Mapper.Map<T>(entity);
+            return model;
+        }
+
+        protected virtual IEnumerable<T> MapEntityToModel(IEnumerable<Y> entity)
+        {
+            IEnumerable<T> model = Mapper.Map<IEnumerable<T>>(entity);
             return model;
         }
 

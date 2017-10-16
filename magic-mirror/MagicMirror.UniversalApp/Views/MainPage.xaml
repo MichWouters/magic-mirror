@@ -139,7 +139,6 @@
             VerticalAlignment="Center"
             FontSize="18" />
 
-
         <Image
             x:Name="RssImage"
             RelativePanel.Above="DurationTextBlock"
@@ -152,7 +151,7 @@
             RelativePanel.RightOf="RssImage"
             RelativePanel.AlignBottomWithPanel="True"
             RelativePanel.AlignTopWith="RssImage"
-            MaxHeight="95"
+            Padding="10"
              HorizontalScrollMode="Enabled"
                   VerticalScrollMode="Enabled"
                   HorizontalScrollBarVisibility="Hidden"
@@ -160,15 +159,15 @@
             <TextBlock
                     x:Name="RSSTextBlock"
                     Text="{x:Bind ViewModel.RSSInfo.Summary, Mode= OneWay, FallbackValue='No RSS for you'}"
-                    FontSize="24"
+                    FontSize="20"
                     TextAlignment="Left" VerticalAlignment="Top" HorizontalAlignment="Left" />
         </ScrollViewer>
 
         <local:CameraFeed
             x:Name="CameraFeed"
-            RelativePanel.AlignHorizontalCenterWithPanel="True"
-            RelativePanel.AlignRightWithPanel="True"
-            RelativePanel.AlignBottomWithPanel="True"
+            RelativePanel.AlignLeftWithPanel="True"
+            RelativePanel.Above="DurationImage"
+            Margin="0, 0, 0, 20"
             HorizontalContentAlignment="Stretch"
             VerticalContentAlignment="Stretch" />
 

@@ -32,6 +32,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         private readonly UserService _userService;
         private UserViewModel _user = new UserViewModel();
         private string _apiOfflineText;
+        private const int CHECK_INTERVAL = 30;// in seconds
 
         public UserViewModel User
         {
@@ -71,8 +72,8 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             User.FirstName = "John";
             User.LastName = "Doe";
-            var sqlContext = new SqliteContext();
-            _userService = new UserService(sqlContext);
+            //_userService = App.GetSingleton<UserService>();
+            _userService = new UserService(new SqliteContext());
             _faceService = new FaceService();
 
             Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
@@ -169,7 +170,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                                         await UserViewModel.SetValuesAsync(User, user);
                                     }
 
-                                    await Task.Delay(10000, _requestStopCancellationToken.Token);
+                                    await Task.Delay(CHECK_INTERVAL * 1000, _requestStopCancellationToken.Token);
                                 }
                             }
                             lastFrameTime = frame.RelativeTime;
