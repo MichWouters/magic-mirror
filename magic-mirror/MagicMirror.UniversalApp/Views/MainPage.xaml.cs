@@ -22,14 +22,14 @@ namespace MagicMirror.UniversalApp.Views
 
         private void Scroll(object sender, object e)
         {
-            double pixelsToScroll = Fml.FontSize * 2;
-            if (Fml.VerticalOffset + pixelsToScroll + 10 <= RSSTextBlock.ActualHeight)
+            double pixelsToScroll = scrollingRss.FontSize * 2;
+            if (scrollingRss.VerticalOffset + pixelsToScroll + 10 <= RSSTextBlock.ActualHeight)
             {
-                Fml.ChangeView(0, Fml.VerticalOffset + pixelsToScroll, 1);
+                scrollingRss.ChangeView(0, scrollingRss.VerticalOffset + pixelsToScroll, 1);
             }
             else
             {
-                Fml.ChangeView(0, 0, 1);
+                scrollingRss.ChangeView(0, 0, 1);
             }
         }
 
