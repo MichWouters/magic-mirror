@@ -13,7 +13,7 @@ namespace MagicMirror.DataAccess.Repos
             if (string.IsNullOrWhiteSpace(latitude)) throw new ArgumentNullException("Latitude need to be provided");
             if (string.IsNullOrWhiteSpace(longitude)) throw new ArgumentNullException("Longitude needs to be provided");
 
-            latitude = latitude.Replace(',', '.');
+            latitude = latitude.ConvertCommaToDot();
             longitude = longitude.Replace(',', '.');
 
             SetApiParameters();

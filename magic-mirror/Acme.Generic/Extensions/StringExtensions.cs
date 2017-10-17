@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Linq;
 using System.Text;
 
-namespace Acme.Generic
+namespace System
 {
     public static class StringExtensions
     {
@@ -79,11 +78,21 @@ namespace Acme.Generic
         }
 
         /// <summary>
-        /// Replace all the dots (.) in a string with a comma (,)
+        /// Replace all the commas (,) in a string with a dot (.)
         /// </summary>
         public static string ConvertCommaToDot(this string input)
         {
             var result = input.Replace(',', '.');
+
+            return result;
+        }
+
+        /// <summary>
+        /// Replace all the dots (.) in a string with a comma (,)
+        /// </summary>
+        public static string ConvertDotToComma(this string input)
+        {
+            var result = input.Replace('.', ',');
 
             return result;
         }

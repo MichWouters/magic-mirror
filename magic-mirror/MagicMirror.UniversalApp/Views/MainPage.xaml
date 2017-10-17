@@ -117,11 +117,27 @@
             Style="{StaticResource Compliment}"
             Text="{x:Bind ViewModel.Compliment, Mode= OneWay, FallbackValue='Foo'}" />
 
+        <TextBlock
+            x:Name="ScoopTextBox"
+            RelativePanel.Above="DurationImage"
+            RelativePanel.AlignVerticalCenterWithPanel="True"
+            Text="Here's the latest news" 
+            Margin="0,0,0,15" 
+            FontSize="12" />
+
+        <TextBlock
+            x:Name="ScoopName"
+            RelativePanel.Above="DurationImage"
+            RelativePanel.RightOf="ScoopTextBox"
+            Text="TODO" 
+            Margin="5,0,0,15" 
+            FontSize="12" HorizontalAlignment="Left" />
+
         <Image
             x:Name="DurationImage"
             RelativePanel.Above="DurationTextBlock"
             RelativePanel.AlignLeftWithPanel="True"
-            Source="ms-appx:///Assets/Weather/Other/car.png"
+            Source="ms-appx:///Assets/Other/Dark/car.png"
             Style="{StaticResource SunImage}" />
 
         <TextBlock
@@ -137,18 +153,20 @@
             Text="{x:Bind ViewModel.TrafficInfo.Summary, Mode= OneWay, FallbackValue='Unavailable'}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            FontSize="18" />
-
+            FontSize="18" 
+            Width="200" />
 
         <Image
             x:Name="RssImage"
             RelativePanel.Above="DurationTextBlock"
             RelativePanel.RightOf="DurationTextBlock"
-            Source="ms-appx:///Assets/Weather/Other/car.png"
-            Style="{StaticResource SunImage}" />
+            Source="ms-appx:///Assets/Other/Dark/news.png"
+            Style="{StaticResource SunImage}" 
+            Margin="20,0,10,0" 
+            HorizontalAlignment="Right" />
 
         <ScrollViewer
-            x:Name="Fml"
+            x:Name="scrollingRss"
             RelativePanel.RightOf="RssImage"
             RelativePanel.AlignBottomWithPanel="True"
             RelativePanel.AlignTopWith="RssImage"
@@ -160,8 +178,12 @@
             <TextBlock
                     x:Name="RSSTextBlock"
                     Text="{x:Bind ViewModel.RSSInfo.Summary, Mode= OneWay, FallbackValue='No RSS for you'}"
-                    FontSize="24"
-                    TextAlignment="Left" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    FontSize="20"
+                    TextAlignment="Left" VerticalAlignment="Top" 
+                HorizontalAlignment="Left" 
+                Width="350" 
+                TextWrapping="WrapWholeWords" 
+                Height="25" />
         </ScrollViewer>
 
         <local:CameraFeed
@@ -190,6 +212,6 @@
         <Button
             Content="Settings"
             RelativePanel.Below="SunSetImage"
-            Click="Button_Click" />
+            Click="Button_Click" Visibility="Collapsed" />
     </RelativePanel>
 </Page>
