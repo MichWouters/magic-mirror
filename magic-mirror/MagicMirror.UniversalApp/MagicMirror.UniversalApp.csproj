@@ -129,9 +129,11 @@
     <None Include="MagicMirror.UniversalApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Other\Dark\news.png" />
+    <Content Include="Assets\Other\Light\news.png" />
     <Content Include="Assets\Weather\Dark\01n.png" />
     <Content Include="Assets\Weather\Light\01n.png" />
-    <Content Include="Assets\Weather\Other\car.png" />
+    <Content Include="Assets\Other\Dark\car.png" />
     <Content Include="Assets\Weather\Dark\010.png" />
     <Content Include="Assets\Weather\Dark\011d.png" />
     <Content Include="Assets\Weather\Dark\011n.png" />
