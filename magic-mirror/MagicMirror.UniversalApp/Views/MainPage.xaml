@@ -212,6 +212,6 @@
         <Button
             Content="Settings"
             RelativePanel.Below="SunSetImage"
-            Click="Button_Click" Visibility="Collapsed" />
+            Click="Button_Click" Visibility="Visible" />
     </RelativePanel>
 </Page>

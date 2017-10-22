@@ -109,6 +109,7 @@
     <Compile Include="ViewModels\SettingPageViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\WiFiSettingsViewModel.cs" />
     <Compile Include="Views\CameraFeed.xaml.cs">
       <DependentUpon>CameraFeed.xaml</DependentUpon>
     </Compile>
@@ -121,6 +122,9 @@
     <Compile Include="Views\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WiFiSettings.xaml.cs">
+      <DependentUpon>WiFiSettings.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -129,8 +133,18 @@
     <None Include="MagicMirror.UniversalApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\open_1bar.png" />
+    <Content Include="Assets\open_2bar.png" />
+    <Content Include="Assets\open_3bar.png" />
+    <Content Include="Assets\open_4bar.png" />
+    <Content Include="Assets\open_5bar.png" />
     <Content Include="Assets\Other\Dark\news.png" />
     <Content Include="Assets\Other\Light\news.png" />
+    <Content Include="Assets\secure_1bar.png" />
+    <Content Include="Assets\secure_2bar.png" />
+    <Content Include="Assets\secure_3bar.png" />
+    <Content Include="Assets\secure_4bar.png" />
+    <Content Include="Assets\secure_5bar.png" />
     <Content Include="Assets\Weather\Dark\01n.png" />
     <Content Include="Assets\Weather\Light\01n.png" />
     <Content Include="Assets\Other\Dark\car.png" />
@@ -226,6 +240,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\WiFiSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsIoT, Version=10.0.14393.0">
+      <Name>Windows IoT Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
