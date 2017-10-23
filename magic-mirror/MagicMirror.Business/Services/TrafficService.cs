@@ -2,7 +2,6 @@
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
-using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -14,7 +13,9 @@ namespace MagicMirror.Business.Services
     {
         private const string OFFLINEMODELNAME = "TrafficOfflineModel.json";
 
-        public TrafficService() { }
+        public TrafficService()
+        {
+        }
 
         public TrafficService(UserSettings criteria)
         {
@@ -54,11 +55,11 @@ namespace MagicMirror.Business.Services
         {
             try
             {
-              /*  // Try reading Json object
-                string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
-                TrafficModel model = JsonConvert.DeserializeObject<TrafficModel>(json);
+                /*  // Try reading Json object
+                  string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
+                  TrafficModel model = JsonConvert.DeserializeObject<TrafficModel>(json);
 
-                return model;*/
+                  return model;*/
                 //TODO fix file writing
                 return GenerateOfflineModel();
             }
@@ -112,8 +113,6 @@ namespace MagicMirror.Business.Services
             }
             return result;
         }
-
-        
 
         public override void SaveOfflineModel(TrafficModel model, string path)
         {

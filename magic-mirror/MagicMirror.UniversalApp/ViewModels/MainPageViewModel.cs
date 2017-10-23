@@ -3,6 +3,7 @@ using MagicMirror.Business.Services;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.VoiceCommands;
 using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
@@ -217,7 +218,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _weather = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -229,7 +230,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _rss = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -241,7 +242,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _traffic = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -254,7 +255,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _time = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -266,7 +267,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _compliment = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 

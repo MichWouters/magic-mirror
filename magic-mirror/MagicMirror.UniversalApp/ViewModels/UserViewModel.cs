@@ -37,7 +37,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _id = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -50,7 +50,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _personId = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -63,7 +63,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _faceIds = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -76,7 +76,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _firstName = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -89,7 +89,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _lastName = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -102,7 +102,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _addresses = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
     }
@@ -128,7 +128,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _id = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -141,7 +141,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _addressTypeId = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -154,7 +154,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _addressTypeName = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -167,7 +167,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _addressId = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -180,7 +180,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _addressStreet = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -193,7 +193,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _addressHouseNumber = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -206,7 +206,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _addressHouseNumberSuffix = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -219,7 +219,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _addressPostCode = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -232,7 +232,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _addressCity = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
