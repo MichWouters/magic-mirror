@@ -1,5 +1,4 @@
-﻿using MagicMirror.DataAccess.Configuration;
-using MagicMirror.DataAccess.Entities.Entities;
+﻿using MagicMirror.DataAccess.Entities.Entities;
 using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Rss;
 using System;
@@ -8,7 +7,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace MagicMirror.DataAccess.Repos
 {
@@ -20,9 +18,9 @@ namespace MagicMirror.DataAccess.Repos
         {
             //TODO : config
 
-            _feed = "https://tvolen.wordpress.com/feed/;
-           // _feed = "http://www.theonion.com/feeds/rss";
-           // _feed = "http://www.hln.be/bizar/rss.xml";
+            _feed = "https://tvolen.wordpress.com/feed/";
+            // _feed = "http://www.theonion.com/feeds/rss";
+            // _feed = "http://www.hln.be/bizar/rss.xml";
         }
 
         public override async Task<RSSEntity> GetEntityAsync()
@@ -43,7 +41,7 @@ namespace MagicMirror.DataAccess.Repos
                         {
                             // Read category
                             case SyndicationElementType.Category:
-                               //DON't Care about categories ISyndicationCategory category = await feedReader.ReadCategory();
+                                //DON't Care about categories ISyndicationCategory category = await feedReader.ReadCategory();
                                 break;
 
                             // Read Image
