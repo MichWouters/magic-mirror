@@ -1,5 +1,4 @@
-﻿using MagicMirror.DataAccess.Entities.Weather;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MagicMirror.DataAccess.Entities.Entities
 {
@@ -7,7 +6,6 @@ namespace MagicMirror.DataAccess.Entities.Entities
     {
         public List<RSSEntityItem> Items { get; set; }
     }
-
 
     public class RSSEntityItem
     {

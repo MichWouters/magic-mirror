@@ -38,6 +38,7 @@ namespace MagicMirror.UniversalApp.Services
                         case "openSettings":
                             await SendCompletionMessageForSettings();
                             break;
+
                         default:
                             LauncAppInForeground();
                             break;

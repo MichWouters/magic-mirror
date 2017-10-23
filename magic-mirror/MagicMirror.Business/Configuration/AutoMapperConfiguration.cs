@@ -22,8 +22,6 @@ namespace MagicMirror.Business.Configuration
                 //.ForMember(dest => dest.SunRise, source => source.Ignore())
                 //.ForMember(dest => dest.SunSet, source => source.Ignore())
                 .ReverseMap();
-            
-
 
             CreateMap<TrafficEntity, TrafficModel>()
                 .ForMember(dest => dest.Distance, source => source.MapFrom(src => src.Routes[0].Legs[0].Distance.Text))

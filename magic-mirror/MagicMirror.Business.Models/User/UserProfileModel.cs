@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MagicMirror.Business.Models.User
 {
@@ -64,6 +63,7 @@ namespace MagicMirror.Business.Models.User
             new Tuple<string, string>("Roose", "Bolton"),
             new Tuple<string, string>("The High", "Sparrow"),
         };
+
         private static Tuple<string, string>[] _femaleNames = new Tuple<string, string>[]
         {
             new Tuple<string, string>("Catelyn", "Stark"),
@@ -76,6 +76,7 @@ namespace MagicMirror.Business.Models.User
             new Tuple<string, string>("Brienne", "of Tarth"),
             new Tuple<string, string>("Ellaria", "Sand")
         };
+
         private static Random _random = new Random();
 
         public static UserProfileModel RandomData(this UserProfileModel model, string gender)
@@ -89,12 +90,13 @@ namespace MagicMirror.Business.Models.User
                     ix = _random.Next(0, _femaleNames.Length);
                     name = _femaleNames[ix];
                     break;
+
                 default:
                     ix = _random.Next(0, _maleNames.Length);
                     name = _maleNames[ix];
                     break;
             }
-            
+
             model.FirstName = name.Item1;
             model.LastName = name.Item2;
             model.Addresses = new List<UserAddressModel>

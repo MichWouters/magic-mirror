@@ -3,7 +3,6 @@ using Acme.Generic.Extensions;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
-using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -15,7 +14,9 @@ namespace MagicMirror.Business.Services
     {
         private const string OFFLINEMODELNAME = "WeatherOfflineModel.json";
 
-        public WeatherService() { }
+        public WeatherService()
+        {
+        }
 
         public WeatherService(UserSettings criteria)
         {
@@ -61,10 +62,10 @@ namespace MagicMirror.Business.Services
             try
             {
                 // Try reading Json object
-               /* string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
-                WeatherModel model = JsonConvert.DeserializeObject<WeatherModel>(json);
+                /* string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
+                 WeatherModel model = JsonConvert.DeserializeObject<WeatherModel>(json);
 
-                return model;*/
+                 return model;*/
                 return GenerateOfflineModel();
             }
             catch (FileNotFoundException)

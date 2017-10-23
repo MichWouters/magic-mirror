@@ -2,7 +2,6 @@
 using MagicMirror.Business.Models.Traffic;
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Services;
-using MagicMirror.UniversalApp.Views;
 using System;
 using System.IO;
 using System.Threading.Tasks;

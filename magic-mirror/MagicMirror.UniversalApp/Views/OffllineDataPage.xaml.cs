@@ -1,6 +1,6 @@
-﻿using System;
-using MagicMirror.UniversalApp.Common;
+﻿using MagicMirror.UniversalApp.Common;
 using MagicMirror.UniversalApp.ViewModels;
+using System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 

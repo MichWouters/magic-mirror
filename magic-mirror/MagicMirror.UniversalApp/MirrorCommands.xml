@@ -19,7 +19,5 @@
       <Feedback> Changing Name </Feedback>
       <VoiceCommandService Target="MirrorVoiceCommandService" />
     </Command>
-
-  </CommandSet >  
-</VoiceCommands>  
-
+  </CommandSet>
+</VoiceCommands>

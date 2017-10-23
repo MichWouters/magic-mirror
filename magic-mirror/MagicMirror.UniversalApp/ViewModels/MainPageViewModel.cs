@@ -51,7 +51,6 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         #region Methods
 
-
         private void SetUpServices()
         {
             try

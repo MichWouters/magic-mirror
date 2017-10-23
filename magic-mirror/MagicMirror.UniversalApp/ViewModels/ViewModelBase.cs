@@ -8,7 +8,8 @@ using Windows.UI.Xaml.Controls;
 namespace MagicMirror.UniversalApp.ViewModels
 {
     /// <summary>
-    /// Base class for ViewModels. Provides INotifPropertyChanged, navigation and error handling functionality
+    /// Base class for ViewModels. Provides INotifPropertyChanged
+    /// navigation and error handling functionality
     /// </summary>
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
@@ -44,38 +45,20 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         public void NavigateToMain()
         {
-            try
-            {
-                App.NavigationService.Navigate<MainPage>();
-            }
-            catch (Exception ex)
-            {
-                DisplayErrorMessage("Unable to navigate to Offline Data", ex.Message);
-            }
+            try { App.NavigationService.Navigate<MainPage>(); }
+            catch (Exception ex) { DisplayErrorMessage("Unable to navigate to Offline Data", ex.Message); }
         }
 
         public void NavigateToSettings()
         {
-            try
-            {
-                App.NavigationService.Navigate<SettingPage>();
-            }
-            catch (Exception ex)
-            {
-                DisplayErrorMessage("Unable to navigate to Settings", ex.Message);
-            }
+            try { App.NavigationService.Navigate<SettingPage>(); }
+            catch (Exception ex) { DisplayErrorMessage("Unable to navigate to Settings", ex.Message); }
         }
 
         public void NavigateToOfflineData()
         {
-            try
-            {
-                App.NavigationService.Navigate<OfflineDataPage>();
-            }
-            catch (Exception ex)
-            {
-                DisplayErrorMessage("Unable to navigate to Offline Data", ex.Message);
-            }
+            try { App.NavigationService.Navigate<OfflineDataPage>(); }
+            catch (Exception ex) { DisplayErrorMessage("Unable to navigate to Offline Data", ex.Message); }
         }
 
         #endregion Navigation

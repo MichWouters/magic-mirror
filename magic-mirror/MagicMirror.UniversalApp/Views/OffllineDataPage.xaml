@@ -66,5 +66,4 @@
             <Button Content="Save offline Data" Margin="10,10,0,0" Click="Button_Click" />
         </StackPanel>
     </ScrollViewer>
-
 </Page>

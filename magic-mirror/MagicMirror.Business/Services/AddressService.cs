@@ -17,7 +17,6 @@ namespace MagicMirror.Business.Services
             _longitude = longitude;
 
             _repo = new AddressRepo(_latitude, _longitude);
-
         }
 
         public override async Task<AddressModel> GetModelAsync()
@@ -43,7 +42,6 @@ namespace MagicMirror.Business.Services
         {
             var am = new AddressModel
             {
-
             };
             return am;
         }
