@@ -20,4 +20,24 @@
       <VoiceCommandService Target="MirrorVoiceCommandService" />
     </Command>
   </CommandSet>
+
+  <CommandSet xml:lang="en-gb" Name="MirrorCommandSet_en-gb">
+    <AppName> Mirror </AppName>
+    <Example> Change my name </Example>
+
+    <Command Name="openSettings">
+      <Example> Open Settings </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> show [my] settings </ListenFor>
+      <ListenFor RequireAppName="ExplicitlySpecified"> show [my] {builtin:AppName} settings </ListenFor>
+      <Feedback> Requisiting settings </Feedback>
+      <Navigate />
+    </Command>
+
+    <Command Name="changeName">
+      <Example> Add a new user </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> add [a] [new] user</ListenFor>
+      <Feedback> Changing Name </Feedback>
+      <VoiceCommandService Target="MirrorVoiceCommandService" />
+    </Command>
+  </CommandSet>
 </VoiceCommands>

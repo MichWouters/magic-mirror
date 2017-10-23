@@ -34,21 +34,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             SetRefreshTimers();
         }
 
-        public async Task UpdateMirrorPhraseList()
-        {
-            try
-            {
-                if (VoiceCommandDefinitionManager.InstalledCommandDefinitions.TryGetValue("MirrorCommandSet", out VoiceCommandDefinition commandDefinition))
-                {
-                    await commandDefinition.SetPhraseListAsync("", null);
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("Updating Phrase list for VCDs: " + ex.ToString());
-            }
-        }
-
         #region Methods
 
         private void SetUpServices()

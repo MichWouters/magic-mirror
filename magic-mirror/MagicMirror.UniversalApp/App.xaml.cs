@@ -2,6 +2,7 @@
 using MagicMirror.UniversalApp.Views;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.VoiceCommands;
@@ -59,15 +60,26 @@ namespace MagicMirror.UniversalApp
                 // Install main VCD
                 StorageFile vcd = await Package.Current.InstalledLocation.GetFileAsync(@"MirrorCommands.xml");
                 await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(vcd);
-
-                //if (Current.Resources["ViewModelLocator"] is ViewModels.ViewModelLocator locator)
-                //{
-                //    await locator.BurgerViewModel.UpdateBurgerPhraseList();
-                //}
+                await UpdatePhraseList();
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Installing Voice Commands Failed: " + ex.ToString());
+            }
+        }
+
+        private async Task UpdatePhraseList()
+        {
+            try
+            {
+                if (VoiceCommandDefinitionManager.InstalledCommandDefinitions.TryGetValue("MirrorCommandSet", out VoiceCommandDefinition commandDefinition))
+                {
+                    await commandDefinition.SetPhraseListAsync("", null);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Updating Phrase list for VCDs: " + ex.ToString());
             }
         }
 
@@ -85,7 +97,7 @@ namespace MagicMirror.UniversalApp
 
                 string voiceCommandName = speechRecognitionResult.RulePath[0];
                 string textSpoken = speechRecognitionResult.Text;
-                string commandMode = SemanticInterpretation("CommandMode", speechRecognitionResult);
+                string commandMode = SemanticInterpretation("commandMode", speechRecognitionResult);
 
                 switch (voiceCommandName)
                 {
