@@ -63,7 +63,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
             catch (UnauthorizedAccessException e)
             {
-                DisplayErrorMessage("Unable to fetch location", e.Message);
+                DisplayErrorMessage("Unable to fetch location, Unauthorized access", e.Message);
                 return null;
             }
             catch (Exception e)
@@ -152,7 +152,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 ipAddress = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -162,7 +162,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _userSettings = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 

@@ -29,6 +29,10 @@ namespace MagicMirror.Business.Services
 
                 return model;
             }
+            catch (AutoMapper.AutoMapperMappingException ex)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
                 throw new ArgumentException("Unable to retrieve Address Model", ex);

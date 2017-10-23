@@ -1,6 +1,5 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
-using MagicMirror.UniversalApp.Views;
 using System;
 
 namespace MagicMirror.UniversalApp.ViewModels
@@ -12,7 +11,6 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         public OfflineDataViewModel()
         {
-            _navigationService.Navigate(typeof(MainPage));
             _weatherService = new WeatherService();
             _trafficService = new TrafficService();
 
@@ -56,7 +54,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _weatherModel = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -71,7 +69,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _trafficModel = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 

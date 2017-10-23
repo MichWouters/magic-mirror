@@ -3,6 +3,7 @@ using MagicMirror.Business.Services;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.VoiceCommands;
 using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
@@ -33,7 +34,23 @@ namespace MagicMirror.UniversalApp.ViewModels
             SetRefreshTimers();
         }
 
+        public async Task UpdateMirrorPhraseList()
+        {
+            try
+            {
+                if (VoiceCommandDefinitionManager.InstalledCommandDefinitions.TryGetValue("MirrorCommandSet", out VoiceCommandDefinition commandDefinition))
+                {
+                    await commandDefinition.SetPhraseListAsync("", null);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Updating Phrase list for VCDs: " + ex.ToString());
+            }
+        }
+
         #region Methods
+
 
         private void SetUpServices()
         {
@@ -217,7 +234,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _weather = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -229,7 +246,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _rss = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -241,7 +258,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _traffic = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -254,7 +271,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _time = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -266,7 +283,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _compliment = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 

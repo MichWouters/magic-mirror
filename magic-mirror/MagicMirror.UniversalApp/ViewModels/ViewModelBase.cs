@@ -1,5 +1,4 @@
-﻿using MagicMirror.UniversalApp.Services;
-using MagicMirror.UniversalApp.Views;
+﻿using MagicMirror.UniversalApp.Views;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -14,15 +13,8 @@ namespace MagicMirror.UniversalApp.ViewModels
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
         private bool _contentDialogShown;
-        protected NavigationService _navigationService;
-
         protected readonly string localFolder = ApplicationData.Current.LocalFolder.Path;
         protected const string SETTING_FILE = "settings.json";
-
-        public ViewModelBase()
-        {
-            _navigationService = new NavigationService();
-        }
 
         protected async void DisplayErrorMessage(string title, string content = "")
         {
@@ -41,7 +33,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public void OnPropertyChanged([CallerMemberName] string property = null)
+        public void NotifyPropertyChanged([CallerMemberName] string property = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
@@ -54,7 +46,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
-                _navigationService.Navigate(typeof(MainPage));
+                App.NavigationService.Navigate<MainPage>();
             }
             catch (Exception ex)
             {
@@ -66,7 +58,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
-                _navigationService.Navigate(typeof(SettingPage));
+                App.NavigationService.Navigate<SettingPage>();
             }
             catch (Exception ex)
             {
@@ -78,7 +70,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
-                _navigationService.Navigate(typeof(OffllineDataPage));
+                App.NavigationService.Navigate<OfflineDataPage>();
             }
             catch (Exception ex)
             {

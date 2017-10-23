@@ -3,7 +3,7 @@
     /// <summary>
     /// Helper file for setting names to avoid typos.
     /// </summary>
-    public class Settings
+    public class HCStrings
     {
         public static string UserName = "userName";
 

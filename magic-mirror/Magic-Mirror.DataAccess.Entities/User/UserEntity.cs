@@ -7,14 +7,14 @@ namespace MagicMirror.DataAccess.Entities.User
     {
         public UserEntity()
         {
-            Addresses = new List<UserAddres>();
+            Addresses = new List<UserAddress>();
             Faces = new List<UserFace>();
         }
 
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public List<UserAddres> Addresses { get; set; }
+        public List<UserAddress> Addresses { get; set; }
         public List<UserFace> Faces { get; set; }
         public Guid PersonId { get; set; }
     }

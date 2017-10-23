@@ -28,9 +28,9 @@ namespace MagicMirror.Tests.User
             {
                 FirstName = "Jon",
                 LastName = "Stark",
-                Addresses = new List<UserAddres>
+                Addresses = new List<UserAddress>
                 {
-                    new UserAddres
+                    new UserAddress
                     {
                         AddressType = new AddressType
                         {
@@ -63,9 +63,9 @@ namespace MagicMirror.Tests.User
             {
                 FirstName = "Jon",
                 LastName = "Stark",
-                Addresses = new List<UserAddres>
+                Addresses = new List<UserAddress>
                 {
-                    new UserAddres
+                    new UserAddress
                     {
                         AddressType = new AddressType
                         {
@@ -106,9 +106,9 @@ namespace MagicMirror.Tests.User
             {
                 FirstName = "Jon",
                 LastName = "Stark",
-                Addresses = new List<UserAddres>
+                Addresses = new List<UserAddress>
                 {
-                    new UserAddres
+                    new UserAddress
                     {
                         AddressType = new AddressType
                         {
