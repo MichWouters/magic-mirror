@@ -212,6 +212,8 @@
         <Button
             Content="Settings"
             RelativePanel.Below="SunSetImage"
+
             Click="Button_Click" />
+
     </RelativePanel>
 </Page>
