@@ -22,9 +22,16 @@ namespace MagicMirror.Business.Cognitive
 
         public FaceService()
         {
-            _faceApiClient = new FaceServiceClient(API_KEY, API_ENDPOINT);
-            var t = Task.Run(() => CreateGroupIfNotExists());
-            t.Wait();
+            try
+            {
+                _faceApiClient = new FaceServiceClient(API_KEY, API_ENDPOINT);
+                var t = Task.Run(() => CreateGroupIfNotExists());
+                t.Wait();
+            }
+            catch (Exception)
+            {
+                
+            }
         }
 
         /// <summary>
