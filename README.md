@@ -1,4 +1,4 @@
- magic-mirror
+Magic-mirror
 Public Repo for the MagicMirror app which anyone can fork and modify.
 
 Todo List:
@@ -13,24 +13,23 @@ Michiel
 * Show Ip adress in Setting menu - Done
 * Set home address using Gps / Wifi - Done
 * Local Json file with dummy data to display when no internet connection can be established - Done
-* Secret screen in which user can modify offline dummy data
+* Secret screen in which user can modify offline dummy data - Done
+* Baic Cortana implementation - Done
+* Avoid deadlocks- Done
 
-* Cortana + stemherkenning, voicecommands - In progress
-* Error Handling: App keeps repeating last error message once an exception has been thrown - In progress
-* Implement IOC
-* Avoid deadlocks
+* Add extra Cortana voice commands - In Progress 
+* Fix “scrolling” feed (RSS) - In progress
 * Error Handling: Log errors.
-* Calendar (Show upcoming events)
-* Ordina feed (RSS)
-* Log Viewer in Setting Menu.
+
 
 Nice to have
-* WIFI / IP adres info + mogelijkheid WIFI in te stellen
-
+* WIFI /  + mogelijkheid WIFI in te stellen
+* Log Viewer in Setting Menu.
 
 Tom
 * Code review
 * Facial recognition met laden gebruikersprofiel
 * Front-End proper maken
-* Ordina “scrolling” feed (RSS)
+* RSS feed - Done
+
 * Settings knopje als tandwiel

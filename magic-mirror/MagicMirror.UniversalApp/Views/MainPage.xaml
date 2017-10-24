@@ -121,16 +121,16 @@
             x:Name="ScoopTextBox"
             RelativePanel.Above="DurationImage"
             RelativePanel.AlignVerticalCenterWithPanel="True"
-            Text="Here's the latest news" 
-            Margin="0,0,0,15" 
+            Text="Here's the latest news"
+            Margin="0,0,0,15"
             FontSize="12" />
 
         <TextBlock
             x:Name="ScoopName"
             RelativePanel.Above="DurationImage"
             RelativePanel.RightOf="ScoopTextBox"
-            Text="TODO" 
-            Margin="5,0,0,15" 
+            Text="TODO"
+            Margin="5,0,0,15"
             FontSize="12" HorizontalAlignment="Left" />
 
         <Image
@@ -153,7 +153,7 @@
             Text="{x:Bind ViewModel.TrafficInfo.Summary, Mode= OneWay, FallbackValue='Unavailable'}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            FontSize="18" 
+            FontSize="18"
             Width="200" />
 
         <Image
@@ -161,8 +161,8 @@
             RelativePanel.Above="DurationTextBlock"
             RelativePanel.RightOf="DurationTextBlock"
             Source="ms-appx:///Assets/Other/Dark/news.png"
-            Style="{StaticResource SunImage}" 
-            Margin="20,0,10,0" 
+            Style="{StaticResource SunImage}"
+            Margin="20,0,10,0"
             HorizontalAlignment="Right" />
 
         <ScrollViewer
@@ -179,10 +179,10 @@
                     x:Name="RSSTextBlock"
                     Text="{x:Bind ViewModel.RSSInfo.Summary, Mode= OneWay, FallbackValue='No RSS for you'}"
                     FontSize="20"
-                    TextAlignment="Left" VerticalAlignment="Top" 
-                HorizontalAlignment="Left" 
-                Width="350" 
-                TextWrapping="WrapWholeWords" 
+                    TextAlignment="Left" VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Width="350"
+                TextWrapping="WrapWholeWords"
                 Height="25" />
         </ScrollViewer>
 
@@ -212,6 +212,8 @@
         <Button
             Content="Settings"
             RelativePanel.Below="SunSetImage"
-            Click="Button_Click" Visibility="Visible" />
+
+            Click="Button_Click" />
+
     </RelativePanel>
 </Page>

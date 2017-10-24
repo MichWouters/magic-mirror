@@ -22,9 +22,6 @@ namespace MagicMirror.Business.Configuration
                 //.ForMember(dest => dest.SunRise, source => source.Ignore())
                 //.ForMember(dest => dest.SunSet, source => source.Ignore())
                 .ReverseMap();
-            
-            CreateMap<RSSItem, RSSEntityItem>().ReverseMap();
-            CreateMap<RSSEntity, RSSModel>().ReverseMap();
 
             CreateMap<TrafficEntity, TrafficModel>()
                 .ForMember(dest => dest.Distance, source => source.MapFrom(src => src.Routes[0].Legs[0].Distance.Text))
@@ -49,8 +46,11 @@ namespace MagicMirror.Business.Configuration
             CreateMap<UserProfileModel, UserEntity>()
                 .ForMember(dest => dest.Faces, source => source.MapFrom(src => src.FaceIds.Select(fId => new UserFace { Id = fId })));
 
-            CreateMap<UserAddres, UserAddressModel>()
+            CreateMap<UserAddress, UserAddressModel>()
                 .ReverseMap();
+
+            CreateMap<RSSItem, RSSEntityItem>().ReverseMap();
+            CreateMap<RSSEntity, RSSModel>().ReverseMap();
         }
     }
 }

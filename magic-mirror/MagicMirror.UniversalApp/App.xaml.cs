@@ -1,9 +1,12 @@
-﻿using MagicMirror.Business.Models;
-using MagicMirror.UniversalApp.Strings;
+﻿using MagicMirror.UniversalApp.Common;
 using MagicMirror.UniversalApp.Views;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.VoiceCommands;
+using Windows.Media.SpeechRecognition;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -11,114 +14,137 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MagicMirror.UniversalApp
 {
-    sealed partial class App
+    sealed partial class App : Application
     {
-        public UserSettings UserSettings;
-
-        // TODO: Read from JSON file
-        private ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
         public App()
         {
             InitializeComponent();
             Suspending += OnSuspending;
-
-            CreateSearchCriteriaSingleton();
         }
 
-        public UserSettings CreateSearchCriteriaSingleton()
-        {
-            try
-            {
-                // Singleton pattern
-                if (UserSettings == null)
-                {
-                    var UserName = localSettings.Values[Settings.UserName].ToString();
-                    var HomeAddress = localSettings.Values[Settings.HomeAddress].ToString();
-                    var WorkAddress = localSettings.Values[Settings.WorkAddress].ToString();
-                    var HomeCity = localSettings.Values[Settings.HomeTown].ToString();
+        public static NavigationService NavigationService { get; private set; }
+        private RootFrameNavigationHelper rootFrameNavigationHelper;
 
-                    UserSettings = new UserSettings(UserName, HomeAddress, WorkAddress, HomeCity, 3, TemperatureUOM.Kelvin, DistanceUOM.Imperial);
-                }
-                return UserSettings;
-            }
-            catch (Exception)
-            {
-                UserSettings = new UserSettings();
-                return UserSettings;
-            }
-        }
-
-        #region BoilerPlate
-
-        /// <summary>
-        /// Invoked when the application is launched normally by the end user.  Other entry points
-        /// will be used such as when the application is launched to open a specific file.
-        /// </summary>
-        /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
-            // Do not repeat app initialization when the Window already has content, just ensure that the window is active
             if (rootFrame == null)
             {
-                // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
-
+                NavigationService = new NavigationService(rootFrame);
+                rootFrameNavigationHelper = new RootFrameNavigationHelper(rootFrame);
                 rootFrame.NavigationFailed += OnNavigationFailed;
-
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    //TODO: Load state from previously suspended application
-                }
-
-                // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
 
-            if (e.PrelaunchActivated == false)
+            if (rootFrame.Content == null)
             {
-                if (rootFrame.Content == null)
+                //Check if manual or Cortana activation
+                if (string.IsNullOrEmpty(e.Arguments))
                 {
-                    // When the navigation stack isn't restored navigate to the first page,
-                    // configuring the new page by passing required information as a navigation
-                    // parameter
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    // Launching normally
+                    rootFrame.Navigate(typeof(MainPage), "");
                 }
-                // Ensure the current window is active
-                Window.Current.Activate();
+                else
+                {
+                    // Cortana launching
+                    rootFrame.Navigate(typeof(SettingPage), e.Arguments);
+                }
+            }
+            // Ensure the current window is active
+            Window.Current.Activate();
+
+            try
+            {
+                // Install main VCD
+                StorageFile vcd = await Package.Current.InstalledLocation.GetFileAsync(@"MirrorCommands.xml");
+                await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(vcd);
+                await UpdatePhraseList();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Installing Voice Commands Failed: " + ex.ToString());
             }
         }
 
-        /// <summary>
-        /// Invoked when Navigation to a certain page fails
-        /// </summary>
-        /// <param name="sender">The Frame which failed navigation</param>
-        /// <param name="e">Details about the navigation failure</param>
+        private async Task UpdatePhraseList()
+        {
+            try
+            {
+                if (VoiceCommandDefinitionManager.InstalledCommandDefinitions.TryGetValue("MirrorCommandSet", out VoiceCommandDefinition commandDefinition))
+                {
+                    await commandDefinition.SetPhraseListAsync("", null);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Updating Phrase list for VCDs: " + ex.ToString());
+            }
+        }
+
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            base.OnActivated(args);
+
+            Type navigationToPageType;
+            ViewModels.MirrorVoiceCommand? navigationCommand = null;
+
+            if (args.Kind == ActivationKind.VoiceCommand)
+            {
+                var commandArgs = args as VoiceCommandActivatedEventArgs;
+                SpeechRecognitionResult speechRecognitionResult = commandArgs.Result;
+
+                string voiceCommandName = speechRecognitionResult.RulePath[0];
+                string textSpoken = speechRecognitionResult.Text;
+                string commandMode = SemanticInterpretation("commandMode", speechRecognitionResult);
+
+                switch (voiceCommandName)
+                {
+                    case "openSettings":
+                        navigationCommand = new ViewModels.MirrorVoiceCommand(voiceCommandName, commandMode, textSpoken, "");
+                        navigationToPageType = typeof(SettingPage);
+                        break;
+
+                    default:
+                        navigationToPageType = typeof(MainPage);
+                        break;
+                }
+            }
+            else
+            {
+                navigationToPageType = typeof(MainPage);
+            }
+
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            if (rootFrame == null)
+            {
+                rootFrame = new Frame();
+                NavigationService = new NavigationService(rootFrame);
+
+                rootFrame.NavigationFailed += OnNavigationFailed;
+                Window.Current.Content = rootFrame;
+            }
+
+            rootFrame.Navigate(navigationToPageType, navigationCommand);
+            Window.Current.Activate();
+        }
+
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
 
-        /// <summary>
-        /// Invoked when application execution is being suspended.  Application state is saved
-        /// without knowing whether the application will be terminated or resumed with the contents
-        /// of memory still intact.
-        /// </summary>
-        /// <param name="sender">The source of the suspend request.</param>
-        /// <param name="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
 
-        #endregion BoilerPlate
+        private string SemanticInterpretation(string interpretationKey, SpeechRecognitionResult speechRecognitionResult)
+        {
+            return speechRecognitionResult.SemanticInterpretation.Properties[interpretationKey].FirstOrDefault();
+        }
     }
 }

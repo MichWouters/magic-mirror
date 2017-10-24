@@ -1,8 +1,6 @@
-﻿using Acme.Generic;
-using MagicMirror.Business.Models;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,8 +42,8 @@ namespace MagicMirror.Business.Services
             try
             {
                 // Try reading Json object
-           /*     string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
-                var model = JsonConvert.DeserializeObject<RSSModel>(json);*/
+                /*     string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
+                     var model = JsonConvert.DeserializeObject<RSSModel>(json);*/
 
                 return GenerateOfflineModel();
             }
@@ -67,8 +65,8 @@ namespace MagicMirror.Business.Services
         {
             try
             {
-             /*   string json = model.ToJson();
-                FileWriter.WriteJsonToFile(json, OFFLINEMODELNAME, path);*/
+                /*   string json = model.ToJson();
+                   FileWriter.WriteJsonToFile(json, OFFLINEMODELNAME, path);*/
             }
             catch (Exception e)
             {

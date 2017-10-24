@@ -42,7 +42,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _user = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
@@ -63,7 +63,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 _apiOfflineText = value;
-                OnPropertyChanged();
+                NotifyPropertyChanged();
             }
         }
 
