@@ -1,43 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
 
-  <CommandSet xml:lang="en-us" Name="MirrorCommandSet_en-us">
-    <AppName> Mirror </AppName>
-    <Example> Change my name </Example>
-
-    <Command Name="openSettings">
-      <Example> Open Settings </Example>
-      <ListenFor RequireAppName="BeforeOrAfterPhrase"> show [my] settings </ListenFor>
-      <ListenFor RequireAppName="ExplicitlySpecified"> show [my] {builtin:AppName} settings </ListenFor>
-      <Feedback> Requisiting settings </Feedback>
-      <Navigate />
-    </Command>
-
-    <Command Name="changeName">
-      <Example> Add a new user </Example>
-      <ListenFor RequireAppName="BeforeOrAfterPhrase"> add [a] [new] user</ListenFor>
-      <Feedback> Changing Name </Feedback>
-      <VoiceCommandService Target="MirrorVoiceCommandService" />
-    </Command>
-  </CommandSet>
-
   <CommandSet xml:lang="en-gb" Name="MirrorCommandSet_en-gb">
     <AppName> Mirror </AppName>
     <Example> Change my name </Example>
 
     <Command Name="openSettings">
       <Example> Open Settings </Example>
-      <ListenFor RequireAppName="BeforeOrAfterPhrase"> show [my] settings </ListenFor>
-      <ListenFor RequireAppName="ExplicitlySpecified"> show [my] {builtin:AppName} settings </ListenFor>
-      <Feedback> Requisiting settings </Feedback>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> show [my] [the] settings </ListenFor>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> open [my] [the] settings </ListenFor>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> go to [my] [the] settings </ListenFor>
+
+      <ListenFor RequireAppName="ExplicitlySpecified"> show [my] [the] {builtin:AppName} settings </ListenFor>
+      <ListenFor RequireAppName="ExplicitlySpecified"> open [my] [the] {builtin:AppName} settings </ListenFor>
+      <Feedback> Opening settings </Feedback>
+      <Navigate />
+    </Command>
+
+    <Command Name="openOfflineSettings">
+      <Example> Open Offline Settings </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> [show] [open] [go to] [my] [the] offline settings </ListenFor>
+      <Feedback> Opening offline settings. You sneaky scoundrel.</Feedback>
+      <Navigate />
+    </Command>
+
+    <Command Name="openMain">
+      <Example> Go to Main Menu </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> show main [menu] </ListenFor>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> open main [menu] </ListenFor>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> go to main [menu] </ListenFor>
+      <Feedback> Opening Main menu </Feedback>
       <Navigate />
     </Command>
 
     <Command Name="changeName">
-      <Example> Add a new user </Example>
-      <ListenFor RequireAppName="BeforeOrAfterPhrase"> add [a] [new] user</ListenFor>
-      <Feedback> Changing Name </Feedback>
+      <Example> Change my name </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> change [my] name to {name} </ListenFor>
+      <Feedback> Changing Name to {name} </Feedback>
       <VoiceCommandService Target="MirrorVoiceCommandService" />
     </Command>
+
+    <PhraseList Label="name">
+      <Item>Mike</Item>
+      <Item>Michiel</Item>
+      <Item>Joe</Item>
+      <Item>Tom</Item>
+      <Item>Princess Pennyworth</Item>
+    </PhraseList>
   </CommandSet>
 </VoiceCommands>

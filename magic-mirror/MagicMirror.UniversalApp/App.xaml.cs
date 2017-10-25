@@ -106,6 +106,17 @@ namespace MagicMirror.UniversalApp
                         navigationToPageType = typeof(SettingPage);
                         break;
 
+                    case "openOfflineSettings":
+                        navigationCommand = new ViewModels.MirrorVoiceCommand(voiceCommandName, commandMode, textSpoken, "");
+                        navigationToPageType = typeof(OfflineDataPage);
+                        break;
+
+                    case "openMain":
+                        navigationCommand = new ViewModels.MirrorVoiceCommand(voiceCommandName, commandMode, textSpoken, "");
+                        navigationToPageType = typeof(MainPage);
+                        break;
+
+                    case "changeParameter":
                     default:
                         navigationToPageType = typeof(MainPage);
                         break;

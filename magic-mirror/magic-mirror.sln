@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.DataAccess", "Magic-Mirror.DataAccess\MagicMirror.DataAccess.csproj", "{61B61B9C-649D-4C21-8D9B-F60905372A2D}"
 EndProject
@@ -28,6 +28,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicMirror.ConsoleCore", "MagicMirror.ConsoleCore\MagicMirror.ConsoleCore.csproj", "{0C591037-F4E4-4707-8456-FE6E067EA40B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.Generic.Tests", "Acme.Generic.Tests\Acme.Generic.Tests.csproj", "{8588F6D2-627A-4D14-8A43-F4809C89F0E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicMirror.VoiceCommandService", "VoiceCommandService\MagicMirror.VoiceCommandService.csproj", "{2B414AF7-49E6-4B10-BAE0-EB2581901E54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -191,6 +193,22 @@ Global
 		{8588F6D2-627A-4D14-8A43-F4809C89F0E1}.Release|x64.Build.0 = Release|Any CPU
 		{8588F6D2-627A-4D14-8A43-F4809C89F0E1}.Release|x86.ActiveCfg = Release|Any CPU
 		{8588F6D2-627A-4D14-8A43-F4809C89F0E1}.Release|x86.Build.0 = Release|Any CPU
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Debug|ARM.ActiveCfg = Debug|ARM
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Debug|ARM.Build.0 = Debug|ARM
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Debug|x64.ActiveCfg = Debug|x64
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Debug|x64.Build.0 = Debug|x64
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Debug|x86.ActiveCfg = Debug|x86
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Debug|x86.Build.0 = Debug|x86
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Release|ARM.ActiveCfg = Release|ARM
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Release|ARM.Build.0 = Release|ARM
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Release|x64.ActiveCfg = Release|x64
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Release|x64.Build.0 = Release|x64
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Release|x86.ActiveCfg = Release|x86
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -205,6 +223,7 @@ Global
 		{230DEDBB-0D31-4DE4-A8AC-9F871F023A8F} = {219B8BBE-B96E-4560-94FE-120C9C2ED1A8}
 		{0C591037-F4E4-4707-8456-FE6E067EA40B} = {6914469F-1502-4552-BBA2-A06B184B22FE}
 		{8588F6D2-627A-4D14-8A43-F4809C89F0E1} = {C76044E1-B2F3-45E0-8A01-2EB81247E47F}
+		{2B414AF7-49E6-4B10-BAE0-EB2581901E54} = {6914469F-1502-4552-BBA2-A06B184B22FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AB5F4222-80B3-4AC4-88C4-1102A60FA675}

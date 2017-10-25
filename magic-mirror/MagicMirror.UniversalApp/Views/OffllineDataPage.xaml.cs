@@ -28,7 +28,6 @@ namespace MagicMirror.UniversalApp.Views
 
         private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)

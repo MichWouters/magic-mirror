@@ -1,16 +1,16 @@
 ﻿using System;
+using System.Resources;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.ApplicationModel.VoiceCommands;
 
-namespace MagicMirror.UniversalApp.Services
+namespace VoiceCommandService
 {
     public sealed class MirrorVoiceCommandService : IBackgroundTask
     {
         private VoiceCommandServiceConnection voiceServiceConnection;
-        private VoiceCommandServiceConnection voiceCommandServiceConnection;
         private BackgroundTaskDeferral serviceDeferral;
         private ResourceMap cortanaResourceMap;
         private ResourceContext cortanaContext;
@@ -21,8 +21,6 @@ namespace MagicMirror.UniversalApp.Services
             taskInstance.Canceled += OnTaskCanceled;
 
             var triggerDetails = taskInstance.TriggerDetails as AppServiceTriggerDetails;
-
-            cortanaResourceMap = ResourceManager.Current.MainResourceMap.GetSubtree("Resources");
             cortanaContext = ResourceContext.GetForViewIndependentUse();
 
             if (triggerDetails != null && triggerDetails.Name == "MirrorVoiceCommandService")
@@ -30,17 +28,18 @@ namespace MagicMirror.UniversalApp.Services
                 try
                 {
                     voiceServiceConnection = VoiceCommandServiceConnection.FromAppServiceTriggerDetails(triggerDetails);
-                    voiceCommandServiceConnection.VoiceCommandCompleted += OnVoiceCommandCompleted;
+                    voiceServiceConnection.VoiceCommandCompleted += OnVoiceCommandCompleted;
                     VoiceCommand voiceCommand = await voiceServiceConnection.GetVoiceCommandAsync();
 
                     switch (voiceCommand.CommandName)
                     {
-                        case "openSettings":
-                            await SendCompletionMessageForSettings();
+                        case "changeName":
+                            string name = voiceCommand.Properties["name"][0];
+                            await SendCompletionMessageForChangeName(name);
                             break;
 
                         default:
-                            LauncAppInForeground();
+                            LaunchAppInForeground();
                             break;
                     }
                 }
@@ -51,17 +50,26 @@ namespace MagicMirror.UniversalApp.Services
             }
         }
 
-        private async Task SendCompletionMessageForSettings()
+        private async Task SendCompletionMessageForChangeName(string name)
         {
-            string openingSettings = "";
-            await ShowProgressScreen(openingSettings);
+            var userPrompt = new VoiceCommandUserMessage();
+            VoiceCommandResponse response;
+
+            var userMessage = new VoiceCommandUserMessage
+            {
+                DisplayMessage = $"Change your name to {name}?",
+                SpokenMessage = $"Change your name to {name}?"
+            };
+
+            response = VoiceCommandResponse.CreateResponseForPrompt(userMessage, userPrompt);
+            var voiceCommandConfirmation = await voiceServiceConnection.RequestConfirmationAsync(response);
         }
 
-        private async void LauncAppInForeground()
+        private async void LaunchAppInForeground()
         {
             var userMessage = new VoiceCommandUserMessage
             {
-                SpokenMessage = "Opening Magic Mirror"
+                SpokenMessage = "Opening Magic Mirror at this time"
             };
 
             var response = VoiceCommandResponse.CreateResponse(userMessage);
