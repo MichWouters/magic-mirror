@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace MagicMirror.UniversalApp.ViewModels
 {
     public enum WiFiSettingsStatus { NotReady, Initializing, Ready, AccessDenied, Unavailable, Error }
+
     public class WiFiSettingsViewModel : ViewModelBase
     {
         private WiFiSettingsStatus _status;
@@ -23,29 +24,31 @@ namespace MagicMirror.UniversalApp.ViewModels
         public ObservableCollection<WiFiNetworkViewModel> WiFiNetworks { get; private set; }
 
         public event EventHandler OnReady;
+
         public event EventHandler OnConnecting;
+
         public event EventHandler OnConnected;
+
         public event EventHandler OnDisconnected;
+
         public event EventHandler OnSelect;
+
         public event EventHandler<Exception> OnError;
 
         public WiFiNetworkViewModel SelectedWiFiNetwork
         {
             get { return _selectedWiFiNetwork; }
-            set { _selectedWiFiNetwork = value; OnPropertyChanged(); }
+            set { _selectedWiFiNetwork = value; NotifyPropertyChanged(); }
         }
-
 
         public WiFiSettingsStatus Status
         {
             get { return _status; }
-            set { _status = value; OnPropertyChanged(); }
+            set { _status = value; NotifyPropertyChanged(); }
         }
-
 
         public WiFiSettingsViewModel()
         {
-
         }
 
         public async void InitializeAsync()
@@ -193,9 +196,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 return;
             }
             SelectedWiFiNetwork.Disconnect();
-
         }
-
 
         public bool IsConnected(WiFiAvailableNetwork network)
         {
@@ -233,6 +234,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             return firstProfile.ProfileName;
         }
     }
+
     public class WiFiNetworkViewModel : ViewModelBase
     {
         private WiFiAdapter _wifiAdapter;
@@ -277,8 +279,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
             WiFiImage = new BitmapImage(new Uri(imageFileName));
 
-            OnPropertyChanged("WiFiImage");
-
+            NotifyPropertyChanged("WiFiImage");
         }
 
         public async Task UpdateConnectivityLevel()
@@ -303,7 +304,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
 
             ConnectivityLevel = connectivityLevel;
-            OnPropertyChanged("ConnectivityLevel");
+            NotifyPropertyChanged("ConnectivityLevel");
         }
 
         public void Disconnect()
@@ -314,6 +315,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         public bool NetworkKeyInfoVisibility { get; set; }
 
         private bool usePassword = false;
+
         public bool UsePassword
         {
             get
@@ -323,11 +325,12 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 usePassword = value;
-                OnPropertyChanged("UsePassword");
+                NotifyPropertyChanged("UsePassword");
             }
         }
 
         private bool connectAutomatically = false;
+
         public bool ConnectAutomatically
         {
             get
@@ -337,7 +340,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 connectAutomatically = value;
-                OnPropertyChanged("ConnectAutomatically");
+                NotifyPropertyChanged("ConnectAutomatically");
             }
         }
 
@@ -354,7 +357,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             get
             {
                 return availableNetwork.Bssid;
-
             }
         }
 
@@ -381,6 +383,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 return string.Format("Authentication: {0}; Encryption: {1}", availableNetwork.SecuritySettings.NetworkAuthenticationType, availableNetwork.SecuritySettings.NetworkEncryptionType);
             }
         }
+
         public String ConnectivityLevel
         {
             get;
@@ -394,24 +397,27 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         private string userName;
+
         public string UserName
         {
             get { return userName; }
-            set { userName = value; OnPropertyChanged("UserName"); }
+            set { userName = value; NotifyPropertyChanged("UserName"); }
         }
 
         private string password;
+
         public string Password
         {
             get { return password; }
-            set { password = value; OnPropertyChanged("Password"); }
+            set { password = value; NotifyPropertyChanged("Password"); }
         }
 
         private string domain;
+
         public string Domain
         {
             get { return domain; }
-            set { domain = value; OnPropertyChanged("Domain"); }
+            set { domain = value; NotifyPropertyChanged("Domain"); }
         }
 
         public bool IsEapAvailable
@@ -424,6 +430,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         private WiFiAvailableNetwork availableNetwork;
+
         public WiFiAvailableNetwork AvailableNetwork
         {
             get
