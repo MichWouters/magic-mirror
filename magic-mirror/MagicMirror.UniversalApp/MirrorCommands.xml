@@ -73,12 +73,8 @@
       <Item>Metric</Item>
     </PhraseList>
 
-    <PhraseList Label="name">
-      <Item>Mike</Item>
-      <Item>Michiel</Item>
-      <Item>Joe</Item>
-      <Item>Tom</Item>
-      <Item>Princess Pennyworth</Item>
-    </PhraseList>
+    <PhraseTopic Label="name" Scenario="Dictation">
+      <Subject>name</Subject>
+    </PhraseTopic>
   </CommandSet>
 </VoiceCommands>
