@@ -107,6 +107,8 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CompletionMessage.cs" />
+    <Compile Include="ParameterActions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MirrorVoiceCommandService.cs" />
   </ItemGroup>
@@ -114,6 +116,16 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MagicMirror.Business.Models\MagicMirror.Business.Models.csproj">
+      <Project>{6C1D40E7-E7DB-4C2A-ADC9-E6FDD4028C0B}</Project>
+      <Name>MagicMirror.Business.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MagicMirror.Business\MagicMirror.Business.csproj">
+      <Project>{9C98AD46-C186-4B98-ABA2-C8E8462C21A3}</Project>
+      <Name>MagicMirror.Business</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

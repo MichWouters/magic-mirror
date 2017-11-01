@@ -1,5 +1,6 @@
-﻿using System;
-using System.Resources;
+﻿using MagicMirror.Business.Models;
+using MagicMirror.Business.Services;
+using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
@@ -14,6 +15,13 @@ namespace VoiceCommandService
         private BackgroundTaskDeferral serviceDeferral;
         private ResourceMap cortanaResourceMap;
         private ResourceContext cortanaContext;
+
+        private SettingsService settingsService;
+
+        public MirrorVoiceCommandService()
+        {
+            settingsService = new SettingsService();
+        }
 
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
@@ -35,7 +43,17 @@ namespace VoiceCommandService
                     {
                         case "changeName":
                             string name = voiceCommand.Properties["name"][0];
-                            await SendCompletionMessageForChangeName(name);
+
+                            CompletionMessage message = new CompletionMessage
+                            {
+                                Message = $"Change your name to { name}?",
+                                RepeatMessage = $"Do you want to change your name to {name}?",
+                                ConfirmMessage = $"Changing name to {name}",
+                                CompletedMessage = $"Your Magic Mirror name has been changed to {name}",
+                                CanceledMessage = "Keeping name to original value",
+                            };
+
+                            await SendCompletionMessage(ParameterAction.ChangeName, name, message);
                             break;
 
                         default:
@@ -50,19 +68,62 @@ namespace VoiceCommandService
             }
         }
 
-        private async Task SendCompletionMessageForChangeName(string name)
+        private async Task SendCompletionMessage(ParameterAction action, string parameter, CompletionMessage completionMessage)
         {
-            var userPrompt = new VoiceCommandUserMessage();
-            VoiceCommandResponse response;
+            var userMessage = new VoiceCommandUserMessage { DisplayMessage = completionMessage.Message, SpokenMessage = completionMessage.Message };
+            var userRepeatMessage = new VoiceCommandUserMessage { DisplayMessage = completionMessage.RepeatMessage, SpokenMessage = completionMessage.RepeatMessage };
 
-            var userMessage = new VoiceCommandUserMessage
+            VoiceCommandResponse response = VoiceCommandResponse.CreateResponseForPrompt(userMessage, userRepeatMessage);
+            VoiceCommandConfirmationResult confirmation = await voiceServiceConnection.RequestConfirmationAsync(response);
+
+            if (confirmation != null)
             {
-                DisplayMessage = $"Change your name to {name}?",
-                SpokenMessage = $"Change your name to {name}?"
-            };
+                if (confirmation.Confirmed)
+                {
+                    await ShowProgressScreen(completionMessage.ConfirmMessage);
 
-            response = VoiceCommandResponse.CreateResponseForPrompt(userMessage, userPrompt);
-            var voiceCommandConfirmation = await voiceServiceConnection.RequestConfirmationAsync(response);
+                    switch (action)
+                    {
+                        case ParameterAction.ChangeName:
+                            ChangeName(parameter);
+                            break;
+
+                        case ParameterAction.ChangeTemperature:
+                            break;
+
+                        case ParameterAction.ChangeDistance:
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    // Provide a completion message to the user.
+                    var nameChangedMessage = new VoiceCommandUserMessage { DisplayMessage = completionMessage.CompletedMessage, SpokenMessage = completionMessage.CompletedMessage };
+
+                    response = VoiceCommandResponse.CreateResponse(nameChangedMessage);
+                    await voiceServiceConnection.ReportSuccessAsync(response);
+                }
+                else
+                {
+                    // Confirm no action for the user.
+                    var cancelledMessage = new VoiceCommandUserMessage();
+                    cancelledMessage.DisplayMessage = cancelledMessage.SpokenMessage = completionMessage.CanceledMessage;
+
+                    response = VoiceCommandResponse.CreateResponse(cancelledMessage);
+                    await voiceServiceConnection.ReportSuccessAsync(response);
+                }
+            }
+        }
+
+        private void ChangeName(string name)
+        {
+            string localFolder = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
+            string SETTING_FILE = "settings.json";
+
+            UserSettings userSettings = settingsService.ReadSettings(localFolder, SETTING_FILE);
+            userSettings.UserName = name;
+            settingsService.SaveSettings(localFolder, SETTING_FILE, userSettings);
         }
 
         private async void LaunchAppInForeground()
