@@ -11,8 +11,8 @@ namespace MagicMirror.UniversalApp.ViewModels
 {
     public class SettingPageViewModel : ViewModelBase
     {
-        private LocationService _locationService;
         private UserSettings _userSettings;
+        private ILocationService _locationService;
         private ISettingsService _settingsService;
         private IApiService<AddressModel> _addressService;
 

@@ -35,8 +35,7 @@ namespace MagicMirror.Tests.Traffic
             TrafficModel model = await _service.GetModelAsync();
 
             // Assert
-            Assert.NotNull(model.Distance);
-            Assert.NotEqual("0", model.Distance);
+            Assert.NotNull(model.DistanceKilometers);
 
             Assert.NotNull(model.Minutes);
             Assert.NotEqual(0, model.Minutes);

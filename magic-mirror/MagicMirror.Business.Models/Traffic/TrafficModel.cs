@@ -5,6 +5,10 @@ namespace MagicMirror.Business.Models
 {
     public class TrafficModel : IModel
     {
+        public double DistanceKilometers { get; set; }
+
+        public double DistanceMiles { get; set; }
+
         public string Distance { get; set; }
 
         public int Minutes { get; set; }

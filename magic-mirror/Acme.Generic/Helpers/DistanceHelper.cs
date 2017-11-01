@@ -2,7 +2,7 @@
 
 namespace Acme.Generic
 {
-    public static class UnitOfMeasureHelper
+    public static class DistanceHelper
     {
         public static double KiloMetersToMiles(int kiloMeters, int precision = 2)
         {

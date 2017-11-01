@@ -11,16 +11,16 @@ namespace MagicMirror.UniversalApp.ViewModels
     public class MainPageViewModel : ViewModelBase
     {
         // Services from the Business Layer
-        private IApiService<WeatherModel> _weatherService;
 
+        private IApiService<WeatherModel> _weatherService;
         private IApiService<RSSModel> _rssService;
         private IApiService<TrafficModel> _trafficService;
         private ISettingsService _settingsService;
         private CommonService _commonService;
 
         // Timers to refresh individual components
-        private DispatcherTimer timeTimer;
 
+        private DispatcherTimer timeTimer;
         private DispatcherTimer complimentTimer;
         private DispatcherTimer weatherTimer;
         private DispatcherTimer trafficTimer;

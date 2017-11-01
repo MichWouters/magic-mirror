@@ -82,6 +82,22 @@ namespace MagicMirror.Business.Services
             model.Minutes = (model.Minutes / 60);
             model.TrafficDensity = CalculateTrafficDensity(model.NumberOfIncidents);
             model.HourOfArrival = DateTime.Now.AddMinutes(model.Minutes);
+            model.DistanceMiles = DistanceHelper.KiloMetersToMiles(model.DistanceKilometers);
+
+            switch (_criteria.DistanceUOM)
+            {
+                case DistanceUOM.Imperial:
+                    model.Distance = model.DistanceMiles + " miles";
+                    break;
+
+                case DistanceUOM.Metric:
+                    model.Distance = model.DistanceKilometers + " km";
+                    break;
+
+                default:
+                    model.Distance = model.DistanceKilometers + " km";
+                    break;
+            }
 
             return model;
         }
@@ -131,7 +147,7 @@ namespace MagicMirror.Business.Services
         {
             var model = new TrafficModel
             {
-                Distance = "40.5 km",
+                DistanceKilometers = 40.5,
                 Minutes = (32 * 60),
                 NumberOfIncidents = 2,
             };

@@ -14,7 +14,7 @@ namespace Acme.Generic.Tests
             for (int i = 0; i < inputs.Length; i++)
             {
                 // Act
-                double result = UnitOfMeasureHelper.MilesToKiloMeters(inputs[i]);
+                double result = DistanceHelper.MilesToKiloMeters(inputs[i]);
 
                 // Assert
                 Assert.Equal(result, expectedValues[i]);
@@ -31,7 +31,7 @@ namespace Acme.Generic.Tests
             for (int i = 0; i < inputs.Length; i++)
             {
                 // Act
-                double result = UnitOfMeasureHelper.KiloMetersToMiles(inputs[i]);
+                double result = DistanceHelper.KiloMetersToMiles(inputs[i]);
 
                 // Assert
                 Assert.Equal(result, expectedValues[i]);

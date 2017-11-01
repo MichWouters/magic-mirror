@@ -116,7 +116,6 @@ namespace MagicMirror.UniversalApp
                         navigationToPageType = typeof(MainPage);
                         break;
 
-                    case "changeParameter":
                     default:
                         navigationToPageType = typeof(MainPage);
                         break;

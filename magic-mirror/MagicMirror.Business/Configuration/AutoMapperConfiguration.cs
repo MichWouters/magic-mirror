@@ -17,19 +17,13 @@ namespace MagicMirror.Business.Configuration
                .ForMember(dest => dest.WeatherType, source => source.MapFrom(src => src.Weather[0].Main))
                .ForMember(dest => dest.Icon, source => source.MapFrom(src => src.Weather[0].Icon))
                .ForMember(dest => dest.TemperatureKelvin, source => source.MapFrom(src => src.Main.Temp))
-                //.ForMember(dest => dest.TemperatureCelsius, source => source.Ignore())
-                //.ForMember(dest => dest.TemperatureFahrenheit, source => source.Ignore())
-                //.ForMember(dest => dest.SunRise, source => source.Ignore())
-                //.ForMember(dest => dest.SunSet, source => source.Ignore())
+               .ForMember(dest => dest.Location, source => source.MapFrom(src => src.Name))
                 .ReverseMap();
 
             CreateMap<TrafficEntity, TrafficModel>()
-                .ForMember(dest => dest.Distance, source => source.MapFrom(src => src.Routes[0].Legs[0].Distance.Text))
+                .ForMember(dest => dest.DistanceKilometers, source => source.MapFrom(src => src.Routes[0].Legs[0].Distance.Text))
                 .ForMember(dest => dest.Minutes, source => source.MapFrom(src => src.Routes[0].Legs[0].Duration.Value))
                 .ForMember(dest => dest.MinutesText, source => source.MapFrom(src => src.Routes[0].Legs[0].Duration.Text))
-                //.ForMember(dest => dest.NumberOfIncidents, source => source.Ignore())
-                //.ForMember(dest => dest.HourOfArrival, source => source.Ignore())
-                //.ForMember(dest => dest.TrafficDensity, source => source.Ignore())
                 .ReverseMap();
 
             CreateMap<AddressEntity, AddressModel>()

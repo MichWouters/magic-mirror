@@ -4,7 +4,7 @@ using Windows.Devices.Geolocation;
 
 namespace MagicMirror.UniversalApp.Services
 {
-    public class LocationService
+    public class LocationService : ILocationService
     {
         private async Task<GeolocationAccessStatus> RequestAccessAsync()
         {

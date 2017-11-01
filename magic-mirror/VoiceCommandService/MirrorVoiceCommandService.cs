@@ -1,5 +1,6 @@
-﻿using System;
-using System.Resources;
+﻿using MagicMirror.Business.Models;
+using MagicMirror.Business.Services;
+using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
@@ -12,8 +13,16 @@ namespace VoiceCommandService
     {
         private VoiceCommandServiceConnection voiceServiceConnection;
         private BackgroundTaskDeferral serviceDeferral;
-        private ResourceMap cortanaResourceMap;
         private ResourceContext cortanaContext;
+
+        private SettingsService settingsService;
+        private readonly string localFolder = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
+        private const string SETTING_FILE = "settings.json";
+
+        public MirrorVoiceCommandService()
+        {
+            settingsService = new SettingsService();
+        }
 
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
@@ -30,12 +39,50 @@ namespace VoiceCommandService
                     voiceServiceConnection = VoiceCommandServiceConnection.FromAppServiceTriggerDetails(triggerDetails);
                     voiceServiceConnection.VoiceCommandCompleted += OnVoiceCommandCompleted;
                     VoiceCommand voiceCommand = await voiceServiceConnection.GetVoiceCommandAsync();
+                    CompletionMessage message;
 
                     switch (voiceCommand.CommandName)
                     {
                         case "changeName":
                             string name = voiceCommand.Properties["name"][0];
-                            await SendCompletionMessageForChangeName(name);
+
+                            message = new CompletionMessage
+                            {
+                                Message = $"Change your name to {name}?",
+                                RepeatMessage = $"Do you want to change your name to {name}?",
+                                ConfirmMessage = $"Changing name to {name}",
+                                CompletedMessage = $"Your Magic Mirror name has been changed to {name}",
+                                CanceledMessage = "Keeping name to original value",
+                            };
+                            await SendCompletionMessage(ParameterAction.ChangeName, name, message);
+                            break;
+
+                        case "changeTemperature":
+                            string temperature = voiceCommand.Properties["temperature"][0];
+
+                            message = new CompletionMessage
+                            {
+                                Message = $"Change your temperature notation to {temperature}?",
+                                RepeatMessage = $"Do you want to hange your temperature notation to {temperature}?",
+                                ConfirmMessage = $"Changing temperature notation to {temperature}",
+                                CompletedMessage = $"Your temperature notation changed to {temperature}",
+                                CanceledMessage = "Keeping temperature to original value",
+                            };
+                            await SendCompletionMessage(ParameterAction.ChangeTemperature, temperature, message);
+                            break;
+
+                        case "changeDistance":
+                            string distance = voiceCommand.Properties["distance"][0];
+
+                            message = new CompletionMessage
+                            {
+                                Message = $"Change your distance notation to {distance} system?",
+                                RepeatMessage = $"Do you want to hange your distance notation to {distance} system?",
+                                ConfirmMessage = $"Changing distance notation to {distance} system",
+                                CompletedMessage = $"Your temperature notation changed to {distance}",
+                                CanceledMessage = "Keeping distance to original system",
+                            };
+                            await SendCompletionMessage(ParameterAction.ChangeDistance, distance, message);
                             break;
 
                         default:
@@ -50,19 +97,77 @@ namespace VoiceCommandService
             }
         }
 
-        private async Task SendCompletionMessageForChangeName(string name)
+        private async Task SendCompletionMessage(ParameterAction action, string parameter, CompletionMessage completionMessage)
         {
-            var userPrompt = new VoiceCommandUserMessage();
-            VoiceCommandResponse response;
+            var userMessage = new VoiceCommandUserMessage { DisplayMessage = completionMessage.Message, SpokenMessage = completionMessage.Message };
+            var userRepeatMessage = new VoiceCommandUserMessage { DisplayMessage = completionMessage.RepeatMessage, SpokenMessage = completionMessage.RepeatMessage };
 
-            var userMessage = new VoiceCommandUserMessage
+            VoiceCommandResponse response = VoiceCommandResponse.CreateResponseForPrompt(userMessage, userRepeatMessage);
+            VoiceCommandConfirmationResult confirmation = await voiceServiceConnection.RequestConfirmationAsync(response);
+
+            if (confirmation != null)
             {
-                DisplayMessage = $"Change your name to {name}?",
-                SpokenMessage = $"Change your name to {name}?"
-            };
+                if (confirmation.Confirmed)
+                {
+                    await ShowProgressScreen(completionMessage.ConfirmMessage);
 
-            response = VoiceCommandResponse.CreateResponseForPrompt(userMessage, userPrompt);
-            var voiceCommandConfirmation = await voiceServiceConnection.RequestConfirmationAsync(response);
+                    switch (action)
+                    {
+                        case ParameterAction.ChangeName:
+                            ChangeName(parameter);
+                            break;
+
+                        case ParameterAction.ChangeTemperature:
+                            ChangeTemperature(parameter);
+                            break;
+
+                        case ParameterAction.ChangeDistance:
+                            ChangeDistance(parameter);
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    // Provide a completion message to the user.
+                    var nameChangedMessage = new VoiceCommandUserMessage { DisplayMessage = completionMessage.CompletedMessage, SpokenMessage = completionMessage.CompletedMessage };
+
+                    response = VoiceCommandResponse.CreateResponse(nameChangedMessage);
+                    await voiceServiceConnection.ReportSuccessAsync(response);
+                }
+                else
+                {
+                    // Confirm no action for the user.
+                    var cancelledMessage = new VoiceCommandUserMessage();
+                    cancelledMessage.DisplayMessage = cancelledMessage.SpokenMessage = completionMessage.CanceledMessage;
+
+                    response = VoiceCommandResponse.CreateResponse(cancelledMessage);
+                    await voiceServiceConnection.ReportSuccessAsync(response);
+                }
+            }
+        }
+
+        private void ChangeDistance(string distance)
+        {
+            UserSettings userSettings = settingsService.ReadSettings(localFolder, SETTING_FILE);
+            Enum.TryParse(distance, out DistanceUOM myTemp);
+            userSettings.DistanceUOM = myTemp;
+            settingsService.SaveSettings(localFolder, SETTING_FILE, userSettings);
+        }
+
+        private void ChangeTemperature(string temperature)
+        {
+            UserSettings userSettings = settingsService.ReadSettings(localFolder, SETTING_FILE);
+            Enum.TryParse(temperature, out TemperatureUOM myTemp);
+            userSettings.TemperatureUOM = myTemp;
+            settingsService.SaveSettings(localFolder, SETTING_FILE, userSettings);
+        }
+
+        private void ChangeName(string name)
+        {
+            UserSettings userSettings = settingsService.ReadSettings(localFolder, SETTING_FILE);
+            userSettings.UserName = name;
+            settingsService.SaveSettings(localFolder, SETTING_FILE, userSettings);
         }
 
         private async void LaunchAppInForeground()
