@@ -3,7 +3,6 @@ using MagicMirror.Business.Services;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.VoiceCommands;
 using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
@@ -187,7 +186,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 if (!trafficTimer.IsEnabled) trafficTimer.Start();
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
                 TrafficModel trafficModel = _trafficService.GetOfflineModel(localFolder);
                 TrafficInfo = trafficModel;
@@ -196,7 +195,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 await Task.Delay((minutes * 60) * 10000);
                 RefreshTrafficModel(null, null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 if (trafficTimer.IsEnabled) trafficTimer.Stop();
 

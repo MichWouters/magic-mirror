@@ -4,6 +4,7 @@ using MagicMirror.Business.Configuration;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Repos;
+using System;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
@@ -20,7 +21,6 @@ namespace MagicMirror.Business.Services
             SetUpMapperConfiguration();
         }
 
-        // Child classes MUST implement abstract methods.
         public abstract Task<T> GetModelAsync();
 
         /// <summary>
