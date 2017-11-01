@@ -36,7 +36,6 @@ namespace MagicMirror.Tests.Traffic
 
             // Assert
             Assert.NotNull(model.DistanceKilometers);
-            Assert.NotEqual("0", model.DistanceKilometers);
 
             Assert.NotNull(model.Minutes);
             Assert.NotEqual(0, model.Minutes);

@@ -39,13 +39,14 @@ namespace VoiceCommandService
                     voiceServiceConnection = VoiceCommandServiceConnection.FromAppServiceTriggerDetails(triggerDetails);
                     voiceServiceConnection.VoiceCommandCompleted += OnVoiceCommandCompleted;
                     VoiceCommand voiceCommand = await voiceServiceConnection.GetVoiceCommandAsync();
+                    CompletionMessage message;
 
                     switch (voiceCommand.CommandName)
                     {
                         case "changeName":
                             string name = voiceCommand.Properties["name"][0];
 
-                            CompletionMessage message = new CompletionMessage
+                            message = new CompletionMessage
                             {
                                 Message = $"Change your name to {name}?",
                                 RepeatMessage = $"Do you want to change your name to {name}?",
@@ -53,7 +54,6 @@ namespace VoiceCommandService
                                 CompletedMessage = $"Your Magic Mirror name has been changed to {name}",
                                 CanceledMessage = "Keeping name to original value",
                             };
-
                             await SendCompletionMessage(ParameterAction.ChangeName, name, message);
                             break;
 
@@ -68,8 +68,21 @@ namespace VoiceCommandService
                                 CompletedMessage = $"Your temperature notation changed to {temperature}",
                                 CanceledMessage = "Keeping temperature to original value",
                             };
-
                             await SendCompletionMessage(ParameterAction.ChangeTemperature, temperature, message);
+                            break;
+
+                        case "changeDistance":
+                            string distance = voiceCommand.Properties["distance"][0];
+
+                            message = new CompletionMessage
+                            {
+                                Message = $"Change your distance notation to {distance} system?",
+                                RepeatMessage = $"Do you want to hange your distance notation to {distance} system?",
+                                ConfirmMessage = $"Changing distance notation to {distance} system",
+                                CompletedMessage = $"Your temperature notation changed to {distance}",
+                                CanceledMessage = "Keeping distance to original system",
+                            };
+                            await SendCompletionMessage(ParameterAction.ChangeDistance, distance, message);
                             break;
 
                         default:
@@ -109,6 +122,7 @@ namespace VoiceCommandService
                             break;
 
                         case ParameterAction.ChangeDistance:
+                            ChangeDistance(parameter);
                             break;
 
                         default:
@@ -131,6 +145,14 @@ namespace VoiceCommandService
                     await voiceServiceConnection.ReportSuccessAsync(response);
                 }
             }
+        }
+
+        private void ChangeDistance(string distance)
+        {
+            UserSettings userSettings = settingsService.ReadSettings(localFolder, SETTING_FILE);
+            Enum.TryParse(distance, out DistanceUOM myTemp);
+            userSettings.DistanceUOM = myTemp;
+            settingsService.SaveSettings(localFolder, SETTING_FILE, userSettings);
         }
 
         private void ChangeTemperature(string temperature)

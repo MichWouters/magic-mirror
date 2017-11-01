@@ -41,9 +41,24 @@
     </Command>
 
     <Command Name="changeTemperature">
-      <Example> Change my name </Example>
-      <ListenFor RequireAppName="BeforeOrAfterPhrase"> change [my] [the] temperature to {temperature} </ListenFor>
+      <Example>  Set the temperature notation to Fahrenheit </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> change [my] [the] temperature [notation] to {temperature} </ListenFor>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> set [my] [the] temperature [notation] to {temperature} </ListenFor>
       <Feedback> Changing Temperature notation to {temperature} </Feedback>
+      <VoiceCommandService Target="MirrorVoiceCommandService" />
+    </Command>
+
+    <Command Name="changeDistance">
+      <Example> Set the distance to Imperial notation </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> [change] [set] [my] [the] distance to {distance} [notation] </ListenFor>
+      <Feedback> Changing distance notation to {distance} system </Feedback>
+      <VoiceCommandService Target="MirrorVoiceCommandService" />
+    </Command>
+
+    <Command Name="useCurrentLocation">
+      <Example> Use my current location </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> use [my] [current] location </ListenFor>
+      <Feedback> Setting current location as home address </Feedback>
       <VoiceCommandService Target="MirrorVoiceCommandService" />
     </Command>
 
@@ -51,6 +66,11 @@
       <Item>Celsius</Item>
       <Item>Fahrenheit</Item>
       <Item>Kelvin</Item>
+    </PhraseList>
+
+    <PhraseList Label="distance">
+      <Item>Imperial</Item>
+      <Item>Metric</Item>
     </PhraseList>
 
     <PhraseList Label="name">
