@@ -13,10 +13,11 @@ namespace VoiceCommandService
     {
         private VoiceCommandServiceConnection voiceServiceConnection;
         private BackgroundTaskDeferral serviceDeferral;
-        private ResourceMap cortanaResourceMap;
         private ResourceContext cortanaContext;
 
         private SettingsService settingsService;
+        private readonly string localFolder = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
+        private const string SETTING_FILE = "settings.json";
 
         public MirrorVoiceCommandService()
         {
@@ -46,7 +47,7 @@ namespace VoiceCommandService
 
                             CompletionMessage message = new CompletionMessage
                             {
-                                Message = $"Change your name to { name}?",
+                                Message = $"Change your name to {name}?",
                                 RepeatMessage = $"Do you want to change your name to {name}?",
                                 ConfirmMessage = $"Changing name to {name}",
                                 CompletedMessage = $"Your Magic Mirror name has been changed to {name}",
@@ -54,6 +55,21 @@ namespace VoiceCommandService
                             };
 
                             await SendCompletionMessage(ParameterAction.ChangeName, name, message);
+                            break;
+
+                        case "changeTemperature":
+                            string temperature = voiceCommand.Properties["temperature"][0];
+
+                            message = new CompletionMessage
+                            {
+                                Message = $"Change your temperature notation to {temperature}?",
+                                RepeatMessage = $"Do you want to hange your temperature notation to {temperature}?",
+                                ConfirmMessage = $"Changing temperature notation to {temperature}",
+                                CompletedMessage = $"Your temperature notation changed to {temperature}",
+                                CanceledMessage = "Keeping temperature to original value",
+                            };
+
+                            await SendCompletionMessage(ParameterAction.ChangeTemperature, temperature, message);
                             break;
 
                         default:
@@ -89,6 +105,7 @@ namespace VoiceCommandService
                             break;
 
                         case ParameterAction.ChangeTemperature:
+                            ChangeTemperature(parameter);
                             break;
 
                         case ParameterAction.ChangeDistance:
@@ -116,11 +133,16 @@ namespace VoiceCommandService
             }
         }
 
+        private void ChangeTemperature(string temperature)
+        {
+            UserSettings userSettings = settingsService.ReadSettings(localFolder, SETTING_FILE);
+            Enum.TryParse(temperature, out TemperatureUOM myTemp);
+            userSettings.TemperatureUOM = myTemp;
+            settingsService.SaveSettings(localFolder, SETTING_FILE, userSettings);
+        }
+
         private void ChangeName(string name)
         {
-            string localFolder = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
-            string SETTING_FILE = "settings.json";
-
             UserSettings userSettings = settingsService.ReadSettings(localFolder, SETTING_FILE);
             userSettings.UserName = name;
             settingsService.SaveSettings(localFolder, SETTING_FILE, userSettings);

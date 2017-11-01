@@ -115,6 +115,25 @@ namespace MagicMirror.Business.Services
             model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, _criteria.Precision);
             model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, _criteria.Precision);
 
+            switch (_criteria.TemperatureUOM)
+            {
+                case TemperatureUOM.Celsius:
+                    model.Temperature = model.TemperatureCelsius;
+                    break;
+
+                case TemperatureUOM.Fahrenheit:
+                    model.Temperature = model.TemperatureFahrenheit;
+                    break;
+
+                case TemperatureUOM.Kelvin:
+                    model.Temperature = model.TemperatureKelvin;
+                    break;
+
+                default:
+                    model.Temperature = model.TemperatureCelsius;
+                    break;
+            }
+
             DateTime sunrise = model.SunRiseMilliseconds.ConvertFromUnixTimestamp();
             DateTime sunset = model.SunSetMilliSeconds.ConvertFromUnixTimestamp();
             model.SunRise = sunrise.ToString("HH:mm");

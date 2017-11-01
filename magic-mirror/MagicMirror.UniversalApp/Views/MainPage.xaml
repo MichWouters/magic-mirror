@@ -55,7 +55,7 @@
         <TextBlock
             x:Name="TemperatureTextBlock"
             Style="{StaticResource Degrees}"
-            Text="{x:Bind ViewModel.WeatherInfo.TemperatureCelsius, Mode=OneWay, FallbackValue='-1'}"
+            Text="{x:Bind ViewModel.WeatherInfo.Temperature, Mode=OneWay, FallbackValue='-1'}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center" DoubleTapped="TemperatureTextBlock_DoubleTapped" />
 
@@ -214,6 +214,5 @@
             RelativePanel.Below="SunSetImage"
 
             Click="Button_Click" />
-
     </RelativePanel>
 </Page>
