@@ -21,7 +21,7 @@ namespace MagicMirror.Business.Configuration
                 .ReverseMap();
 
             CreateMap<TrafficEntity, TrafficModel>()
-                .ForMember(dest => dest.DistanceKilometers, source => source.MapFrom(src => src.Routes[0].Legs[0].Distance.Text))
+                .ForMember(dest => dest.DistanceKilometers, source => source.MapFrom(src => src.Routes[0].Legs[0].Distance.Value))
                 .ForMember(dest => dest.Minutes, source => source.MapFrom(src => src.Routes[0].Legs[0].Duration.Value))
                 .ForMember(dest => dest.MinutesText, source => source.MapFrom(src => src.Routes[0].Legs[0].Duration.Text))
                 .ReverseMap();
