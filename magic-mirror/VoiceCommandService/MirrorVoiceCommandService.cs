@@ -57,6 +57,48 @@ namespace VoiceCommandService
                             await SendCompletionMessage(ParameterAction.ChangeName, name, message);
                             break;
 
+                        case "changeAddress":
+                            string address = voiceCommand.Properties["address"][0];
+
+                            message = new CompletionMessage
+                            {
+                                Message = $"Change your address to {address}?",
+                                RepeatMessage = $"Do you want to change your address to {address}?",
+                                ConfirmMessage = $"Changing address to {address}",
+                                CompletedMessage = $"Your address has been changed to {address}",
+                                CanceledMessage = "Keeping address to original value",
+                            };
+                            await SendCompletionMessage(ParameterAction.ChangeAddress, address, message);
+                            break;
+
+                        case "changeTown":
+                            string town = voiceCommand.Properties["town"][0];
+
+                            message = new CompletionMessage
+                            {
+                                Message = $"Change your home town to {town}?",
+                                RepeatMessage = $"Do you want to change your home town to {town}?",
+                                ConfirmMessage = $"Changing home town to {town}",
+                                CompletedMessage = $"Your home town has been changed to {town}",
+                                CanceledMessage = "Keeping town to original value",
+                            };
+                            await SendCompletionMessage(ParameterAction.ChangeTown, town, message);
+                            break;
+
+                        case "changeWorkAddress":
+                            string workAddress = voiceCommand.Properties["workAddress"][0];
+
+                            message = new CompletionMessage
+                            {
+                                Message = $"Change your work Address to {workAddress}?",
+                                RepeatMessage = $"Do you want to change your work Address to {workAddress}?",
+                                ConfirmMessage = $"Changing work Address to {workAddress}",
+                                CompletedMessage = $"Your workAddress changed to {workAddress}",
+                                CanceledMessage = "Keeping workAddress to original value",
+                            };
+                            await SendCompletionMessage(ParameterAction.ChangeWorkAddress, workAddress, message);
+                            break;
+
                         case "changeTemperature":
                             string temperature = voiceCommand.Properties["temperature"][0];
 
@@ -116,15 +158,21 @@ namespace VoiceCommandService
                         case ParameterAction.ChangeName:
                             ChangeName(parameter);
                             break;
-
                         case ParameterAction.ChangeTemperature:
                             ChangeTemperature(parameter);
                             break;
-
                         case ParameterAction.ChangeDistance:
                             ChangeDistance(parameter);
                             break;
-
+                        case ParameterAction.ChangeAddress:
+                            ChangeAddress(parameter);
+                            break;
+                        case ParameterAction.ChangeTown:
+                            ChangeTown(parameter);
+                            break;
+                        case ParameterAction.ChangeWorkAddress:
+                            ChangeWorkAddress(parameter);
+                            break;
                         default:
                             break;
                     }
@@ -145,6 +193,27 @@ namespace VoiceCommandService
                     await voiceServiceConnection.ReportSuccessAsync(response);
                 }
             }
+        }
+
+        private void ChangeAddress(string address)
+        {
+            UserSettings userSettings = settingsService.ReadSettings(localFolder, SETTING_FILE);
+            userSettings.HomeAddress = address;
+            settingsService.SaveSettings(localFolder, SETTING_FILE, userSettings);
+        }
+
+        private void ChangeTown(string address)
+        {
+            UserSettings userSettings = settingsService.ReadSettings(localFolder, SETTING_FILE);
+            userSettings.HomeCity = address;
+            settingsService.SaveSettings(localFolder, SETTING_FILE, userSettings);
+        }
+
+        private void ChangeWorkAddress(string address)
+        {
+            UserSettings userSettings = settingsService.ReadSettings(localFolder, SETTING_FILE);
+            userSettings.WorkAddress = address;
+            settingsService.SaveSettings(localFolder, SETTING_FILE, userSettings);
         }
 
         private void ChangeDistance(string distance)

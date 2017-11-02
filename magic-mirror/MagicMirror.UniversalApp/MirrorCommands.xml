@@ -40,6 +40,29 @@
       <VoiceCommandService Target="MirrorVoiceCommandService" />
     </Command>
 
+    <Command Name="changeAddress">
+      <Example> Change my address </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> change [my] address to {address} </ListenFor>
+      <Feedback> Changing Address to {address} </Feedback>
+      <VoiceCommandService Target="MirrorVoiceCommandService" />
+    </Command>
+
+    <Command Name="changeTown">
+      <Example> Change my home town </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> change [my] [home] town to {town} </ListenFor>
+      <Feedback> Changing Town to {town} </Feedback>
+      <VoiceCommandService Target="MirrorVoiceCommandService" />
+    </Command>
+
+    <Command Name="changeWorkAddress">
+      <Example> Change my work Address </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> change [my] work address town to {workAddress} </ListenFor>
+      <Feedback> Changing work address to {workAddress} </Feedback>
+      <VoiceCommandService Target="MirrorVoiceCommandService" />
+    </Command>
+
+    
+
     <Command Name="changeTemperature">
       <Example>  Set the temperature notation to Fahrenheit </Example>
       <ListenFor RequireAppName="BeforeOrAfterPhrase"> change [my] [the] temperature [notation] to {temperature} </ListenFor>
@@ -52,13 +75,6 @@
       <Example> Set the distance to Imperial notation </Example>
       <ListenFor RequireAppName="BeforeOrAfterPhrase"> [change] [set] [my] [the] distance to {distance} [notation] </ListenFor>
       <Feedback> Changing distance notation to {distance} system </Feedback>
-      <VoiceCommandService Target="MirrorVoiceCommandService" />
-    </Command>
-
-    <Command Name="useCurrentLocation">
-      <Example> Use my current location </Example>
-      <ListenFor RequireAppName="BeforeOrAfterPhrase"> use [my] [current] location </ListenFor>
-      <Feedback> Setting current location as home address </Feedback>
       <VoiceCommandService Target="MirrorVoiceCommandService" />
     </Command>
 
@@ -75,6 +91,18 @@
 
     <PhraseTopic Label="name" Scenario="Dictation">
       <Subject>name</Subject>
+    </PhraseTopic>
+
+    <PhraseTopic Label="address" Scenario="Dictation">
+      <Subject>Address</Subject>
+    </PhraseTopic>
+
+    <PhraseTopic Label="town" Scenario="Dictation">
+      <Subject>Town</Subject>
+    </PhraseTopic>
+
+    <PhraseTopic Label="workAddress" Scenario="Dictation">
+      <Subject>Work Address</Subject>
     </PhraseTopic>
   </CommandSet>
 </VoiceCommands>
