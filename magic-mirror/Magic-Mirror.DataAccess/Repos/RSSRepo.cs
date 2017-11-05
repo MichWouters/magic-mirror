@@ -18,10 +18,10 @@ namespace MagicMirror.DataAccess.Repos
         {
             //TODO : config
 
-            _feed = "https://tvolen.wordpress.com/feed/";
-
-           // _feed = "http://www.theonion.com/feeds/rss";
-           // _feed = "http://www.hln.be/bizar/rss.xml";
+            _feed = "http://www.standaard.be/rss/section/a30afc42-3737-4301-8f8a-5b6833855457";
+            // _feed = "https://tvolen.wordpress.com/feed/";
+            // _feed = "http://www.theonion.com/feeds/rss";
+            // _feed = "http://www.hln.be/bizar/rss.xml";
         }
 
         public override async Task<RSSEntity> GetEntityAsync()
