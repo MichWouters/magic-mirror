@@ -1,5 +1,7 @@
 ﻿using MagicMirror.UniversalApp.ViewModels;
 using System;
+using System.Threading.Tasks;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -48,6 +50,11 @@ namespace MagicMirror.UniversalApp.Views
         private void TemperatureTextBlock_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
         {
             ViewModel.NavigateToOfflineData();
+        }
+
+        private async void Shutdown_Click(object sender, RoutedEventArgs e)
+        {
+            await Task.Run(() => ShutdownManager.BeginShutdown(ShutdownKind.Shutdown, new TimeSpan(1)));
         }
     }
 }

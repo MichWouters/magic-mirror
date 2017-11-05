@@ -18,16 +18,15 @@
             Content="{x:Bind ViewModel.CaptureElement}"
             Width="150"
             Height="100" />
-        <StackPanel Grid.Row="1" Orientation="Vertical">
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Path Width="20" Height="20" Stretch="Uniform" Fill="White" Margin="0, 0, 20, 0" Data="F1 M 131.432,90.6536C 128.611,76.0937 89.7838,77.6419 80.4271,66.2396C 78.4531,63.8334 78.4531,63.8334 79.776,54.8972C 82.0338,44.8945 84.0807,51.103 87.3098,31.1524C 90.0235,14.3972 84.2357,1.52588e-005 66.6667,1.52588e-005C 49.0976,1.52588e-005 43.3105,14.3972 46.0228,31.1524C 49.252,51.103 51.2975,44.8945 53.5573,54.8972C 54.8802,63.8334 54.8802,63.8334 52.907,66.2396C 43.5495,77.6419 4.72269,76.0937 1.90106,90.6536C 1.56641,92.3763 0,101.911 0,101.911L 133.333,101.911C 133.333,101.911 131.767,92.3763 131.432,90.6536 Z "/>
             <TextBlock
-            Foreground="Red"
-            Text="{x:Bind ViewModel.ApiOfflineText}" />
+                Margin="0, 0, 5, 0"
+                Foreground="White"
+                Text="{x:Bind ViewModel.User.FirstName, Mode=OneWay}" />
             <TextBlock
-            Foreground="White"
-            Text="{x:Bind ViewModel.User.FirstName, Mode=OneWay}" />
-            <TextBlock
-            Foreground="White"
-            Text="{x:Bind ViewModel.User.LastName, Mode=OneWay}" />
+                Foreground="White"
+                Text="{x:Bind ViewModel.User.LastName, Mode=OneWay}" />
         </StackPanel>
     </Grid>
 </UserControl>
