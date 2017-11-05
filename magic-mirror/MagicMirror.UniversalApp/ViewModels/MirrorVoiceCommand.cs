@@ -3,16 +3,12 @@
     public struct MirrorVoiceCommand
     {
         public string VoiceCommand;
-        public string CommandMode;
         public string TextSpoken;
-        public string Burger;
 
-        public MirrorVoiceCommand(string voiceCommand, string commandMode, string textSpoken, string burger)
+        public MirrorVoiceCommand(string voiceCommand, string textSpoken)
         {
             VoiceCommand = voiceCommand;
-            CommandMode = commandMode;
             TextSpoken = textSpoken;
-            Burger = burger;
         }
     }
 }

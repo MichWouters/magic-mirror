@@ -6,7 +6,7 @@
     <Example> Change my name </Example>
 
     <Command Name="openSettings">
-      <Example> Open Settings </Example>
+      <Example> Open settings on Mirror </Example>
       <ListenFor RequireAppName="BeforeOrAfterPhrase"> show [my] [the] settings </ListenFor>
       <ListenFor RequireAppName="BeforeOrAfterPhrase"> open [my] [the] settings </ListenFor>
       <ListenFor RequireAppName="BeforeOrAfterPhrase"> go to [my] [the] settings </ListenFor>
@@ -18,9 +18,9 @@
     </Command>
 
     <Command Name="openOfflineSettings">
-      <Example> Open Offline Settings </Example>
+      <Example> Mirror, Open my offline settings </Example>
       <ListenFor RequireAppName="BeforeOrAfterPhrase"> [show] [open] [go to] [my] [the] offline settings </ListenFor>
-      <Feedback> Opening offline settings. You sneaky scoundrel.</Feedback>
+      <Feedback> Opening offline settings.</Feedback>
       <Navigate />
     </Command>
 
@@ -34,9 +34,17 @@
     </Command>
 
     <Command Name="changeName">
-      <Example> Change my name </Example>
+      <Example> Mirror, Change my name </Example>
       <ListenFor RequireAppName="BeforeOrAfterPhrase"> change [my] name to {name} </ListenFor>
       <Feedback> Changing Name to {name} </Feedback>
+      <VoiceCommandService Target="MirrorVoiceCommandService" />
+    </Command>
+
+    <Command Name="changeTemperature">
+      <Example>  Set the temperature notation to Fahrenheit on Mirror</Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> change [my] [the] temperature [notation] to {temperature} </ListenFor>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> set [my] [the] temperature [notation] to {temperature} </ListenFor>
+      <Feedback> Changing Temperature notation to {temperature} </Feedback>
       <VoiceCommandService Target="MirrorVoiceCommandService" />
     </Command>
 
@@ -58,16 +66,6 @@
       <Example> Change my work Address </Example>
       <ListenFor RequireAppName="BeforeOrAfterPhrase"> change [my] work address town to {workAddress} </ListenFor>
       <Feedback> Changing work address to {workAddress} </Feedback>
-      <VoiceCommandService Target="MirrorVoiceCommandService" />
-    </Command>
-
-    
-
-    <Command Name="changeTemperature">
-      <Example>  Set the temperature notation to Fahrenheit </Example>
-      <ListenFor RequireAppName="BeforeOrAfterPhrase"> change [my] [the] temperature [notation] to {temperature} </ListenFor>
-      <ListenFor RequireAppName="BeforeOrAfterPhrase"> set [my] [the] temperature [notation] to {temperature} </ListenFor>
-      <Feedback> Changing Temperature notation to {temperature} </Feedback>
       <VoiceCommandService Target="MirrorVoiceCommandService" />
     </Command>
 

@@ -37,7 +37,7 @@ namespace MagicMirror.DataAccess.Repos
             }
         }
 
-        public override async Task<HttpResponseMessage> GetHttpResponseFromApiAsync()
+        protected override async Task<HttpResponseMessage> GetHttpResponseFromApiAsync()
         {
             try
             {

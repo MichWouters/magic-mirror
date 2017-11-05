@@ -1,6 +1,5 @@
 ﻿using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
-using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -16,16 +15,6 @@ namespace MagicMirror.Tests.Traffic
             string destination = "Earl Bakkenstraat 10, 6422 PJ Heerlen, Netherlands";
 
             _repo = new TrafficRepo(start, destination);
-        }
-
-        [Fact]
-        public async Task Can_Access_Api()
-        {
-            var result = await _repo.GetHttpResponseFromApiAsync();
-
-            Assert.NotNull(result);
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
-            Assert.True(result.IsSuccessStatusCode);
         }
 
         [Fact]

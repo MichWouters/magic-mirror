@@ -57,9 +57,12 @@ namespace MagicMirror.UniversalApp
 
             try
             {
-                // Install main VCD
+                // Load Vcd Storage File
                 StorageFile vcd = await Package.Current.InstalledLocation.GetFileAsync(@"MirrorCommands.xml");
+
+                // Install Voice commands from file
                 await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(vcd);
+
                 await UpdatePhraseList();
             }
             catch (Exception ex)
@@ -86,7 +89,6 @@ namespace MagicMirror.UniversalApp
         protected override void OnActivated(IActivatedEventArgs args)
         {
             base.OnActivated(args);
-
             Type navigationToPageType;
             ViewModels.MirrorVoiceCommand? navigationCommand = null;
 
@@ -97,22 +99,21 @@ namespace MagicMirror.UniversalApp
 
                 string voiceCommandName = speechRecognitionResult.RulePath[0];
                 string textSpoken = speechRecognitionResult.Text;
-                string commandMode = SemanticInterpretation("commandMode", speechRecognitionResult);
 
                 switch (voiceCommandName)
                 {
                     case "openSettings":
-                        navigationCommand = new ViewModels.MirrorVoiceCommand(voiceCommandName, commandMode, textSpoken, "");
+                        navigationCommand = new ViewModels.MirrorVoiceCommand(voiceCommandName, textSpoken);
                         navigationToPageType = typeof(SettingPage);
                         break;
 
                     case "openOfflineSettings":
-                        navigationCommand = new ViewModels.MirrorVoiceCommand(voiceCommandName, commandMode, textSpoken, "");
+                        navigationCommand = new ViewModels.MirrorVoiceCommand(voiceCommandName, textSpoken);
                         navigationToPageType = typeof(OfflineDataPage);
                         break;
 
                     case "openMain":
-                        navigationCommand = new ViewModels.MirrorVoiceCommand(voiceCommandName, commandMode, textSpoken, "");
+                        navigationCommand = new ViewModels.MirrorVoiceCommand(voiceCommandName, textSpoken);
                         navigationToPageType = typeof(MainPage);
                         break;
 

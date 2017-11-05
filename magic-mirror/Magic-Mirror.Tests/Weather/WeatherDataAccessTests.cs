@@ -14,19 +14,6 @@ namespace MagicMirror.Tests.Weather
             _repo = new WeatherRepo("London");
         }
 
-        // If this test fails, we know why other test fail
-        [Fact]
-        public async Task Can_Connect_To_Api()
-        {
-            // Act
-            var result = await _repo.GetHttpResponseFromApiAsync();
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.True(result.IsSuccessStatusCode);
-            Assert.Equal("200", result.StatusCode.ToString());
-        }
-
         [Fact]
         public async Task Result_Not_Null()
         {

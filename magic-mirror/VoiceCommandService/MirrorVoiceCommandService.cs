@@ -13,8 +13,6 @@ namespace VoiceCommandService
     {
         private VoiceCommandServiceConnection voiceServiceConnection;
         private BackgroundTaskDeferral serviceDeferral;
-        private ResourceContext cortanaContext;
-
         private SettingsService settingsService;
         private readonly string localFolder = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
         private const string SETTING_FILE = "settings.json";
@@ -28,9 +26,7 @@ namespace VoiceCommandService
         {
             serviceDeferral = taskInstance.GetDeferral();
             taskInstance.Canceled += OnTaskCanceled;
-
             var triggerDetails = taskInstance.TriggerDetails as AppServiceTriggerDetails;
-            cortanaContext = ResourceContext.GetForViewIndependentUse();
 
             if (triggerDetails != null && triggerDetails.Name == "MirrorVoiceCommandService")
             {
@@ -158,21 +154,27 @@ namespace VoiceCommandService
                         case ParameterAction.ChangeName:
                             ChangeName(parameter);
                             break;
+
                         case ParameterAction.ChangeTemperature:
                             ChangeTemperature(parameter);
                             break;
+
                         case ParameterAction.ChangeDistance:
                             ChangeDistance(parameter);
                             break;
+
                         case ParameterAction.ChangeAddress:
                             ChangeAddress(parameter);
                             break;
+
                         case ParameterAction.ChangeTown:
                             ChangeTown(parameter);
                             break;
+
                         case ParameterAction.ChangeWorkAddress:
                             ChangeWorkAddress(parameter);
                             break;
+
                         default:
                             break;
                     }

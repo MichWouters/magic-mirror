@@ -7,7 +7,5 @@ namespace MagicMirror.DataAccess.Repos
     public interface IApiRepo<T> where T : IEntity
     {
         Task<T> GetEntityAsync();
-
-        Task<HttpResponseMessage> GetHttpResponseFromApiAsync();
     }
 }

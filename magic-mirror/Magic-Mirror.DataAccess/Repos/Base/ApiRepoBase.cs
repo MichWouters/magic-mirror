@@ -22,7 +22,7 @@ namespace MagicMirror.DataAccess.Repos
         /// Retrieve a Json object as string from an Api
         /// </summary>
         /// <returns></returns>
-        public async Task<string> GetJsonAsync()
+        protected async Task<string> GetJsonAsync()
         {
             try
             {
@@ -41,7 +41,7 @@ namespace MagicMirror.DataAccess.Repos
         /// Get an HttpResponse (with data) from an API. Throws catchable exception if no connection can be made
         /// </summary>
         /// <returns></returns>
-        public virtual async Task<HttpResponseMessage> GetHttpResponseFromApiAsync()
+        protected virtual async Task<HttpResponseMessage> GetHttpResponseFromApiAsync()
         {
             var client = new HttpClient();
             HttpResponseMessage _response = await client.GetAsync(_url);
