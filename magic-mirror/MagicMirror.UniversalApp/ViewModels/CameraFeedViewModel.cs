@@ -32,6 +32,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         private readonly UserService _userService;
         private UserViewModel _user = new UserViewModel();
         private string _apiOfflineText;
+        private const int CHECK_INTERVAL = 10;// in seconds
 
         public UserViewModel User
         {
@@ -145,6 +146,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                                         {
                                             user = new UserProfileModel().RandomData(detectedPerson.Gender);
                                             user.PersonId = detectedPerson.PersonId.Value;
+                                            user.FaceIds.Add(detectedPerson.FaceId.Value);
                                             user = await _userService.AddUserAsync(user);
                                         }
                                         await UserViewModel.SetValuesAsync(User, user);
@@ -163,12 +165,12 @@ namespace MagicMirror.UniversalApp.ViewModels
                                         user.PersonId = await _faceService.CreatePersonAsync(user.FullName);
                                         var faceIds = new List<Guid>();
                                         faceIds.Add(await _faceService.AddFaceAsync(user.PersonId, stream.AsStream()));
-                                        user.FaceIds = faceIds.ToArray();
+                                        user.FaceIds.AddRange(faceIds);
                                         user = await _userService.AddUserAsync(user);
                                         await UserViewModel.SetValuesAsync(User, user);
                                     }
 
-                                    await Task.Delay(10000, _requestStopCancellationToken.Token);
+                                    await Task.Delay(CHECK_INTERVAL * 1000, _requestStopCancellationToken.Token);
                                 }
                             }
                             lastFrameTime = frame.RelativeTime;
