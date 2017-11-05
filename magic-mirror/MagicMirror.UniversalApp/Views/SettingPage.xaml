@@ -111,6 +111,6 @@
                 Width="400" Margin="0,10,0,0" Click="Button_Click" />
             </RelativePanel>
         </ScrollViewer>
-        <!--<local:WiFiSettings Grid.Column="1" />-->
+        <local:WiFiSettings Grid.Column="1" />
     </Grid>
 </Page>

@@ -1,5 +1,6 @@
 ﻿using MagicMirror.DataAccess.Entities.User;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace MagicMirror.DataAccess
 {
@@ -20,10 +21,20 @@ namespace MagicMirror.DataAccess
 
         private void CheckDb()
         {
-            if (!System.IO.File.Exists(_dbFile))
+            Database.EnsureCreated();
+            var home = AddressTypes.Find(AddressType.Home.Id);
+            if (home == null)
             {
-                Database.EnsureDeleted();
-                Database.EnsureCreated();
+                AddressTypes.Add(AddressType.Home);
+            }
+            var work = AddressTypes.Find(AddressType.Work.Id);
+            if (work == null)
+            {
+                AddressTypes.Add(AddressType.Work);
+            }
+            if (home == null || work == null)
+            {
+                SaveChanges();
             }
         }
 
