@@ -23,13 +23,10 @@
             Foreground="Red"
             Text="{x:Bind ViewModel.ApiOfflineText}" />
             <TextBlock
-            Foreground="Yellow"
-            Text="Hello" />
-            <TextBlock
-            Foreground="Yellow"
+            Foreground="White"
             Text="{x:Bind ViewModel.User.FirstName, Mode=OneWay}" />
             <TextBlock
-            Foreground="Yellow"
+            Foreground="White"
             Text="{x:Bind ViewModel.User.LastName, Mode=OneWay}" />
         </StackPanel>
     </Grid>

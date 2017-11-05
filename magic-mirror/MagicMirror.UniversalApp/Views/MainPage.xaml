@@ -117,7 +117,7 @@
             Style="{StaticResource Compliment}"
             Text="{x:Bind ViewModel.Compliment, Mode= OneWay, FallbackValue='Foo'}" />
 
-        <TextBlock
+        <!--<TextBlock
             x:Name="ScoopTextBox"
             RelativePanel.Above="DurationImage"
             RelativePanel.AlignVerticalCenterWithPanel="True"
@@ -131,7 +131,7 @@
             RelativePanel.RightOf="ScoopTextBox"
             Text="TODO"
             Margin="5,0,0,15"
-            FontSize="12" HorizontalAlignment="Left" />
+            FontSize="12" HorizontalAlignment="Left" />-->
 
         <Image
             x:Name="DurationImage"

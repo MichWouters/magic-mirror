@@ -13,6 +13,8 @@ namespace MagicMirror.Business.Cognitive
     public class FaceService
     {
         // TODO: app settings (https://docs.microsoft.com/en-us/windows/uwp/app-settings/app-settings-and-data)
+        
+            //"94125687ef704084a503c60792359f5d"; //ORDINA KEY
         private const string API_KEY = "2857aeacf78c475c80fa2467fa917397";
 
         private const string API_ENDPOINT = "https://westeurope.api.cognitive.microsoft.com/face/v1.0";
@@ -22,9 +24,16 @@ namespace MagicMirror.Business.Cognitive
 
         public FaceService()
         {
-            _faceApiClient = new FaceServiceClient(API_KEY, API_ENDPOINT);
-            var t = Task.Run(() => CreateGroupIfNotExists());
-            t.Wait();
+            try
+            {
+                _faceApiClient = new FaceServiceClient(API_KEY, API_ENDPOINT);
+                var t = Task.Run(() => CreateGroupIfNotExists());
+                t.Wait();
+            }
+            catch (Exception)
+            {
+                // don't throw
+            }
         }
 
         /// <summary>
@@ -139,6 +148,11 @@ namespace MagicMirror.Business.Cognitive
                 FaceAttributeType.Smile
             });
 
+            if (faces.Length < 1)
+            {
+                return null;
+            }
+
             var identification = await _faceApiClient.IdentifyAsync(MAGIC_MIRROR_GROUP, faces.Select(f => f.FaceId).ToArray());
 
             if (identification == null || identification.Length != 1 || !identification.First().Candidates.Any())
@@ -146,6 +160,7 @@ namespace MagicMirror.Business.Cognitive
                 return new FaceInfoModel
                 {
                     PersonId = null,
+                    FaceId = null,
                     Age = faces.FirstOrDefault()?.FaceAttributes?.Age,
                     Gender = faces.FirstOrDefault()?.FaceAttributes?.Gender
                 };
@@ -158,6 +173,7 @@ namespace MagicMirror.Business.Cognitive
                 return new FaceInfoModel
                 {
                     PersonId = null,
+                    FaceId = null,
                     Age = faces.FirstOrDefault()?.FaceAttributes?.Age,
                     Gender = faces.FirstOrDefault()?.FaceAttributes?.Gender
                 };
@@ -166,6 +182,7 @@ namespace MagicMirror.Business.Cognitive
             return new FaceInfoModel
             {
                 PersonId = candidate.PersonId,
+                FaceId = identification.First().FaceId,
                 Age = faces.FirstOrDefault()?.FaceAttributes?.Age,
                 Gender = faces.FirstOrDefault()?.FaceAttributes?.Gender
             };
