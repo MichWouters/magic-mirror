@@ -28,7 +28,7 @@ namespace MagicMirror.Business.Services
 
                 return model;
             }
-            catch (AutoMapper.AutoMapperMappingException ex)
+            catch (AutoMapper.AutoMapperMappingException)
             {
                 throw;
             }

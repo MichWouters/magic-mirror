@@ -101,6 +101,7 @@ namespace MagicMirror.UniversalApp.Views
                 SetSelectedItemState(network);
             }
         }
+
         private void SetSelectedItemState(WiFiNetworkViewModel network)
         {
             if (network == null)
@@ -116,14 +117,14 @@ namespace MagicMirror.UniversalApp.Views
             }
         }
 
-        private void ConnectButton_Click(object sender, RoutedEventArgs e)
+        private async void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.ConnectAsync();
+            await ViewModel.ConnectAsync();
         }
 
         private void Disconnect_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.DisconnectAsync();
+            ViewModel.Disconnect();
         }
     }
 }

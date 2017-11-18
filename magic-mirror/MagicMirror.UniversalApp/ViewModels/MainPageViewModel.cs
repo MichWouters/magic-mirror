@@ -186,7 +186,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 if (!trafficTimer.IsEnabled) trafficTimer.Start();
             }
-            catch (HttpRequestException ex)
+            catch (HttpRequestException)
             {
                 TrafficModel trafficModel = _trafficService.GetOfflineModel(localFolder);
                 TrafficInfo = trafficModel;
@@ -195,7 +195,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 await Task.Delay((minutes * 60) * 10000);
                 RefreshTrafficModel(null, null);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 if (trafficTimer.IsEnabled) trafficTimer.Stop();
 

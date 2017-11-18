@@ -49,6 +49,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
+                // TODO: Modernize
                 var coordinates = await _locationService.GetLocationAsync();
                 _addressService = new AddressService(coordinates.Coordinate.Latitude.ToString(), coordinates.Coordinate.Longitude.ToString());
                 AddressModel addressModel = await _addressService.GetModelAsync();
