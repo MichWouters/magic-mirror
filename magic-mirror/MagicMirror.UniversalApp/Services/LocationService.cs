@@ -6,6 +6,14 @@ namespace MagicMirror.UniversalApp.Services
 {
     public class LocationService : ILocationService
     {
+        public async Task<Geoposition> GetLocationAsync()
+        {
+            var access = await RequestAccessAsync();
+            var pos = await GetCoordinates();
+
+            return pos;
+        }
+
         private async Task<GeolocationAccessStatus> RequestAccessAsync()
         {
             GeolocationAccessStatus accessStatus = await Geolocator.RequestAccessAsync();
@@ -23,17 +31,17 @@ namespace MagicMirror.UniversalApp.Services
         private async Task<Geoposition> GetCoordinates()
         {
             Geolocator geolocator = new Geolocator { DesiredAccuracyInMeters = 25 };
-            Geoposition pos = await geolocator.GetGeopositionAsync();
+            Geoposition position = await geolocator.GetGeopositionAsync();
 
-            return pos;
+            geolocator.PositionChanged += OnPositionChanged;
+
+            return position;
         }
 
-        public async Task<Geoposition> GetLocationAsync()
+        private void OnPositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
-            var access = await RequestAccessAsync();
-            var pos = await GetCoordinates();
-
-            return pos;
+            var latitude = args.Position.Coordinate.Point.Position.Latitude;
+            var longitude = args.Position.Coordinate.Point.Position.Longitude;
         }
     }
 }
