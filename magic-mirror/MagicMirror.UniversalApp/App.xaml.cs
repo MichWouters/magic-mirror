@@ -1,8 +1,10 @@
 ﻿using MagicMirror.UniversalApp.Common;
+using MagicMirror.UniversalApp.Services;
 using MagicMirror.UniversalApp.Views;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Unity;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.VoiceCommands;
@@ -84,6 +86,12 @@ namespace MagicMirror.UniversalApp
             {
                 System.Diagnostics.Debug.WriteLine("Updating Phrase list for VCDs: " + ex.ToString());
             }
+        }
+
+        private void SetUpUnityContainers()
+        {
+            IUnityContainer myContainer = new UnityContainer();
+            myContainer.RegisterType<ILocationService, LocationService>();
         }
 
         protected override void OnActivated(IActivatedEventArgs args)
