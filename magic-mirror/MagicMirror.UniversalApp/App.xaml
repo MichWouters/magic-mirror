@@ -9,6 +9,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <convertor:TemperatureConverter x:Key="tempConvertor"></convertor:TemperatureConverter>
+
+            <local:ViewModelLocator x:Key="mainViewModelLocator"></local:ViewModelLocator>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

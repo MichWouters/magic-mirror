@@ -114,6 +114,7 @@
     <Compile Include="ViewModels\SettingPageViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="ViewModels\WiFiSettingsViewModel.cs" />
     <Compile Include="Views\CameraFeed.xaml.cs">
       <DependentUpon>CameraFeed.xaml</DependentUpon>

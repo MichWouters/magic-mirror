@@ -4,12 +4,11 @@ using MagicMirror.Business.Configuration;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Repos;
-using System;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public abstract class ServiceBase<T, Y> : IApiService<T> where T : IModel
+    public abstract class ServiceBase<T, Y> : IService<T> where T : IModel
                                                              where Y : IEntity
     {
         protected IMapper Mapper;
@@ -33,7 +32,7 @@ namespace MagicMirror.Business.Services
         /// </summary>
         public abstract void SaveOfflineModel(T model, string path);
 
-        // Child classes CAN override virtual methods.
+        // Child classes CAN override virtual methods, but MUST implement abstract methods
         /// <summary>
         /// Map Entity to Business Model using AutoMapper
         /// </summary>

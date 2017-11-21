@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public interface IApiService<T> where T : IModel
+    public interface IService<T> where T : IModel
     {
         Task<T> GetModelAsync();
 

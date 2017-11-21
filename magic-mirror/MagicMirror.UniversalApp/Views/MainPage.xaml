@@ -5,6 +5,7 @@
     xmlns:local="using:MagicMirror.UniversalApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource mainViewModelLocator},Path=MainPageViewModel}"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -48,32 +49,33 @@
         </Style>
     </Page.Resources>
 
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{Binding WeatherInfo}">
         <!--  Top Left elements  -->
 
         <!--  Main Temperature  -->
         <TextBlock
             x:Name="TemperatureTextBlock"
             Style="{StaticResource Degrees}"
-            Text="{x:Bind ViewModel.WeatherInfo.Temperature, Converter={StaticResource tempConvertor}, Mode=OneWay, FallbackValue='-1'}"
+            Text="{Binding WeatherInfo.Temperature, Converter={StaticResource tempConvertor}, Mode=OneWay, FallbackValue='-1'}"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center" DoubleTapped="TemperatureTextBlock_DoubleTapped" />
+            VerticalAlignment="Center"
+            DoubleTapped="TemperatureTextBlock_DoubleTapped" />
 
         <TextBlock
             x:Name="WeatherTextBox"
             RelativePanel.Below="TemperatureTextBlock"
             Style="{StaticResource WeatherType}"
-            Text="{x:Bind ViewModel.WeatherInfo.WeatherType, Mode= OneWay, FallbackValue='Unavailable'}" />
+            Text="{Binding WeatherInfo.WeatherType, Mode= OneWay, FallbackValue='Unavailable'}" />
 
         <TextBlock x:Name="LocationTextBlock"
                    RelativePanel.Below="WeatherTextBox"
                    FontSize="10"
-                   Text="{x:Bind ViewModel.WeatherInfo.Location, Mode= OneWay,FallbackValue='Montgomery'}"
+                   Text="{Binding WeatherInfo.Location, Mode= OneWay,FallbackValue='Montgomery'}"
                    Margin="0,0,0,10" />
 
         <Image
             x:Name="WeatherImage"
-            Source="{x:Bind ViewModel.WeatherInfo.Icon, Mode=OneWay, FallbackValue=ms-appx:///Assets/Weather/Dark/01d.png}"
+            Source="{Binding WeatherInfo.Icon, Mode=OneWay, FallbackValue=ms-appx:///Assets/Weather/Dark/01d.png}"
             RelativePanel.RightOf="TemperatureTextBlock"
             RelativePanel.AlignVerticalCenterWith="TemperatureTextBlock"
             Style="{StaticResource CurrentWeatherImage}" />
@@ -88,7 +90,7 @@
             x:Name="SunriseTextBox"
             RelativePanel.AlignVerticalCenterWith="SunriseImage"
             RelativePanel.RightOf="SunriseImage"
-            Text="{x:Bind ViewModel.WeatherInfo.SunRise, Mode= OneWay, FallbackValue='0:00 am'}" />
+            Text="{Binding WeatherInfo.SunRise, Mode= OneWay, FallbackValue='0:00 am'}" />
 
         <Image
             x:Name="SunSetImage"
@@ -100,7 +102,7 @@
             x:Name="SunsetTextBox"
             RelativePanel.AlignVerticalCenterWith="SunSetImage"
             RelativePanel.RightOf="SunSetImage"
-            Text="{x:Bind ViewModel.WeatherInfo.SunSet, Mode= OneWay,FallbackValue='00:00 am'}" />
+            Text="{Binding WeatherInfo.SunSet, Mode= OneWay,FallbackValue='00:00 am'}" />
 
         <!--  Bottom of the page  -->
         <TextBlock
@@ -108,23 +110,7 @@
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             RelativePanel.AlignVerticalCenterWithPanel="True"
             Style="{StaticResource Compliment}"
-            Text="{x:Bind ViewModel.Compliment, Mode= OneWay, FallbackValue='Foo'}" />
-
-        <!--<TextBlock
-            x:Name="ScoopTextBox"
-            RelativePanel.Above="DurationImage"
-            RelativePanel.AlignVerticalCenterWithPanel="True"
-            Text="Here's the latest news"
-            Margin="0,0,0,15"
-            FontSize="12" />
-
-        <TextBlock
-            x:Name="ScoopName"
-            RelativePanel.Above="DurationImage"
-            RelativePanel.RightOf="ScoopTextBox"
-            Text="TODO"
-            Margin="5,0,0,15"
-            FontSize="12" HorizontalAlignment="Left" />-->
+            Text="{Binding Compliment, Mode= OneWay, FallbackValue='Foo'}" />
 
         <Image
             x:Name="DurationImage"
@@ -143,7 +129,7 @@
             x:Name="DurationTextBlock"
             RelativePanel.AlignBottomWithPanel="True"
             Style="{StaticResource BottomMetaDeta}"
-            Text="{x:Bind ViewModel.TrafficInfo.Summary, Mode= OneWay, FallbackValue='Unavailable'}"
+            Text="{Binding TrafficInfo.Summary, Mode= OneWay, FallbackValue='Unavailable'}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontSize="18"
@@ -170,7 +156,7 @@
                   VerticalScrollBarVisibility="Hidden">
             <TextBlock
                     x:Name="RSSTextBlock"
-                    Text="{x:Bind ViewModel.RSSInfo.Summary, Mode= OneWay, FallbackValue='No RSS for you'}"
+                    Text="{Binding RSSInfo.Summary, Mode= OneWay, FallbackValue='No RSS for you'}"
                     FontSize="20"
                     TextAlignment="Left" VerticalAlignment="Top"
                 HorizontalAlignment="Left"
@@ -192,13 +178,13 @@
             Style="{StaticResource DateTextBlock}"
             RelativePanel.Below="TimeTextBlock"
             RelativePanel.AlignRightWithPanel="True"
-            Text="{x:Bind ViewModel.Date.DateFull, Mode= OneWay, FallbackValue='Januari 1, 1970'}" />
+            Text="{Binding Date.DateFull, Mode= OneWay, FallbackValue='Januari 1, 1970'}" />
 
         <TextBlock
             x:Name="TimeTextBlock"
             FontSize="48"
             RelativePanel.AlignRightWithPanel="True"
-            Text="{x:Bind ViewModel.Time, Mode=OneWay, FallbackValue='00:00'}" />
+            Text="{Binding Time, Mode=OneWay, FallbackValue='00:00'}" />
 
         <!-- Todo: Place somewhere more UI friendly -->
         <Button

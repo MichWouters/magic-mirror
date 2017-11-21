@@ -1,5 +1,4 @@
-﻿using MagicMirror.UniversalApp.ViewModels;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Windows.System;
 using Windows.UI.Xaml;
@@ -9,13 +8,10 @@ namespace MagicMirror.UniversalApp.Views
 {
     public sealed partial class MainPage : Page
     {
-        public MainPageViewModel ViewModel { get; } = new MainPageViewModel();
-
         private DispatcherTimer rssTimerRefresh;
 
         public MainPage()
         {
-            DataContext = ViewModel;
             InitializeComponent();
 
             rssTimerRefresh = new DispatcherTimer();
@@ -44,12 +40,12 @@ namespace MagicMirror.UniversalApp.Views
 
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            ViewModel.NavigateToSettings();
+            //ViewModel.NavigateToSettings();
         }
 
         private void TemperatureTextBlock_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
         {
-            ViewModel.NavigateToOfflineData();
+            //ViewModel.NavigateToOfflineData();
         }
 
         private async void Shutdown_Click(object sender, RoutedEventArgs e)

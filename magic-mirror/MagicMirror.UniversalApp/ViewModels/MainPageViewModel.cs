@@ -11,9 +11,9 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         // Services from the Business Layer
 
-        private IApiService<WeatherModel> _weatherService;
-        private IApiService<RSSModel> _rssService;
-        private IApiService<TrafficModel> _trafficService;
+        private IService<WeatherModel> _weatherService;
+        private IService<RSSModel> _rssService;
+        private IService<TrafficModel> _trafficService;
         private ISettingsService _settingsService;
         private CommonService _commonService;
 

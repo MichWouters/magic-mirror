@@ -10,7 +10,7 @@ namespace MagicMirror.Tests.Traffic
     public class TrafficBusinessTests
     {
         private readonly IApiRepo<TrafficEntity> _repo;
-        private readonly IApiService<TrafficModel> _service;
+        private readonly IService<TrafficModel> _service;
 
         public TrafficBusinessTests()
         {

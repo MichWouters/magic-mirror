@@ -14,13 +14,10 @@ namespace MagicMirror.UniversalApp.ViewModels
         private UserSettings _userSettings;
         private ILocationService _locationService;
         private ISettingsService _settingsService;
-        private IApiService<AddressModel> _addressService;
+        private IService<AddressModel> _addressService;
 
         public SettingPageViewModel()
         {
-            _settingsService = new SettingsService();
-            _locationService = new LocationService();
-
             try
             {
                 _userSettings = LoadSettings();
@@ -28,8 +25,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             catch (FileNotFoundException)
             {
                 DisplayErrorMessage("No Settings File Found",
-                    "It looks like you're running this app for the first time." +
-                    " We created a new settings file with default values. Please enter your settings now.");
+                    "It looks like you're running this app for the first time. We created a new settings file with default values. Please enter your settings now.");
             }
         }
 
