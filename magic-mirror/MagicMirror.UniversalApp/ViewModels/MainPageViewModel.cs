@@ -28,9 +28,9 @@ namespace MagicMirror.UniversalApp.ViewModels
         public MainPageViewModel()
         {
             SetUpServices();
-            SetUpTimers();
-            LoadDataOnPageStartup();
-            SetRefreshTimers();
+            //SetUpTimers();
+            //LoadDataOnPageStartup();
+            //SetRefreshTimers();
         }
 
         #region Methods
@@ -42,8 +42,8 @@ namespace MagicMirror.UniversalApp.ViewModels
                 _settingsService = new SettingsService();
                 UserSettings userSettings = _settingsService.ReadSettings(localFolder, SETTING_FILE);
 
-                _weatherService = new WeatherService(userSettings);
-                _trafficService = new TrafficService(userSettings);
+                _weatherService = new WeatherService();
+                _trafficService = new TrafficService();
                 _commonService = new CommonService();
                 _rssService = new RSSService();
             }

@@ -27,6 +27,16 @@ namespace MagicMirror.DataAccess.Repos
             catch (Exception) { throw; }
         }
 
+        private void ValidateInputParameters(string city)
+        {
+            _apiUrl = DataAccessConfig.OpenWeatherApiUrl;
+            _apiId = DataAccessConfig.OpenWeatherApiId;
+
+            if (string.IsNullOrWhiteSpace(_apiUrl)) throw new ArgumentNullException("No Weather API Url provided");
+            if (string.IsNullOrWhiteSpace(_apiId)) throw new ArgumentNullException("No Weather Api Id provided");
+            if (string.IsNullOrWhiteSpace(city)) throw new ArgumentNullException("A home city has to be provided");
+        }
+
         protected override async Task<HttpResponseMessage> GetHttpResponseFromApiAsync()
         {
             try
@@ -40,16 +50,6 @@ namespace MagicMirror.DataAccess.Repos
                 throw new HttpRequestException(errorMessage, ex);
             }
             catch (Exception) { throw; }
-        }
-
-        private void ValidateInputParameters(string city)
-        {
-            _apiUrl = DataAccessConfig.OpenWeatherApiUrl;
-            _apiId = DataAccessConfig.OpenWeatherApiId;
-
-            if (string.IsNullOrWhiteSpace(_apiUrl)) throw new ArgumentNullException("No Weather API Url provided");
-            if (string.IsNullOrWhiteSpace(_apiId)) throw new ArgumentNullException("No Weather Api Id provided");
-            if (string.IsNullOrWhiteSpace(city)) throw new ArgumentNullException("A home city has to be provided");
         }
     }
 }

@@ -3,16 +3,20 @@
     public class ViewModelLocator
     {
         private static MainPageViewModel mainPageViewModel = new MainPageViewModel();
-        private static SettingPageViewModel settingPageViewModel = new SettingPageViewModel();
+        //private static SettingPageViewModel settingPageViewModel = new SettingPageViewModel();
 
         public static MainPageViewModel MainPageViewModel
         {
-            get { return mainPageViewModel; }
+            get
+            {
+                var x = mainPageViewModel;
+                return x;
+            }
         }
 
-        public static SettingPageViewModel SettingPageViewModel
-        {
-            get { return settingPageViewModel; }
-        }
+        //public static SettingPageViewModel SettingPageViewModel
+        //{
+        //    get { return settingPageViewModel; }
+        //}
     }
 }

@@ -1,5 +1,4 @@
 ﻿using MagicMirror.DataAccess.Entities;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos

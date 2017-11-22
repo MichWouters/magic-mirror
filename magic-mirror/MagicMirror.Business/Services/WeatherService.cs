@@ -3,6 +3,7 @@ using Acme.Generic.Extensions;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class WeatherService : ServiceBase<WeatherModel, WeatherEntity>
+    public class WeatherService : ServiceBase<WeatherModel, WeatherEntity>, IWeatherService
     {
         private const string OFFLINEMODELNAME = "WeatherOfflineModel.json";
 
@@ -18,21 +19,18 @@ namespace MagicMirror.Business.Services
         {
         }
 
-        public WeatherService(UserSettings criteria)
+        public override async Task<WeatherModel> GetModelAsync()
         {
-            // Defensive coding
-            if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
-            if (string.IsNullOrWhiteSpace(criteria.HomeCity)) throw new ArgumentException("A city has to be provided");
-
-            // Set up parameters
-            _criteria = criteria;
-            _repo = new WeatherRepo(_criteria.HomeCity);
+            string homeCity = "Houwaart, Belgium";
+            return await GetModelAsync(homeCity);
         }
 
-        public override async Task<WeatherModel> GetModelAsync()
+        public async Task<WeatherModel> GetModelAsync(string homeCity)
         {
             try
             {
+                _repo = new WeatherRepo(homeCity);
+
                 // Get entity from Repository.
                 WeatherEntity entity = await _repo.GetEntityAsync();
 
@@ -61,12 +59,11 @@ namespace MagicMirror.Business.Services
         {
             try
             {
-                // Try reading Json object
-                /* string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
-                 WeatherModel model = JsonConvert.DeserializeObject<WeatherModel>(json);
+                //Try reading Json object
+                string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
+                WeatherModel model = JsonConvert.DeserializeObject<WeatherModel>(json);
 
-                 return model;*/
-                return GenerateOfflineModel();
+                return model;
             }
             catch (FileNotFoundException)
             {

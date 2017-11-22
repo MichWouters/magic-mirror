@@ -12,43 +12,43 @@
     <Page.Resources>
         <DataTemplate x:Name="WifiInitialState">
             <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding Path=WiFiImage}" Stretch="UniformToFill" Height="32" Width="32" Margin="5"/>
+                <Image Source="{Binding Path=WiFiImage}" Stretch="UniformToFill" Height="32" Width="32" Margin="5" />
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <TextBlock Text="Ssid:" Margin="0,0,5,0" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding Path=Ssid}" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                    <TextBlock Text="{Binding Path=ConnectionKinds}" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,5,0" Visibility="{Binding Path=ConnectionKindsVisibility}"/>
+                    <TextBlock Text="Ssid:" Margin="0,0,5,0" VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding Path=Ssid}" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,5,0" />
+                    <TextBlock Text="{Binding Path=ConnectionKinds}" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,5,0" Visibility="{Binding Path=ConnectionKindsVisibility}" />
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Name="WifiConnectState">
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="{Binding Path=WiFiImage}" Stretch="UniformToFill" Height="32" Width="32" Margin="5"/>
+                    <Image Source="{Binding Path=WiFiImage}" Stretch="UniformToFill" Height="32" Width="32" Margin="5" />
                     <StackPanel Orientation="Horizontal" Margin="5">
-                        <TextBlock Text="Ssid:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="{Binding Path=Ssid}" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,5,0" VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding Path=ConnectionKinds}" TextWrapping="Wrap" Margin="0,0,5,0" VerticalAlignment="Center" Visibility="{Binding Path=ConnectionKindsVisibility}"/>
+                        <TextBlock Text="Ssid:" VerticalAlignment="Center" Margin="0,0,5,0" />
+                        <TextBlock Text="{Binding Path=Ssid}" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,5,0" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding Path=ConnectionKinds}" TextWrapping="Wrap" Margin="0,0,5,0" VerticalAlignment="Center" Visibility="{Binding Path=ConnectionKindsVisibility}" />
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="5">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Bssid:" Margin="0,0,5,0"/>
+                        <TextBlock Text="Bssid:" Margin="0,0,5,0" />
                         <TextBlock Text="{Binding Path=Bssid}" TextWrapping="Wrap" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Rssi:" Margin="0,0,5,0"/>
-                        <TextBlock Text="{Binding Path=Rssi}"/>
+                        <TextBlock Text="Rssi:" Margin="0,0,5,0" />
+                        <TextBlock Text="{Binding Path=Rssi}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Ch. Frequency:" Margin="0,0,5,0"/>
-                        <TextBlock Text="{Binding Path=ChannelCenterFrequency}" TextWrapping="Wrap"/>
+                        <TextBlock Text="Ch. Frequency:" Margin="0,0,5,0" />
+                        <TextBlock Text="{Binding Path=ChannelCenterFrequency}" TextWrapping="Wrap" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Path=SecuritySettings}" TextWrapping="Wrap" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Path=SecuritySettings}" TextWrapping="Wrap" Margin="0,0,5,0" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock FontWeight="Bold" Text="{Binding Path=ConnectivityLevel}" TextWrapping="Wrap" Margin="0,0,5,0"/>
+                        <TextBlock FontWeight="Bold" Text="{Binding Path=ConnectivityLevel}" TextWrapping="Wrap" Margin="0,0,5,0" />
                     </StackPanel>
                 </StackPanel>
 
@@ -62,19 +62,19 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="User:" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
-                        <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Text="{Binding Path=UserName, Mode=TwoWay}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Domain:" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Text="{Binding Path=Domain, Mode=TwoWay}"/>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Password:" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
-                        <PasswordBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Password="{Binding Path=Password, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="User:" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" />
+                        <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Text="{Binding Path=UserName, Mode=TwoWay}" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Domain:" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" />
+                        <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Text="{Binding Path=Domain, Mode=TwoWay}" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Password:" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" />
+                        <PasswordBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5" Password="{Binding Path=Password, Mode=TwoWay}" />
                     </Grid>
                     <StackPanel x:Name="NetworkKeyInfo" Orientation="Horizontal" Visibility="{Binding Path=NetworkKeyInfoVisibility}">
-                        <TextBlock Text="Security Key:" Margin="5" VerticalAlignment="Bottom"/>
-                        <PasswordBox Width="124" Margin="5" Password="{Binding Path=Password, Mode=TwoWay}"/>
+                        <TextBlock Text="Security Key:" Margin="5" VerticalAlignment="Bottom" />
+                        <PasswordBox Width="124" Margin="5" Password="{Binding Path=Password, Mode=TwoWay}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Button Click="ConnectButton_Click" Margin="5">Connect</Button>
@@ -85,34 +85,34 @@
         <DataTemplate x:Name="WifiConnectingState">
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="{Binding Path=WiFiImage}" Stretch="UniformToFill" Height="32" Width="32" Margin="5"/>
+                    <Image Source="{Binding Path=WiFiImage}" Stretch="UniformToFill" Height="32" Width="32" Margin="5" />
                     <StackPanel Orientation="Horizontal" Margin="5">
-                        <TextBlock Text="Ssid:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="{Binding Path=Ssid}" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Ssid:" VerticalAlignment="Center" Margin="0,0,5,0" />
+                        <TextBlock Text="{Binding Path=Ssid}" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,5,0" VerticalAlignment="Center" />
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="5">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Bssid:" Margin="0,0,5,0"/>
+                        <TextBlock Text="Bssid:" Margin="0,0,5,0" />
                         <TextBlock Text="{Binding Path=Bssid}" TextWrapping="Wrap" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Rssi:" Margin="0,0,5,0"/>
-                        <TextBlock Text="{Binding Path=Rssi}"/>
+                        <TextBlock Text="Rssi:" Margin="0,0,5,0" />
+                        <TextBlock Text="{Binding Path=Rssi}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Ch. Frequency:" Margin="0,0,5,0"/>
-                        <TextBlock Text="{Binding Path=ChannelCenterFrequency}" TextWrapping="Wrap"/>
+                        <TextBlock Text="Ch. Frequency:" Margin="0,0,5,0" />
+                        <TextBlock Text="{Binding Path=ChannelCenterFrequency}" TextWrapping="Wrap" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Path=SecuritySettings}" TextWrapping="Wrap" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Path=SecuritySettings}" TextWrapping="Wrap" Margin="0,0,5,0" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock FontWeight="Bold" Text="{Binding Path=ConnectivityLevel}" TextWrapping="Wrap" Margin="0,0,5,0"/>
+                        <TextBlock FontWeight="Bold" Text="{Binding Path=ConnectivityLevel}" TextWrapping="Wrap" Margin="0,0,5,0" />
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
-                    <ProgressRing x:Name="ConnectingProgressRing" IsActive="True" Foreground="White" Margin="120,20,0,40"/>
+                    <ProgressRing x:Name="ConnectingProgressRing" IsActive="True" Foreground="White" Margin="120,20,0,40" />
                     <TextBlock Text="Checking network requirements" HorizontalAlignment="Left" VerticalAlignment="Center" />
                 </StackPanel>
             </StackPanel>
@@ -120,31 +120,31 @@
         <DataTemplate x:Name="WifiConnectedState">
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="{Binding Path=WiFiImage}" Stretch="UniformToFill" Height="32" Width="32" Margin="5"/>
+                    <Image Source="{Binding Path=WiFiImage}" Stretch="UniformToFill" Height="32" Width="32" Margin="5" />
                     <StackPanel Orientation="Horizontal" Margin="5">
-                        <TextBlock Text="Ssid:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="{Binding Path=Ssid}" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,5,0" VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding Path=ConnectionKinds}" TextWrapping="Wrap" Margin="0,0,5,0" VerticalAlignment="Center" Visibility="{Binding Path=ConnectionKindsVisibility}"/>
+                        <TextBlock Text="Ssid:" VerticalAlignment="Center" Margin="0,0,5,0" />
+                        <TextBlock Text="{Binding Path=Ssid}" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,5,0" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding Path=ConnectionKinds}" TextWrapping="Wrap" Margin="0,0,5,0" VerticalAlignment="Center" Visibility="{Binding Path=ConnectionKindsVisibility}" />
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="5">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Bssid:" Margin="0,0,5,0"/>
+                        <TextBlock Text="Bssid:" Margin="0,0,5,0" />
                         <TextBlock Text="{Binding Path=Bssid}" TextWrapping="Wrap" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Rssi:" Margin="0,0,5,0"/>
-                        <TextBlock Text="{Binding Path=Rssi}"/>
+                        <TextBlock Text="Rssi:" Margin="0,0,5,0" />
+                        <TextBlock Text="{Binding Path=Rssi}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Ch. Frequency:" Margin="0,0,5,0"/>
-                        <TextBlock Text="{Binding Path=ChannelCenterFrequency}" TextWrapping="Wrap"/>
+                        <TextBlock Text="Ch. Frequency:" Margin="0,0,5,0" />
+                        <TextBlock Text="{Binding Path=ChannelCenterFrequency}" TextWrapping="Wrap" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Path=SecuritySettings}" TextWrapping="Wrap" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Path=SecuritySettings}" TextWrapping="Wrap" Margin="0,0,5,0" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock FontWeight="Bold" Text="{Binding Path=ConnectivityLevel}" TextWrapping="Wrap" Margin="0,0,5,0"/>
+                        <TextBlock FontWeight="Bold" Text="{Binding Path=ConnectivityLevel}" TextWrapping="Wrap" Margin="0,0,5,0" />
                     </StackPanel>
                 </StackPanel>
                 <Button Click="Disconnect_Click" Margin="5">Disconnect</Button>
