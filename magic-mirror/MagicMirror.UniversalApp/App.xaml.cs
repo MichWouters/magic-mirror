@@ -1,10 +1,11 @@
-﻿using MagicMirror.UniversalApp.Common;
+﻿using GalaSoft.MvvmLight.Ioc;
+using MagicMirror.UniversalApp.Common;
 using MagicMirror.UniversalApp.Services;
+using MagicMirror.UniversalApp.ViewModels;
 using MagicMirror.UniversalApp.Views;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Unity;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.VoiceCommands;
@@ -38,7 +39,7 @@ namespace MagicMirror.UniversalApp
                 rootFrameNavigationHelper = new RootFrameNavigationHelper(rootFrame);
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                SetUpUnityContainers();
+                SetUpIocContainers();
                 Window.Current.Content = rootFrame;
             }
 
@@ -90,11 +91,14 @@ namespace MagicMirror.UniversalApp
             }
         }
 
-        private void SetUpUnityContainers()
+        private void SetUpIocContainers()
         {
-            IUnityContainer myContainer = new UnityContainer();
-            myContainer.RegisterType<ILocationService, LocationService>();
-            myContainer.RegisterType<Services.ISettingsService, SettingsService>();
+            //Register Services
+            SimpleIoc.Default.Register<ISettingsService, SettingsService>();
+
+            //Register classes
+            SimpleIoc.Default.Register<MainPageViewModel>();
+            SimpleIoc.Default.Register<SettingPageViewModel>();
         }
 
         protected override void OnActivated(IActivatedEventArgs args)

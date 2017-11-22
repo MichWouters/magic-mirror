@@ -40,12 +40,12 @@ namespace MagicMirror.UniversalApp.Views
 
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            //ViewModel.NavigateToSettings();
+            App.NavigationService.Navigate<SettingPage>();
         }
 
         private void TemperatureTextBlock_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
         {
-            //ViewModel.NavigateToOfflineData();
+            App.NavigationService.Navigate<OfflineDataPage>();
         }
 
         private async void Shutdown_Click(object sender, RoutedEventArgs e)

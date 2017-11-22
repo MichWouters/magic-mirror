@@ -1,8 +1,10 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
+using MagicMirror.UniversalApp.Common;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.UI.Xaml;
 
 namespace MagicMirror.UniversalApp.ViewModels
@@ -25,12 +27,27 @@ namespace MagicMirror.UniversalApp.ViewModels
         private DispatcherTimer trafficTimer;
         private DispatcherTimer rssTimer;
 
+        // Commands
+        public ICommand GoToSettings { get; set; }
+
         public MainPageViewModel()
         {
             SetUpServices();
             SetUpTimers();
             LoadDataOnPageStartup();
             SetRefreshTimers();
+
+            GoToSettings = new CustomCommand(NavigateToSettings, CanNavigateToSettings);
+        }
+
+        private void NavigateToSettings(object obj)
+        {
+            base.NavigateToSettings();
+        }
+
+        private bool CanNavigateToSettings(object obj)
+        {
+            return true;
         }
 
         #region Methods
