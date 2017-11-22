@@ -10,16 +10,16 @@ namespace MagicMirror.UniversalApp.ViewModels
     public class MainPageViewModel : ViewModelBase
     {
         // Services from the Business Layer
-
         private IService<WeatherModel> _weatherService;
+
         private IService<RSSModel> _rssService;
         private IService<TrafficModel> _trafficService;
-        private ISettingsService _settingsService;
+        private Services.ISettingsService _settingsService;
         private CommonService _commonService;
 
         // Timers to refresh individual components
-
         private DispatcherTimer timeTimer;
+
         private DispatcherTimer complimentTimer;
         private DispatcherTimer weatherTimer;
         private DispatcherTimer trafficTimer;
@@ -39,8 +39,8 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
-                _settingsService = new SettingsService();
-                UserSettings userSettings = _settingsService.ReadSettings(localFolder, SETTING_FILE);
+                _settingsService = new Services.SettingsService();
+                UserSettings userSettings = _settingsService.LoadSettings();
 
                 _weatherService = new WeatherService();
                 _trafficService = new TrafficService();

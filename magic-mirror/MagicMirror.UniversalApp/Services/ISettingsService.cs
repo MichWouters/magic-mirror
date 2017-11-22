@@ -6,6 +6,6 @@ namespace MagicMirror.UniversalApp.Services
     {
         UserSettings LoadSettings();
 
-        void SaveSettings(UserSettings userSettings, bool createNewSettings = false)
+        void SaveSettings(UserSettings userSettings, bool createNewSettings = false);
     }
 }

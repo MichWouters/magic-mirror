@@ -15,6 +15,9 @@ namespace MagicMirror.UniversalApp.ViewModels
     {
         private bool _contentDialogShown;
 
+        //TODO: Does not belong here.
+        protected readonly string localFolder = ApplicationData.Current.LocalFolder.Path;
+
         protected async void DisplayErrorMessage(string title, string content = "")
         {
             // Only one dialog can be open

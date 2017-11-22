@@ -39,7 +39,7 @@ namespace MagicMirror.UniversalApp.Services
             }
             catch (Exception e)
             {
-                throw new Exception("Unable to save Settings. " + e.Message.ToString(), e);
+                throw new Exception("Unable to save Settings.", e);
             }
         }
 
@@ -49,7 +49,7 @@ namespace MagicMirror.UniversalApp.Services
             {
                 var result = _settingsService.ReadSettings(localFolder, SETTING_FILE);
 
-                if (result == null) throw new FileNotFoundException();
+                if (result == null) throw new FileNotFoundException("It looks like you're running this app for the first time. We created a new settings file with default values. Please enter your settings now.");
 
                 return result;
             }

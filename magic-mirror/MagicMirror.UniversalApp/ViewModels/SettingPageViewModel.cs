@@ -1,7 +1,6 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Models.Traffic;
 using MagicMirror.Business.Services;
-using MagicMirror.UniversalApp.Services;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -16,17 +15,27 @@ namespace MagicMirror.UniversalApp.ViewModels
         private Services.ISettingsService _settingsService;
         private IService<AddressModel> _addressService;
 
-        public SettingPageViewModel()
+        public SettingPageViewModel(Services.ISettingsService settingsService)
         {
+            _settingsService = settingsService;
+
             try
             {
                 _userSettings = _settingsService.LoadSettings();
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException ex)
             {
-                DisplayErrorMessage("No Settings File Found",
-                    "It looks like you're running this app for the first time. We created a new settings file with default values. Please enter your settings now.");
+                DisplayErrorMessage("Settings file not found", ex.Message);
             }
+            catch (Exception ex)
+            {
+                DisplayErrorMessage("Unable to set up SettingPageViewModel", ex.Message);
+            }
+        }
+
+        public void SaveSettings()
+        {
+            _settingsService.SaveSettings(_userSettings);
         }
 
         public void ToggleLightTheme()

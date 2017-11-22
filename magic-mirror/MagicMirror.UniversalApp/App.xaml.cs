@@ -37,6 +37,8 @@ namespace MagicMirror.UniversalApp
                 NavigationService = new NavigationService(rootFrame);
                 rootFrameNavigationHelper = new RootFrameNavigationHelper(rootFrame);
                 rootFrame.NavigationFailed += OnNavigationFailed;
+
+                SetUpUnityContainers();
                 Window.Current.Content = rootFrame;
             }
 
@@ -92,6 +94,7 @@ namespace MagicMirror.UniversalApp
         {
             IUnityContainer myContainer = new UnityContainer();
             myContainer.RegisterType<ILocationService, LocationService>();
+            myContainer.RegisterType<Services.ISettingsService, SettingsService>();
         }
 
         protected override void OnActivated(IActivatedEventArgs args)
