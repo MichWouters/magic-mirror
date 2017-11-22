@@ -3,6 +3,7 @@ using Acme.Generic.Extensions;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class WeatherService : ServiceBase<WeatherModel, WeatherEntity>
+    public class WeatherService : ServiceBase<WeatherModel, WeatherEntity>, IWeatherService
     {
         private const string OFFLINEMODELNAME = "WeatherOfflineModel.json";
 
@@ -18,21 +19,12 @@ namespace MagicMirror.Business.Services
         {
         }
 
-        public WeatherService(UserSettings criteria)
-        {
-            // Defensive coding
-            if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
-            if (string.IsNullOrWhiteSpace(criteria.HomeCity)) throw new ArgumentException("A city has to be provided");
-
-            // Set up parameters
-            _criteria = criteria;
-            _repo = new WeatherRepo(_criteria.HomeCity);
-        }
-
-        public override async Task<WeatherModel> GetModelAsync()
+        public async Task<WeatherModel> GetModelAsync(string homeCity, int precision, TemperatureUOM temperatureUOM)
         {
             try
             {
+                _repo = new WeatherRepo(homeCity);
+
                 // Get entity from Repository.
                 WeatherEntity entity = await _repo.GetEntityAsync();
 
@@ -40,7 +32,7 @@ namespace MagicMirror.Business.Services
                 WeatherModel model = MapEntityToModel(entity);
 
                 // Calculate non-mappable values
-                model = CalculateUnMappableValues(model);
+                model = CalculateUnMappableValues(model, precision, temperatureUOM);
 
                 // Todo: Implement bool if user wants metro or openweather icons
                 if (true)
@@ -50,23 +42,22 @@ namespace MagicMirror.Business.Services
 
                 return model;
             }
-            catch (HttpRequestException) { throw; }
+            catch (HttpRequestException ex) { throw ex; }
             catch (Exception ex)
             {
                 throw new ArgumentException("Unable to retrieve Weather Model", ex);
             }
         }
 
-        public override WeatherModel GetOfflineModel(string path)
+        public WeatherModel GetOfflineModel(string path)
         {
             try
             {
-                // Try reading Json object
-                /* string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
-                 WeatherModel model = JsonConvert.DeserializeObject<WeatherModel>(json);
+                //Try reading Json object
+                string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
+                WeatherModel model = JsonConvert.DeserializeObject<WeatherModel>(json);
 
-                 return model;*/
-                return GenerateOfflineModel();
+                return model;
             }
             catch (FileNotFoundException)
             {
@@ -82,7 +73,7 @@ namespace MagicMirror.Business.Services
             }
         }
 
-        public override void SaveOfflineModel(WeatherModel model, string path)
+        public void SaveOfflineModel(WeatherModel model, string path)
         {
             try
             {
@@ -110,12 +101,12 @@ namespace MagicMirror.Business.Services
             };
         }
 
-        protected WeatherModel CalculateUnMappableValues(WeatherModel model)
+        protected WeatherModel CalculateUnMappableValues(WeatherModel model, int precision, TemperatureUOM temperatureUOM)
         {
-            model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, _criteria.Precision);
-            model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, _criteria.Precision);
+            model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, precision);
+            model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, precision);
 
-            switch (_criteria.TemperatureUOM)
+            switch (temperatureUOM)
             {
                 case TemperatureUOM.Celsius:
                     model.Temperature = model.TemperatureCelsius;

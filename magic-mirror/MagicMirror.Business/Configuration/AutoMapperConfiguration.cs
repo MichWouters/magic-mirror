@@ -27,11 +27,11 @@ namespace MagicMirror.Business.Configuration
                 .ReverseMap();
 
             CreateMap<AddressEntity, AddressModel>()
-                .ForMember(dest => dest.HouseNumber, source => source.MapFrom(src => src.results[0].address_components[0].long_name))
-                .ForMember(dest => dest.Street, source => source.MapFrom(src => src.results[0].address_components[1].long_name))
-                .ForMember(dest => dest.City, source => source.MapFrom(src => src.results[0].address_components[2].long_name))
-                .ForMember(dest => dest.Country, source => source.MapFrom(src => src.results[0].address_components[5].long_name))
-                .ForMember(dest => dest.PostalCode, source => source.MapFrom(src => src.results[0].address_components[6].long_name))
+                .ForMember(dest => dest.HouseNumber, source => source.MapFrom(src => src.Results[0].address_components[0].long_name))
+                .ForMember(dest => dest.Street, source => source.MapFrom(src => src.Results[0].address_components[1].long_name))
+                .ForMember(dest => dest.City, source => source.MapFrom(src => src.Results[0].address_components[2].long_name))
+                .ForMember(dest => dest.Country, source => source.MapFrom(src => src.Results[0].address_components[5].long_name))
+                .ForMember(dest => dest.PostalCode, source => source.MapFrom(src => src.Results[0].address_components[6].long_name))
                 .ReverseMap();
 
             CreateMap<UserEntity, UserProfileModel>()

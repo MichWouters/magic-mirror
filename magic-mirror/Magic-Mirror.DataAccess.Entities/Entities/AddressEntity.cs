@@ -2,9 +2,9 @@
 
 namespace MagicMirror.DataAccess.Entities.Entities
 {
-    public class AddressEntity : IEntity
+    public class AddressEntity : Entity
     {
-        public Result[] results { get; set; }
-        public string status { get; set; }
+        public Result[] Results { get; set; }
+        public string Status { get; set; }
     }
 }

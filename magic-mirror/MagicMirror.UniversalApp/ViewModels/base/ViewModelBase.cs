@@ -14,8 +14,9 @@ namespace MagicMirror.UniversalApp.ViewModels
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
         private bool _contentDialogShown;
+
+        //TODO: Does not belong here.
         protected readonly string localFolder = ApplicationData.Current.LocalFolder.Path;
-        protected const string SETTING_FILE = "settings.json";
 
         protected async void DisplayErrorMessage(string title, string content = "")
         {
@@ -46,7 +47,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         public void NavigateToMain()
         {
             try { App.NavigationService.Navigate<MainPage>(); }
-            catch (Exception ex) { DisplayErrorMessage("Unable to navigate to Offline Data", ex.Message); }
+            catch (Exception ex) { DisplayErrorMessage("Unable to navigate to Main", ex.Message); }
         }
 
         public void NavigateToSettings()

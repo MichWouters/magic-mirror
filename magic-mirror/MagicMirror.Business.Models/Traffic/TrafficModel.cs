@@ -3,7 +3,7 @@ using System;
 
 namespace MagicMirror.Business.Models
 {
-    public class TrafficModel : IModel
+    public class TrafficModel : Model
     {
         public double DistanceKilometers { get; set; }
 

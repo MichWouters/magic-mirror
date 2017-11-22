@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:MagicMirror.UniversalApp.Views"
+    DataContext="{Binding Source={StaticResource mainViewModelLocator},Path=SettingPageViewModel}"
     mc:Ignorable="d" Loaded="Page_Loaded">
 
     <Page.Resources>
@@ -40,42 +41,42 @@
                 IsOn="False"
                 OffContent="Dark theme"
                 OnContent="Light theme"
-                RelativePanel.AlignLeftWithPanel="True"
-                Toggled="{x:Bind ViewModel.ToggleLightTheme}" />
+                RelativePanel.AlignLeftWithPanel="True" />
 
                 <TextBox x:Name="UserNameTextBox"
                  HorizontalAlignment="Left"
                  Header="User Name"
                  RelativePanel.AlignLeftWithPanel="True"
                  RelativePanel.Below="ThemeSwitch"
-                 Text="{x:Bind ViewModel.UserSettings.UserName, Mode=TwoWay}" />
+                 Text="{Binding UserSettings.UserName, Mode=TwoWay}" />
 
                 <TextBox x:Name="HomeTextBox"
                      HorizontalAlignment="Left"
                      Header="Home street and number"
                      RelativePanel.AlignLeftWithPanel="True"
                      RelativePanel.Below="UserNameTextBox"
-                     Text="{x:Bind ViewModel.UserSettings.HomeAddress, Mode=TwoWay}" />
+                     Text="{Binding UserSettings.HomeAddress, Mode=TwoWay}" />
 
                 <TextBox x:Name="HomeTownTextBox"
                      HorizontalAlignment="Left"
                      Header="Postal code Home town"
                      RelativePanel.AlignLeftWithPanel="True"
                      RelativePanel.Below="HomeTextBox"
-                     Text="{x:Bind ViewModel.UserSettings.HomeCity, Mode=TwoWay}" />
+                     Text="{Binding UserSettings.HomeCity, Mode=TwoWay}" />
 
                 <Button x:Name="LocationButton"
                 RelativePanel.RightOf="HomeTownTextBox"
                 RelativePanel.Below="UserNameTextBox"
                 RelativePanel.AlignBottomWith="HomeTownTextBox"
-                Content="Use current location" Click="LocationButton_Click" />
+                Content="Use current location"
+                        Click="LocationButton_Click" />
 
                 <TextBox x:Name="WorkAddressTextBox"
                  HorizontalAlignment="Left"
                  Header="Work Address"
                  RelativePanel.AlignLeftWithPanel="True"
                  RelativePanel.Below="HomeTownTextBox"
-                 Text="{x:Bind ViewModel.UserSettings.WorkAddress, Mode=TwoWay}" />
+                 Text="{Binding UserSettings.WorkAddress, Mode=TwoWay}" />
 
                 <TextBox x:Name="PrecisonSlider"
                  HorizontalAlignment="Left"
@@ -83,27 +84,27 @@
                  RelativePanel.AlignLeftWithPanel="True"
                  RelativePanel.Below="WorkAddressTextBox"
                  InputScope="Digits"
-                 Text="{x:Bind ViewModel.UserSettings.Precision, Mode=TwoWay}" />
+                 Text="{Binding UserSettings.Precision, Mode=TwoWay}" />
 
                 <ComboBox x:Name="DistanceUomComboBox"
                   HorizontalAlignment="Left"
                   Header="Distance Unit of Measure"
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.Below="PrecisonSlider"
-                  SelectedValue="{x:Bind ViewModel.UserSettings.DistanceUOM}" />
+                  SelectedValue="{Binding UserSettings.DistanceUOM}" />
 
                 <ComboBox x:Name="TemperatureUomComboBox"
                   HorizontalAlignment="Left"
                   Header="Temperature Unit of Measure"
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.Below="DistanceUomComboBox"
-                  SelectedValue="{x:Bind ViewModel.UserSettings.TemperatureUOM}" />
+                  SelectedValue="{Binding UserSettings.TemperatureUOM}" />
 
                 <TextBlock x:Name="IpAddressTextBlock"
                      HorizontalAlignment="Left"
                      RelativePanel.AlignBottomWithPanel="True"
                      RelativePanel.AlignRightWithPanel="True"
-                     Text="{x:Bind ViewModel.IpAddress, Mode=OneWay}" />
+                     Text="{Binding IpAddress, Mode=OneWay}" />
 
                 <Button Content="Save"
                 RelativePanel.Below="TemperatureUomComboBox"

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class UserService : ServiceBase<UserProfileModel, UserEntity>
+    public class UserService : ServiceBase<UserProfileModel, UserEntity>, IUserService
     {
         private UserRepo _userRepo;
 
@@ -25,7 +25,7 @@ namespace MagicMirror.Business.Services
             return MapEntityToModel(entity);
         }
 
-        public override async Task<UserProfileModel> GetModelAsync()
+        public async Task<UserProfileModel> GetModelAsync()
         {
             UserEntity entity = await _userRepo.GetUserByPersonId(PersonId);
             UserProfileModel model = MapEntityToModel(entity);
@@ -33,14 +33,9 @@ namespace MagicMirror.Business.Services
             return model;
         }
 
-        public override UserProfileModel GetOfflineModel(string path)
+        public UserProfileModel GetOfflineModel(string path)
         {
             return (new UserProfileModel()).RandomData("male");
-        }
-
-        public override void SaveOfflineModel(UserProfileModel model, string path)
-        {
-            throw new NotImplementedException();
         }
 
         protected UserProfileModel CalculateUnMappableValues(UserProfileModel model)

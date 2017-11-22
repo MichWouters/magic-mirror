@@ -1,6 +1,6 @@
 ﻿namespace MagicMirror.Business.Models
 {
-    public class WeatherModel : IModel
+    public class WeatherModel : Model
     {
         public string Location { get; set; }
         public string Icon { get; set; }

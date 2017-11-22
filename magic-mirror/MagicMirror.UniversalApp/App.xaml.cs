@@ -1,4 +1,10 @@
-﻿using MagicMirror.UniversalApp.Common;
+﻿using GalaSoft.MvvmLight.Ioc;
+using MagicMirror.Business.Models;
+using MagicMirror.Business.Services;
+using MagicMirror.DataAccess.Repos;
+using MagicMirror.UniversalApp.Common;
+using MagicMirror.UniversalApp.Services;
+using MagicMirror.UniversalApp.ViewModels;
 using MagicMirror.UniversalApp.Views;
 using System;
 using System.Linq;
@@ -23,6 +29,7 @@ namespace MagicMirror.UniversalApp
         }
 
         public static NavigationService NavigationService { get; private set; }
+        public static UserSettings UserSettings { get; set; }
         private RootFrameNavigationHelper rootFrameNavigationHelper;
 
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
@@ -33,8 +40,14 @@ namespace MagicMirror.UniversalApp
             {
                 rootFrame = new Frame();
                 NavigationService = new NavigationService(rootFrame);
+
+                // Singleton for Usersettings
+                UserSettings = new UserSettings();
+
                 rootFrameNavigationHelper = new RootFrameNavigationHelper(rootFrame);
                 rootFrame.NavigationFailed += OnNavigationFailed;
+
+                SetUpIocContainers();
                 Window.Current.Content = rootFrame;
             }
 
@@ -84,6 +97,25 @@ namespace MagicMirror.UniversalApp
             {
                 System.Diagnostics.Debug.WriteLine("Updating Phrase list for VCDs: " + ex.ToString());
             }
+        }
+
+        private void SetUpIocContainers()
+        {
+            // Register business Services
+            SimpleIoc.Default.Register<IAddressService, AddressService>();
+            SimpleIoc.Default.Register<ICommonService, CommonService>();
+            SimpleIoc.Default.Register<IFileWriterService, FileWriterService>();
+            SimpleIoc.Default.Register<IRSSService, RSSService>();
+            SimpleIoc.Default.Register<ITrafficService, TrafficService>();
+            SimpleIoc.Default.Register<IWeatherService, WeatherService>();
+
+            // Register UWP services
+            SimpleIoc.Default.Register<ILocationService, LocationService>();
+            SimpleIoc.Default.Register<ISettingsService, SettingsService>();
+
+            // Register viewModels
+            SimpleIoc.Default.Register<SettingPageViewModel>();
+            SimpleIoc.Default.Register<MainPageViewModel>();
         }
 
         protected override void OnActivated(IActivatedEventArgs args)

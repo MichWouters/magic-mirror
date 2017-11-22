@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Devices.WiFi;
-using Windows.Foundation.Metadata;
 using Windows.Networking.Connectivity;
 using Windows.Security.Credentials;
 using Windows.UI.Xaml.Media.Imaging;
@@ -184,11 +181,11 @@ namespace MagicMirror.UniversalApp.ViewModels
             // Since a connection attempt was made, update the connectivity level displayed for each
             foreach (var network in WiFiNetworks)
             {
-                network.UpdateConnectivityLevel();
+                await network.UpdateConnectivityLevel();
             }
         }
 
-        public async Task DisconnectAsync()
+        public void Disconnect()
         {
             if (SelectedWiFiNetwork == null)
             {

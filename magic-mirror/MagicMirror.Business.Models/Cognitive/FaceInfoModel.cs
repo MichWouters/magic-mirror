@@ -2,7 +2,7 @@
 
 namespace MagicMirror.Business.Models.Cognitive
 {
-    public class FaceInfoModel : IModel
+    public class FaceInfoModel : Model
     {
         public Guid? PersonId { get; set; }
         public Guid? FaceId { get; set; }

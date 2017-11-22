@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class AddressService : ServiceBase<AddressModel, AddressEntity>
+    public class AddressService : ServiceBase<AddressModel, AddressEntity>, IAddressService
     {
         private string _latitude;
         private string _longitude;
@@ -19,7 +19,7 @@ namespace MagicMirror.Business.Services
             _repo = new AddressRepo(_latitude, _longitude);
         }
 
-        public override async Task<AddressModel> GetModelAsync()
+        public async Task<AddressModel> GetModelAsync()
         {
             try
             {
@@ -28,7 +28,7 @@ namespace MagicMirror.Business.Services
 
                 return model;
             }
-            catch (AutoMapper.AutoMapperMappingException ex)
+            catch (AutoMapper.AutoMapperMappingException)
             {
                 throw;
             }
@@ -36,19 +36,6 @@ namespace MagicMirror.Business.Services
             {
                 throw new ArgumentException("Unable to retrieve Address Model", ex);
             }
-        }
-
-        public override AddressModel GetOfflineModel(string path)
-        {
-            var am = new AddressModel
-            {
-            };
-            return am;
-        }
-
-        public override void SaveOfflineModel(AddressModel model, string path)
-        {
-            throw new NotImplementedException();
         }
     }
 }

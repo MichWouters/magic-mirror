@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public interface IDbRepo<T> where T : IEntity
+    public interface IDbRepo<T> where T : Entity
     {
         Task<T> GetEntityAsync(object[] key);
 

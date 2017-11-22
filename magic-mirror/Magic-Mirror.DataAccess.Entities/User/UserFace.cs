@@ -2,7 +2,7 @@
 
 namespace MagicMirror.DataAccess.Entities.User
 {
-    public class UserFace : IEntity
+    public class UserFace : Entity
     {
         public Guid Id { get; set; }
     }

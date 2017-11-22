@@ -2,7 +2,7 @@
 
 namespace MagicMirror.DataAccess.Entities.Entities
 {
-    public class RSSEntity : IEntity
+    public class RSSEntity : Entity
     {
         public List<RSSEntityItem> Items { get; set; }
     }

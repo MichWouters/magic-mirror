@@ -2,7 +2,7 @@
 
 namespace MagicMirror.Business.Services
 {
-    public interface ISettingsService
+    public interface IFileWriterService
     {
         UserSettings ReadSettings(string folder, string fileName);
 

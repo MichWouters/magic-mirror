@@ -1,6 +1,5 @@
 ﻿using MagicMirror.DataAccess.Entities.User;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace MagicMirror.DataAccess
 {

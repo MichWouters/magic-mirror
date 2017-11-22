@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MagicMirror.Business.Models.User
 {
-    public class UserProfileModel : IModel
+    public class UserProfileModel : Model
     {
         public UserProfileModel()
         {

@@ -3,7 +3,6 @@ using MagicMirror.Business.Models.Traffic;
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Services;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
 
@@ -11,44 +10,27 @@ namespace MagicMirror.UniversalApp.ViewModels
 {
     public class SettingPageViewModel : ViewModelBase
     {
-        private UserSettings _userSettings;
         private ILocationService _locationService;
         private ISettingsService _settingsService;
-        private IApiService<AddressModel> _addressService;
+        private IAddressService _addressService;
 
-        public SettingPageViewModel()
+        public SettingPageViewModel(ILocationService locationService, ISettingsService settingsService, IAddressService addressService)
         {
-            _settingsService = new SettingsService();
-            _locationService = new LocationService();
-
-            try
-            {
-                _userSettings = LoadSettings();
-            }
-            catch (FileNotFoundException)
-            {
-                DisplayErrorMessage("No Settings File Found",
-                    "It looks like you're running this app for the first time." +
-                    " We created a new settings file with default values. Please enter your settings now.");
-            }
+            _locationService = locationService;
+            _settingsService = settingsService;
+            _addressService = addressService;
         }
 
-        public void ToggleLightTheme()
+        public void SaveSettings()
         {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                DisplayErrorMessage("Cannot switch theme at this time", ex.Message);
-            }
+            _settingsService.SaveSettings(App.UserSettings);
         }
 
         public async Task<FetchedAddress> GetAddressModel()
         {
             try
             {
+                // TODO: Modernize
                 var coordinates = await _locationService.GetLocationAsync();
                 _addressService = new AddressService(coordinates.Coordinate.Latitude.ToString(), coordinates.Coordinate.Longitude.ToString());
                 AddressModel addressModel = await _addressService.GetModelAsync();
@@ -56,8 +38,8 @@ namespace MagicMirror.UniversalApp.ViewModels
                 string address = $"{addressModel.Street}, {addressModel.HouseNumber}";
                 string city = $"{addressModel.PostalCode} {addressModel.City}, {addressModel.Country}";
 
-                UserSettings.HomeAddress = address;
-                UserSettings.HomeCity = city;
+                App.UserSettings.HomeAddress = address;
+                App.UserSettings.HomeCity = city;
                 return new FetchedAddress { Address = address, City = city };
             }
             catch (UnauthorizedAccessException e)
@@ -70,49 +52,6 @@ namespace MagicMirror.UniversalApp.ViewModels
                 DisplayErrorMessage("Unable to fetch location", e.Message);
                 return null;
             }
-        }
-
-        public void SaveSettings(bool createNewSettings = false)
-        {
-            try
-            {
-                if (createNewSettings)
-                {
-                    _userSettings = new UserSettings();
-                    DisplayErrorMessage("Default settings created", "No settings file found! Creating a new one with default settings");
-                }
-
-                if (_userSettings != null)
-                {
-                    _settingsService.SaveSettings(localFolder, SETTING_FILE, _userSettings);
-                    NavigateToMain();
-                }
-                else
-                    DisplayErrorMessage("Unable to save Settings. Please check your input");
-            }
-            catch (Exception e)
-            {
-                DisplayErrorMessage("Unable to save Settings.", e.Message);
-            }
-        }
-
-        private UserSettings LoadSettings()
-        {
-            try
-            {
-                var result = _settingsService.ReadSettings(localFolder, SETTING_FILE);
-
-                if (result == null) throw new FileNotFoundException();
-
-                return result;
-            }
-            catch (FileNotFoundException)
-            {
-                SaveSettings(true);
-                _userSettings = LoadSettings();
-                throw;
-            }
-            catch (Exception) { throw; }
         }
 
         private string GetIpAddress()
@@ -151,16 +90,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 ipAddress = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public UserSettings UserSettings
-        {
-            get => _userSettings;
-            set
-            {
-                _userSettings = value;
                 NotifyPropertyChanged();
             }
         }

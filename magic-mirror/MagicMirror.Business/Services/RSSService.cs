@@ -1,15 +1,18 @@
-﻿using MagicMirror.Business.Models;
+﻿using Acme.Generic;
+using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class RSSService : ServiceBase<RSSModel, RSSEntity>
+    public class RSSService : ServiceBase<RSSModel, RSSEntity>, IRSSService
     {
         private const string OFFLINEMODELNAME = "RssOfflineModel.json";
 
@@ -18,7 +21,7 @@ namespace MagicMirror.Business.Services
             _repo = new RSSRepo();
         }
 
-        public override async Task<RSSModel> GetModelAsync()
+        public async Task<RSSModel> GetModelAsync()
         {
             try
             {
@@ -37,15 +40,15 @@ namespace MagicMirror.Business.Services
             }
         }
 
-        public override RSSModel GetOfflineModel(string path)
+        public RSSModel GetOfflineModel(string path)
         {
             try
             {
-                // Try reading Json object
-                /*     string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
-                     var model = JsonConvert.DeserializeObject<RSSModel>(json);*/
+                //Try reading Json object
+                string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
+                var model = JsonConvert.DeserializeObject<RSSModel>(json);
 
-                return GenerateOfflineModel();
+                return model;
             }
             catch (FileNotFoundException)
             {
@@ -61,12 +64,12 @@ namespace MagicMirror.Business.Services
             }
         }
 
-        public override void SaveOfflineModel(RSSModel model, string path)
+        public void SaveOfflineModel(RSSModel model, string path)
         {
             try
             {
-                /*   string json = model.ToJson();
-                   FileWriter.WriteJsonToFile(json, OFFLINEMODELNAME, path);*/
+                string json = model.ToJson();
+                FileWriter.WriteJsonToFile(json, OFFLINEMODELNAME, path);
             }
             catch (Exception e)
             {
@@ -91,14 +94,14 @@ namespace MagicMirror.Business.Services
                };
 
             var model = new RSSModel();
-            var items = new List<RSSItem>();
+            var items = new ObservableCollection<RSSItem>();
 
             foreach (string page in funnyPages)
             {
                 items.Add(new RSSItem { Title = page });
             }
 
-            model.items = items;
+            model.Items = items;
             return model;
         }
     }

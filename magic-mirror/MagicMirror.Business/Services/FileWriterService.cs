@@ -5,7 +5,7 @@ using System;
 
 namespace MagicMirror.Business.Services
 {
-    public class SettingsService : ISettingsService
+    public class FileWriterService : IFileWriterService
     {
         public UserSettings ReadSettings(string folder, string fileName)
         {
