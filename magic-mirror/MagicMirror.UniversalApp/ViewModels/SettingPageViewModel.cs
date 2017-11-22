@@ -1,6 +1,7 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Models.Traffic;
 using MagicMirror.Business.Services;
+using MagicMirror.UniversalApp.Services;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -11,13 +12,15 @@ namespace MagicMirror.UniversalApp.ViewModels
     public class SettingPageViewModel : ViewModelBase
     {
         private UserSettings _userSettings;
-        private Services.ILocationService _locationService;
-        private Services.ISettingsService _settingsService;
-        private IService<AddressModel> _addressService;
+        private ILocationService _locationService;
+        private ISettingsService _settingsService;
+        private IAddressService _addressService;
 
-        public SettingPageViewModel(Services.ISettingsService settingsService)
+        public SettingPageViewModel(ILocationService locationService, ISettingsService settingsService, IAddressService addressService)
         {
+            _locationService = locationService;
             _settingsService = settingsService;
+            _addressService = addressService;
 
             try
             {

@@ -1,6 +1,6 @@
 ﻿namespace MagicMirror.Business.Models
 {
-    public interface IModel
+    public abstract class Model
     {
     }
 }

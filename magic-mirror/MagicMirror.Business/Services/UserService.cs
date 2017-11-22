@@ -25,7 +25,7 @@ namespace MagicMirror.Business.Services
             return MapEntityToModel(entity);
         }
 
-        public override async Task<UserProfileModel> GetModelAsync()
+        public async Task<UserProfileModel> GetModelAsync()
         {
             UserEntity entity = await _userRepo.GetUserByPersonId(PersonId);
             UserProfileModel model = MapEntityToModel(entity);

@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Ioc;
+using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Common;
 using MagicMirror.UniversalApp.Services;
 using MagicMirror.UniversalApp.ViewModels;
@@ -93,11 +94,17 @@ namespace MagicMirror.UniversalApp
 
         private void SetUpIocContainers()
         {
-            //Register Services
+            //Register business Services
+            SimpleIoc.Default.Register<IAddressService, AddressService>();
+            SimpleIoc.Default.Register<ICommonService, CommonService>();
+            SimpleIoc.Default.Register<IFileWriterService, FileWriterService>();
+            SimpleIoc.Default.Register<IRSSService, RSSService>();
+            SimpleIoc.Default.Register<ITrafficService, TrafficService>();
+            SimpleIoc.Default.Register<IWeatherService, WeatherService>();
 
-            SimpleIoc.Default.Register<UniversalApp.Services.ISettingsService, UniversalApp.Services.SettingsService>();
-            SimpleIoc.Default.Register<Business.Services.IFileWriterService, Business.Services.FileWriterService>();
+            // Register UWP services
             SimpleIoc.Default.Register<ILocationService, LocationService>();
+            SimpleIoc.Default.Register<ISettingsService, SettingsService>();
 
             //Register viewModels
             SimpleIoc.Default.Register<MainPageViewModel>();

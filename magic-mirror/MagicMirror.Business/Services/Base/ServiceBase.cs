@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public abstract class ServiceBase<T, Y> : IService<T> where T : IModel
-                                                             where Y : Entity
+    public abstract class ServiceBase<T, Y> where T : Model
+                                            where Y : Entity
     {
         protected IMapper Mapper;
         protected IApiRepo<Y> _repo;
@@ -19,18 +19,6 @@ namespace MagicMirror.Business.Services
         {
             SetUpMapperConfiguration();
         }
-
-        public abstract Task<T> GetModelAsync();
-
-        /// <summary>
-        /// Provide dummy data when no internet connection can be established
-        /// </summary>
-        public abstract T GetOfflineModel(string path);
-
-        /// <summary>
-        /// Save dummy data for when no internet connection can be established.
-        /// </summary>
-        public abstract void SaveOfflineModel(T model, string path);
 
         // Child classes CAN override virtual methods, but MUST implement abstract methods
         /// <summary>

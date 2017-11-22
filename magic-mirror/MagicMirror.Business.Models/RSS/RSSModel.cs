@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MagicMirror.Business.Models
 {
-    public class RSSModel : IModel
+    public class RSSModel : Model
     {
         public List<RSSItem> items { get; set; }
 

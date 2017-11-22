@@ -12,17 +12,15 @@ namespace MagicMirror.UniversalApp.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-        // Services from the Business Layer
-        private IService<WeatherModel> _weatherService;
-
-        private IService<RSSModel> _rssService;
-        private IService<TrafficModel> _trafficService;
+        /* Services from the Business Layer */
+        private IWeatherService _weatherService;
+        private ITrafficService _trafficService;
+        private IRSSService _rssService;
         private ISettingsService _settingsService;
-        private CommonService _commonService;
+        private ICommonService _commonService;
 
-        // Timers to refresh individual components
+        /* Timers to refresh individual components */
         private DispatcherTimer timeTimer;
-
         private DispatcherTimer complimentTimer;
         private DispatcherTimer weatherTimer;
         private DispatcherTimer trafficTimer;
@@ -31,11 +29,17 @@ namespace MagicMirror.UniversalApp.ViewModels
         // Commands
         public ICommand GoToSettings { get; set; }
 
-        public MainPageViewModel(ISettingsService settingsService)
+        public MainPageViewModel(IWeatherService weatherService, ITrafficService trafficService, IRSSService rSSService, ISettingsService settingsService, ICommonService commonService)
         {
+            // Constructor injection
+            _weatherService = weatherService;
+            _trafficService = trafficService;
+            _rssService = rSSService;
             _settingsService = settingsService;
+            _commonService = commonService;
 
-            SetUpServices();
+            UserSettings userSettings = _settingsService.LoadSettings();
+
             SetUpTimers();
             LoadDataOnPageStartup();
             SetRefreshTimers();
@@ -54,23 +58,6 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         #region Methods
-
-        private void SetUpServices()
-        {
-            try
-            {
-                UserSettings userSettings = _settingsService.LoadSettings();
-
-                _weatherService = new WeatherService();
-                _trafficService = new TrafficService();
-                _commonService = new CommonService();
-                _rssService = new RSSService();
-            }
-            catch (Exception ex)
-            {
-                DisplayErrorMessage("Unable to initialize one or more services.", ex.Message);
-            }
-        }
 
         private void SetUpTimers()
         {

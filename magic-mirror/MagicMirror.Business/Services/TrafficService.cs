@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class TrafficService : ServiceBase<TrafficModel, TrafficEntity>
+    public class TrafficService : ServiceBase<TrafficModel, TrafficEntity>, ITrafficService
     {
         private const string OFFLINEMODELNAME = "TrafficOfflineModel.json";
 
@@ -17,19 +17,19 @@ namespace MagicMirror.Business.Services
         {
         }
 
-        public TrafficService(UserSettings criteria)
-        {
-            // Defensive coding
-            if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
-            if (string.IsNullOrWhiteSpace(criteria.HomeAddress)) throw new ArgumentNullException("A home address has to be provided");
-            if (string.IsNullOrWhiteSpace(criteria.HomeCity)) throw new ArgumentNullException("A home town has to be provided");
-            if (string.IsNullOrWhiteSpace(criteria.WorkAddress)) throw new ArgumentNullException("A destination address has to be provided");
+        //public TrafficService(UserSettings criteria)
+        //{
+        //    // Defensive coding
+        //    if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
+        //    if (string.IsNullOrWhiteSpace(criteria.HomeAddress)) throw new ArgumentNullException("A home address has to be provided");
+        //    if (string.IsNullOrWhiteSpace(criteria.HomeCity)) throw new ArgumentNullException("A home town has to be provided");
+        //    if (string.IsNullOrWhiteSpace(criteria.WorkAddress)) throw new ArgumentNullException("A destination address has to be provided");
 
-            _criteria = criteria;
-            _repo = new TrafficRepo($"{_criteria.HomeAddress} {_criteria.HomeCity}", _criteria.WorkAddress);
-        }
+        //    _criteria = criteria;
+        //    _repo = new TrafficRepo($"{_criteria.HomeAddress} {_criteria.HomeCity}", _criteria.WorkAddress);
+        //}
 
-        public override async Task<TrafficModel> GetModelAsync()
+        public async Task<TrafficModel> GetModelAsync(string homeAddress, string homeCity, string workAddress)
         {
             try
             {

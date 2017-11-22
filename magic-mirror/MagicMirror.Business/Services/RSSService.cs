@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class RSSService : ServiceBase<RSSModel, RSSEntity>
+    public class RSSService : ServiceBase<RSSModel, RSSEntity>, IRSSService
     {
         private const string OFFLINEMODELNAME = "RssOfflineModel.json";
 
@@ -18,7 +18,7 @@ namespace MagicMirror.Business.Services
             _repo = new RSSRepo();
         }
 
-        public override async Task<RSSModel> GetModelAsync()
+        public async Task<RSSModel> GetModelAsync()
         {
             try
             {

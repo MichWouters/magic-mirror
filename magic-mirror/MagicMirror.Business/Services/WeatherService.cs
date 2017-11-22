@@ -19,7 +19,7 @@ namespace MagicMirror.Business.Services
         {
         }
 
-        public override async Task<WeatherModel> GetModelAsync()
+        public async Task<WeatherModel> GetModelAsync()
         {
             string homeCity = "Houwaart, Belgium";
             return await GetModelAsync(homeCity);
@@ -55,7 +55,7 @@ namespace MagicMirror.Business.Services
             }
         }
 
-        public override WeatherModel GetOfflineModel(string path)
+        public WeatherModel GetOfflineModel(string path)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace MagicMirror.Business.Services
             }
         }
 
-        public override void SaveOfflineModel(WeatherModel model, string path)
+        public void SaveOfflineModel(WeatherModel model, string path)
         {
             try
             {
