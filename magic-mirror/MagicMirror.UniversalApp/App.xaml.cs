@@ -103,7 +103,7 @@ namespace MagicMirror.UniversalApp
         {
             // Register business Services
             SimpleIoc.Default.Register<IAddressService, AddressService>();
-            SimpleIoc.Default.Register<ICommonService, CommonService>();
+            SimpleIoc.Default.Register<IComplimentService, ComplimentService>();
             SimpleIoc.Default.Register<IFileWriterService, FileWriterService>();
             SimpleIoc.Default.Register<IRSSService, RSSService>();
             SimpleIoc.Default.Register<ITrafficService, TrafficService>();
@@ -112,6 +112,7 @@ namespace MagicMirror.UniversalApp
             // Register UWP services
             SimpleIoc.Default.Register<ILocationService, LocationService>();
             SimpleIoc.Default.Register<ISettingsService, SettingsService>();
+            SimpleIoc.Default.Register<ICommonService, CommonService>();
 
             // Register viewModels
             SimpleIoc.Default.Register<SettingPageViewModel>();

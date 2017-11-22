@@ -20,7 +20,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         private ITrafficService _trafficService;
         private IRSSService _rssService;
         private ISettingsService _settingsService;
-        private ICommonService _commonService;
+        private IComplimentService _commonService;
 
         /* Timers to refresh individual components */
         private DispatcherTimer timeTimer;
@@ -45,7 +45,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         #endregion privates
 
-        public MainPageViewModel(IWeatherService weatherService, ITrafficService trafficService, IRSSService rSSService, ISettingsService settingsService, ICommonService commonService)
+        public MainPageViewModel(IWeatherService weatherService, ITrafficService trafficService, IRSSService rSSService, ISettingsService settingsService, IComplimentService commonService)
         {
             // Constructor injection
             _weatherService = weatherService;
@@ -59,10 +59,10 @@ namespace MagicMirror.UniversalApp.ViewModels
             LoadDataOnPageStartup();
             SetRefreshTimers();
 
-            GoToSettings = new CustomCommand(NavigateToSettings, CanNavigateToSettings);
+            GoToSettingsCommand = new CustomCommand(NavigateToSettings, CanNavigateToSettings);
         }
 
-        public ICommand GoToSettings { get; set; }
+        public ICommand GoToSettingsCommand { get; set; }
 
         private void NavigateToSettings(object obj)
         {

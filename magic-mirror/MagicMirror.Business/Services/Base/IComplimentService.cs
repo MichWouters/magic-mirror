@@ -1,6 +1,6 @@
 ﻿namespace MagicMirror.Business.Services
 {
-    public interface ICommonService
+    public interface IComplimentService
     {
         string GenerateCompliment();
     }

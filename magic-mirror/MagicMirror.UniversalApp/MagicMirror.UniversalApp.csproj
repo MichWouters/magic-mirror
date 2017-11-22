@@ -98,7 +98,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\CommonService.cs" />
     <Compile Include="Common\CustomCommand.cs" />
+    <Compile Include="Common\ICommonService.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Converters\TemperatureConverter.cs" />

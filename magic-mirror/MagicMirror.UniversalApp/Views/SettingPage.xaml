@@ -48,21 +48,21 @@
                  Header="User Name"
                  RelativePanel.AlignLeftWithPanel="True"
                  RelativePanel.Below="ThemeSwitch"
-                 Text="{Binding UserSettings.UserName, Mode=TwoWay}" />
+                 Text="{Binding Name, Mode=TwoWay}" />
 
                 <TextBox x:Name="HomeTextBox"
                      HorizontalAlignment="Left"
                      Header="Home street and number"
                      RelativePanel.AlignLeftWithPanel="True"
                      RelativePanel.Below="UserNameTextBox"
-                     Text="{Binding UserSettings.HomeAddress, Mode=TwoWay}" />
+                     Text="{Binding HomeAddress, Mode=TwoWay}" />
 
                 <TextBox x:Name="HomeTownTextBox"
                      HorizontalAlignment="Left"
                      Header="Postal code Home town"
                      RelativePanel.AlignLeftWithPanel="True"
                      RelativePanel.Below="HomeTextBox"
-                     Text="{Binding UserSettings.HomeCity, Mode=TwoWay}" />
+                     Text="{Binding HomeTown, Mode=TwoWay}" />
 
                 <Button x:Name="LocationButton"
                 RelativePanel.RightOf="HomeTownTextBox"
@@ -76,7 +76,7 @@
                  Header="Work Address"
                  RelativePanel.AlignLeftWithPanel="True"
                  RelativePanel.Below="HomeTownTextBox"
-                 Text="{Binding UserSettings.WorkAddress, Mode=TwoWay}" />
+                 Text="{Binding WorkAddress, Mode=TwoWay}" />
 
                 <TextBox x:Name="PrecisonSlider"
                  HorizontalAlignment="Left"
@@ -84,21 +84,21 @@
                  RelativePanel.AlignLeftWithPanel="True"
                  RelativePanel.Below="WorkAddressTextBox"
                  InputScope="Digits"
-                 Text="{Binding UserSettings.Precision, Mode=TwoWay}" />
+                 Text="{Binding HomeTown, Mode=TwoWay}" />
 
                 <ComboBox x:Name="DistanceUomComboBox"
                   HorizontalAlignment="Left"
                   Header="Distance Unit of Measure"
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.Below="PrecisonSlider"
-                  SelectedValue="{Binding UserSettings.DistanceUOM}" />
+                  SelectedValue="{Binding DistanceUom}" />
 
                 <ComboBox x:Name="TemperatureUomComboBox"
                   HorizontalAlignment="Left"
                   Header="Temperature Unit of Measure"
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.Below="DistanceUomComboBox"
-                  SelectedValue="{Binding UserSettings.TemperatureUOM}" />
+                  SelectedValue="{Binding TemperatureUOM}" />
 
                 <TextBlock x:Name="IpAddressTextBlock"
                      HorizontalAlignment="Left"
@@ -109,9 +109,11 @@
                 <Button Content="Save"
                 RelativePanel.Below="TemperatureUomComboBox"
                 HorizontalAlignment="Center"
-                Width="400" Margin="0,10,0,0" Click="Button_Click" />
+                Width="400"
+                Margin="0,10,0,0"
+                Command="{Binding SaveSettingsCommand}" />
             </RelativePanel>
         </ScrollViewer>
-        <local:WiFiSettings Grid.Column="1" />
+        <!--<local:WiFiSettings Grid.Column="1" />-->
     </Grid>
 </Page>

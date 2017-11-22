@@ -11,13 +11,6 @@ namespace MagicMirror.UniversalApp.Views
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            //ViewModel.UserSettings.TemperatureUOM = (TemperatureUOM)TemperatureUomComboBox.SelectedValue;
-            //ViewModel.UserSettings.DistanceUOM = (DistanceUOM)DistanceUomComboBox.SelectedValue;
-            //ViewModel.SaveSettings();
-        }
-
         private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             FillDropDownLists();

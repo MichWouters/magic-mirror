@@ -3,7 +3,7 @@ using System;
 
 namespace MagicMirror.Business.Services
 {
-    public class CommonService : ICommonService
+    public class ComplimentService : IComplimentService
     {
         public string GenerateCompliment()
         {
