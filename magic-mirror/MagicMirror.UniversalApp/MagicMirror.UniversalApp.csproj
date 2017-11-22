@@ -104,7 +104,6 @@
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Converters\TemperatureConverter.cs" />
-    <Compile Include="Converters\TemperatureUomConverter.cs" />
     <Compile Include="Services\ILocationService.cs" />
     <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\SettingsService.cs" />
