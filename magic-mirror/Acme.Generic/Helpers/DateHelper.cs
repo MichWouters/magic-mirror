@@ -6,8 +6,8 @@ namespace Acme.Generic
     {
         public static string CurrentDayShort => DateTime.Now.DayOfWeek.ToShortDayNotation();
 
-        public static string CurrentTimeFull => DateTime.Now.ToString("ddddd, MMMM d");
+        public static string CurrentDateFull => DateTime.Now.ToString("ddddd, MMMM d");
 
-        public static string CurrentTime => DateTime.Now.ToString("HH:mm");
+        public static string CurrentTime => DateTime.Now.ToString("HH:mm:ss");
     }
 }

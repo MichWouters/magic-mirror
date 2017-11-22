@@ -22,6 +22,8 @@ namespace MagicMirror.Business.Services
         {
             try
             {
+                _repo = new TrafficRepo($"{homeAddress}, {homeCity}", workAddress);
+
                 // Get Entity
                 var entity = await _repo.GetEntityAsync();
 

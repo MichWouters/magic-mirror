@@ -39,7 +39,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         private string compliment;
         private string travelDuration;
         private string location;
-        private DateTime date;
+        private string date;
         private string time;
         private RSSModel _rss;
 
@@ -96,11 +96,11 @@ namespace MagicMirror.UniversalApp.ViewModels
         private void LoadDataOnPageStartup()
         {
             GetTime(null, null);
-            GetTime(null, null);
+            GetDate(null, null);
             GetCompliment(null, null);
-            RefreshWeatherModel(null, null);
-            RefreshTrafficModel(null, null);
-            RefreshRSSModel(null, null);
+            GetWeatherInfo(null, null);
+            GetTrafficInfo(null, null);
+            GetRss(null, null);
         }
 
         private void SetRefreshTimers()
@@ -109,9 +109,9 @@ namespace MagicMirror.UniversalApp.ViewModels
             SetUpTimer(timeTimer, new TimeSpan(0, 0, 1), GetTime);
             SetUpTimer(dateTimer, new TimeSpan(1, 0, 0), GetDate);
             SetUpTimer(complimentTimer, new TimeSpan(0, 5, 0), GetCompliment);
-            SetUpTimer(weatherTimer, new TimeSpan(0, 15, 0), RefreshWeatherModel);
-            SetUpTimer(trafficTimer, new TimeSpan(0, 10, 0), RefreshTrafficModel);
-            SetUpTimer(rssTimer, new TimeSpan(0, 10, 0), RefreshRSSModel);
+            SetUpTimer(weatherTimer, new TimeSpan(0, 15, 0), GetWeatherInfo);
+            SetUpTimer(trafficTimer, new TimeSpan(0, 10, 0), GetTrafficInfo);
+            SetUpTimer(rssTimer, new TimeSpan(0, 10, 0), GetRss);
         }
 
         private void SetUpTimer(DispatcherTimer timer, TimeSpan timeSpan, EventHandler<object> method)
@@ -129,7 +129,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private void GetDate(object sender, object e)
         {
-            try { Time = DateHelper.CurrentTimeFull; }
+            try { Date = DateHelper.CurrentDateFull; }
             catch (Exception ex) { DisplayErrorMessage("Cannot set Date", ex.Message); }
         }
 
@@ -145,7 +145,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        private async void RefreshWeatherModel(object sender, object e)
+        private async void GetWeatherInfo(object sender, object e)
         {
             try
             {
@@ -165,7 +165,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 // Try to refresh data. If succesful, resume timer
                 int minutes = 5;
                 await Task.Delay((minutes * 60) * 10000);
-                RefreshWeatherModel(null, null);
+                GetWeatherInfo(null, null);
             }
             catch (Exception ex)
             {
@@ -176,7 +176,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 // Try to refresh data. If succesful, resume timer
                 int minutes = 5;
                 await Task.Delay((minutes * 60) * 10000);
-                RefreshWeatherModel(null, null);
+                GetWeatherInfo(null, null);
             }
         }
 
@@ -190,7 +190,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             Location = weatherModel.Location;
         }
 
-        private async void RefreshRSSModel(object sender, object e)
+        private async void GetRss(object sender, object e)
         {
             try
             {
@@ -206,7 +206,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 int minutes = 30;
                 await Task.Delay((minutes * 60) * 10000);
-                RefreshRSSModel(null, null);
+                GetRss(null, null);
             }
             catch (Exception)
             {
@@ -214,11 +214,11 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 int minutes = 5;
                 await Task.Delay((minutes * 60) * 10000);
-                RefreshRSSModel(null, null);
+                GetRss(null, null);
             }
         }
 
-        private async void RefreshTrafficModel(object sender, object e)
+        private async void GetTrafficInfo(object sender, object e)
         {
             try
             {
@@ -235,7 +235,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 int minutes = 5;
                 await Task.Delay((minutes * 60) * 10000);
-                RefreshTrafficModel(null, null);
+                GetTrafficInfo(null, null);
             }
             catch (Exception)
             {
@@ -243,7 +243,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
                 int minutes = 5;
                 await Task.Delay((minutes * 60) * 10000);
-                RefreshTrafficModel(null, null);
+                GetTrafficInfo(null, null);
             }
         }
 
@@ -331,7 +331,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        public DateTime Date
+        public string Date
         {
             get { return date; }
             set

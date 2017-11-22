@@ -129,7 +129,7 @@
             x:Name="DurationTextBlock"
             RelativePanel.AlignBottomWithPanel="True"
             Style="{StaticResource BottomMetaDeta}"
-            Text="{Binding Summary, Mode= OneWay, FallbackValue='Unavailable'}"
+            Text="{Binding TravelDuration, Mode= OneWay, FallbackValue='Unavailable'}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontSize="18"
