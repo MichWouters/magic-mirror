@@ -12,6 +12,8 @@ namespace MagicMirror.UniversalApp.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
+        #region privates
+
         /* Services from the Business Layer */
         private IWeatherService _weatherService;
         private ITrafficService _trafficService;
@@ -26,69 +28,20 @@ namespace MagicMirror.UniversalApp.ViewModels
         private DispatcherTimer trafficTimer;
         private DispatcherTimer rssTimer;
 
-        // Commands
-        public ICommand GoToSettings { get; set; }
-
-        private WeatherModel _weather;
-
-        public WeatherModel WeatherInfo
-        {
-            get => _weather;
-            set
-            {
-                _weather = value;
-                NotifyPropertyChanged();
-            }
-        }
-
+        /* Properties */
+        private double temperature;
+        private string weatherimage;
+        private string weatherType;
+        private string sunrise;
+        private string sunset;
+        private string compliment;
+        private string travelDuration;
+        private string location;
+        private DateTime date;
+        private string time;
         private RSSModel _rss;
 
-        public RSSModel RSSInfo
-        {
-            get => _rss;
-            set
-            {
-                _rss = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        private TrafficModel _traffic;
-
-        public TrafficModel TrafficInfo
-        {
-            get => _traffic;
-            set
-            {
-                _traffic = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public DateModel Date => new DateModel();
-        private string _time;
-
-        public string Time
-        {
-            get => _time;
-            set
-            {
-                _time = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        private string _compliment;
-
-        public string Compliment
-        {
-            get => _compliment;
-            set
-            {
-                _compliment = value;
-                NotifyPropertyChanged();
-            }
-        }
+        #endregion privates
 
         public MainPageViewModel(IWeatherService weatherService, ITrafficService trafficService, IRSSService rSSService, ISettingsService settingsService, ICommonService commonService)
         {
@@ -100,13 +53,14 @@ namespace MagicMirror.UniversalApp.ViewModels
             _commonService = commonService;
 
             App.UserSettings = _settingsService.LoadSettings();
-
             SetUpTimers();
             LoadDataOnPageStartup();
             SetRefreshTimers();
 
             GoToSettings = new CustomCommand(NavigateToSettings, CanNavigateToSettings);
         }
+
+        public ICommand GoToSettings { get; set; }
 
         private void NavigateToSettings(object obj)
         {
@@ -136,7 +90,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        // Call data immediately after app launch
         private void LoadDataOnPageStartup()
         {
             GetTime(null, null);
@@ -146,9 +99,9 @@ namespace MagicMirror.UniversalApp.ViewModels
             RefreshRSSModel(null, null);
         }
 
-        // Set timers at which data needs to be refreshed
         private void SetRefreshTimers()
         {
+            // Set timers at which data needs to be refreshed
             SetUpTimer(timeTimer, new TimeSpan(0, 0, 1), GetTime);
             SetUpTimer(complimentTimer, new TimeSpan(0, 5, 0), GetCompliment);
             SetUpTimer(weatherTimer, new TimeSpan(0, 15, 0), RefreshWeatherModel);
@@ -173,8 +126,6 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
-                if (_commonService == null) _commonService = new CommonService();
-
                 Compliment = _commonService.GenerateCompliment();
             }
             catch (Exception ex)
@@ -189,15 +140,16 @@ namespace MagicMirror.UniversalApp.ViewModels
             {
                 var settings = App.UserSettings;
                 WeatherModel weatherModel = await _weatherService.GetModelAsync(settings.HomeCity, settings.Precision, settings.TemperatureUOM);
-                WeatherInfo = weatherModel;
+                FillWeatherInformation(weatherModel);
 
                 if (!weatherTimer.IsEnabled) weatherTimer.Start();
             }
             catch (HttpRequestException ex)
             {
                 // No internet connection. Display dummy data.
+                DisplayErrorMessage("No internet connection. Displaying dummy data", ex.Message);
                 WeatherModel weatherModel = _weatherService.GetOfflineModel(localFolder);
-                WeatherInfo = weatherModel;
+                FillWeatherInformation(weatherModel);
 
                 // Try to refresh data. If succesful, resume timer
                 int minutes = 5;
@@ -207,7 +159,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             catch (Exception ex)
             {
                 // Can't connect to server. Try again after waiting for a few minutes.
-                //DisplayErrorMessage("Can't update Weather information", ex.Message);
+                DisplayErrorMessage("Can't update Weather information", ex.Message);
                 if (weatherTimer.IsEnabled) weatherTimer.Stop();
 
                 // Try to refresh data. If succesful, resume timer
@@ -215,6 +167,16 @@ namespace MagicMirror.UniversalApp.ViewModels
                 await Task.Delay((minutes * 60) * 10000);
                 RefreshWeatherModel(null, null);
             }
+        }
+
+        private void FillWeatherInformation(WeatherModel weatherModel)
+        {
+            Temperature = weatherModel.Temperature;
+            WeatherImage = weatherModel.Icon;
+            WeatherType = weatherModel.WeatherType;
+            Sunrise = weatherModel.SunRise;
+            Sunset = weatherModel.SunSet;
+            Location = weatherModel.Location;
         }
 
         private async void RefreshRSSModel(object sender, object e)
@@ -250,15 +212,15 @@ namespace MagicMirror.UniversalApp.ViewModels
             try
             {
                 var settings = App.UserSettings;
-                TrafficModel result = await _trafficService.GetModelAsync(settings.HomeAddress, settings.HomeCity, settings.WorkAddress);
-                TrafficInfo = result;
+                TrafficModel trafficModel = await _trafficService.GetModelAsync(settings.HomeAddress, settings.HomeCity, settings.WorkAddress);
+                TravelDuration = trafficModel.Summary;
 
                 if (!trafficTimer.IsEnabled) trafficTimer.Start();
             }
             catch (HttpRequestException)
             {
                 TrafficModel trafficModel = _trafficService.GetOfflineModel(localFolder);
-                TrafficInfo = trafficModel;
+                TravelDuration = trafficModel.Summary;
 
                 int minutes = 5;
                 await Task.Delay((minutes * 60) * 10000);
@@ -275,5 +237,114 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         #endregion Methods
+
+        #region Properties
+
+        public double Temperature
+        {
+            get { return temperature; }
+            set
+            {
+                temperature = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string WeatherImage
+        {
+            get { return weatherimage; }
+            set
+            {
+                weatherimage = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string WeatherType
+        {
+            get { return weatherType; }
+            set
+            {
+                weatherType = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string Sunrise
+        {
+            get { return sunrise; }
+            set
+            {
+                sunrise = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string Sunset
+        {
+            get { return sunset; }
+            set
+            {
+                sunset = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string Compliment
+        {
+            get => compliment;
+            set
+            {
+                compliment = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string Location
+        {
+            get { return location; }
+            set
+            {
+                location = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string TravelDuration
+        {
+            get { return travelDuration; }
+            set
+            {
+                travelDuration = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public DateTime Date
+        {
+            get { return date; }
+            set
+            {
+                date = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string Time
+        {
+            get { return TimeModel; }
+        }
+
+        public RSSModel RSSInfo
+        {
+            get => _rss;
+            set
+            {
+                _rss = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        #endregion Properties
     }
 }

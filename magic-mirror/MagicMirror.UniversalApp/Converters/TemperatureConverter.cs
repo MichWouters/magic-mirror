@@ -5,6 +5,10 @@ namespace MagicMirror.UniversalApp.Converters
 {
     internal class TemperatureConverter : IValueConverter
     {
+        public TemperatureConverter()
+        {
+        }
+
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             return value + " °";
