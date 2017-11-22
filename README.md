@@ -1,3 +1,4 @@
+
 Magic-mirror
 Public Repo for the MagicMirror app which anyone can fork and modify.
 
@@ -16,6 +17,8 @@ Michiel
 * Secret screen in which user can modify offline dummy data - Done
 * Baic Cortana implementation - Done
 * Avoid deadlocks- Done
+* Implement IOC - Done
+* Rewrite app to accommodate IOC - Done
 
 * Add extra Cortana voice commands - In Progress 
 * Fix “scrolling” feed (RSS) - In progress
