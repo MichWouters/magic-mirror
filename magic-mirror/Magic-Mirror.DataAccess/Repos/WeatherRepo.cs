@@ -24,7 +24,7 @@ namespace MagicMirror.DataAccess.Repos
                 WeatherEntity entity = ConvertJsonToEntity(json);
                 return entity;
             }
-            catch (Exception) { throw; }
+            catch (Exception ex) { throw ex; }
         }
 
         private void ValidateInputParameters(string city)

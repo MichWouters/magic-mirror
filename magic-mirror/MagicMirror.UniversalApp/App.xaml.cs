@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Ioc;
+using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Common;
 using MagicMirror.UniversalApp.Services;
@@ -27,6 +28,7 @@ namespace MagicMirror.UniversalApp
         }
 
         public static NavigationService NavigationService { get; private set; }
+        public static UserSettings UserSettings { get; set; }
         private RootFrameNavigationHelper rootFrameNavigationHelper;
 
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
@@ -37,6 +39,10 @@ namespace MagicMirror.UniversalApp
             {
                 rootFrame = new Frame();
                 NavigationService = new NavigationService(rootFrame);
+
+                // Singleton for Usersettings
+                UserSettings = new UserSettings();
+
                 rootFrameNavigationHelper = new RootFrameNavigationHelper(rootFrame);
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
@@ -94,7 +100,7 @@ namespace MagicMirror.UniversalApp
 
         private void SetUpIocContainers()
         {
-            //Register business Services
+            // Register business Services
             SimpleIoc.Default.Register<IAddressService, AddressService>();
             SimpleIoc.Default.Register<ICommonService, CommonService>();
             SimpleIoc.Default.Register<IFileWriterService, FileWriterService>();
@@ -106,9 +112,9 @@ namespace MagicMirror.UniversalApp
             SimpleIoc.Default.Register<ILocationService, LocationService>();
             SimpleIoc.Default.Register<ISettingsService, SettingsService>();
 
-            //Register viewModels
-            SimpleIoc.Default.Register<MainPageViewModel>();
+            // Register viewModels
             SimpleIoc.Default.Register<SettingPageViewModel>();
+            SimpleIoc.Default.Register<MainPageViewModel>();
         }
 
         protected override void OnActivated(IActivatedEventArgs args)

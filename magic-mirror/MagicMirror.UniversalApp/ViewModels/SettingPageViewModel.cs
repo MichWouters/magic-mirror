@@ -3,7 +3,6 @@ using MagicMirror.Business.Models.Traffic;
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Services;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
 
@@ -11,7 +10,6 @@ namespace MagicMirror.UniversalApp.ViewModels
 {
     public class SettingPageViewModel : ViewModelBase
     {
-        private UserSettings _userSettings;
         private ILocationService _locationService;
         private ISettingsService _settingsService;
         private IAddressService _addressService;
@@ -21,36 +19,11 @@ namespace MagicMirror.UniversalApp.ViewModels
             _locationService = locationService;
             _settingsService = settingsService;
             _addressService = addressService;
-
-            try
-            {
-                _userSettings = _settingsService.LoadSettings();
-            }
-            catch (FileNotFoundException ex)
-            {
-                DisplayErrorMessage("Settings file not found", ex.Message);
-            }
-            catch (Exception ex)
-            {
-                DisplayErrorMessage("Unable to set up SettingPageViewModel", ex.Message);
-            }
         }
 
         public void SaveSettings()
         {
-            _settingsService.SaveSettings(_userSettings);
-        }
-
-        public void ToggleLightTheme()
-        {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                DisplayErrorMessage("Cannot switch theme at this time", ex.Message);
-            }
+            _settingsService.SaveSettings(App.UserSettings);
         }
 
         public async Task<FetchedAddress> GetAddressModel()
@@ -65,8 +38,8 @@ namespace MagicMirror.UniversalApp.ViewModels
                 string address = $"{addressModel.Street}, {addressModel.HouseNumber}";
                 string city = $"{addressModel.PostalCode} {addressModel.City}, {addressModel.Country}";
 
-                UserSettings.HomeAddress = address;
-                UserSettings.HomeCity = city;
+                App.UserSettings.HomeAddress = address;
+                App.UserSettings.HomeCity = city;
                 return new FetchedAddress { Address = address, City = city };
             }
             catch (UnauthorizedAccessException e)
@@ -117,16 +90,6 @@ namespace MagicMirror.UniversalApp.ViewModels
             set
             {
                 ipAddress = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public UserSettings UserSettings
-        {
-            get => _userSettings;
-            set
-            {
-                _userSettings = value;
                 NotifyPropertyChanged();
             }
         }

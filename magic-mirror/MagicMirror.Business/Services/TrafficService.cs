@@ -2,6 +2,7 @@
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -17,19 +18,7 @@ namespace MagicMirror.Business.Services
         {
         }
 
-        //public TrafficService(UserSettings criteria)
-        //{
-        //    // Defensive coding
-        //    if (criteria == null) throw new ArgumentNullException("No search criteria provided", nameof(criteria));
-        //    if (string.IsNullOrWhiteSpace(criteria.HomeAddress)) throw new ArgumentNullException("A home address has to be provided");
-        //    if (string.IsNullOrWhiteSpace(criteria.HomeCity)) throw new ArgumentNullException("A home town has to be provided");
-        //    if (string.IsNullOrWhiteSpace(criteria.WorkAddress)) throw new ArgumentNullException("A destination address has to be provided");
-
-        //    _criteria = criteria;
-        //    _repo = new TrafficRepo($"{_criteria.HomeAddress} {_criteria.HomeCity}", _criteria.WorkAddress);
-        //}
-
-        public async Task<TrafficModel> GetModelAsync(string homeAddress, string homeCity, string workAddress)
+        public async Task<TrafficModel> GetModelAsync(string homeAddress, string homeCity, string workAddress, DistanceUOM distanceUOM = DistanceUOM.Metric)
         {
             try
             {
@@ -40,7 +29,7 @@ namespace MagicMirror.Business.Services
                 TrafficModel model = MapEntityToModel(entity);
 
                 // Calculate non-mappable values
-                model = CalculateUnMappableValues(model);
+                model = CalculateUnMappableValues(model, distanceUOM);
 
                 return model;
             }
@@ -51,17 +40,15 @@ namespace MagicMirror.Business.Services
             }
         }
 
-        public override TrafficModel GetOfflineModel(string path)
+        public TrafficModel GetOfflineModel(string path)
         {
             try
             {
-                /*  // Try reading Json object
-                  string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
-                  TrafficModel model = JsonConvert.DeserializeObject<TrafficModel>(json);
+                // Try reading Json object
+                string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
+                TrafficModel model = JsonConvert.DeserializeObject<TrafficModel>(json);
 
-                  return model;*/
-                //TODO fix file writing
-                return GenerateOfflineModel();
+                return model;
             }
             catch (FileNotFoundException)
             {
@@ -77,14 +64,14 @@ namespace MagicMirror.Business.Services
             }
         }
 
-        protected TrafficModel CalculateUnMappableValues(TrafficModel model)
+        protected TrafficModel CalculateUnMappableValues(TrafficModel model, DistanceUOM distanceUOM)
         {
             model.Minutes = (model.Minutes / 60);
             model.TrafficDensity = CalculateTrafficDensity(model.NumberOfIncidents);
             model.HourOfArrival = DateTime.Now.AddMinutes(model.Minutes);
             model.DistanceMiles = DistanceHelper.KiloMetersToMiles(model.DistanceKilometers);
 
-            switch (_criteria.DistanceUOM)
+            switch (distanceUOM)
             {
                 case DistanceUOM.Imperial:
                     model.Distance = model.DistanceMiles + " miles";
@@ -130,7 +117,7 @@ namespace MagicMirror.Business.Services
             return result;
         }
 
-        public override void SaveOfflineModel(TrafficModel model, string path)
+        public void SaveOfflineModel(TrafficModel model, string path)
         {
             try
             {
@@ -152,7 +139,7 @@ namespace MagicMirror.Business.Services
                 NumberOfIncidents = 2,
             };
 
-            model = CalculateUnMappableValues(model);
+            model = CalculateUnMappableValues(model, DistanceUOM.Metric);
 
             return model;
         }

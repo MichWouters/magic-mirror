@@ -38,7 +38,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             _settingsService = settingsService;
             _commonService = commonService;
 
-            UserSettings userSettings = _settingsService.LoadSettings();
+            App.UserSettings = _settingsService.LoadSettings();
 
             SetUpTimers();
             LoadDataOnPageStartup();
@@ -126,12 +126,13 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
-                WeatherModel weatherModel = await _weatherService.GetModelAsync();
+                var settings = App.UserSettings;
+                WeatherModel weatherModel = await _weatherService.GetModelAsync(settings.HomeCity, settings.Precision, settings.TemperatureUOM);
                 WeatherInfo = weatherModel;
 
                 if (!weatherTimer.IsEnabled) weatherTimer.Start();
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
                 // No internet connection. Display dummy data.
                 WeatherModel weatherModel = _weatherService.GetOfflineModel(localFolder);
@@ -142,7 +143,7 @@ namespace MagicMirror.UniversalApp.ViewModels
                 await Task.Delay((minutes * 60) * 10000);
                 RefreshWeatherModel(null, null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // Can't connect to server. Try again after waiting for a few minutes.
                 //DisplayErrorMessage("Can't update Weather information", ex.Message);
@@ -187,7 +188,8 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
-                TrafficModel result = await _trafficService.GetModelAsync();
+                var settings = App.UserSettings;
+                TrafficModel result = await _trafficService.GetModelAsync(settings.HomeAddress, settings.HomeCity, settings.WorkAddress);
                 TrafficInfo = result;
 
                 if (!trafficTimer.IsEnabled) trafficTimer.Start();

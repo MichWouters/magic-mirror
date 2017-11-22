@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace MagicMirror.Business.Models
 {
     public class RSSModel : Model
     {
-        public List<RSSItem> items { get; set; }
+        public ObservableCollection<RSSItem> Items { get; set; }
 
         public string Summary
         {
             get
             {
-                return items.Select(i => i.Title).Aggregate((a, b) => a + Environment.NewLine + b);
+                return Items.Select(i => i.Title).Aggregate((a, b) => a + Environment.NewLine + b);
             }
         }
     }

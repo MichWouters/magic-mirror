@@ -9,14 +9,14 @@ namespace MagicMirror.UniversalApp.Services
 {
     public class SettingsService : ISettingsService
     {
-        private FileWriterService _settingsService;
+        private IFileWriterService _fileWriterService;
 
         private readonly string localFolder = ApplicationData.Current.LocalFolder.Path;
         private const string SETTING_FILE = "settings.json";
 
-        public SettingsService(Business.Services.FileWriterService settingsService)
+        public SettingsService(IFileWriterService fileWriterService)
         {
-            _settingsService = settingsService;
+            _fileWriterService = fileWriterService;
         }
 
         public void SaveSettings(UserSettings userSettings, bool createNewSettings = false)
@@ -26,12 +26,11 @@ namespace MagicMirror.UniversalApp.Services
                 if (createNewSettings || userSettings == null)
                 {
                     userSettings = new UserSettings();
-                    //DisplayErrorMessage("Default settings created", "No settings file found! Creating a new one with default settings");
                 }
 
                 if (userSettings != null)
                 {
-                    _settingsService.SaveSettings(localFolder, SETTING_FILE, userSettings);
+                    _fileWriterService.SaveSettings(localFolder, SETTING_FILE, userSettings);
                     App.NavigationService.Navigate<MainPage>();
                 }
                 else
@@ -49,7 +48,7 @@ namespace MagicMirror.UniversalApp.Services
         {
             try
             {
-                var result = _settingsService.ReadSettings(localFolder, SETTING_FILE);
+                var result = _fileWriterService.ReadSettings(localFolder, SETTING_FILE);
 
                 if (result == null) throw new FileNotFoundException("It looks like you're running this app for the first time. We created a new settings file with default values. Please enter your settings now.");
 

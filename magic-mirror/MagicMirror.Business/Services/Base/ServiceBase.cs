@@ -13,7 +13,6 @@ namespace MagicMirror.Business.Services
     {
         protected IMapper Mapper;
         protected IApiRepo<Y> _repo;
-        protected UserSettings _criteria;
 
         protected ServiceBase()
         {

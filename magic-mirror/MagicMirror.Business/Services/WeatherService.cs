@@ -19,13 +19,7 @@ namespace MagicMirror.Business.Services
         {
         }
 
-        public async Task<WeatherModel> GetModelAsync()
-        {
-            string homeCity = "Houwaart, Belgium";
-            return await GetModelAsync(homeCity);
-        }
-
-        public async Task<WeatherModel> GetModelAsync(string homeCity)
+        public async Task<WeatherModel> GetModelAsync(string homeCity, int precision, TemperatureUOM temperatureUOM)
         {
             try
             {
@@ -38,7 +32,7 @@ namespace MagicMirror.Business.Services
                 WeatherModel model = MapEntityToModel(entity);
 
                 // Calculate non-mappable values
-                model = CalculateUnMappableValues(model);
+                model = CalculateUnMappableValues(model, precision, temperatureUOM);
 
                 // Todo: Implement bool if user wants metro or openweather icons
                 if (true)
@@ -48,7 +42,7 @@ namespace MagicMirror.Business.Services
 
                 return model;
             }
-            catch (HttpRequestException) { throw; }
+            catch (HttpRequestException ex) { throw ex; }
             catch (Exception ex)
             {
                 throw new ArgumentException("Unable to retrieve Weather Model", ex);
@@ -107,12 +101,12 @@ namespace MagicMirror.Business.Services
             };
         }
 
-        protected WeatherModel CalculateUnMappableValues(WeatherModel model)
+        protected WeatherModel CalculateUnMappableValues(WeatherModel model, int precision, TemperatureUOM temperatureUOM)
         {
-            model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, _criteria.Precision);
-            model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, _criteria.Precision);
+            model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, precision);
+            model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, precision);
 
-            switch (_criteria.TemperatureUOM)
+            switch (temperatureUOM)
             {
                 case TemperatureUOM.Celsius:
                     model.Temperature = model.TemperatureCelsius;
