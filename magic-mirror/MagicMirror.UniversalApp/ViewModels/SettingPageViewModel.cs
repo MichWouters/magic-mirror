@@ -12,15 +12,15 @@ namespace MagicMirror.UniversalApp.ViewModels
     public class SettingPageViewModel : ViewModelBase
     {
         private UserSettings _userSettings;
-        private ILocationService _locationService;
-        private ISettingsService _settingsService;
+        private Services.ILocationService _locationService;
+        private Services.ISettingsService _settingsService;
         private IService<AddressModel> _addressService;
 
         public SettingPageViewModel()
         {
             try
             {
-                _userSettings = LoadSettings();
+                _userSettings = _settingsService.LoadSettings();
             }
             catch (FileNotFoundException)
             {
@@ -67,49 +67,6 @@ namespace MagicMirror.UniversalApp.ViewModels
                 DisplayErrorMessage("Unable to fetch location", e.Message);
                 return null;
             }
-        }
-
-        public void SaveSettings(bool createNewSettings = false)
-        {
-            try
-            {
-                if (createNewSettings)
-                {
-                    _userSettings = new UserSettings();
-                    DisplayErrorMessage("Default settings created", "No settings file found! Creating a new one with default settings");
-                }
-
-                if (_userSettings != null)
-                {
-                    _settingsService.SaveSettings(localFolder, SETTING_FILE, _userSettings);
-                    NavigateToMain();
-                }
-                else
-                    DisplayErrorMessage("Unable to save Settings. Please check your input");
-            }
-            catch (Exception e)
-            {
-                DisplayErrorMessage("Unable to save Settings.", e.Message);
-            }
-        }
-
-        private UserSettings LoadSettings()
-        {
-            try
-            {
-                var result = _settingsService.ReadSettings(localFolder, SETTING_FILE);
-
-                if (result == null) throw new FileNotFoundException();
-
-                return result;
-            }
-            catch (FileNotFoundException)
-            {
-                SaveSettings(true);
-                _userSettings = LoadSettings();
-                throw;
-            }
-            catch (Exception) { throw; }
         }
 
         private string GetIpAddress()

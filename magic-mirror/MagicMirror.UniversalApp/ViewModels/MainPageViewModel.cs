@@ -28,9 +28,9 @@ namespace MagicMirror.UniversalApp.ViewModels
         public MainPageViewModel()
         {
             SetUpServices();
-            //SetUpTimers();
-            //LoadDataOnPageStartup();
-            //SetRefreshTimers();
+            SetUpTimers();
+            LoadDataOnPageStartup();
+            SetRefreshTimers();
         }
 
         #region Methods
