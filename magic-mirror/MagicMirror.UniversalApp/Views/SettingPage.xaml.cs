@@ -1,6 +1,4 @@
 ﻿using MagicMirror.Business.Models;
-using MagicMirror.Business.Models.Traffic;
-using MagicMirror.UniversalApp.ViewModels;
 using System;
 using Windows.UI.Xaml.Controls;
 

@@ -94,9 +94,12 @@ namespace MagicMirror.UniversalApp
         private void SetUpIocContainers()
         {
             //Register Services
-            SimpleIoc.Default.Register<ISettingsService, SettingsService>();
 
-            //Register classes
+            SimpleIoc.Default.Register<UniversalApp.Services.ISettingsService, UniversalApp.Services.SettingsService>();
+            SimpleIoc.Default.Register<Business.Services.IFileWriterService, Business.Services.FileWriterService>();
+            SimpleIoc.Default.Register<ILocationService, LocationService>();
+
+            //Register viewModels
             SimpleIoc.Default.Register<MainPageViewModel>();
             SimpleIoc.Default.Register<SettingPageViewModel>();
         }

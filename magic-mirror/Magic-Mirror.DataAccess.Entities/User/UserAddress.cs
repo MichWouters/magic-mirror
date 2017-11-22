@@ -2,7 +2,7 @@
 
 namespace MagicMirror.DataAccess.Entities.User
 {
-    public class UserAddress : IEntity
+    public class UserAddress : Entity
     {
         public Guid Id { get; set; }
         public AddressType AddressType { get; set; }

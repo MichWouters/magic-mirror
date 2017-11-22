@@ -1,6 +1,7 @@
 ﻿using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Common;
+using MagicMirror.UniversalApp.Services;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private IService<RSSModel> _rssService;
         private IService<TrafficModel> _trafficService;
-        private Services.ISettingsService _settingsService;
+        private ISettingsService _settingsService;
         private CommonService _commonService;
 
         // Timers to refresh individual components
@@ -30,8 +31,10 @@ namespace MagicMirror.UniversalApp.ViewModels
         // Commands
         public ICommand GoToSettings { get; set; }
 
-        public MainPageViewModel()
+        public MainPageViewModel(ISettingsService settingsService)
         {
+            _settingsService = settingsService;
+
             SetUpServices();
             SetUpTimers();
             LoadDataOnPageStartup();
@@ -56,7 +59,6 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             try
             {
-                _settingsService = new Services.SettingsService();
                 UserSettings userSettings = _settingsService.LoadSettings();
 
                 _weatherService = new WeatherService();

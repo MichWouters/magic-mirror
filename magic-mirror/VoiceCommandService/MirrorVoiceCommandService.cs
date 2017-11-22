@@ -12,13 +12,13 @@ namespace VoiceCommandService
     {
         private VoiceCommandServiceConnection voiceServiceConnection;
         private BackgroundTaskDeferral serviceDeferral;
-        private SettingsService settingsService;
+        private FileWriterService settingsService;
         private readonly string localFolder = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
         private const string SETTING_FILE = "settings.json";
 
         public MirrorVoiceCommandService()
         {
-            settingsService = new SettingsService();
+            settingsService = new FileWriterService();
         }
 
         public async void Run(IBackgroundTaskInstance taskInstance)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MagicMirror.DataAccess.Entities.User
 {
-    public class UserEntity : IEntity
+    public class UserEntity : Entity
     {
         public UserEntity()
         {

@@ -1,4 +1,5 @@
 ﻿using MagicMirror.Business.Models;
+using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Views;
 using System;
 using System.IO;
@@ -8,13 +9,14 @@ namespace MagicMirror.UniversalApp.Services
 {
     public class SettingsService : ISettingsService
     {
-        private Business.Services.SettingsService _settingsService;
+        private FileWriterService _settingsService;
+
         private readonly string localFolder = ApplicationData.Current.LocalFolder.Path;
         private const string SETTING_FILE = "settings.json";
 
-        public SettingsService()
+        public SettingsService(Business.Services.FileWriterService settingsService)
         {
-            _settingsService = new Business.Services.SettingsService();
+            _settingsService = settingsService;
         }
 
         public void SaveSettings(UserSettings userSettings, bool createNewSettings = false)

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MagicMirror.Business.Services
 {
     public abstract class ServiceBase<T, Y> : IService<T> where T : IModel
-                                                             where Y : IEntity
+                                                             where Y : Entity
     {
         protected IMapper Mapper;
         protected IApiRepo<Y> _repo;

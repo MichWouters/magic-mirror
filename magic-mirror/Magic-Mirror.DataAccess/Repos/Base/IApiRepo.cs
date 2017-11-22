@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public interface IApiRepo<T> where T : IEntity
+    public interface IApiRepo<T> where T : Entity
     {
         Task<T> GetEntityAsync();
     }

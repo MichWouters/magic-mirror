@@ -1,6 +1,6 @@
 ﻿namespace MagicMirror.DataAccess.Entities
 {
-    public interface IEntity
+    public class Entity
     {
     }
 }
