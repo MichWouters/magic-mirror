@@ -49,7 +49,7 @@
         </Style>
     </Page.Resources>
 
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{Binding WeatherInfo}">
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <!--  Top Left elements  -->
 
         <!--  Main Temperature  -->

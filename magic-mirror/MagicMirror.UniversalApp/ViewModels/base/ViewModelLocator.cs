@@ -10,6 +10,9 @@ namespace MagicMirror.UniversalApp.ViewModels
             {
                 return SimpleIoc.Default.GetInstance<MainPageViewModel>();
             }
+            set
+            {
+            }
         }
 
         public static SettingPageViewModel SettingPageViewModel
@@ -17,6 +20,9 @@ namespace MagicMirror.UniversalApp.ViewModels
             get
             {
                 return SimpleIoc.Default.GetInstance<SettingPageViewModel>();
+            }
+            set
+            {
             }
         }
     }

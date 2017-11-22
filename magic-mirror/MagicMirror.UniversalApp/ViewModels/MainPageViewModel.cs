@@ -29,6 +29,67 @@ namespace MagicMirror.UniversalApp.ViewModels
         // Commands
         public ICommand GoToSettings { get; set; }
 
+        private WeatherModel _weather;
+
+        public WeatherModel WeatherInfo
+        {
+            get => _weather;
+            set
+            {
+                _weather = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private RSSModel _rss;
+
+        public RSSModel RSSInfo
+        {
+            get => _rss;
+            set
+            {
+                _rss = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private TrafficModel _traffic;
+
+        public TrafficModel TrafficInfo
+        {
+            get => _traffic;
+            set
+            {
+                _traffic = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public DateModel Date => new DateModel();
+        private string _time;
+
+        public string Time
+        {
+            get => _time;
+            set
+            {
+                _time = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private string _compliment;
+
+        public string Compliment
+        {
+            get => _compliment;
+            set
+            {
+                _compliment = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public MainPageViewModel(IWeatherService weatherService, ITrafficService trafficService, IRSSService rSSService, ISettingsService settingsService, ICommonService commonService)
         {
             // Constructor injection
@@ -214,70 +275,5 @@ namespace MagicMirror.UniversalApp.ViewModels
         }
 
         #endregion Methods
-
-        #region Properties
-
-        private WeatherModel _weather;
-
-        public WeatherModel WeatherInfo
-        {
-            get => _weather;
-            set
-            {
-                _weather = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        private RSSModel _rss;
-
-        public RSSModel RSSInfo
-        {
-            get => _rss;
-            set
-            {
-                _rss = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        private TrafficModel _traffic;
-
-        public TrafficModel TrafficInfo
-        {
-            get => _traffic;
-            set
-            {
-                _traffic = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public DateModel Date => new DateModel();
-        private string _time;
-
-        public string Time
-        {
-            get => _time;
-            set
-            {
-                _time = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        private string _compliment;
-
-        public string Compliment
-        {
-            get => _compliment;
-            set
-            {
-                _compliment = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        #endregion Properties
     }
 }
