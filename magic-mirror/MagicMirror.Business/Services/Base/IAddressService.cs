@@ -5,6 +5,6 @@ namespace MagicMirror.Business.Services
 {
     public interface IAddressService
     {
-        Task<AddressModel> GetModelAsync();
+        Task<AddressModel> GetModelAsync(string latitude, string longitude);
     }
 }

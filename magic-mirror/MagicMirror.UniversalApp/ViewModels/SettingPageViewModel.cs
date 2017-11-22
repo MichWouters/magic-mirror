@@ -1,7 +1,10 @@
 ﻿using MagicMirror.Business.Models;
+using MagicMirror.Business.Models.Traffic;
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Common;
 using MagicMirror.UniversalApp.Services;
+using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace MagicMirror.UniversalApp.ViewModels
@@ -23,25 +26,49 @@ namespace MagicMirror.UniversalApp.ViewModels
         private TemperatureUOM temperatureUOM;
 
         public ICommand SaveSettingsCommand { get; set; }
+        public ICommand GetUserLocationCommand { get; set; }
 
-        public SettingPageViewModel(ISettingsService settingsService, ICommonService commonService)
+        public SettingPageViewModel(ISettingsService settingsService, ICommonService commonService, ILocationService locationService, IAddressService addressService)
         {
             _settingsService = settingsService;
             _commonService = commonService;
+            _locationService = locationService;
+            _addressService = addressService;
 
             SaveSettingsCommand = new CustomCommand(SaveSettings, CanSaveSettings);
+            GetUserLocationCommand = new CustomCommand(GetuserLocationAsync, CanGetUserLocation);
 
             FillSettingsInformation();
         }
 
-        private void SaveSettings(object obj)
+        private bool CanGetUserLocation(object obj)
         {
-            _settingsService.SaveSettings(App.UserSettings);
+            return true;
         }
 
         private bool CanSaveSettings(object obj)
         {
             return true;
+        }
+
+        private async void GetuserLocationAsync(object obj)
+        {
+            var address = await GetAddressModel();
+            HomeAddress = address.Address;
+            HomeTown = address.City;
+        }
+
+        private void SaveSettings(object obj)
+        {
+            var usersettings = App.UserSettings;
+            usersettings.DistanceUOM = DistanceUom;
+            usersettings.HomeAddress = HomeAddress;
+            usersettings.HomeCity = HomeTown;
+            usersettings.TemperatureUOM = temperatureUOM;
+            usersettings.UserName = Name;
+            usersettings.WorkAddress = WorkAddress;
+
+            _settingsService.SaveSettings(usersettings);
         }
 
         private void FillSettingsInformation()
@@ -57,33 +84,33 @@ namespace MagicMirror.UniversalApp.ViewModels
             TemperatureUOM = settings.TemperatureUOM;
         }
 
-        //public async Task<FetchedAddress> GetAddressModel()
-        //{
-        //    try
-        //    {
-        //        // TODO: Modernize
-        //        var coordinates = await _locationService.GetLocationAsync();
-        //        _addressService = new AddressService(coordinates.Coordinate.Latitude.ToString(), coordinates.Coordinate.Longitude.ToString());
-        //        AddressModel addressModel = await _addressService.GetModelAsync();
+        public async Task<FetchedAddress> GetAddressModel()
+        {
+            try
+            {
+                // TODO: Modernize
+                var coordinates = await _locationService.GetLocationAsync();
+                _addressService = new AddressService();
+                AddressModel addressModel = await _addressService.GetModelAsync(coordinates.Coordinate.Latitude.ToString(), coordinates.Coordinate.Longitude.ToString());
 
-        //        string address = $"{addressModel.Street}, {addressModel.HouseNumber}";
-        //        string city = $"{addressModel.PostalCode} {addressModel.City}, {addressModel.Country}";
+                string address = $"{addressModel.Street}, {addressModel.HouseNumber}";
+                string city = $"{addressModel.PostalCode} {addressModel.City}, {addressModel.Country}";
 
-        //        App.UserSettings.HomeAddress = address;
-        //        App.UserSettings.HomeCity = city;
-        //        return new FetchedAddress { Address = address, City = city };
-        //    }
-        //    catch (UnauthorizedAccessException e)
-        //    {
-        //        DisplayErrorMessage("Unable to fetch location, Unauthorized access", e.Message);
-        //        return null;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        DisplayErrorMessage("Unable to fetch location", e.Message);
-        //        return null;
-        //    }
-        //}
+                App.UserSettings.HomeAddress = address;
+                App.UserSettings.HomeCity = city;
+                return new FetchedAddress { Address = address, City = city };
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                DisplayErrorMessage("Unable to fetch location, Unauthorized access", e.Message);
+                return null;
+            }
+            catch (Exception e)
+            {
+                DisplayErrorMessage("Unable to fetch location", e.Message);
+                return null;
+            }
+        }
 
         #region Properties
 

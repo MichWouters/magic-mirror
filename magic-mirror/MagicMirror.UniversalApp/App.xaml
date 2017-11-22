@@ -9,6 +9,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <convertor:TemperatureConverter x:Key="tempConvertor"></convertor:TemperatureConverter>
+            <convertor:UomEnumConverter x:Key="uomEnumconverter"></convertor:UomEnumConverter>
 
             <local:ViewModelLocator x:Key="mainViewModelLocator"></local:ViewModelLocator>
         </ResourceDictionary>

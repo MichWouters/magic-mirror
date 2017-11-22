@@ -8,21 +8,11 @@ namespace MagicMirror.Business.Services
 {
     public class AddressService : ServiceBase<AddressModel, AddressEntity>, IAddressService
     {
-        private string _latitude;
-        private string _longitude;
-
-        public AddressService(string latitude, string longitude)
-        {
-            _latitude = latitude;
-            _longitude = longitude;
-
-            _repo = new AddressRepo(_latitude, _longitude);
-        }
-
-        public async Task<AddressModel> GetModelAsync()
+        public async Task<AddressModel> GetModelAsync(string latitude, string longitude)
         {
             try
             {
+                _repo = new AddressRepo(latitude, longitude);
                 var entity = await _repo.GetEntityAsync();
                 AddressModel model = MapEntityToModel(entity);
 

@@ -69,7 +69,7 @@
                 RelativePanel.Below="UserNameTextBox"
                 RelativePanel.AlignBottomWith="HomeTownTextBox"
                 Content="Use current location"
-                        Click="LocationButton_Click" />
+                Command="{Binding GetUserLocationCommand}" />
 
                 <TextBox x:Name="WorkAddressTextBox"
                  HorizontalAlignment="Left"
@@ -84,21 +84,21 @@
                  RelativePanel.AlignLeftWithPanel="True"
                  RelativePanel.Below="WorkAddressTextBox"
                  InputScope="Digits"
-                 Text="{Binding HomeTown, Mode=TwoWay}" />
+                 Text="{Binding Decimals, Mode=TwoWay}" />
 
                 <ComboBox x:Name="DistanceUomComboBox"
                   HorizontalAlignment="Left"
                   Header="Distance Unit of Measure"
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.Below="PrecisonSlider"
-                  SelectedValue="{Binding DistanceUom}" />
+                  SelectedIndex="{Binding DistanceUom, Converter={StaticResource uomEnumconverter}}" />
 
                 <ComboBox x:Name="TemperatureUomComboBox"
                   HorizontalAlignment="Left"
                   Header="Temperature Unit of Measure"
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.Below="DistanceUomComboBox"
-                  SelectedValue="{Binding TemperatureUOM}" />
+                  SelectedIndex="{Binding TemperatureUOM, Converter={StaticResource uomEnumconverter}}" />
 
                 <TextBlock x:Name="IpAddressTextBlock"
                      HorizontalAlignment="Left"

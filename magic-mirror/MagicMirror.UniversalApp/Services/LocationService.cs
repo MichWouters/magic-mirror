@@ -6,6 +6,10 @@ namespace MagicMirror.UniversalApp.Services
 {
     public class LocationService : ILocationService
     {
+        public LocationService()
+        {
+        }
+
         public async Task<Geoposition> GetLocationAsync()
         {
             var access = await RequestAccessAsync();
