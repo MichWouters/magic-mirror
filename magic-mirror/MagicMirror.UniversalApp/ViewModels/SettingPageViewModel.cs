@@ -64,7 +64,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             usersettings.DistanceUOM = DistanceUom;
             usersettings.HomeAddress = HomeAddress;
             usersettings.HomeCity = HomeTown;
-            usersettings.TemperatureUOM = temperatureUOM;
+            usersettings.TemperatureUOM = TemperatureUOM;
             usersettings.UserName = Name;
             usersettings.WorkAddress = WorkAddress;
 

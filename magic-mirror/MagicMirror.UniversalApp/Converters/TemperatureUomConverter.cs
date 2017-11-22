@@ -1,5 +1,5 @@
-﻿using MagicMirror.Business.Models;
-using System;
+﻿using System;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 
 namespace MagicMirror.UniversalApp.Converters
@@ -8,13 +8,12 @@ namespace MagicMirror.UniversalApp.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            int result = (int)value;
-            return result;
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            return value as ComboBoxItem;
         }
     }
 }

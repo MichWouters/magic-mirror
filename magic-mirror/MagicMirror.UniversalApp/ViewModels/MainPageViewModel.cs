@@ -56,7 +56,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
             App.UserSettings = _settingsService.LoadSettings();
             InitializeTimers();
-            LoadDataOnPageStartup();
+            RefreshAllData();
             SetRefreshTimers();
 
             GoToSettingsCommand = new CustomCommand(NavigateToSettings, CanNavigateToSettings);
@@ -93,7 +93,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             }
         }
 
-        private void LoadDataOnPageStartup()
+        private void RefreshAllData()
         {
             GetTime(null, null);
             GetDate(null, null);

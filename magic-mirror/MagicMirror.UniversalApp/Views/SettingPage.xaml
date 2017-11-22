@@ -91,14 +91,14 @@
                   Header="Distance Unit of Measure"
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.Below="PrecisonSlider"
-                  SelectedIndex="{Binding DistanceUom, Converter={StaticResource uomEnumconverter}}" />
+                  SelectedItem="{Binding DistanceUom, Converter={StaticResource uomEnumconverter}}" />
 
                 <ComboBox x:Name="TemperatureUomComboBox"
                   HorizontalAlignment="Left"
                   Header="Temperature Unit of Measure"
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.Below="DistanceUomComboBox"
-                  SelectedIndex="{Binding TemperatureUOM, Converter={StaticResource uomEnumconverter}}" />
+                  SelectedItem="{Binding TemperatureUOM, Converter={StaticResource uomEnumconverter}}" />
 
                 <TextBlock x:Name="IpAddressTextBlock"
                      HorizontalAlignment="Left"
