@@ -1,4 +1,5 @@
-﻿using MagicMirror.Business.Models;
+﻿using Acme.Generic;
+using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
 using MagicMirror.UniversalApp.Common;
 using MagicMirror.UniversalApp.Services;
@@ -23,6 +24,7 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         /* Timers to refresh individual components */
         private DispatcherTimer timeTimer;
+        private DispatcherTimer dateTimer;
         private DispatcherTimer complimentTimer;
         private DispatcherTimer weatherTimer;
         private DispatcherTimer trafficTimer;
@@ -53,7 +55,7 @@ namespace MagicMirror.UniversalApp.ViewModels
             _commonService = commonService;
 
             App.UserSettings = _settingsService.LoadSettings();
-            SetUpTimers();
+            InitializeTimers();
             LoadDataOnPageStartup();
             SetRefreshTimers();
 
@@ -74,11 +76,12 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         #region Methods
 
-        private void SetUpTimers()
+        private void InitializeTimers()
         {
             try
             {
                 timeTimer = new DispatcherTimer();
+                dateTimer = new DispatcherTimer();
                 complimentTimer = new DispatcherTimer();
                 weatherTimer = new DispatcherTimer();
                 rssTimer = new DispatcherTimer();
@@ -93,6 +96,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         private void LoadDataOnPageStartup()
         {
             GetTime(null, null);
+            GetTime(null, null);
             GetCompliment(null, null);
             RefreshWeatherModel(null, null);
             RefreshTrafficModel(null, null);
@@ -103,6 +107,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             // Set timers at which data needs to be refreshed
             SetUpTimer(timeTimer, new TimeSpan(0, 0, 1), GetTime);
+            SetUpTimer(dateTimer, new TimeSpan(1, 0, 0), GetDate);
             SetUpTimer(complimentTimer, new TimeSpan(0, 5, 0), GetCompliment);
             SetUpTimer(weatherTimer, new TimeSpan(0, 15, 0), RefreshWeatherModel);
             SetUpTimer(trafficTimer, new TimeSpan(0, 10, 0), RefreshTrafficModel);
@@ -118,8 +123,14 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         private void GetTime(object sender, object e)
         {
-            try { Time = DateTime.Now.ToString("HH:mm"); }
+            try { Time = DateHelper.CurrentTime; }
             catch (Exception ex) { DisplayErrorMessage("Cannot set Time", ex.Message); }
+        }
+
+        private void GetDate(object sender, object e)
+        {
+            try { Time = DateHelper.CurrentTimeFull; }
+            catch (Exception ex) { DisplayErrorMessage("Cannot set Date", ex.Message); }
         }
 
         private void GetCompliment(object sender, object e)
@@ -332,7 +343,12 @@ namespace MagicMirror.UniversalApp.ViewModels
 
         public string Time
         {
-            get { return TimeModel; }
+            get { return time; }
+            set
+            {
+                time = value;
+                NotifyPropertyChanged();
+            }
         }
 
         public RSSModel RSSInfo
