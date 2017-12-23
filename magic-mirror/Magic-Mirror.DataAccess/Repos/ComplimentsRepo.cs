@@ -1,10 +1,76 @@
-﻿using System.Collections.Generic;
+﻿using MagicMirror.DataAccess.Entities.Entities;
+using MagicMirror.DataAccess.Repos.Base;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MagicMirror.DataAccess.Compliments
 {
-    public class ComplimentsRepo
+    public class ComplimentsRepo : IDataRepository<ComplimentEntity>, IComplimentsRepo
     {
-        public List<string> GetCompliments()
+        public ComplimentEntity Add(ComplimentEntity entity)
+        {
+            using (var ctx = new SqliteContext())
+            {
+                var newEntity = ctx.Compliments.Add(entity);
+                ctx.SaveChanges();
+                return newEntity.Entity;
+            }
+        }
+
+        public ComplimentEntity Get(int id)
+        {
+            using (var ctx = new SqliteContext())
+            {
+                return ctx.Compliments.Find(id);
+            }
+        }
+
+        public ComplimentEntity Get(string keyword)
+        {
+            using (var ctx = new SqliteContext())
+            {
+                return ctx.Compliments
+                    .First(x => x.Value.Contains(keyword));
+            }
+        }
+
+        public IEnumerable<ComplimentEntity> GetAll()
+        {
+            using (var ctx = new SqliteContext())
+            {
+                return ctx.Compliments;
+            }
+        }
+
+        public void Remove(ComplimentEntity entity)
+        {
+            using (var ctx = new SqliteContext())
+            {
+                ctx.Compliments.Remove(entity);
+                ctx.SaveChanges();
+            }
+        }
+
+        public void Remove(int id)
+        {
+            using (var ctx = new SqliteContext())
+            {
+                ComplimentEntity entity = Get(id);
+                Remove(entity);
+            }
+        }
+
+        public ComplimentEntity Update(ComplimentEntity entity)
+        {
+            using (var ctx = new SqliteContext())
+            {
+                var updateEntity = ctx.Compliments.Attach(entity);
+                ctx.SaveChanges();
+                return updateEntity.Entity;
+            }
+        }
+
+        public List<string> GetHardCodedCompliments()
         {
             var complimentList = new List<string>
             {

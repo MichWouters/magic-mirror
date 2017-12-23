@@ -1,4 +1,5 @@
-﻿using MagicMirror.DataAccess.Entities.User;
+﻿using MagicMirror.DataAccess.Entities.Entities;
+using MagicMirror.DataAccess.Entities.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace MagicMirror.DataAccess
@@ -38,13 +39,14 @@ namespace MagicMirror.DataAccess
         }
 
         public DbSet<UserEntity> Users { get; set; }
+        public DbSet<ComplimentEntity> Compliments { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<AddressType> AddressTypes { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite($"Data Source={_dbFile}");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlite($"Data Source={_dbFile}");
+        //}
 
         public void DeleteDatabase()
         {

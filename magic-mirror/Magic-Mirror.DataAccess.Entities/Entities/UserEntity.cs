@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MagicMirror.DataAccess.Entities.User
 {
-    public class UserEntity : IIdentifiableEntity
+    public class UserEntity : Entity, IIdentifiableEntity
     {
         public UserEntity()
         {

@@ -18,7 +18,7 @@ namespace MagicMirror.DataAccess.Repos.Base
 
         T Update(T entity);
 
-        IEnumerable<T> Get();
+        IEnumerable<T> GetAll();
 
         T Get(int id);
     }
