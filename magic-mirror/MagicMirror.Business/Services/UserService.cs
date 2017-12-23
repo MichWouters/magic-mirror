@@ -11,7 +11,7 @@ namespace MagicMirror.Business.Services
     {
         private UserRepo _userRepo;
 
-        public UserService(SqliteContext context)
+        public UserService(MirrorContext context)
         {
             _userRepo = new UserRepo(context);
         }

@@ -9,9 +9,9 @@ namespace MagicMirror.DataAccess.Repos
 {
     public abstract class DbRepo<T> : IDbRepo<T> where T : Entity
     {
-        protected SqliteContext Context { get; private set; }
+        protected MirrorContext Context { get; private set; }
 
-        protected DbRepo(SqliteContext context)
+        protected DbRepo(MirrorContext context)
         {
             Context = context;
         }

@@ -8,7 +8,7 @@ namespace MagicMirror.DataAccess.Repos
 {
     public class UserRepo : DbRepo<UserEntity>
     {
-        public UserRepo(SqliteContext context) : base(context)
+        public UserRepo(MirrorContext context) : base(context)
         {
         }
 

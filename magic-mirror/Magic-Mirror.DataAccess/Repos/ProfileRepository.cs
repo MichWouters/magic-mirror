@@ -8,7 +8,7 @@ namespace MagicMirror.DataAccess.Repos
     {
         public UserEntity Add(UserEntity entity)
         {
-            using (var ctx = new SqliteContext())
+            using (var ctx = new MirrorContext())
             {
                 var newEntity = ctx.Users.Add(entity);
                 ctx.SaveChanges();
@@ -18,7 +18,7 @@ namespace MagicMirror.DataAccess.Repos
 
         public UserEntity Get(int id)
         {
-            using (var ctx = new SqliteContext())
+            using (var ctx = new MirrorContext())
             {
                 return ctx.Users.Find(id);
             }
@@ -26,7 +26,7 @@ namespace MagicMirror.DataAccess.Repos
 
         public IEnumerable<UserEntity> GetAll()
         {
-            using (var ctx = new SqliteContext())
+            using (var ctx = new MirrorContext())
             {
                 return ctx.Users;
             }
@@ -34,7 +34,7 @@ namespace MagicMirror.DataAccess.Repos
 
         public void Remove(UserEntity entity)
         {
-            using (var ctx = new SqliteContext())
+            using (var ctx = new MirrorContext())
             {
                 ctx.Users.Remove(entity);
                 ctx.SaveChanges();
@@ -43,7 +43,7 @@ namespace MagicMirror.DataAccess.Repos
 
         public void Remove(int id)
         {
-            using (var ctx = new SqliteContext())
+            using (var ctx = new MirrorContext())
             {
                 UserEntity entity = Get(id);
                 Remove(entity);
@@ -52,7 +52,7 @@ namespace MagicMirror.DataAccess.Repos
 
         public UserEntity Update(UserEntity entity)
         {
-            using (var ctx = new SqliteContext())
+            using (var ctx = new MirrorContext())
             {
                 var updateEntity = ctx.Users.Attach(entity);
                 ctx.SaveChanges();

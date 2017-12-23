@@ -11,12 +11,12 @@ namespace MagicMirror.Tests.User
 {
     public class UserDataTests
     {
-        private readonly SqliteContext _context;
+        private readonly MirrorContext _context;
         private readonly UserRepo _repo;
 
         public UserDataTests()
         {
-            _context = new SqliteContext("tests.db");
+            _context = new MirrorContext("tests.db");
             _repo = new UserRepo(_context);
         }
 

@@ -72,7 +72,7 @@ namespace MagicMirror.UniversalApp.ViewModels
         {
             User.FirstName = "John";
             User.LastName = "Doe";
-            var sqlContext = new SqliteContext();
+            var sqlContext = new MirrorContext();
             _userService = new UserService(sqlContext);
             _faceService = new FaceService();
 

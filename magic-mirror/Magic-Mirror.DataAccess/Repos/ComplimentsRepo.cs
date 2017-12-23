@@ -9,7 +9,7 @@ namespace MagicMirror.DataAccess.Compliments
     {
         public ComplimentEntity Add(ComplimentEntity entity)
         {
-            using (var ctx = new SqliteContext())
+            using (var ctx = new MirrorContext())
             {
                 var newEntity = ctx.Compliments.Add(entity);
                 ctx.SaveChanges();
@@ -19,7 +19,7 @@ namespace MagicMirror.DataAccess.Compliments
 
         public ComplimentEntity Get(int id)
         {
-            using (var ctx = new SqliteContext())
+            using (var ctx = new MirrorContext())
             {
                 return ctx.Compliments.Find(id);
             }
@@ -27,7 +27,7 @@ namespace MagicMirror.DataAccess.Compliments
 
         public ComplimentEntity Get(string keyword)
         {
-            using (var ctx = new SqliteContext())
+            using (var ctx = new MirrorContext())
             {
                 return ctx.Compliments
                     .First(x => x.Value.Contains(keyword));
@@ -36,7 +36,7 @@ namespace MagicMirror.DataAccess.Compliments
 
         public IEnumerable<ComplimentEntity> GetAll()
         {
-            using (var ctx = new SqliteContext())
+            using (var ctx = new MirrorContext())
             {
                 return ctx.Compliments;
             }
@@ -44,7 +44,7 @@ namespace MagicMirror.DataAccess.Compliments
 
         public void Remove(ComplimentEntity entity)
         {
-            using (var ctx = new SqliteContext())
+            using (var ctx = new MirrorContext())
             {
                 ctx.Compliments.Remove(entity);
                 ctx.SaveChanges();
@@ -53,7 +53,7 @@ namespace MagicMirror.DataAccess.Compliments
 
         public void Remove(int id)
         {
-            using (var ctx = new SqliteContext())
+            using (var ctx = new MirrorContext())
             {
                 ComplimentEntity entity = Get(id);
                 Remove(entity);
@@ -62,7 +62,7 @@ namespace MagicMirror.DataAccess.Compliments
 
         public ComplimentEntity Update(ComplimentEntity entity)
         {
-            using (var ctx = new SqliteContext())
+            using (var ctx = new MirrorContext())
             {
                 var updateEntity = ctx.Compliments.Attach(entity);
                 ctx.SaveChanges();
