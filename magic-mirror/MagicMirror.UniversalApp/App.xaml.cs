@@ -1,7 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Ioc;
 using MagicMirror.Business.Models;
 using MagicMirror.Business.Services;
-using MagicMirror.DataAccess.Repos;
 using MagicMirror.UniversalApp.Common;
 using MagicMirror.UniversalApp.Services;
 using MagicMirror.UniversalApp.ViewModels;

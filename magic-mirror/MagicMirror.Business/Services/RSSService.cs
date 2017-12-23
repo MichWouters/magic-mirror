@@ -4,7 +4,6 @@ using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Net.Http;

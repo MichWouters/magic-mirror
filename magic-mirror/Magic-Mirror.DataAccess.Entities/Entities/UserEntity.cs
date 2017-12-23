@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MagicMirror.DataAccess.Entities.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace MagicMirror.DataAccess.Entities.User
 {
-    public class UserEntity : Entity
+    public class UserEntity : IIdentifiableEntity
     {
         public UserEntity()
         {
@@ -11,6 +12,7 @@ namespace MagicMirror.DataAccess.Entities.User
             Faces = new List<UserFace>();
         }
 
+        public int EntityId { get; set; }
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

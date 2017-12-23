@@ -4,7 +4,6 @@ using MagicMirror.Business.Configuration;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities;
 using MagicMirror.DataAccess.Repos;
-using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {

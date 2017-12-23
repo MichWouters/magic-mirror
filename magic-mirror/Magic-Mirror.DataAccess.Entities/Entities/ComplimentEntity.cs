@@ -1,13 +1,13 @@
 ﻿namespace MagicMirror.DataAccess.Entities.Entities
 {
-    public class Compliment
+    public class ComplimentEntity : IIdentifiableEntity
     {
-        private int complimentId;
+        private int _entityId;
 
-        public int ComplimentId
+        public int EntityId
         {
-            get { return complimentId; }
-            set { complimentId = value; }
+            get { return _entityId; }
+            set { _entityId = value; }
         }
 
         private string _value;
