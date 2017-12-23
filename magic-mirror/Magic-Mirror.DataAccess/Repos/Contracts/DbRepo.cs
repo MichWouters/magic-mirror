@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public abstract class DbRepoBase<T> : IDbRepo<T> where T : Entity
+    public abstract class DbRepo<T> : IDbRepo<T> where T : Entity
     {
         protected SqliteContext Context { get; private set; }
 
-        protected DbRepoBase(SqliteContext context)
+        protected DbRepo(SqliteContext context)
         {
             Context = context;
         }

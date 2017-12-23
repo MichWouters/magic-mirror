@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class UserRepo : DbRepoBase<UserEntity>
+    public class UserRepo : DbRepo<UserEntity>
     {
         public UserRepo(SqliteContext context) : base(context)
         {

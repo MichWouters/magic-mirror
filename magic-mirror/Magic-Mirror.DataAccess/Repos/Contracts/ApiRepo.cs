@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public abstract class ApiRepoBase<T> : IApiRepo<T> where T : Entity
+    public abstract class ApiRepo<T> : IApiRepo<T>
+        where T : Entity
     {
         protected virtual string _apiUrl { get; set; }
         protected virtual string _apiId { get; set; }

@@ -10,7 +10,7 @@ using System.Xml;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class RSSRepo : ApiRepoBase<RSSEntity>
+    public class RSSRepo : ApiRepo<RSSEntity>
     {
         private string _feed { get; set; }
 

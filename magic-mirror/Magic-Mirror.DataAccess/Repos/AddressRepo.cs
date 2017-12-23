@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class AddressRepo : ApiRepoBase<AddressEntity>
+    public class AddressRepo : ApiRepo<AddressEntity>
     {
         public AddressRepo(string latitude, string longitude) : base()
         {

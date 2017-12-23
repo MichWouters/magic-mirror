@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class WeatherRepo : ApiRepoBase<WeatherEntity>
+    public class WeatherRepo : ApiRepo<WeatherEntity>
     {
-        public WeatherRepo(string city) : base()
+        public WeatherRepo(string city)
+            : base()
         {
             ValidateInputParameters(city);
             _url = $"{_apiUrl}/weather?q={city}&appid={_apiId}";

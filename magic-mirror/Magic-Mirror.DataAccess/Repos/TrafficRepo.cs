@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.DataAccess.Repos
 {
-    public class TrafficRepo : ApiRepoBase<TrafficEntity>
+    public class TrafficRepo : ApiRepo<TrafficEntity>
     {
         public TrafficRepo(string start, string destination) : base()
         {
