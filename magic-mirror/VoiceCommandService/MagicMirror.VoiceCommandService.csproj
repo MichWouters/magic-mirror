@@ -118,10 +118,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MagicMirror.Business.Models\MagicMirror.Business.Models.csproj">
-      <Project>{6C1D40E7-E7DB-4C2A-ADC9-E6FDD4028C0B}</Project>
-      <Name>MagicMirror.Business.Models</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MagicMirror.Business\MagicMirror.Business.csproj">
       <Project>{9C98AD46-C186-4B98-ABA2-C8E8462C21A3}</Project>
       <Name>MagicMirror.Business</Name>

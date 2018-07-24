@@ -1,5 +1,4 @@
 ﻿using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities.Entities;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -11,9 +10,11 @@ namespace MagicMirror.Business.Services
     public class WeatherService : ServiceBase<WeatherModel, WeatherEntity>, IWeatherService
     {
         private const string OFFLINEMODELNAME = "WeatherOfflineModel.json";
+        private readonly IWeatherRepo _repo;
 
-        public WeatherService()
+        public WeatherService(IWeatherRepo repo)
         {
+            _repo = repo;
         }
 
         public async Task<WeatherModel> GetModelAsync(string homeCity, int precision, TemperatureUOM temperatureUOM)
