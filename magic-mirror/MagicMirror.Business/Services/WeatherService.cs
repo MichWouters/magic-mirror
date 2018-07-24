@@ -1,9 +1,6 @@
-﻿using MagicMirror.Business.Enums;
-using MagicMirror.Business.Models;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Repos;
-using Newtonsoft.Json;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
@@ -22,13 +19,8 @@ namespace MagicMirror.Business.Services
         {
             try
             {
-                // Get entity from Repository.
                 var entity = await _repo.GetWeatherEntityByCityAsync(city);
-
-                // Map entity to model.
                 var model = MapFromEntity(entity);
-
-                // Calculate non-mappable values
                 model.ConvertValues();
 
                 return model;
@@ -37,57 +29,6 @@ namespace MagicMirror.Business.Services
             {
                 throw new ArgumentException("Unable to retrieve Weather Model", ex);
             }
-        }
-
-        public WeatherModel GetOfflineModel(string path)
-        {
-            try
-            {
-                //Try reading Json object
-                string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
-                WeatherModel model = JsonConvert.DeserializeObject<WeatherModel>(json);
-
-                return model;
-            }
-            catch (FileNotFoundException)
-            {
-                // Object does not exist. Create a new one
-                WeatherModel offlineModel = GenerateOfflineModel();
-                SaveOfflineModel(offlineModel, path);
-
-                return GetOfflineModel(path);
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException("Could not read offline Weathermodel", e);
-            }
-        }
-
-        public void SaveOfflineModel(WeatherModel model, string path)
-        {
-            try
-            {
-                string json = model.ToJson();
-                FileWriter.WriteJsonToFile(json, OFFLINEMODELNAME, path);
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException("Could not save offline Weather Model", e);
-            }
-        }
-
-        private WeatherModel GenerateOfflineModel()
-        {
-            return new WeatherModel
-            {
-                Icon = "01d",
-                Location = "Mechelen",
-                Sunrise = "06:44",
-                Sunset = "19:42",
-                Temperature = 13,
-                TemperatureUom = TemperatureUom.Celsius,
-                WeatherType = "Sunny"
-            };
         }
 
         // TODO: To Presentation Layer
