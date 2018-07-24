@@ -1,13 +1,14 @@
-﻿using MagicMirror.Business.Models;
+﻿using MagicMirror.Business.Enums;
+using MagicMirror.Business.Models;
+using MagicMirror.DataAccess.Repos;
 using Newtonsoft.Json;
 using System;
 using System.IO;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class WeatherService : ServiceBase<WeatherModel, WeatherEntity>, IWeatherService
+    public class WeatherService : Service<WeatherModel>, IWeatherService
     {
         private const string OFFLINEMODELNAME = "WeatherOfflineModel.json";
         private readonly IWeatherRepo _repo;
@@ -17,30 +18,21 @@ namespace MagicMirror.Business.Services
             _repo = repo;
         }
 
-        public async Task<WeatherModel> GetModelAsync(string homeCity, int precision, TemperatureUOM temperatureUOM)
+        public async Task<WeatherModel> GetWeatherModel(string city)
         {
             try
             {
-                _repo = new WeatherRepo(homeCity);
-
                 // Get entity from Repository.
-                WeatherEntity entity = await _repo.GetEntityAsync();
+                var entity = await _repo.GetWeatherEntityByCityAsync(city);
 
                 // Map entity to model.
-                WeatherModel model = MapEntityToModel(entity);
+                var model = MapFromEntity(entity);
 
                 // Calculate non-mappable values
-                model = CalculateUnMappableValues(model, precision, temperatureUOM);
-
-                // Todo: Implement bool if user wants metro or openweather icons
-                if (true)
-                {
-                    model.Icon = ConvertWeatherIcon(model.Icon);
-                }
+                model.ConvertValues();
 
                 return model;
             }
-            catch (HttpRequestException ex) { throw ex; }
             catch (Exception ex)
             {
                 throw new ArgumentException("Unable to retrieve Weather Model", ex);
@@ -90,52 +82,15 @@ namespace MagicMirror.Business.Services
             {
                 Icon = "01d",
                 Location = "Mechelen",
-                SunRise = "06:44",
-                SunSet = "19:42",
-                TemperatureCelsius = 13,
-                TemperatureFahrenheit = 55.40,
-                TemperatureKelvin = 286.15,
+                Sunrise = "06:44",
+                Sunset = "19:42",
+                Temperature = 13,
+                TemperatureUom = TemperatureUom.Celsius,
                 WeatherType = "Sunny"
             };
         }
 
-        protected WeatherModel CalculateUnMappableValues(WeatherModel model, int precision, TemperatureUOM temperatureUOM)
-        {
-            model.TemperatureCelsius = TemperatureHelper.KelvinToCelsius(model.TemperatureKelvin, precision);
-            model.TemperatureFahrenheit = TemperatureHelper.KelvinToFahrenheit(model.TemperatureKelvin, precision);
-
-            switch (temperatureUOM)
-            {
-                case TemperatureUOM.Celsius:
-                    model.Temperature = model.TemperatureCelsius;
-                    break;
-
-                case TemperatureUOM.Fahrenheit:
-                    model.Temperature = model.TemperatureFahrenheit;
-                    break;
-
-                case TemperatureUOM.Kelvin:
-                    model.Temperature = model.TemperatureKelvin;
-                    break;
-
-                default:
-                    model.Temperature = model.TemperatureCelsius;
-                    break;
-            }
-
-            DateTime sunrise = model.SunRiseMilliseconds.ConvertFromUnixTimestamp();
-            DateTime sunset = model.SunSetMilliSeconds.ConvertFromUnixTimestamp();
-            model.SunRise = sunrise.ToString("HH:mm");
-            model.SunSet = sunset.ToString("HH:mm");
-
-            return model;
-        }
-
-        /// <summary>
-        /// Convert an OpenWeatherMap icon to a Metro Style weather icon
-        /// </summary>
-        /// <param name="icon">OpenweatherMap icon to convert</param>
-        /// <param name="theme">The colour scheme. Choice between light and dark</param>
+        // TODO: To Presentation Layer
         private string ConvertWeatherIcon(string icon, string theme = "Dark")
         {
             try

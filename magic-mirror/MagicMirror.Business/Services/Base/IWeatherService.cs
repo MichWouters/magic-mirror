@@ -3,12 +3,8 @@ using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public interface IWeatherService
+    public interface IWeatherService : IService<WeatherModel>
     {
-        Task<WeatherModel> GetModelAsync(string homeCity, int precision, TemperatureUOM temperatureUOM);
-
-        WeatherModel GetOfflineModel(string path);
-
-        void SaveOfflineModel(WeatherModel model, string path);
+        Task<WeatherModel> GetWeatherModel(string city);
     }
 }
