@@ -1,4 +1,4 @@
-﻿using Acme.Generic;
+﻿using Acme.Generic.Helpers;
 using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Entities;
 using MagicMirror.DataAccess.Repos;

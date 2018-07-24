@@ -202,18 +202,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Magic-Mirror.DataAccess.Entities\MagicMirror.DataAccess.Entities.csproj">
-      <Project>{06257571-7A42-4A83-9230-B7A954F92439}</Project>
-      <Name>MagicMirror.DataAccess.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magic-Mirror.DataAccess\MagicMirror.DataAccess.csproj">
-      <Project>{61B61B9C-649D-4C21-8D9B-F60905372A2D}</Project>
-      <Name>MagicMirror.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Acme.Generic\Acme.Generic.csproj">
-      <Project>{230DEDBB-0D31-4DE4-A8AC-9F871F023A8F}</Project>
-      <Name>Acme.Generic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MagicMirror.Business.Models\MagicMirror.Business.Models.csproj">
       <Project>{6c1d40e7-e7db-4c2a-adc9-e6fdd4028c0b}</Project>
       <Name>MagicMirror.Business.Models</Name>

@@ -1,8 +1,5 @@
-﻿using Acme.Generic;
-using Acme.Generic.Extensions;
-using MagicMirror.Business.Models;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Entities.Entities;
-using MagicMirror.DataAccess.Repos;
 using Newtonsoft.Json;
 using System;
 using System.IO;
