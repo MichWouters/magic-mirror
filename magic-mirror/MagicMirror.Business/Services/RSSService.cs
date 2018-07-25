@@ -1,27 +1,23 @@
-﻿using Acme.Generic;
-using MagicMirror.Business.Models;
-using MagicMirror.DataAccess.Entities.Entities;
+﻿using MagicMirror.Business.Models;
 using MagicMirror.DataAccess.Repos;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MagicMirror.Business.Services
 {
-    public class RSSService : ServiceBase<RSSModel, RSSEntity>, IRSSService
+    public class RssService : IRSSService
     {
         private const string OFFLINEMODELNAME = "RssOfflineModel.json";
+        private readonly IRssRepo _repo;
 
-        public RSSService()
+        public RssService(IRssRepo repo)
         {
-            _repo = new RSSRepo();
+            _repo = repo;
         }
 
-        public async Task<RSSModel> GetModelAsync()
+        public async Task<RssModel> GetModelAsync()
         {
             try
             {
@@ -40,44 +36,8 @@ namespace MagicMirror.Business.Services
             }
         }
 
-        public RSSModel GetOfflineModel(string path)
-        {
-            try
-            {
-                //Try reading Json object
-                string json = FileWriter.ReadFromFile(path, OFFLINEMODELNAME);
-                var model = JsonConvert.DeserializeObject<RSSModel>(json);
 
-                return model;
-            }
-            catch (FileNotFoundException)
-            {
-                // Object does not exist. Create a new one
-                var offlineModel = GenerateOfflineModel();
-                SaveOfflineModel(offlineModel, path);
-
-                return GetOfflineModel(path);
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException("Could not read offline RSS model", e);
-            }
-        }
-
-        public void SaveOfflineModel(RSSModel model, string path)
-        {
-            try
-            {
-                string json = model.ToJson();
-                FileWriter.WriteJsonToFile(json, OFFLINEMODELNAME, path);
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException("Could not save offline RSS Model", e);
-            }
-        }
-
-        private RSSModel GenerateOfflineModel()
+        private RssModel GenerateOfflineModel()
         {
             string[] funnyPages = new string[]
                {
@@ -93,12 +53,12 @@ namespace MagicMirror.Business.Services
                     "Trein komt op tijd aan. Wetenschappers voor raadsel"
                };
 
-            var model = new RSSModel();
-            var items = new ObservableCollection<RSSItem>();
+            var model = new RssModel();
+            var items = new ObservableCollection<RssItem>();
 
             foreach (string page in funnyPages)
             {
-                items.Add(new RSSItem { Title = page });
+                items.Add(new RssItem { Title = page });
             }
 
             model.Items = items;
